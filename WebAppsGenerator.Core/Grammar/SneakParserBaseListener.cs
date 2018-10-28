@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from .\SneakParser.g4 by ANTLR 4.7.1
+// Generated from C:\Users\drejerk\source\repos\WebAppsGenerator\WebAppsGenerator.Core\Grammar\SneakParser.g4 by ANTLR 4.7.1
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -19,6 +19,7 @@
 // Ambiguous reference in cref attribute
 #pragma warning disable 419
 
+namespace WebAppsGenerator.Core.Grammar {
 
 using Antlr4.Runtime.Misc;
 using IErrorNode = Antlr4.Runtime.Tree.IErrorNode;
@@ -84,3 +85,4 @@ public partial class SneakParserBaseListener : ISneakParserListener {
 	/// <remarks>The default implementation does nothing.</remarks>
 	public virtual void VisitErrorNode([NotNull] IErrorNode node) { }
 }
+} // namespace WebAppsGenerator.Core.Grammar

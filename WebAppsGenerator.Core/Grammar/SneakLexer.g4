@@ -9,7 +9,7 @@ CLASS	:	'class'
 		;
 INDENT	:	'\t' 
 		;
-ID		:	[A-Za-z]+ 
+ID		:	[A-Za-z0-9]+ 
 		;
 COLON	:	':' 
 		;

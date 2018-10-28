@@ -4,4 +4,12 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="antlr4 $(ProjectDir)\Grammar\*.g4 -o $(ProjectDir)\Grammar\ -Dlanguage=CSharp -package WebAppsGenerator.Core.Grammar" />
+  </Target>
+
+  <ItemGroup>
+    <PackageReference Include="Antlr4.Runtime.Standard" Version="4.7.1.1" />
+  </ItemGroup>
+
 </Project>

@@ -10,13 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Antlr4.Runtime.Standard" Version="4.7.1.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Antlr4 Update="Grammar\SneakLexer.g4">
-      <Generator>MSBuild:Compile</Generator>
-    </Antlr4>
+    <ProjectReference Include="..\WebAppsGenerator.Core\WebAppsGenerator.Core.csproj" />
   </ItemGroup>
 
 </Project>
