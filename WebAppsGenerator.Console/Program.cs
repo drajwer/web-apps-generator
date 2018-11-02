@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Text;
+using WebAppsGenerator.Core.Grammar;
 
 namespace WebAppsGenerator
 {
@@ -18,7 +19,7 @@ namespace WebAppsGenerator
             var parser = new SneakParser(commonTokenStream);
             SneakParser.FileContext fileContext = parser.file();
 
-            var visitor = new SneakParserBaseVisitor<string>();
+            var visitor = new SneakParserCustomVisitor();
 
             visitor.Visit(fileContext);
 
