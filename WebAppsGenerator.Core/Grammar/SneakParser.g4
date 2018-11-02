@@ -2,21 +2,42 @@ parser grammar SneakParser;
 
 options { tokenVocab=SneakLexer; }
 
-compileUnit
-	:	EOF
-	;
+compileUnit		:	EOF
+				;
 
-file			:	 (classDef)*
+file			:	classDefs
 				;
-classDef		:	CLASS CLASS_NAME ENDL_CLASS property*
+
+classDefs		:	classDef classDefs
+				|	/* epsilon */
 				;
-property		:	/*INDENT*/ ID COLON TYPE ENDL_PROP
+
+classDef		:	CLASS ID NEWLINE body
 				;
-annotation		:	HASH ANN_NAME PARAMS
+
+body			:	INDENT properties DEDENT
+				|	/* epsilon */
+				;
+
+properties		:	(property NEWLINE)* property NEWLINE?
+				; 	
+
+property		:	annotations ID COLON TYPE
+				;
+
+annotations		:	(annotation NEWLINE)*
+				;
+
+annotation		:	HASH ID params
 				; 
+
 params			:	/* epsilon */
-				|	'(' PARAMLIST ')'
+				|	'(' paramlist ')'
 				;
-paramlist		:	PARAM ',' PARAMLIST
-				|	PARAM
+
+paramlist		:	(param COMMA)* param
+				;
+
+param			:	ID
+				|	ID '=' VALUE
 				;

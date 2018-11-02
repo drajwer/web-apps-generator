@@ -1,11 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="antlr4 $(ProjectDir)\Grammar\*.g4 -o $(ProjectDir)\Grammar\ -Dlanguage=CSharp -package WebAppsGenerator.Core.Grammar" />
+    <!--<Exec Command="antlr4 $(ProjectDir)\Grammar\*.g4 -o $(ProjectDir)\Grammar\ -Dlanguage=CSharp -package WebAppsGenerator.Core.Grammar" />-->
   </Target>
 
   <ItemGroup>

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from C:\Users\drejerk\source\repos\WebAppsGenerator\WebAppsGenerator.Core\Grammar\SneakParser.g4 by ANTLR 4.7.1
+// Generated from SneakParser.g4 by ANTLR 4.7.1
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -19,7 +19,6 @@
 // Ambiguous reference in cref attribute
 #pragma warning disable 419
 
-namespace WebAppsGenerator.Core.Grammar {
 
 using Antlr4.Runtime.Misc;
 using IErrorNode = Antlr4.Runtime.Tree.IErrorNode;
@@ -48,17 +47,41 @@ public partial class SneakParserBaseListener : ISneakParserListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitCompileUnit([NotNull] SneakParser.CompileUnitContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="SneakParser.class"/>.
+	/// Enter a parse tree produced by <see cref="SneakParser.file"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterClass([NotNull] SneakParser.ClassContext context) { }
+	public virtual void EnterFile([NotNull] SneakParser.FileContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="SneakParser.class"/>.
+	/// Exit a parse tree produced by <see cref="SneakParser.file"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitClass([NotNull] SneakParser.ClassContext context) { }
+	public virtual void ExitFile([NotNull] SneakParser.FileContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="SneakParser.classDef"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterClassDef([NotNull] SneakParser.ClassDefContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="SneakParser.classDef"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitClassDef([NotNull] SneakParser.ClassDefContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="SneakParser.properties"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterProperties([NotNull] SneakParser.PropertiesContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="SneakParser.properties"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitProperties([NotNull] SneakParser.PropertiesContext context) { }
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="SneakParser.property"/>.
 	/// <para>The default implementation does nothing.</para>
@@ -71,6 +94,66 @@ public partial class SneakParserBaseListener : ISneakParserListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitProperty([NotNull] SneakParser.PropertyContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="SneakParser.annotations"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterAnnotations([NotNull] SneakParser.AnnotationsContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="SneakParser.annotations"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitAnnotations([NotNull] SneakParser.AnnotationsContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="SneakParser.annotation"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterAnnotation([NotNull] SneakParser.AnnotationContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="SneakParser.annotation"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitAnnotation([NotNull] SneakParser.AnnotationContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="SneakParser.params"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterParams([NotNull] SneakParser.ParamsContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="SneakParser.params"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitParams([NotNull] SneakParser.ParamsContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="SneakParser.paramlist"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterParamlist([NotNull] SneakParser.ParamlistContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="SneakParser.paramlist"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitParamlist([NotNull] SneakParser.ParamlistContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="SneakParser.param"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterParam([NotNull] SneakParser.ParamContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="SneakParser.param"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitParam([NotNull] SneakParser.ParamContext context) { }
 
 	/// <inheritdoc/>
 	/// <remarks>The default implementation does nothing.</remarks>
@@ -85,4 +168,3 @@ public partial class SneakParserBaseListener : ISneakParserListener {
 	/// <remarks>The default implementation does nothing.</remarks>
 	public virtual void VisitErrorNode([NotNull] IErrorNode node) { }
 }
-} // namespace WebAppsGenerator.Core.Grammar

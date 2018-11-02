@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from C:\Users\drejerk\source\repos\WebAppsGenerator\WebAppsGenerator.Core\Grammar\SneakParser.g4 by ANTLR 4.7.1
+// Generated from SneakParser.g4 by ANTLR 4.7.1
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -19,7 +19,6 @@
 // Ambiguous reference in cref attribute
 #pragma warning disable 419
 
-namespace WebAppsGenerator.Core.Grammar {
 using System;
 using System.IO;
 using System.Text;
@@ -37,18 +36,26 @@ public partial class SneakParser : Parser {
 	protected static DFA[] decisionToDFA;
 	protected static PredictionContextCache sharedContextCache = new PredictionContextCache();
 	public const int
-		INDENT=1, DEDENT=2, WS=3, CLASS=4, ID=5, COLON=6, TYPE=7, NEWLINE=8;
+		INDENT=1, DEDENT=2, NEWLINE=3, WS=4, CLASS=5, COLON=6, HASH=7, COMMA=8, 
+		OPEN_BRACKET=9, CLOSE_BRACKET=10, EQUALS=11, COMMENT=12, MULTILINE_COMM=13, 
+		VALUE=14, ID=15, TYPE=16, PROP_WS=17;
 	public const int
-		RULE_compileUnit = 0, RULE_class = 1, RULE_property = 2;
+		RULE_compileUnit = 0, RULE_file = 1, RULE_classDefs = 2, RULE_classDef = 3, 
+		RULE_body = 4, RULE_properties = 5, RULE_property = 6, RULE_annotations = 7, 
+		RULE_annotation = 8, RULE_params = 9, RULE_paramlist = 10, RULE_param = 11;
 	public static readonly string[] ruleNames = {
-		"compileUnit", "class", "property"
+		"compileUnit", "file", "classDefs", "classDef", "body", "properties", 
+		"property", "annotations", "annotation", "params", "paramlist", "param"
 	};
 
 	private static readonly string[] _LiteralNames = {
-		null, "'\t'", null, "' '", "'class'", null, "':'"
+		null, "'INDENT'", "'DEDENT'", null, null, "'class'", "':'", "'#'", "','", 
+		"'('", "')'", "'='"
 	};
 	private static readonly string[] _SymbolicNames = {
-		null, "INDENT", "DEDENT", "WS", "CLASS", "ID", "COLON", "TYPE", "NEWLINE"
+		null, "INDENT", "DEDENT", "NEWLINE", "WS", "CLASS", "COLON", "HASH", "COMMA", 
+		"OPEN_BRACKET", "CLOSE_BRACKET", "EQUALS", "COMMENT", "MULTILINE_COMM", 
+		"VALUE", "ID", "TYPE", "PROP_WS"
 	};
 	public static readonly IVocabulary DefaultVocabulary = new Vocabulary(_LiteralNames, _SymbolicNames);
 
@@ -88,13 +95,10 @@ public partial class SneakParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_compileUnit; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			ISneakParserListener typedListener = listener as ISneakParserListener;
-			if (typedListener != null) typedListener.EnterCompileUnit(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			ISneakParserListener typedListener = listener as ISneakParserListener;
-			if (typedListener != null) typedListener.ExitCompileUnit(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ISneakParserVisitor<TResult> typedVisitor = visitor as ISneakParserVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitCompileUnit(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -105,7 +109,7 @@ public partial class SneakParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 6; Match(Eof);
+			State = 24; Match(Eof);
 			}
 		}
 		catch (RecognitionException re) {
@@ -119,52 +123,351 @@ public partial class SneakParser : Parser {
 		return _localctx;
 	}
 
-	public partial class ClassContext : ParserRuleContext {
+	public partial class FileContext : ParserRuleContext {
+		public ClassDefsContext classDefs() {
+			return GetRuleContext<ClassDefsContext>(0);
+		}
+		public FileContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_file; } }
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ISneakParserVisitor<TResult> typedVisitor = visitor as ISneakParserVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitFile(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public FileContext file() {
+		FileContext _localctx = new FileContext(Context, State);
+		EnterRule(_localctx, 2, RULE_file);
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 26; classDefs();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class ClassDefsContext : ParserRuleContext {
+		public ClassDefContext classDef() {
+			return GetRuleContext<ClassDefContext>(0);
+		}
+		public ClassDefsContext classDefs() {
+			return GetRuleContext<ClassDefsContext>(0);
+		}
+		public ClassDefsContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_classDefs; } }
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ISneakParserVisitor<TResult> typedVisitor = visitor as ISneakParserVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitClassDefs(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public ClassDefsContext classDefs() {
+		ClassDefsContext _localctx = new ClassDefsContext(Context, State);
+		EnterRule(_localctx, 4, RULE_classDefs);
+		try {
+			State = 32;
+			ErrorHandler.Sync(this);
+			switch (TokenStream.LA(1)) {
+			case CLASS:
+				EnterOuterAlt(_localctx, 1);
+				{
+				State = 28; classDef();
+				State = 29; classDefs();
+				}
+				break;
+			case Eof:
+				EnterOuterAlt(_localctx, 2);
+				{
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class ClassDefContext : ParserRuleContext {
 		public ITerminalNode CLASS() { return GetToken(SneakParser.CLASS, 0); }
 		public ITerminalNode ID() { return GetToken(SneakParser.ID, 0); }
 		public ITerminalNode NEWLINE() { return GetToken(SneakParser.NEWLINE, 0); }
+		public BodyContext body() {
+			return GetRuleContext<BodyContext>(0);
+		}
+		public ClassDefContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_classDef; } }
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ISneakParserVisitor<TResult> typedVisitor = visitor as ISneakParserVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitClassDef(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public ClassDefContext classDef() {
+		ClassDefContext _localctx = new ClassDefContext(Context, State);
+		EnterRule(_localctx, 6, RULE_classDef);
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 34; Match(CLASS);
+			State = 35; Match(ID);
+			State = 36; Match(NEWLINE);
+			State = 37; body();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class BodyContext : ParserRuleContext {
+		public ITerminalNode INDENT() { return GetToken(SneakParser.INDENT, 0); }
+		public PropertiesContext properties() {
+			return GetRuleContext<PropertiesContext>(0);
+		}
+		public ITerminalNode DEDENT() { return GetToken(SneakParser.DEDENT, 0); }
+		public BodyContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_body; } }
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ISneakParserVisitor<TResult> typedVisitor = visitor as ISneakParserVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitBody(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public BodyContext body() {
+		BodyContext _localctx = new BodyContext(Context, State);
+		EnterRule(_localctx, 8, RULE_body);
+		try {
+			State = 44;
+			ErrorHandler.Sync(this);
+			switch (TokenStream.LA(1)) {
+			case INDENT:
+				EnterOuterAlt(_localctx, 1);
+				{
+				State = 39; Match(INDENT);
+				State = 40; properties();
+				State = 41; Match(DEDENT);
+				}
+				break;
+			case Eof:
+			case CLASS:
+				EnterOuterAlt(_localctx, 2);
+				{
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class PropertiesContext : ParserRuleContext {
 		public PropertyContext[] property() {
 			return GetRuleContexts<PropertyContext>();
 		}
 		public PropertyContext property(int i) {
 			return GetRuleContext<PropertyContext>(i);
 		}
-		public ClassContext(ParserRuleContext parent, int invokingState)
+		public ITerminalNode[] NEWLINE() { return GetTokens(SneakParser.NEWLINE); }
+		public ITerminalNode NEWLINE(int i) {
+			return GetToken(SneakParser.NEWLINE, i);
+		}
+		public PropertiesContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
 		}
-		public override int RuleIndex { get { return RULE_class; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			ISneakParserListener typedListener = listener as ISneakParserListener;
-			if (typedListener != null) typedListener.EnterClass(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			ISneakParserListener typedListener = listener as ISneakParserListener;
-			if (typedListener != null) typedListener.ExitClass(this);
+		public override int RuleIndex { get { return RULE_properties; } }
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ISneakParserVisitor<TResult> typedVisitor = visitor as ISneakParserVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitProperties(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
 	[RuleVersion(0)]
-	public ClassContext @class() {
-		ClassContext _localctx = new ClassContext(Context, State);
-		EnterRule(_localctx, 2, RULE_class);
+	public PropertiesContext properties() {
+		PropertiesContext _localctx = new PropertiesContext(Context, State);
+		EnterRule(_localctx, 10, RULE_properties);
+		int _la;
+		try {
+			int _alt;
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 51;
+			ErrorHandler.Sync(this);
+			_alt = Interpreter.AdaptivePredict(TokenStream,2,Context);
+			while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER ) {
+				if ( _alt==1 ) {
+					{
+					{
+					State = 46; property();
+					State = 47; Match(NEWLINE);
+					}
+					} 
+				}
+				State = 53;
+				ErrorHandler.Sync(this);
+				_alt = Interpreter.AdaptivePredict(TokenStream,2,Context);
+			}
+			State = 54; property();
+			State = 56;
+			ErrorHandler.Sync(this);
+			_la = TokenStream.LA(1);
+			if (_la==NEWLINE) {
+				{
+				State = 55; Match(NEWLINE);
+				}
+			}
+
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class PropertyContext : ParserRuleContext {
+		public AnnotationsContext annotations() {
+			return GetRuleContext<AnnotationsContext>(0);
+		}
+		public ITerminalNode ID() { return GetToken(SneakParser.ID, 0); }
+		public ITerminalNode COLON() { return GetToken(SneakParser.COLON, 0); }
+		public ITerminalNode TYPE() { return GetToken(SneakParser.TYPE, 0); }
+		public PropertyContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_property; } }
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ISneakParserVisitor<TResult> typedVisitor = visitor as ISneakParserVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitProperty(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public PropertyContext property() {
+		PropertyContext _localctx = new PropertyContext(Context, State);
+		EnterRule(_localctx, 12, RULE_property);
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 58; annotations();
+			State = 59; Match(ID);
+			State = 60; Match(COLON);
+			State = 61; Match(TYPE);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class AnnotationsContext : ParserRuleContext {
+		public AnnotationContext[] annotation() {
+			return GetRuleContexts<AnnotationContext>();
+		}
+		public AnnotationContext annotation(int i) {
+			return GetRuleContext<AnnotationContext>(i);
+		}
+		public ITerminalNode[] NEWLINE() { return GetTokens(SneakParser.NEWLINE); }
+		public ITerminalNode NEWLINE(int i) {
+			return GetToken(SneakParser.NEWLINE, i);
+		}
+		public AnnotationsContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_annotations; } }
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ISneakParserVisitor<TResult> typedVisitor = visitor as ISneakParserVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitAnnotations(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public AnnotationsContext annotations() {
+		AnnotationsContext _localctx = new AnnotationsContext(Context, State);
+		EnterRule(_localctx, 14, RULE_annotations);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 8; Match(CLASS);
-			State = 9; Match(ID);
-			State = 10; Match(NEWLINE);
-			State = 14;
+			State = 68;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
-			while (_la==ID) {
+			while (_la==HASH) {
 				{
 				{
-				State = 11; property();
+				State = 63; annotation();
+				State = 64; Match(NEWLINE);
 				}
 				}
-				State = 16;
+				State = 70;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
@@ -181,37 +484,197 @@ public partial class SneakParser : Parser {
 		return _localctx;
 	}
 
-	public partial class PropertyContext : ParserRuleContext {
+	public partial class AnnotationContext : ParserRuleContext {
+		public ITerminalNode HASH() { return GetToken(SneakParser.HASH, 0); }
 		public ITerminalNode ID() { return GetToken(SneakParser.ID, 0); }
-		public ITerminalNode COLON() { return GetToken(SneakParser.COLON, 0); }
-		public ITerminalNode TYPE() { return GetToken(SneakParser.TYPE, 0); }
-		public ITerminalNode NEWLINE() { return GetToken(SneakParser.NEWLINE, 0); }
-		public PropertyContext(ParserRuleContext parent, int invokingState)
+		public ParamsContext @params() {
+			return GetRuleContext<ParamsContext>(0);
+		}
+		public AnnotationContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
 		}
-		public override int RuleIndex { get { return RULE_property; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			ISneakParserListener typedListener = listener as ISneakParserListener;
-			if (typedListener != null) typedListener.EnterProperty(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			ISneakParserListener typedListener = listener as ISneakParserListener;
-			if (typedListener != null) typedListener.ExitProperty(this);
+		public override int RuleIndex { get { return RULE_annotation; } }
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ISneakParserVisitor<TResult> typedVisitor = visitor as ISneakParserVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitAnnotation(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
 	[RuleVersion(0)]
-	public PropertyContext property() {
-		PropertyContext _localctx = new PropertyContext(Context, State);
-		EnterRule(_localctx, 4, RULE_property);
+	public AnnotationContext annotation() {
+		AnnotationContext _localctx = new AnnotationContext(Context, State);
+		EnterRule(_localctx, 16, RULE_annotation);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 17; Match(ID);
-			State = 18; Match(COLON);
-			State = 19; Match(TYPE);
-			State = 20; Match(NEWLINE);
+			State = 71; Match(HASH);
+			State = 72; Match(ID);
+			State = 73; @params();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class ParamsContext : ParserRuleContext {
+		public ParamlistContext paramlist() {
+			return GetRuleContext<ParamlistContext>(0);
+		}
+		public ParamsContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_params; } }
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ISneakParserVisitor<TResult> typedVisitor = visitor as ISneakParserVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitParams(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public ParamsContext @params() {
+		ParamsContext _localctx = new ParamsContext(Context, State);
+		EnterRule(_localctx, 18, RULE_params);
+		try {
+			State = 80;
+			ErrorHandler.Sync(this);
+			switch (TokenStream.LA(1)) {
+			case NEWLINE:
+				EnterOuterAlt(_localctx, 1);
+				{
+				}
+				break;
+			case OPEN_BRACKET:
+				EnterOuterAlt(_localctx, 2);
+				{
+				State = 76; Match(OPEN_BRACKET);
+				State = 77; paramlist();
+				State = 78; Match(CLOSE_BRACKET);
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class ParamlistContext : ParserRuleContext {
+		public ParamContext[] param() {
+			return GetRuleContexts<ParamContext>();
+		}
+		public ParamContext param(int i) {
+			return GetRuleContext<ParamContext>(i);
+		}
+		public ITerminalNode[] COMMA() { return GetTokens(SneakParser.COMMA); }
+		public ITerminalNode COMMA(int i) {
+			return GetToken(SneakParser.COMMA, i);
+		}
+		public ParamlistContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_paramlist; } }
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ISneakParserVisitor<TResult> typedVisitor = visitor as ISneakParserVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitParamlist(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public ParamlistContext paramlist() {
+		ParamlistContext _localctx = new ParamlistContext(Context, State);
+		EnterRule(_localctx, 20, RULE_paramlist);
+		try {
+			int _alt;
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 87;
+			ErrorHandler.Sync(this);
+			_alt = Interpreter.AdaptivePredict(TokenStream,6,Context);
+			while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER ) {
+				if ( _alt==1 ) {
+					{
+					{
+					State = 82; param();
+					State = 83; Match(COMMA);
+					}
+					} 
+				}
+				State = 89;
+				ErrorHandler.Sync(this);
+				_alt = Interpreter.AdaptivePredict(TokenStream,6,Context);
+			}
+			State = 90; param();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class ParamContext : ParserRuleContext {
+		public ITerminalNode ID() { return GetToken(SneakParser.ID, 0); }
+		public ITerminalNode VALUE() { return GetToken(SneakParser.VALUE, 0); }
+		public ParamContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_param; } }
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ISneakParserVisitor<TResult> typedVisitor = visitor as ISneakParserVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitParam(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public ParamContext param() {
+		ParamContext _localctx = new ParamContext(Context, State);
+		EnterRule(_localctx, 22, RULE_param);
+		try {
+			State = 96;
+			ErrorHandler.Sync(this);
+			switch ( Interpreter.AdaptivePredict(TokenStream,7,Context) ) {
+			case 1:
+				EnterOuterAlt(_localctx, 1);
+				{
+				State = 92; Match(ID);
+				}
+				break;
+			case 2:
+				EnterOuterAlt(_localctx, 2);
+				{
+				State = 93; Match(ID);
+				State = 94; Match(EQUALS);
+				State = 95; Match(VALUE);
+				}
+				break;
 			}
 		}
 		catch (RecognitionException re) {
@@ -227,24 +690,80 @@ public partial class SneakParser : Parser {
 
 	private static char[] _serializedATN = {
 		'\x3', '\x608B', '\xA72A', '\x8133', '\xB9ED', '\x417C', '\x3BE7', '\x7786', 
-		'\x5964', '\x3', '\n', '\x19', '\x4', '\x2', '\t', '\x2', '\x4', '\x3', 
-		'\t', '\x3', '\x4', '\x4', '\t', '\x4', '\x3', '\x2', '\x3', '\x2', '\x3', 
-		'\x3', '\x3', '\x3', '\x3', '\x3', '\x3', '\x3', '\a', '\x3', '\xF', '\n', 
-		'\x3', '\f', '\x3', '\xE', '\x3', '\x12', '\v', '\x3', '\x3', '\x4', '\x3', 
-		'\x4', '\x3', '\x4', '\x3', '\x4', '\x3', '\x4', '\x3', '\x4', '\x2', 
-		'\x2', '\x5', '\x2', '\x4', '\x6', '\x2', '\x2', '\x2', '\x16', '\x2', 
-		'\b', '\x3', '\x2', '\x2', '\x2', '\x4', '\n', '\x3', '\x2', '\x2', '\x2', 
-		'\x6', '\x13', '\x3', '\x2', '\x2', '\x2', '\b', '\t', '\a', '\x2', '\x2', 
-		'\x3', '\t', '\x3', '\x3', '\x2', '\x2', '\x2', '\n', '\v', '\a', '\x6', 
-		'\x2', '\x2', '\v', '\f', '\a', '\a', '\x2', '\x2', '\f', '\x10', '\a', 
-		'\n', '\x2', '\x2', '\r', '\xF', '\x5', '\x6', '\x4', '\x2', '\xE', '\r', 
-		'\x3', '\x2', '\x2', '\x2', '\xF', '\x12', '\x3', '\x2', '\x2', '\x2', 
-		'\x10', '\xE', '\x3', '\x2', '\x2', '\x2', '\x10', '\x11', '\x3', '\x2', 
-		'\x2', '\x2', '\x11', '\x5', '\x3', '\x2', '\x2', '\x2', '\x12', '\x10', 
-		'\x3', '\x2', '\x2', '\x2', '\x13', '\x14', '\a', '\a', '\x2', '\x2', 
-		'\x14', '\x15', '\a', '\b', '\x2', '\x2', '\x15', '\x16', '\a', '\t', 
-		'\x2', '\x2', '\x16', '\x17', '\a', '\n', '\x2', '\x2', '\x17', '\a', 
-		'\x3', '\x2', '\x2', '\x2', '\x3', '\x10',
+		'\x5964', '\x3', '\x13', '\x65', '\x4', '\x2', '\t', '\x2', '\x4', '\x3', 
+		'\t', '\x3', '\x4', '\x4', '\t', '\x4', '\x4', '\x5', '\t', '\x5', '\x4', 
+		'\x6', '\t', '\x6', '\x4', '\a', '\t', '\a', '\x4', '\b', '\t', '\b', 
+		'\x4', '\t', '\t', '\t', '\x4', '\n', '\t', '\n', '\x4', '\v', '\t', '\v', 
+		'\x4', '\f', '\t', '\f', '\x4', '\r', '\t', '\r', '\x3', '\x2', '\x3', 
+		'\x2', '\x3', '\x3', '\x3', '\x3', '\x3', '\x4', '\x3', '\x4', '\x3', 
+		'\x4', '\x3', '\x4', '\x5', '\x4', '#', '\n', '\x4', '\x3', '\x5', '\x3', 
+		'\x5', '\x3', '\x5', '\x3', '\x5', '\x3', '\x5', '\x3', '\x6', '\x3', 
+		'\x6', '\x3', '\x6', '\x3', '\x6', '\x3', '\x6', '\x5', '\x6', '/', '\n', 
+		'\x6', '\x3', '\a', '\x3', '\a', '\x3', '\a', '\a', '\a', '\x34', '\n', 
+		'\a', '\f', '\a', '\xE', '\a', '\x37', '\v', '\a', '\x3', '\a', '\x3', 
+		'\a', '\x5', '\a', ';', '\n', '\a', '\x3', '\b', '\x3', '\b', '\x3', '\b', 
+		'\x3', '\b', '\x3', '\b', '\x3', '\t', '\x3', '\t', '\x3', '\t', '\a', 
+		'\t', '\x45', '\n', '\t', '\f', '\t', '\xE', '\t', 'H', '\v', '\t', '\x3', 
+		'\n', '\x3', '\n', '\x3', '\n', '\x3', '\n', '\x3', '\v', '\x3', '\v', 
+		'\x3', '\v', '\x3', '\v', '\x3', '\v', '\x5', '\v', 'S', '\n', '\v', '\x3', 
+		'\f', '\x3', '\f', '\x3', '\f', '\a', '\f', 'X', '\n', '\f', '\f', '\f', 
+		'\xE', '\f', '[', '\v', '\f', '\x3', '\f', '\x3', '\f', '\x3', '\r', '\x3', 
+		'\r', '\x3', '\r', '\x3', '\r', '\x5', '\r', '\x63', '\n', '\r', '\x3', 
+		'\r', '\x2', '\x2', '\xE', '\x2', '\x4', '\x6', '\b', '\n', '\f', '\xE', 
+		'\x10', '\x12', '\x14', '\x16', '\x18', '\x2', '\x2', '\x2', '`', '\x2', 
+		'\x1A', '\x3', '\x2', '\x2', '\x2', '\x4', '\x1C', '\x3', '\x2', '\x2', 
+		'\x2', '\x6', '\"', '\x3', '\x2', '\x2', '\x2', '\b', '$', '\x3', '\x2', 
+		'\x2', '\x2', '\n', '.', '\x3', '\x2', '\x2', '\x2', '\f', '\x35', '\x3', 
+		'\x2', '\x2', '\x2', '\xE', '<', '\x3', '\x2', '\x2', '\x2', '\x10', '\x46', 
+		'\x3', '\x2', '\x2', '\x2', '\x12', 'I', '\x3', '\x2', '\x2', '\x2', '\x14', 
+		'R', '\x3', '\x2', '\x2', '\x2', '\x16', 'Y', '\x3', '\x2', '\x2', '\x2', 
+		'\x18', '\x62', '\x3', '\x2', '\x2', '\x2', '\x1A', '\x1B', '\a', '\x2', 
+		'\x2', '\x3', '\x1B', '\x3', '\x3', '\x2', '\x2', '\x2', '\x1C', '\x1D', 
+		'\x5', '\x6', '\x4', '\x2', '\x1D', '\x5', '\x3', '\x2', '\x2', '\x2', 
+		'\x1E', '\x1F', '\x5', '\b', '\x5', '\x2', '\x1F', ' ', '\x5', '\x6', 
+		'\x4', '\x2', ' ', '#', '\x3', '\x2', '\x2', '\x2', '!', '#', '\x3', '\x2', 
+		'\x2', '\x2', '\"', '\x1E', '\x3', '\x2', '\x2', '\x2', '\"', '!', '\x3', 
+		'\x2', '\x2', '\x2', '#', '\a', '\x3', '\x2', '\x2', '\x2', '$', '%', 
+		'\a', '\a', '\x2', '\x2', '%', '&', '\a', '\x11', '\x2', '\x2', '&', '\'', 
+		'\a', '\x5', '\x2', '\x2', '\'', '(', '\x5', '\n', '\x6', '\x2', '(', 
+		'\t', '\x3', '\x2', '\x2', '\x2', ')', '*', '\a', '\x3', '\x2', '\x2', 
+		'*', '+', '\x5', '\f', '\a', '\x2', '+', ',', '\a', '\x4', '\x2', '\x2', 
+		',', '/', '\x3', '\x2', '\x2', '\x2', '-', '/', '\x3', '\x2', '\x2', '\x2', 
+		'.', ')', '\x3', '\x2', '\x2', '\x2', '.', '-', '\x3', '\x2', '\x2', '\x2', 
+		'/', '\v', '\x3', '\x2', '\x2', '\x2', '\x30', '\x31', '\x5', '\xE', '\b', 
+		'\x2', '\x31', '\x32', '\a', '\x5', '\x2', '\x2', '\x32', '\x34', '\x3', 
+		'\x2', '\x2', '\x2', '\x33', '\x30', '\x3', '\x2', '\x2', '\x2', '\x34', 
+		'\x37', '\x3', '\x2', '\x2', '\x2', '\x35', '\x33', '\x3', '\x2', '\x2', 
+		'\x2', '\x35', '\x36', '\x3', '\x2', '\x2', '\x2', '\x36', '\x38', '\x3', 
+		'\x2', '\x2', '\x2', '\x37', '\x35', '\x3', '\x2', '\x2', '\x2', '\x38', 
+		':', '\x5', '\xE', '\b', '\x2', '\x39', ';', '\a', '\x5', '\x2', '\x2', 
+		':', '\x39', '\x3', '\x2', '\x2', '\x2', ':', ';', '\x3', '\x2', '\x2', 
+		'\x2', ';', '\r', '\x3', '\x2', '\x2', '\x2', '<', '=', '\x5', '\x10', 
+		'\t', '\x2', '=', '>', '\a', '\x11', '\x2', '\x2', '>', '?', '\a', '\b', 
+		'\x2', '\x2', '?', '@', '\a', '\x12', '\x2', '\x2', '@', '\xF', '\x3', 
+		'\x2', '\x2', '\x2', '\x41', '\x42', '\x5', '\x12', '\n', '\x2', '\x42', 
+		'\x43', '\a', '\x5', '\x2', '\x2', '\x43', '\x45', '\x3', '\x2', '\x2', 
+		'\x2', '\x44', '\x41', '\x3', '\x2', '\x2', '\x2', '\x45', 'H', '\x3', 
+		'\x2', '\x2', '\x2', '\x46', '\x44', '\x3', '\x2', '\x2', '\x2', '\x46', 
+		'G', '\x3', '\x2', '\x2', '\x2', 'G', '\x11', '\x3', '\x2', '\x2', '\x2', 
+		'H', '\x46', '\x3', '\x2', '\x2', '\x2', 'I', 'J', '\a', '\t', '\x2', 
+		'\x2', 'J', 'K', '\a', '\x11', '\x2', '\x2', 'K', 'L', '\x5', '\x14', 
+		'\v', '\x2', 'L', '\x13', '\x3', '\x2', '\x2', '\x2', 'M', 'S', '\x3', 
+		'\x2', '\x2', '\x2', 'N', 'O', '\a', '\v', '\x2', '\x2', 'O', 'P', '\x5', 
+		'\x16', '\f', '\x2', 'P', 'Q', '\a', '\f', '\x2', '\x2', 'Q', 'S', '\x3', 
+		'\x2', '\x2', '\x2', 'R', 'M', '\x3', '\x2', '\x2', '\x2', 'R', 'N', '\x3', 
+		'\x2', '\x2', '\x2', 'S', '\x15', '\x3', '\x2', '\x2', '\x2', 'T', 'U', 
+		'\x5', '\x18', '\r', '\x2', 'U', 'V', '\a', '\n', '\x2', '\x2', 'V', 'X', 
+		'\x3', '\x2', '\x2', '\x2', 'W', 'T', '\x3', '\x2', '\x2', '\x2', 'X', 
+		'[', '\x3', '\x2', '\x2', '\x2', 'Y', 'W', '\x3', '\x2', '\x2', '\x2', 
+		'Y', 'Z', '\x3', '\x2', '\x2', '\x2', 'Z', '\\', '\x3', '\x2', '\x2', 
+		'\x2', '[', 'Y', '\x3', '\x2', '\x2', '\x2', '\\', ']', '\x5', '\x18', 
+		'\r', '\x2', ']', '\x17', '\x3', '\x2', '\x2', '\x2', '^', '\x63', '\a', 
+		'\x11', '\x2', '\x2', '_', '`', '\a', '\x11', '\x2', '\x2', '`', '\x61', 
+		'\a', '\r', '\x2', '\x2', '\x61', '\x63', '\a', '\x10', '\x2', '\x2', 
+		'\x62', '^', '\x3', '\x2', '\x2', '\x2', '\x62', '_', '\x3', '\x2', '\x2', 
+		'\x2', '\x63', '\x19', '\x3', '\x2', '\x2', '\x2', '\n', '\"', '.', '\x35', 
+		':', '\x46', 'R', 'Y', '\x62',
 	};
 
 	public static readonly ATN _ATN =
@@ -252,4 +771,3 @@ public partial class SneakParser : Parser {
 
 
 }
-} // namespace WebAppsGenerator.Core.Grammar

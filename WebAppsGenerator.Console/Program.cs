@@ -1,6 +1,7 @@
 ﻿using Antlr4.Runtime;
 using System;
-using WebAppsGenerator.Core.Grammar;
+using System.IO;
+using System.Text;
 
 namespace WebAppsGenerator
 {
@@ -8,13 +9,22 @@ namespace WebAppsGenerator
     {
         static void Main(string[] args)
         {
-            var lexer = new SneakLexer(CharStreams.fromstring("class Hello"));
+            var reader = new StreamReader("./../../../../WebAppsGenerator.Core/Grammar/SimpleClass.txt");
+            AntlrInputStream inputStream = new AntlrInputStream(reader);
+            var lexer = new SneakLexer(inputStream);
+        
             var commonTokenStream = new CommonTokenStream(lexer);
-            foreach (var token in lexer.GetAllTokens())
-                Console.Write($"{token},");
-            Console.WriteLine();
+            
             var parser = new SneakParser(commonTokenStream);
+            SneakParser.FileContext fileContext = parser.file();
 
+            var visitor = new SneakParserBaseVisitor<string>();
+
+            visitor.Visit(fileContext);
+
+            foreach (var token in commonTokenStream.GetTokens())
+                Console.WriteLine($"{token},");
+            Console.WriteLine();
 
             Console.WriteLine("Hello World!");
         }

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from C:\Users\drejerk\source\repos\WebAppsGenerator\WebAppsGenerator.Core\Grammar\SneakParser.g4 by ANTLR 4.7.1
+// Generated from SneakParser.g4 by ANTLR 4.7.1
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -19,7 +19,6 @@
 // Ambiguous reference in cref attribute
 #pragma warning disable 419
 
-namespace WebAppsGenerator.Core.Grammar {
 using Antlr4.Runtime.Misc;
 using IParseTreeListener = Antlr4.Runtime.Tree.IParseTreeListener;
 using IToken = Antlr4.Runtime.IToken;
@@ -42,15 +41,35 @@ public interface ISneakParserListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitCompileUnit([NotNull] SneakParser.CompileUnitContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="SneakParser.class"/>.
+	/// Enter a parse tree produced by <see cref="SneakParser.file"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterClass([NotNull] SneakParser.ClassContext context);
+	void EnterFile([NotNull] SneakParser.FileContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="SneakParser.class"/>.
+	/// Exit a parse tree produced by <see cref="SneakParser.file"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitClass([NotNull] SneakParser.ClassContext context);
+	void ExitFile([NotNull] SneakParser.FileContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="SneakParser.classDef"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterClassDef([NotNull] SneakParser.ClassDefContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="SneakParser.classDef"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitClassDef([NotNull] SneakParser.ClassDefContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="SneakParser.properties"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterProperties([NotNull] SneakParser.PropertiesContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="SneakParser.properties"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitProperties([NotNull] SneakParser.PropertiesContext context);
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="SneakParser.property"/>.
 	/// </summary>
@@ -61,5 +80,54 @@ public interface ISneakParserListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitProperty([NotNull] SneakParser.PropertyContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="SneakParser.annotations"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterAnnotations([NotNull] SneakParser.AnnotationsContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="SneakParser.annotations"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitAnnotations([NotNull] SneakParser.AnnotationsContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="SneakParser.annotation"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterAnnotation([NotNull] SneakParser.AnnotationContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="SneakParser.annotation"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitAnnotation([NotNull] SneakParser.AnnotationContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="SneakParser.params"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterParams([NotNull] SneakParser.ParamsContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="SneakParser.params"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitParams([NotNull] SneakParser.ParamsContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="SneakParser.paramlist"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterParamlist([NotNull] SneakParser.ParamlistContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="SneakParser.paramlist"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitParamlist([NotNull] SneakParser.ParamlistContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="SneakParser.param"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterParam([NotNull] SneakParser.ParamContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="SneakParser.param"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitParam([NotNull] SneakParser.ParamContext context);
 }
-} // namespace WebAppsGenerator.Core.Grammar
