@@ -6,5 +6,6 @@ namespace WebAppsGenerator.Core.Models
     {
         public string Name { get; set; }
         public List<AnnotationParam> Params { get; set; }
+        public bool IsClassAnnotation { get; set; }
     }
 }

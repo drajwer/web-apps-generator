@@ -17,7 +17,8 @@ namespace WebAppsGenerator.Core.Grammar
             var entity = new Entity()
             {
                 Name = className,
-                Fields = (fields as Field[])?.ToList()
+                Fields = (fields as Field[])?.ToList(),
+                Annotations = VisitClassAnnotations(context.annotations())
             };
 
             if(!Entities.TryAdd(className, entity))
@@ -54,11 +55,24 @@ namespace WebAppsGenerator.Core.Grammar
             return context.annotation().Select(ctx => VisitAnnotation(ctx)).OfType<Annotation>().ToList();
         }
 
+        public List<Annotation> VisitClassAnnotations([NotNull] SneakParser.AnnotationsContext context)
+        {
+            return context.annotation().Select(ctx => VisitClassAnnotation(ctx)).OfType<Annotation>().ToList();
+        }
+
+        public Annotation VisitClassAnnotation([NotNull] SneakParser.AnnotationContext context)
+        {
+            var annotation = VisitAnnotation(context) as Annotation;
+            annotation.IsClassAnnotation = true;
+
+            return annotation;
+        }
+
         public override object VisitAnnotation([NotNull] SneakParser.AnnotationContext context)
         {
             return new Annotation()
             {
-                Name = context.ID().ToString()
+                Name = context.ID().ToString(),
             };
         }
     }
