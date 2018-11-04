@@ -34,7 +34,6 @@ namespace WebAppsGenerator.Core.Grammar
         }
         public override object VisitProperties([NotNull] SneakParser.PropertiesContext context)
         {
-
             var props = context.property().Select(ctx => VisitProperty(ctx)).OfType<Field>();
 
             return props.ToArray();
@@ -43,10 +42,24 @@ namespace WebAppsGenerator.Core.Grammar
         {
             var property = new Field()
             {
-                Name = context.ID().ToString()
+                Name = context.ID().ToString(),
+                Annotations = VisitAnnotations(context.annotations()) as List<Annotation>
             };
 
             return property;
+        }
+
+        public override object VisitAnnotations([NotNull] SneakParser.AnnotationsContext context)
+        {
+            return context.annotation().Select(ctx => VisitAnnotation(ctx)).OfType<Annotation>().ToList();
+        }
+
+        public override object VisitAnnotation([NotNull] SneakParser.AnnotationContext context)
+        {
+            return new Annotation()
+            {
+                Name = context.ID().ToString()
+            };
         }
     }
 }
