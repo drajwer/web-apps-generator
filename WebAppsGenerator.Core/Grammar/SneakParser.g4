@@ -12,7 +12,7 @@ classDefs		:	classDef classDefs
 				|	/* epsilon */
 				;
 
-classDef		:	CLASS ID NEWLINE body
+classDef		:	annotations CLASS ID NEWLINE body
 				;
 
 body			:	INDENT properties DEDENT

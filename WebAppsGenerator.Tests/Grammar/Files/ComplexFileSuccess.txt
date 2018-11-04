@@ -1,0 +1,28 @@
+﻿
+
+#AdminOnly
+#Display(Name = "Library", Color = "FF00FF")
+
+class Booook
+	Editor: Person?
+#AdminOnly
+#Display(Name = "Library", Color = "FF00FF")
+
+class Booook
+	Editor: Person?
+class Book
+	#DisplayName
+	#List(Sortable = true)
+	#Length(Min = 7, Max = /*comment*/ 10)
+
+	Pages: int
+	Author:Author
+class Author 
+class Novel
+
+class		Table
+		  
+class Wine
+ ProductionDate	: date?
+ Type:	string[] //comment
+ Taste: String?[]

@@ -1,0 +1,3 @@
+﻿class Book
+	Prop1: int
+		Prop2:int

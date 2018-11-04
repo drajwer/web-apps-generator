@@ -146,7 +146,7 @@ ID				:	IDENTIFIER
 
 mode PROPERTY;
 			
-TYPE			:	[A-Za-z]+ -> popMode
+TYPE			:	[A-Za-z]+ ('?')?('[]')? -> popMode
 				;
 PROP_WS			:	WHITESPACES -> skip
 				;
