@@ -1,0 +1,3 @@
+﻿class Book
+	#Ann1 #Ann2
+	Prop: int

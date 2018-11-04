@@ -1,0 +1,18 @@
+﻿
+
+class Book
+	#DisplayName
+	#List(Sortable = true)
+	#Length(Min = 7, Max = /*comment*/ 10)
+
+	Pages: int
+	Author:Author
+class Author 
+class Novel
+
+class		Table
+		  
+class Wine
+ ProductionDate	: date?
+ Type:	string[] //comment
+ Taste: String?[]

@@ -1,0 +1,4 @@
+﻿class Book
+	 prop1: Type
+	#Ann
+	 prop2: Type
