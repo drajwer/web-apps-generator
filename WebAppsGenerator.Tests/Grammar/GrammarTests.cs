@@ -32,63 +32,63 @@ namespace WebAppsGenerator.Tests.Grammar
         public void TrailingSpaceBeforeClass()
         {
             var parser = Setup();
-            Assert.AreEqual(1, parser.NumberOfSyntaxErrors);
+            Assert.IsTrue(0 < parser.NumberOfSyntaxErrors);
         }
 
         [TestMethod]
         public void NoIndentBeforeProp()
         {
             var parser = Setup();
-            Assert.AreEqual(1, parser.NumberOfSyntaxErrors);
+            Assert.IsTrue(0 < parser.NumberOfSyntaxErrors);
         }
 
         [TestMethod]
         public void NoNewlineBetweeneProps()
         {
             var parser = Setup();
-            Assert.AreEqual(1, parser.NumberOfSyntaxErrors);
+            Assert.IsTrue(0 < parser.NumberOfSyntaxErrors);
         }
 
         [TestMethod]
         public void NoNewlineBetweenAnnotations()
         {
             var parser = Setup();
-            Assert.AreEqual(1, parser.NumberOfSyntaxErrors);
+            Assert.IsTrue(0 < parser.NumberOfSyntaxErrors);
         }
 
         [TestMethod]
         public void DifferentIndentLvlBetweenProps()
         {
             var parser = Setup();
-            Assert.AreEqual(1, parser.NumberOfSyntaxErrors);
+            Assert.IsTrue(0 < parser.NumberOfSyntaxErrors);
         }
 
         [TestMethod]
         public void PropHasNoType()
         {
             var parser = Setup();
-            Assert.AreEqual(1, parser.NumberOfSyntaxErrors);
+            Assert.IsTrue(0 < parser.NumberOfSyntaxErrors);
         }
 
         [TestMethod]
         public void PropHasLowerIndentLvlThanAnn()
         {
             var parser = Setup();
-            Assert.AreEqual(1, parser.NumberOfSyntaxErrors);
+            Assert.IsTrue(0 < parser.NumberOfSyntaxErrors);
         }
 
         [TestMethod]
         public void PropHasHigherIndentLvlThanAnn()
         {
             var parser = Setup();
-            Assert.AreEqual(1, parser.NumberOfSyntaxErrors);
+            Assert.IsTrue(0 < parser.NumberOfSyntaxErrors);
         }
 
         [TestMethod]
         public void TrailingSpaceBeforeSecondClass()
         {
             var parser = Setup();
-            Assert.AreEqual(1, parser.NumberOfSyntaxErrors);
+            Assert.IsTrue(0 < parser.NumberOfSyntaxErrors);
         }
 
         [TestMethod]

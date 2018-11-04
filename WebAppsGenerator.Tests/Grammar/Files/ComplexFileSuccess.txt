@@ -1,5 +1,15 @@
 ﻿
 
+#AdminOnly
+#Display(Name = "Library", Color = "FF00FF")
+
+class Booook
+	Editor: Person?
+#AdminOnly
+#Display(Name = "Library", Color = "FF00FF")
+
+class Booook
+	Editor: Person?
 class Book
 	#DisplayName
 	#List(Sortable = true)
