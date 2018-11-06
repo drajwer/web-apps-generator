@@ -3,13 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
+using WebAppsGenerator.Core.Exceptions;
 using WebAppsGenerator.Core.Models;
+using WebAppsGenerator.Core.Parsing.Annotations;
+using WebAppsGenerator.Core.Parsing.Types;
+using Type = WebAppsGenerator.Core.Models.Type;
 
 namespace WebAppsGenerator.Core.Grammar
 {
     public class SneakParserCustomVisitor : SneakParserBaseVisitor<object>
     {
+        private readonly ITypeParser _typeParser;
+        private readonly IAnnotationParamParser _annotationParamParser;
+
         public Dictionary<string, Entity> Entities = new Dictionary<string, Entity>();
+
+        public SneakParserCustomVisitor(ITypeParser typeParser, IAnnotationParamParser annotationParamParser)
+        {
+            _typeParser = typeParser;
+            _annotationParamParser = annotationParamParser;
+        }
+
         public override object VisitClassDef([NotNull] SneakParser.ClassDefContext context)
         {
             var className = context.ID().GetText();
@@ -23,7 +37,7 @@ namespace WebAppsGenerator.Core.Grammar
 
             if(!Entities.TryAdd(className, entity))
             {
-                Console.WriteLine("Error");
+                throw new ParsingException($"Duplicate declaration of {className}");
             }
             return entity;
         }
@@ -51,12 +65,9 @@ namespace WebAppsGenerator.Core.Grammar
             return property;
         }
 
-        public FieldType VisitFieldType(ITerminalNode type)
+        public Type VisitFieldType(ITerminalNode type)
         {
-            return new FieldType()
-            {
-                Name = type.GetText()
-            };
+            return _typeParser.ParseTypeName(type.GetText());
         }
         public override object VisitAnnotations([NotNull] SneakParser.AnnotationsContext context)
         {
@@ -102,13 +113,7 @@ namespace WebAppsGenerator.Core.Grammar
 
         public override object VisitParam([NotNull] SneakParser.ParamContext context)
         {
-            // TODO: Add types
-            return new AnnotationParam()
-            {
-                Name = context.ID().GetText(),
-                Value = context.VALUE().GetText()
-            };
-            
+            return _annotationParamParser.ParseAnnotationParam(context.ID().GetText(), context.VALUE().GetText());
         }
     }
 }

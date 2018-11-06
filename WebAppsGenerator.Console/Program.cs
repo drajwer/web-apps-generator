@@ -3,6 +3,8 @@ using System;
 using System.IO;
 using System.Text;
 using WebAppsGenerator.Core.Grammar;
+using WebAppsGenerator.Core.Parsing.Annotations;
+using WebAppsGenerator.Core.Parsing.Types;
 
 namespace WebAppsGenerator
 {
@@ -19,7 +21,7 @@ namespace WebAppsGenerator
             var parser = new SneakParser(commonTokenStream);
             SneakParser.FileContext fileContext = parser.file();
 
-            var visitor = new SneakParserCustomVisitor();
+            var visitor = new SneakParserCustomVisitor(new BasicTypeParser(), new BasicAnnotationParamParser());
 
             visitor.Visit(fileContext);
 
