@@ -10,6 +10,7 @@ namespace WebAppsGenerator.Tests.Grammar
     {
         public SneakParser Setup([CallerMemberName] string filename = "")
         {
+            // TODO: change reader to use embedded resources
             var reader = new StreamReader($"./../../../../WebAppsGenerator.Tests/Grammar//Files/{filename}.txt");
             AntlrInputStream inputStream = new AntlrInputStream(reader);
             var lexer = new SneakLexer(inputStream);

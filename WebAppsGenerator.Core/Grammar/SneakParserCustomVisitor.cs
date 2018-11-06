@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Antlr4.Runtime.Misc;
+using Antlr4.Runtime.Tree;
 using WebAppsGenerator.Core.Models;
 
 namespace WebAppsGenerator.Core.Grammar
@@ -12,7 +12,7 @@ namespace WebAppsGenerator.Core.Grammar
         public Dictionary<string, Entity> Entities = new Dictionary<string, Entity>();
         public override object VisitClassDef([NotNull] SneakParser.ClassDefContext context)
         {
-            var className = context.ID().ToString();
+            var className = context.ID().GetText();
             var fields = VisitBody(context.body());
             var entity = new Entity()
             {
@@ -35,7 +35,7 @@ namespace WebAppsGenerator.Core.Grammar
         }
         public override object VisitProperties([NotNull] SneakParser.PropertiesContext context)
         {
-            var props = context.property().Select(ctx => VisitProperty(ctx)).OfType<Field>();
+            var props = context.property().Select(VisitProperty).OfType<Field>();
 
             return props.ToArray();
         }
@@ -43,27 +43,37 @@ namespace WebAppsGenerator.Core.Grammar
         {
             var property = new Field()
             {
-                Name = context.ID().ToString(),
-                Annotations = VisitAnnotations(context.annotations()) as List<Annotation>
+                Name = context.ID().GetText(),
+                Annotations = VisitAnnotations(context.annotations()) as List<Annotation>,
+                Type = VisitFieldType(context.TYPE())
             };
 
             return property;
         }
 
+        public FieldType VisitFieldType(ITerminalNode type)
+        {
+            return new FieldType()
+            {
+                Name = type.GetText()
+            };
+        }
         public override object VisitAnnotations([NotNull] SneakParser.AnnotationsContext context)
         {
-            return context.annotation().Select(ctx => VisitAnnotation(ctx)).OfType<Annotation>().ToList();
+            return context.annotation().Select(VisitAnnotation).OfType<Annotation>().ToList();
         }
 
         public List<Annotation> VisitClassAnnotations([NotNull] SneakParser.AnnotationsContext context)
         {
-            return context.annotation().Select(ctx => VisitClassAnnotation(ctx)).OfType<Annotation>().ToList();
+            return context.annotation().Select(VisitClassAnnotation).ToList();
         }
 
         public Annotation VisitClassAnnotation([NotNull] SneakParser.AnnotationContext context)
         {
             var annotation = VisitAnnotation(context) as Annotation;
-            annotation.IsClassAnnotation = true;
+
+            if (annotation != null)
+                annotation.IsClassAnnotation = true;
 
             return annotation;
         }
@@ -72,8 +82,33 @@ namespace WebAppsGenerator.Core.Grammar
         {
             return new Annotation()
             {
-                Name = context.ID().ToString(),
+                Name = context.ID().GetText(),
+                Params = VisitParams(context.@params()) as List<AnnotationParam>
             };
+        }
+
+        public override object VisitParams([NotNull] SneakParser.ParamsContext context)
+        {
+            var paramlist = context.paramlist();
+            if(paramlist != null)
+                return VisitParamlist(context.paramlist());
+            return new List<AnnotationParam>();
+        }
+
+        public override object VisitParamlist([NotNull] SneakParser.ParamlistContext context)
+        {
+            return context.param().Select(VisitParam).OfType<AnnotationParam>().ToList();
+        }
+
+        public override object VisitParam([NotNull] SneakParser.ParamContext context)
+        {
+            // TODO: Add types
+            return new AnnotationParam()
+            {
+                Name = context.ID().GetText(),
+                Value = context.VALUE().GetText()
+            };
+            
         }
     }
 }

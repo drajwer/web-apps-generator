@@ -27,7 +27,7 @@ namespace WebAppsGenerator
                 Console.WriteLine($"{token},");
             Console.WriteLine();
 
-            Console.WriteLine("Hello World!");
+            Console.ReadKey();
         }
     }
 }
