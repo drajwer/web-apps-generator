@@ -1,6 +1,7 @@
 ﻿using Antlr4.Runtime;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 
 namespace WebAppsGenerator.Tests.Grammar
@@ -10,16 +11,22 @@ namespace WebAppsGenerator.Tests.Grammar
     {
         public SneakParser Setup([CallerMemberName] string filename = "")
         {
-            // TODO: change reader to use embedded resources
-            var reader = new StreamReader($"./../../../../WebAppsGenerator.Tests/Grammar//Files/{filename}.txt");
-            AntlrInputStream inputStream = new AntlrInputStream(reader);
-            var lexer = new SneakLexer(inputStream);
+            var assembly = Assembly.GetExecutingAssembly();
+            var resourceName = $"WebAppsGenerator.Tests.Grammar.Files.{filename}.txt";
 
-            var commonTokenStream = new CommonTokenStream(lexer);
-            
-            var parser = new SneakParser(commonTokenStream);
-            SneakParser.FileContext fileContext = parser.file();
-            return parser;
+            // TODO: change reader to use embedded resources
+            using (var stream = assembly.GetManifestResourceStream(resourceName))
+            {
+                var reader = new StreamReader(stream);
+                AntlrInputStream inputStream = new AntlrInputStream(reader);
+                var lexer = new SneakLexer(inputStream);
+
+                var commonTokenStream = new CommonTokenStream(lexer);
+
+                var parser = new SneakParser(commonTokenStream);
+                SneakParser.FileContext fileContext = parser.file();
+                return parser;
+            }
         }
 
         [TestMethod]
