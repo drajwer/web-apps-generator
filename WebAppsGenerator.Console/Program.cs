@@ -1,19 +1,18 @@
 ﻿using Antlr4.Runtime;
-using System;
-using System.IO;
-using System.Text;
+using WebAppsGenerator.Core.Files;
+using WebAppsGenerator.Core.Files.Providers;
 using WebAppsGenerator.Core.Grammar;
 using WebAppsGenerator.Core.Parsing.Annotations;
 using WebAppsGenerator.Core.Parsing.Types;
 
-namespace WebAppsGenerator
+namespace WebAppsGenerator.Console
 {
     class Program
     {
         static void Main(string[] args)
         {
-            var reader = new StreamReader("./../../../../WebAppsGenerator.Core/Grammar/SimpleClass.txt");
-            AntlrInputStream inputStream = new AntlrInputStream(reader);
+            ConcatFileService concatFileService = new ConcatFileService(new FlatDirectoryFilesProvider("./../../../TestDir", "txt"));
+            AntlrInputStream inputStream = new AntlrInputStream(concatFileService.ConcatFile);
             var lexer = new SneakLexer(inputStream);
         
             var commonTokenStream = new CommonTokenStream(lexer);
@@ -26,10 +25,10 @@ namespace WebAppsGenerator
             visitor.Visit(fileContext);
 
             foreach (var token in commonTokenStream.GetTokens())
-                Console.WriteLine($"{token},");
-            Console.WriteLine();
+                System.Console.WriteLine($"{token},");
+            System.Console.WriteLine(concatFileService.ConcatFile);
 
-            Console.ReadKey();
+            System.Console.ReadKey();
         }
     }
 }
