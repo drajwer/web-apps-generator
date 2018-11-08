@@ -4,6 +4,7 @@ using WebAppsGenerator.Core.Files.Providers;
 using WebAppsGenerator.Core.Grammar;
 using WebAppsGenerator.Core.Parsing.Annotations;
 using WebAppsGenerator.Core.Parsing.Types;
+using WebAppsGenerator.Generator.Validation;
 
 namespace WebAppsGenerator.Console
 {
@@ -23,6 +24,9 @@ namespace WebAppsGenerator.Console
             var visitor = new SneakParserCustomVisitor(new BasicTypeParser(), new BasicAnnotationParamParser());
 
             visitor.Visit(fileContext);
+
+            var validator = new Validator();
+            validator.ValidateTypes(visitor.Entities.Values);
 
             foreach (var token in commonTokenStream.GetTokens())
                 System.Console.WriteLine($"{token},");

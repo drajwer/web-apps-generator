@@ -1,17 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="SneakLexer.g4" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\WebAppsGenerator.Core\WebAppsGenerator.Core.csproj" />
-    <ProjectReference Include="..\WebAppsGenerator.Generator\WebAppsGenerator.Generator.csproj" />
   </ItemGroup>
 
 </Project>
