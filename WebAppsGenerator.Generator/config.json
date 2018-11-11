@@ -1,0 +1,41 @@
+{
+    "AllowedAnnotations": {
+        "Annotations": [
+            {
+                "IsClassAnnotation": true,
+                "Name": "List",
+                "Params": [
+                    {
+                        "Name": "Sortable",
+                        "Type": "bool"
+                    }
+                ]
+            },
+            {
+                "IsClassAnnotation": true,
+                "Name": "AdminOnly"
+            },
+            {
+                "IsClassAnnotation": true,
+                "Name": "Display",
+                "Params": [
+                    {
+                        "Name": "Name",
+                        "Type": "string"
+                    },
+                    {
+                        "Name": "Color",
+                        "Type": "string"
+                    }
+                ]
+            },
+            {
+                "IsClassAnnotation": false,
+                "Name": "PropAnn",
+                "AllowedPropTypeKinds": [
+                    "Entity"
+                ]
+            }
+        ]
+    }
+}

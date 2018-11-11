@@ -6,7 +6,7 @@ namespace WebAppsGenerator.Core.Exceptions
 {
     public class UnknownTypeException: Exception
     {
-        public UnknownTypeException(string message): base(message)
+        public UnknownTypeException(string type): base($"Type {type} is not declared")
         {
         }
     }
