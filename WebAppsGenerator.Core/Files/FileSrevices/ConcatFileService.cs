@@ -4,9 +4,9 @@ using System.IO;
 using System.Linq;
 using WebAppsGenerator.Core.Files.Providers;
 
-namespace WebAppsGenerator.Core.Files
+namespace WebAppsGenerator.Core.Files.FileSrevices
 {
-    public class ConcatFileService
+    public class ConcatFileService : IFileService
     {
         private readonly List<FileInfo> _files;
         public ConcatFileService(IFilesProvider filesProvider)
@@ -17,23 +17,25 @@ namespace WebAppsGenerator.Core.Files
 
             foreach (var file in fileNames)
             {
-                var lines = File.ReadLines(file).Count() + 1;
+                var lines = File.ReadLines(file);
                 var content = File.ReadAllText(file);
+                // if the file ends with \r\n, there is an empty line at the end that ReadLines() skips but we need to count it
+                var linesCount = content.EndsWith("\r\n") ? lines.Count() + 1 : lines.Count();
 
                 ConcatFile += content + "\r\n";
-                _files.Add(new FileInfo(lines, file));
+                _files.Add(new FileInfo(linesCount, file));
             }
         }
 
         public string ConcatFile { get; }
         public LineInfo GetLineInfo(int concatFileLineNo)
         {
-            int lineCounter = 0;
+            var lineCounter = 0;
             foreach (var fileInfo in _files)
             {
                 if (lineCounter + fileInfo.Lines > concatFileLineNo)
                 {
-                    int lineNo = concatFileLineNo - lineCounter;
+                    var lineNo = concatFileLineNo - lineCounter;
                     return new LineInfo()
                     {
                         FileName = fileInfo.FilePath,
@@ -47,7 +49,7 @@ namespace WebAppsGenerator.Core.Files
         }
     }
 
-    
+
     struct FileInfo
     {
         public int Lines { get; }
