@@ -44,8 +44,6 @@ namespace WebAppsGenerator.Core.Services
             process.BeginOutputReadLine();
             process.BeginErrorReadLine();
             process.WaitForExit();
-
-            Console.WriteLine("ExitCode: {0}", process.ExitCode);
             process.Close();
         }
 

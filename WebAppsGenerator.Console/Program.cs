@@ -9,6 +9,9 @@ using WebAppsGenerator.Core.Grammar.ErrorListeners;
 using WebAppsGenerator.Core.Interfaces;
 using WebAppsGenerator.Core.Parsing.Annotations;
 using WebAppsGenerator.Core.Parsing.Types;
+using WebAppsGenerator.Generating.Abstract.Interfaces;
+using WebAppsGenerator.Generating.Abstract.Options;
+using WebAppsGenerator.Generating.AspNetCore.Services;
 
 namespace WebAppsGenerator.Console
 {
@@ -36,13 +39,13 @@ namespace WebAppsGenerator.Console
 
             var fileContext = parser.file();
 
-            var visitor = (SneakParserCustomVisitor) ServiceProvider.GetService<ISneakParserVisitor<object>>();
+            var visitor = (SneakParserMappingVisitor) ServiceProvider.GetService<ISneakParserVisitor<object>>();
 
             visitor.Visit(fileContext);
             
             // pass visitor's results to generator
             var generator = ServiceProvider.GetService<IGenerator>();
-            generator.ProcessVisitorResults(visitor.Entities.Values);
+            generator.Generate(visitor.Entities.Values);
 
             foreach (var token in commonTokenStream.GetTokens())
                 System.Console.WriteLine($"{token},");
@@ -56,10 +59,12 @@ namespace WebAppsGenerator.Console
             var services = new ServiceCollection();
 
             services.AddOptions();
-            services.AddScoped<ISneakParserVisitor<object>, SneakParserCustomVisitor>();
+            services.AddScoped<ISneakParserVisitor<object>, SneakParserMappingVisitor>();
             services.AddTransient<ITypeParser, BasicTypeParser>();
             services.AddTransient<IAnnotationParamParser, BasicAnnotationParamParser>();
-            services.AddScoped<IGenerator, Generator.Generator.Generator>();
+            services.AddSingleton<IGeneratorConfiguration>(new GeneratorConfiguration()
+                {OutputPath = "Output", ProjectName = "Bookstore"});
+            services.AddScoped<IGenerator, SolutionGenerator>();
 
             ServiceProvider = services.BuildServiceProvider();
         }
