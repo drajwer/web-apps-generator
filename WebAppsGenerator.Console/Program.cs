@@ -2,9 +2,10 @@
 using Antlr4.Runtime;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using WebAppsGenerator.Core.Files;
+using WebAppsGenerator.Core.Files.FileSrevices;
 using WebAppsGenerator.Core.Files.Providers;
 using WebAppsGenerator.Core.Grammar;
+using WebAppsGenerator.Core.Grammar.ErrorListeners;
 using WebAppsGenerator.Core.Interfaces;
 using WebAppsGenerator.Core.Parsing.Annotations;
 using WebAppsGenerator.Core.Parsing.Types;
@@ -23,13 +24,19 @@ namespace WebAppsGenerator.Console
             var concatFileService = new ConcatFileService(new FlatDirectoryFilesProvider("./../../../TestDir", "txt"));
             var inputStream = new AntlrInputStream(concatFileService.ConcatFile);
             var lexer = new SneakLexer(inputStream);
-        
+
+            lexer.RemoveErrorListeners();
+            lexer.AddErrorListener(new SneakLexerErrorListener(concatFileService));
+
             var commonTokenStream = new CommonTokenStream(lexer);
             
             var parser = new SneakParser(commonTokenStream);
+            parser.RemoveErrorListeners();
+            parser.AddErrorListener(new SneakParserErrorListener(concatFileService));
+
             var fileContext = parser.file();
 
-            var visitor = (SneakParserCustomVisitor) ServiceProvider.GetService<ISneakParserVisitor<object>>();// new SneakParserCustomVisitor(new BasicTypeParser(), new BasicAnnotationParamParser());
+            var visitor = (SneakParserCustomVisitor) ServiceProvider.GetService<ISneakParserVisitor<object>>();
 
             visitor.Visit(fileContext);
             
