@@ -5,6 +5,15 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <None Remove="Templates\Entity.liquid" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Include="Templates\Entity.liquid" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="DotLiquid" Version="2.0.298" />
         <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.1.1" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.1.1" />
         <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.1.1" />

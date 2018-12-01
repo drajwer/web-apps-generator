@@ -59,7 +59,7 @@ namespace WebAppsGenerator.Console
             services.AddScoped<ISneakParserVisitor<object>, SneakParserCustomVisitor>();
             services.AddTransient<ITypeParser, BasicTypeParser>();
             services.AddTransient<IAnnotationParamParser, BasicAnnotationParamParser>();
-            services.AddScoped<IGenerator, Generator.Generator.Generator>();
+            services.AddTransient<IGenerator, Generator.Generators.Generator>();
 
             ServiceProvider = services.BuildServiceProvider();
         }

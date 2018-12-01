@@ -43,7 +43,7 @@ namespace WebAppsGenerator.Core.Parsing.Types
                 case FloatType:
                     return TypeKind.Float;
                 case DateType:
-                    return TypeKind.Date;
+                    return TypeKind.DateTime;
                 case StringType:
                     return TypeKind.String;
                 case BoolType:

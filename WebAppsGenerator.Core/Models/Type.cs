@@ -1,4 +1,6 @@
-﻿namespace WebAppsGenerator.Core.Models
+﻿using System;
+
+namespace WebAppsGenerator.Core.Models
 {
     public class Type
     {
@@ -6,6 +8,12 @@
         public TypeKind BaseTypeKind { get; set; }
         public bool IsNullable { get; set; }
         public bool IsArray { get; set; }
+
+        public string FullTypeName => BaseTypeKind == TypeKind.Entity
+            ? EntityName
+            : BaseTypeKind == TypeKind.DateTime
+                ? BaseTypeKind.ToString("G")
+                : BaseTypeKind.ToString("G").ToLower() + (IsNullable ? "?" : "") + (IsArray ? "[]" : "");
     }
 
     public enum TypeKind
@@ -14,7 +22,7 @@
         Int,
         Float,
         String,
-        Date,
+        DateTime,
         Entity
-    }
+    }   
 }

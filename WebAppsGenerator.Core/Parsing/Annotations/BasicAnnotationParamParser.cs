@@ -25,7 +25,7 @@ namespace WebAppsGenerator.Core.Parsing.Annotations
             {
                 valueString = valueString.Trim('"');
                 if (DateTimeOffset.TryParse(valueString, out var dateResult))
-                    return (TypeKind.Date, dateResult);
+                    return (TypeKind.DateTime, dateResult);
 
                 return (TypeKind.String, valueString);
             }
