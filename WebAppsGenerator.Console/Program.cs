@@ -9,8 +9,10 @@ using WebAppsGenerator.Core.Grammar.ErrorListeners;
 using WebAppsGenerator.Core.Interfaces;
 using WebAppsGenerator.Core.Parsing.Annotations;
 using WebAppsGenerator.Core.Parsing.Types;
+using WebAppsGenerator.Core.Services;
 using WebAppsGenerator.Generating.Abstract.Interfaces;
 using WebAppsGenerator.Generating.Abstract.Options;
+using WebAppsGenerator.Generating.AspNetCore.IoC;
 using WebAppsGenerator.Generating.AspNetCore.Services;
 
 namespace WebAppsGenerator.Console
@@ -64,8 +66,8 @@ namespace WebAppsGenerator.Console
             services.AddTransient<IAnnotationParamParser, BasicAnnotationParamParser>();
             services.AddSingleton<IGeneratorConfiguration>(new GeneratorConfiguration()
                 {OutputPath = "Output", ProjectName = "Bookstore"});
-            services.AddScoped<IGenerator, SolutionGenerator>();
-
+            services.AddScoped<ICommandLineService, CommandLineService>();
+            services.AddAspNetCoreGenerator();
             ServiceProvider = services.BuildServiceProvider();
         }
     }

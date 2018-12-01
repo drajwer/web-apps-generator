@@ -5,6 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Templates\WebApi\Controller.liquid" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Templates\WebApi\Controller.liquid" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\WebAppsGenerator.Generating.Abstract\WebAppsGenerator.Generating.Abstract.csproj" />
   </ItemGroup>
 

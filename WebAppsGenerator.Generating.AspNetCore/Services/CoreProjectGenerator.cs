@@ -10,19 +10,17 @@ using WebAppsGenerator.Generator.Generator;
 
 namespace WebAppsGenerator.Generating.AspNetCore.Services
 {
-    public class SolutionGenerator : BaseGenerator
+    public class CoreProjectGenerator : BaseGenerator
     {
-        private readonly CommandLineService _commandLineService;
+        private readonly ICommandLineService _commandLineService;
 
-        public SolutionGenerator(IGeneratorConfiguration generatorConfiguration) : base(generatorConfiguration)
+        public CoreProjectGenerator(IGeneratorConfiguration generatorConfiguration, ICommandLineService commandLineService) : base(generatorConfiguration)
         {
-            _commandLineService = new CommandLineService();
+            _commandLineService = commandLineService;
         }
 
         public override void Generate(IEnumerable<Entity> entities)
         {
-            _commandLineService.RunCommand("mkdir Output");
-            _commandLineService.RunCommand($"dotnet new webapi -n {_generatorConfiguration.ProjectName} -o {_generatorConfiguration.OutputPath}");
         }
     }
 }
