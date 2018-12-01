@@ -11,14 +11,14 @@ using Type = WebAppsGenerator.Core.Models.Type;
 
 namespace WebAppsGenerator.Core.Grammar
 {
-    public class SneakParserCustomVisitor : SneakParserBaseVisitor<object>
+    public class SneakParserMappingVisitor : SneakParserBaseVisitor<object>
     {
         private readonly ITypeParser _typeParser;
         private readonly IAnnotationParamParser _annotationParamParser;
 
         public Dictionary<string, Entity> Entities = new Dictionary<string, Entity>();
 
-        public SneakParserCustomVisitor(ITypeParser typeParser, IAnnotationParamParser annotationParamParser)
+        public SneakParserMappingVisitor(ITypeParser typeParser, IAnnotationParamParser annotationParamParser)
         {
             _typeParser = typeParser;
             _annotationParamParser = annotationParamParser;

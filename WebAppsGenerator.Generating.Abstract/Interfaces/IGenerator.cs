@@ -5,6 +5,6 @@ namespace WebAppsGenerator.Core.Interfaces
 {
     public interface IGenerator
     {
-        void ProcessVisitorResults(IEnumerable<Entity> entities);
+        void Generate(IEnumerable<Entity> entities);
     }
 }
