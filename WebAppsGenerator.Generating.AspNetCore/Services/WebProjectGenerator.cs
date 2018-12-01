@@ -10,11 +10,11 @@ using WebAppsGenerator.Generator.Generator;
 
 namespace WebAppsGenerator.Generating.AspNetCore.Services
 {
-    public class SolutionGenerator : BaseGenerator
+    public class WebProjectGenerator : BaseGenerator
     {
         private readonly CommandLineService _commandLineService;
 
-        public SolutionGenerator(IGeneratorConfiguration generatorConfiguration) : base(generatorConfiguration)
+        public WebProjectGenerator(IGeneratorConfiguration generatorConfiguration) : base(generatorConfiguration)
         {
             _commandLineService = new CommandLineService();
         }

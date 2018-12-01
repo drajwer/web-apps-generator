@@ -1,0 +1,6 @@
+﻿public class {{ entity.Name }}
+{
+	{% for prop in entity.Fields %}
+		public {{ prop.Type.FullTypeName }} {{ prop.Name }} { get; set; }
+	{% endfor %}
+}
