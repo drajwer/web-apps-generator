@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using WebAppsGenerator.Core.Interfaces;
 using WebAppsGenerator.Core.Models;
 using WebAppsGenerator.Core.Services;
@@ -31,6 +29,9 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
 
         public override void Generate(IEnumerable<Entity> entities)
         {
+            if (entities == null)
+                throw new ArgumentNullException();
+
             CreateSolutionWithProjects();
 
             _coreProjectGenerator.Generate(entities);
