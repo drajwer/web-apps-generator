@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
@@ -6,10 +6,12 @@
 
   <ItemGroup>
     <None Remove="Templates\Entity.liquid" />
+    <None Remove="Templates\WebApi\ProjectFile.liquid" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Templates\Entity.liquid" />
+    <EmbeddedResource Include="Templates\WebApi\ProjectFile.liquid" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,6 +19,14 @@
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.1.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.1.1" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Templates\WebApi\Controller.liquid" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Templates\WebApi\Controller.liquid" />
   </ItemGroup>
 
   <ItemGroup>

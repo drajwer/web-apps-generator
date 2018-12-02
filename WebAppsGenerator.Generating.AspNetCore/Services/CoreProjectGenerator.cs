@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text;
-using WebAppsGenerator.Core.Interfaces;
+﻿using System.Collections.Generic;
 using WebAppsGenerator.Core.Models;
 using WebAppsGenerator.Core.Services;
 using WebAppsGenerator.Generating.Abstract.Interfaces;
@@ -12,17 +8,15 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
 {
     public class CoreProjectGenerator : BaseGenerator
     {
-        private readonly CommandLineService _commandLineService;
+        private readonly ICommandLineService _commandLineService;
 
-        public CoreProjectGenerator(IGeneratorConfiguration generatorConfiguration) : base(generatorConfiguration)
+        public CoreProjectGenerator(IGeneratorConfiguration generatorConfiguration, ICommandLineService commandLineService) : base(generatorConfiguration)
         {
-            _commandLineService = new CommandLineService();
+            _commandLineService = commandLineService;
         }
 
         public override void Generate(IEnumerable<Entity> entities)
         {
-            _commandLineService.RunCommand("mkdir Output");
-            _commandLineService.RunCommand($"dotnet new webapi -n {_generatorConfiguration.ProjectName} -o {_generatorConfiguration.OutputPath}");
         }
     }
 }
