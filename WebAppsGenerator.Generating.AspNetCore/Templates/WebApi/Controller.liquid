@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using {{Params.CoreProjectName}}.Models;
 
-namespace {{Params.ProjectName}}.Controllers
+namespace {{Params.WebApiProjectName}}.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -12,27 +13,27 @@ namespace {{Params.ProjectName}}.Controllers
     {
         // GET api/{{ Params.Entity.PluralName | Downcase }}
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public IActionResult Get()
         {
-            return new [] { new {{Params.Entity.Name}}()};
+            return new JsonResult(new[] { new {{Params.Entity.Name}}() });
         }
 
         // GET api/{{ Params.Entity.PluralName | Downcase }}/5
         [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        public IActionResult Get(int id)
         {
-            return new {{Params.Entity.Name}}();
+            return new JsonResult(new {{Params.Entity.Name}}());
         }
 
         // POST api/{{ Params.Entity.PluralName | Downcase }}
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post([FromBody] {{Params.Entity.Name}} value)
         {
         }
 
         // PUT api/{{ Params.Entity.PluralName | Downcase }}/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void Put(int id, [FromBody] {{Params.Entity.Name}} value)
         {
         }
 

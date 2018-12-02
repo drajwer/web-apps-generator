@@ -7,7 +7,7 @@ using WebAppsGenerator.Generating.Abstract.Interfaces;
 
 namespace WebAppsGenerator.Generating.Abstract.Models.Templating
 {
-    public class DefaultDrop : BasicDrop
+    public class DefaultDrop : BaseDrop
     {
         public List<Entity> Entities { get; }
         public DefaultDrop(IGeneratorConfiguration generatorConfiguration, List<Entity> entities) : base(generatorConfiguration)

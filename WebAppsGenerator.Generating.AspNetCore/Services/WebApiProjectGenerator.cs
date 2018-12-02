@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
 using WebAppsGenerator.Core.Models;
 using WebAppsGenerator.Generating.Abstract.Interfaces;
-using WebAppsGenerator.Generating.Abstract.Services;
 using WebAppsGenerator.Generating.AspNetCore.Models.Templating;
 using WebAppsGenerator.Generator.Generator;
 using FileInfo = WebAppsGenerator.Generating.Abstract.Models.FileInfo;
@@ -24,7 +21,20 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
 
         public override void Generate(IEnumerable<Entity> entities)
         {
+            GenerateCsProj();
             GenerateControllers(entities);
+        }
+
+        private void GenerateCsProj()
+        {
+            var csprojFileInfo = new FileInfo
+            {
+                NameTemplate = "{{Params.WebApiProjectName}}.csproj",
+                TemplatePath = "WebApi.ProjectFile.liquid",
+                OutputPath = _pathService.WebApiDirPath
+            };
+
+            _fileService.CreateFromTemplate(csprojFileInfo, new WebApiBaseDrop(_pathService, GeneratorConfiguration));
         }
 
         private void GenerateControllers(IEnumerable<Entity> entities)
@@ -41,7 +51,7 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
 
             foreach (var entity in entities)
             {
-                _fileService.CreateFromTemplate(controllerFileInfo, new SingleEntityDrop(GeneratorConfiguration, entity));
+                _fileService.CreateFromTemplate(controllerFileInfo, new SingleEntityDrop(GeneratorConfiguration, _pathService, entity));
             }
         }
     }

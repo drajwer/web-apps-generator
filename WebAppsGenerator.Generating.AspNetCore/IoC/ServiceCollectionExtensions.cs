@@ -23,7 +23,7 @@ namespace WebAppsGenerator.Generating.AspNetCore.IoC
                 var fileService =
                     new FileService(new TemplateFileProvider(Assembly.GetAssembly(typeof(SolutionGenerator))), liquidTemplateService);
                 var webApiGenerator = new WebApiProjectGenerator(generatorConfiguration, fileService);
-                var coreGenerator = new CoreProjectGenerator(generatorConfiguration, commandLineService);
+                var coreGenerator = new CoreProjectGenerator(generatorConfiguration, fileService);
 
                 return new SolutionGenerator(generatorConfiguration, commandLineService, webApiGenerator, coreGenerator);
             });
