@@ -64,7 +64,8 @@ namespace WebAppsGenerator.Console
             services.AddTransient<IAnnotationParamParser, BasicAnnotationParamParser>();
             services.AddSingleton<IGeneratorConfiguration>(new GeneratorConfiguration()
                 {OutputPath = "Output", ProjectName = "Bookstore"});
-            services.AddScoped<IGenerator, SolutionGenerator>();
+            //services.AddScoped<IGenerator, SolutionGenerator>();
+            services.AddScoped<IGenerator, EntityGenerator>();
 
             ServiceProvider = services.BuildServiceProvider();
         }

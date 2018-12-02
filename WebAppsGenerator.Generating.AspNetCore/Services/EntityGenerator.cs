@@ -22,18 +22,21 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
             _registerTypes = new List<Type>();
         }
 
-        public string GenerateEntities(IEnumerable<Entity> entities)
+        public override void Generate(IEnumerable<Entity> entities)
         {
             var entityList = entities.ToList();
-            var entity = entityList[0];
-            var templateTxt = GetTemplate();
-            RegisterTypesForObject(typeof(Entity));
+            foreach (var entity in entityList)
+            {
+                var templateTxt = GetTemplate();
+                RegisterTypesForObject(typeof(Entity));
 
-            var template = Template.Parse(templateTxt); // Parses and compiles the template
+                var template = Template.Parse(templateTxt); // Parses and compiles the template
 
-            var generatedEntity = template.Render(Hash.FromAnonymousObject(new { entity }));
-            Console.Write(generatedEntity);
-            return null;
+                var generatedEntity = template.Render(Hash.FromAnonymousObject(new { entity }));
+                Console.WriteLine(generatedEntity);
+            }
+
+            //return null;
         }
 
         private static string GetTemplate()

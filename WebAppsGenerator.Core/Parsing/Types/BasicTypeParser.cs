@@ -17,7 +17,7 @@ namespace WebAppsGenerator.Core.Parsing.Types
         public Type ParseTypeName(string typeName)
         {
             var kind = ParseTypeKind(typeName);
-            var type = new Type() {BaseTypeKind = kind};
+            var type = new Type() { BaseTypeKind = kind, FullTypeName = typeName };
             EnsureArrayAndNullable(typeName, kind);
 
             if (kind == TypeKind.Entity)
@@ -76,7 +76,7 @@ namespace WebAppsGenerator.Core.Parsing.Types
         {
             if (kind == TypeKind.Entity && type.EndsWith("?"))
                 throw new InvalidTypeParsingException(type);
-            if (type.EndsWith("[]"))
+            if (kind != TypeKind.Entity && type.EndsWith("[]"))
                 throw new InvalidTypeParsingException(type);
         }
         private static void EnsureBaseType(string type, string baseType)
