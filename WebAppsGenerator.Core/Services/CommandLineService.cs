@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 namespace WebAppsGenerator.Core.Services
 {
-    public class CommandLineService
+    public class CommandLineService : ICommandLineService
     {
         private const string Cmd = "cmd.exe";
         private const string Bash = "/bin/bash";

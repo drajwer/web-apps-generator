@@ -7,11 +7,11 @@ namespace WebAppsGenerator.Generator.Generator
 {
     public class BaseGenerator: IGenerator
     {
-        protected IGeneratorConfiguration _generatorConfiguration;
+        protected IGeneratorConfiguration GeneratorConfiguration;
 
         public BaseGenerator(IGeneratorConfiguration generatorConfiguration)
         {
-            _generatorConfiguration = generatorConfiguration;
+            GeneratorConfiguration = generatorConfiguration;
         }
 
         public virtual void Generate(IEnumerable<Entity> entities)
