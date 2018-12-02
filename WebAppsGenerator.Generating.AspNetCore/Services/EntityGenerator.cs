@@ -1,25 +1,22 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using DotLiquid;
 using WebAppsGenerator.Core.Models;
 using WebAppsGenerator.Generating.Abstract.Interfaces;
-using WebAppsGenerator.Generator.Extensions;
+using WebAppsGenerator.Generating.Abstract.Services;
 using WebAppsGenerator.Generator.Generator;
-using Type = System.Type;
 
 namespace WebAppsGenerator.Generating.AspNetCore.Services
 {
     public class EntityGenerator : BaseGenerator
     {
-        private readonly List<Type> _registerTypes;
+        private readonly LiquidTemplateService _liquidTemplateService;
 
-        public EntityGenerator(IGeneratorConfiguration generatorConfiguration) : base(generatorConfiguration)
+        public EntityGenerator(IGeneratorConfiguration generatorConfiguration, LiquidTemplateService liquidTemplateService) : base(generatorConfiguration)
         {
-            _registerTypes = new List<Type>();
+            _liquidTemplateService = liquidTemplateService;
         }
 
         public override void Generate(IEnumerable<Entity> entities)
@@ -28,22 +25,17 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
             foreach (var entity in entityList)
             {
                 var templateTxt = GetTemplate();
-                RegisterTypesForObject(typeof(Entity));
+                var generatedEntity = _liquidTemplateService.RenderTemplate(templateTxt, entity);
 
-                var template = Template.Parse(templateTxt); // Parses and compiles the template
-
-                var generatedEntity = template.Render(Hash.FromAnonymousObject(new { entity }));
                 Console.WriteLine(generatedEntity);
             }
-
-            //return null;
         }
 
         private static string GetTemplate()
         {
-            var assembly = Assembly.GetCallingAssembly();//.GetAssembly(typeof(Generator));//GetExecutingAssembly();
+            var assembly = Assembly.GetCallingAssembly();
             var resourceName = $"WebAppsGenerator.Generating.AspNetCore.Templates.Entity.liquid";
-            var r = assembly.GetManifestResourceNames();
+            //var r = assembly.GetManifestResourceNames();
 
             using (var reader = new StreamReader(assembly.GetManifestResourceStream(resourceName)))
             {

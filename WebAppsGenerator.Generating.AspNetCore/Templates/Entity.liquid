@@ -1,6 +1,6 @@
-﻿public class {{ entity.Name }}
+﻿public class {{ Name }}
 {
-{%- for prop in entity.Fields -%}
-	public {{ prop.Type.full_type_name }} {{ prop.Name }} { get; set; }
+{%- for prop in Fields -%}
+	public {{ prop.Type.FullTypeName }} {{ prop.Name }} { get; set; }
 {%- endfor -%}
 }
