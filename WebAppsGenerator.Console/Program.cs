@@ -12,6 +12,7 @@ using WebAppsGenerator.Core.Parsing.Types;
 using WebAppsGenerator.Core.Services;
 using WebAppsGenerator.Generating.Abstract.Interfaces;
 using WebAppsGenerator.Generating.Abstract.Options;
+using WebAppsGenerator.Generating.Abstract.Services;
 using WebAppsGenerator.Generating.AspNetCore.IoC;
 using WebAppsGenerator.Generating.AspNetCore.Services;
 
@@ -67,6 +68,7 @@ namespace WebAppsGenerator.Console
             services.AddSingleton<IGeneratorConfiguration>(new GeneratorConfiguration()
                 {OutputPath = "Output", ProjectName = "Bookstore"});
             services.AddScoped<ICommandLineService, CommandLineService>();
+            services.AddScoped<LiquidTemplateService>();
             services.AddAspNetCoreGenerator();
             ServiceProvider = services.BuildServiceProvider();
         }

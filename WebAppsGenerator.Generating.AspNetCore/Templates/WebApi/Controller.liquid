@@ -4,39 +4,39 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace {{ProjectName}}.Controllers
+namespace {{Params.ProjectName}}.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class {{Params.Entity.PluralName}}Controller : ControllerBase
     {
-        // GET api/values
+        // GET api/{{ Params.Entity.PluralName | Downcase }}
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            return new string[] { "value1", "value2" };
+            return new [] { new {{Params.Entity.Name}}()};
         }
 
-        // GET api/values/5
+        // GET api/{{ Params.Entity.PluralName | Downcase }}/5
         [HttpGet("{id}")]
         public ActionResult<string> Get(int id)
         {
-            return "value";
+            return new {{Params.Entity.Name}}();
         }
 
-        // POST api/values
+        // POST api/{{ Params.Entity.PluralName | Downcase }}
         [HttpPost]
         public void Post([FromBody] string value)
         {
         }
 
-        // PUT api/values/5
+        // PUT api/{{ Params.Entity.PluralName | Downcase }}/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
-        // DELETE api/values/5
+        // DELETE api/{{ Params.Entity.PluralName | Downcase }}/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

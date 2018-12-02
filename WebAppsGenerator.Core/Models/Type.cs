@@ -9,11 +9,7 @@ namespace WebAppsGenerator.Core.Models
         public bool IsNullable { get; set; }
         public bool IsArray { get; set; }
 
-        public string FullTypeName => BaseTypeKind == TypeKind.Entity
-            ? EntityName
-            : BaseTypeKind == TypeKind.DateTime
-                ? BaseTypeKind.ToString("G")
-                : BaseTypeKind.ToString("G").ToLower() + (IsNullable ? "?" : "") + (IsArray ? "[]" : "");
+        
     }
 
     public enum TypeKind

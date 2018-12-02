@@ -1,37 +1,47 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-using WebAppsGenerator.Core.Interfaces;
+using System.IO;
+using System.Reflection;
 using WebAppsGenerator.Core.Models;
-using WebAppsGenerator.Core.Services;
 using WebAppsGenerator.Generating.Abstract.Interfaces;
-using WebAppsGenerator.Generating.Abstract.Models;
+using WebAppsGenerator.Generating.Abstract.Services;
+using WebAppsGenerator.Generating.AspNetCore.Models.Templating;
 using WebAppsGenerator.Generator.Generator;
+using FileInfo = WebAppsGenerator.Generating.Abstract.Models.FileInfo;
 
 namespace WebAppsGenerator.Generating.AspNetCore.Services
 {
     public class WebApiProjectGenerator : BaseGenerator
     {
         private readonly SolutionPathService _pathService;
-        
-        public WebApiProjectGenerator(IGeneratorConfiguration generatorConfiguration) : base(generatorConfiguration)
+        private readonly IFileService _fileService;
+
+        public WebApiProjectGenerator(IGeneratorConfiguration generatorConfiguration, IFileService fileService) : base(generatorConfiguration)
         {
+            _fileService = fileService;
             _pathService = new SolutionPathService(generatorConfiguration);
         }
 
         public override void Generate(IEnumerable<Entity> entities)
         {
-            var controllerFileInfo = new FileInfo() { NameTemplate = "{{Entity.Name}}Controller.cs", TemplatePath = "WebApi.Controller.liquid" };
-            GenerateControllers(entities, controllerFileInfo);
+            GenerateControllers(entities);
         }
 
-        private void GenerateControllers(IEnumerable<Entity> entities, FileInfo controllerFileInfo)
+        private void GenerateControllers(IEnumerable<Entity> entities)
         {
+            var controllerFileInfo = new FileInfo
+            {
+                NameTemplate = "{{Params.Entity.Name}}Controller.cs",
+                TemplatePath = "WebApi.Controller.liquid",
+                OutputPath = Path.Combine(_pathService.WebApiDirPath, "Controllers")
+            };
+
+            var sampleControllerPath = Path.Combine(controllerFileInfo.OutputPath, "ValuesController.cs");
+            File.Delete(sampleControllerPath);
+
             foreach (var entity in entities)
             {
-                var nameTemplate = controllerFileInfo.NameTemplate;
-                // Generate Controller
+                _fileService.CreateFromTemplate(controllerFileInfo, new SingleEntityDrop(GeneratorConfiguration, entity));
             }
         }
     }

@@ -8,5 +8,6 @@ namespace WebAppsGenerator.Generating.Abstract.Models
     {
         public string NameTemplate { get; set; }
         public string TemplatePath { get; set; }
+        public string OutputPath { get; set; }
     }
 }

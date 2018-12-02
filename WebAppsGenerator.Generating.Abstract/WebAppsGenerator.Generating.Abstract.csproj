@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="DotLiquid" Version="2.0.298" />
+    <PackageReference Include="PluralizeService.Core" Version="1.0.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\WebAppsGenerator.Core\WebAppsGenerator.Core.csproj" />
   </ItemGroup>
 
