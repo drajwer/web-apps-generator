@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using WebAppsGenerator.Core.Models;
 
-namespace WebAppsGenerator.Core.Interfaces
+namespace WebAppsGenerator.Generating.Abstract.Interfaces
 {
     public interface IGenerator
     {

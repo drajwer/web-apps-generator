@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using WebAppsGenerator.Core.Interfaces;
 using WebAppsGenerator.Core.Models;
 using WebAppsGenerator.Generating.Abstract.Interfaces;
 
-namespace WebAppsGenerator.Generator.Generator
+namespace WebAppsGenerator.Generating.Abstract.Services
 {
     public class BaseGenerator: IGenerator
     {

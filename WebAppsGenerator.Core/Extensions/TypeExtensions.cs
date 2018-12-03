@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace WebAppsGenerator.Generator.Extensions
+namespace WebAppsGenerator.Core.Extensions
 {
     public static class TypeExtensions
     {

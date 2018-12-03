@@ -1,0 +1,12 @@
+﻿using {{Params.CoreProjectName}}.Models;
+using Microsoft.EntityFrameworkCore;
+
+namespace {{Params.CoreProjectName}}.CoreContext
+{
+	public class CoreContext: DbContext
+	{
+		{% for entity in Params.Entities %}
+			public DbSet<{{ entity.Name }}> {{ entity.PluralName }} { get; set; }
+		{% endfor %}
+	}
+}

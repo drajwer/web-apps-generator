@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using WebAppsGenerator.Core.Interfaces;
 using WebAppsGenerator.Core.Models;
 using WebAppsGenerator.Core.Services;
 using WebAppsGenerator.Generating.Abstract.Interfaces;
-using WebAppsGenerator.Generator.Generator;
+using WebAppsGenerator.Generating.Abstract.Services;
 
 namespace WebAppsGenerator.Generating.AspNetCore.Services
 {
@@ -45,6 +44,7 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
             _commandLineService.RunCommand($"dotnet new webapi -o {_pathService.WebApiDirPath}");
             _commandLineService.RunCommand($"dotnet sln {_pathService.SolutionFilePath} add {_pathService.CoreDirPath}");
             _commandLineService.RunCommand($"dotnet sln {_pathService.SolutionFilePath} add {_pathService.WebApiDirPath}");
+            _commandLineService.RunCommand($"dotnet add {_pathService.CoreDirPath}\\{_pathService.CoreProjectName}.csproj package --version 2.1.4 Microsoft.EntityFrameworkCore");
         }
     }
 }

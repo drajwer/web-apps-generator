@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using WebAppsGenerator.Core.Models;
 
-namespace WebAppsGenerator.Generator.Validation
+namespace WebAppsGenerator.Generating.Abstract.Interfaces
 {
     public interface IValidator
     {

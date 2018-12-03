@@ -2,8 +2,8 @@
 using System.IO;
 using WebAppsGenerator.Core.Models;
 using WebAppsGenerator.Generating.Abstract.Interfaces;
+using WebAppsGenerator.Generating.Abstract.Services;
 using WebAppsGenerator.Generating.AspNetCore.Models.Templating;
-using WebAppsGenerator.Generator.Generator;
 using FileInfo = WebAppsGenerator.Generating.Abstract.Models.FileInfo;
 
 namespace WebAppsGenerator.Generating.AspNetCore.Services
@@ -26,6 +26,7 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
             File.Delete(sampleControllerPath);
 
             GenerateModels(entities);
+            GenerateDbContext(entities);
         }
 
         private void GenerateModels(IEnumerable<Entity> entities)
@@ -33,7 +34,7 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
             var modelFileInfo = new FileInfo
             {
                 NameTemplate = "{{Params.Entity.Name}}.cs",
-                TemplatePath = "Entity.liquid",
+                TemplatePath = "Core.Entity.liquid",
                 OutputPath = Path.Combine(_pathService.CoreDirPath, "Models")
             };
 
@@ -41,6 +42,18 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
             {
                 _fileService.CreateFromTemplate(modelFileInfo, new SingleEntityDrop(GeneratorConfiguration, _pathService, entity));
             }
+        }
+
+        private void GenerateDbContext(IEnumerable<Entity> entities)
+        {
+            var modelFileInfo = new FileInfo
+            {
+                NameTemplate = "CoreContext.cs",
+                TemplatePath = "Core.CoreContext.liquid",
+                OutputPath = Path.Combine(_pathService.CoreDirPath, "CoreContext")
+            };
+
+            _fileService.CreateFromTemplate(modelFileInfo, new EntityListDrop(GeneratorConfiguration, _pathService, entities));
         }
     }
 }

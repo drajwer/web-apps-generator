@@ -2,8 +2,8 @@
 using System.IO;
 using WebAppsGenerator.Core.Models;
 using WebAppsGenerator.Generating.Abstract.Interfaces;
+using WebAppsGenerator.Generating.Abstract.Services;
 using WebAppsGenerator.Generating.AspNetCore.Models.Templating;
-using WebAppsGenerator.Generator.Generator;
 using FileInfo = WebAppsGenerator.Generating.Abstract.Models.FileInfo;
 
 namespace WebAppsGenerator.Generating.AspNetCore.Services

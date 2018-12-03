@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DotLiquid;
 using DotLiquid.NamingConventions;
-using WebAppsGenerator.Generator.Extensions;
+using WebAppsGenerator.Core.Extensions;
 
 namespace WebAppsGenerator.Generating.Abstract.Services
 {

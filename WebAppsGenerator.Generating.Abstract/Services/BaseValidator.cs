@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using WebAppsGenerator.Core.Models;
 using WebAppsGenerator.Core.Exceptions;
+using WebAppsGenerator.Core.Models;
+using WebAppsGenerator.Generating.Abstract.Interfaces;
 
-namespace WebAppsGenerator.Generator.Validation
+namespace WebAppsGenerator.Generating.Abstract.Services
 {
     public class BaseValidator : IValidator
     {

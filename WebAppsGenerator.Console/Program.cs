@@ -6,7 +6,6 @@ using WebAppsGenerator.Core.Files.FileSrevices;
 using WebAppsGenerator.Core.Files.Providers;
 using WebAppsGenerator.Core.Grammar;
 using WebAppsGenerator.Core.Grammar.ErrorListeners;
-using WebAppsGenerator.Core.Interfaces;
 using WebAppsGenerator.Core.Parsing.Annotations;
 using WebAppsGenerator.Core.Parsing.Types;
 using WebAppsGenerator.Core.Services;
