@@ -1,6 +1,9 @@
-﻿public class {{ Name }}
+﻿namespace {{Params.CoreProjectName}}.Models
 {
-{%- for prop in Fields -%}
-	public {{ prop.Type.FullTypeName }} {{ prop.Name }} { get; set; }
-{%- endfor -%}
+	public class {{ Params.Entity.Name }}
+	{
+		{% for prop in Params.Entity.Fields %}
+		public {{ prop.Type.Name }} {{ prop.Name }} { get; set; }
+		{% endfor %}
+	}
 }

@@ -7,11 +7,11 @@ using WebAppsGenerator.Generating.Abstract.Interfaces;
 
 namespace WebAppsGenerator.Generating.Abstract.Models.Templating
 {
-    public class BasicDrop : Drop
+    public class BaseDrop : Drop
     {
         private readonly IGeneratorConfiguration _generatorConfiguration;
 
-        public BasicDrop(IGeneratorConfiguration generatorConfiguration)
+        public BaseDrop(IGeneratorConfiguration generatorConfiguration)
         {
             _generatorConfiguration = generatorConfiguration;
         }

@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using DotLiquid;
 using DotLiquid.NamingConventions;
 using WebAppsGenerator.Generator.Extensions;
@@ -23,6 +22,16 @@ namespace WebAppsGenerator.Generating.Abstract.Services
             _registerTypes = new List<Type>();
         }
 
+        public IEnumerable<string> RenderTemplate(string template, IEnumerable<Drop> sources)
+        {
+            RegisterTypesForObject(sources.GetType());
+            var parseTemplate = Template.Parse(template); // Parses and compiles the template
+            foreach (var source in sources)
+            {
+                yield return parseTemplate.Render(Hash.FromAnonymousObject(new { Params = source }));
+            }
+        }
+
         public string RenderTemplate(string template, Drop source)
         {
             RegisterTypesForObject(source.GetType());
@@ -30,6 +39,7 @@ namespace WebAppsGenerator.Generating.Abstract.Services
 
             return parseTemplate.Render(Hash.FromAnonymousObject(new {Params = source}));
         }
+
         public string RenderTemplate(string template, object source)
         {
             RegisterTypesForObject(source.GetType());
