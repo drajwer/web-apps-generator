@@ -25,8 +25,7 @@ namespace WebAppsGenerator.Generating.AspNetCore.IoC
                 var webApiGenerator = new WebApiProjectGenerator(generatorConfiguration, fileService);
                 var coreGenerator = new CoreProjectGenerator(generatorConfiguration, fileService);
 
-                //return new SolutionGenerator(generatorConfiguration, commandLineService, webApiGenerator, coreGenerator);
-                return new EntityGenerator(generatorConfiguration, liquidTemplateService);
+                return new SolutionGenerator(generatorConfiguration, commandLineService, webApiGenerator, coreGenerator);
             });
 
             return services;
