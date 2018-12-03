@@ -71,7 +71,7 @@ namespace WebAppsGenerator.Tests.Generating.AspNetCore
             // Assert
             Assert.IsTrue(_webApiGeneratorCalled);
             Assert.IsTrue(_coreGeneratorCalled);
-            Assert.AreEqual(5, _commandLineService.Commands.Count);
+            Assert.AreEqual(6, _commandLineService.Commands.Count);
             Assert.IsTrue(_commandLineService.Commands.All(c => c.StartsWith("dotnet")));
             // TODO: Assert if commands executed in correct order and with valid args.
         }
