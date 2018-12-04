@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using {{Params.CoreProjectName}}.CoreContext;
 using Microsoft.AspNetCore.Mvc;
 using {{Params.CoreProjectName}}.Models;
 
@@ -11,36 +8,51 @@ namespace {{Params.WebApiProjectName}}.Controllers
     [ApiController]
     public class {{Params.Entity.PluralName}}Controller : ControllerBase
     {
+        private readonly Repository<{{Params.Entity.Name}}> _repo;
+
+        public {{Params.Entity.PluralName}}Controller(Repository<{{Params.Entity.Name}}> repo)
+        {
+            _repo = repo;
+        }
+
         // GET api/{{ Params.Entity.PluralName | Downcase }}
         [HttpGet]
         public IActionResult Get()
         {
-            return new JsonResult(new[] { new {{Params.Entity.Name}}() });
+            var queryable = _repo.GetAll();
+            return new JsonResult(queryable);
         }
 
         // GET api/{{ Params.Entity.PluralName | Downcase }}/5
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            return new JsonResult(new {{Params.Entity.Name}}());
+            var entity = _repo.Get(id);
+            return new JsonResult(entity);
         }
 
         // POST api/{{ Params.Entity.PluralName | Downcase }}
         [HttpPost]
-        public void Post([FromBody] {{Params.Entity.Name}} value)
+        public IActionResult Post([FromBody] {{Params.Entity.Name}} value)
         {
+            var entity = _repo.Create(value);
+            return new JsonResult(entity);
         }
 
         // PUT api/{{ Params.Entity.PluralName | Downcase }}/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] {{Params.Entity.Name}} value)
+        public IActionResult Put(int id, [FromBody] {{Params.Entity.Name}} value)
         {
+			value.Id = id;
+            var entity = _repo.Update(id, value);
+            return new JsonResult(entity);
         }
 
         // DELETE api/{{ Params.Entity.PluralName | Downcase }}/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            _repo.Delete(id);
         }
     }
 }

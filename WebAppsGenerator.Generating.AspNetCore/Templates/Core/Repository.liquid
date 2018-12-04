@@ -1,0 +1,48 @@
+﻿using System.Linq;
+using Microsoft.EntityFrameworkCore;
+
+namespace {{{Params.CoreProjectName}}.CoreContext
+{
+    public class Repository<T> where T : class
+    {
+        private readonly DbSet<T> _dbSet;
+        private readonly CoreContext _coreContext;
+
+        public Repository(CoreContext coreContext)
+        {
+            _dbSet = coreContext.Set<T>();
+            _coreContext = coreContext;
+        }
+
+        public IQueryable<T> GetAll()
+        {
+            return _dbSet.AsQueryable();
+        }
+
+        public T Get(int id)
+        {
+            return _dbSet.Find(id);
+        }
+
+		public T Create(T entity)
+        {
+            _dbSet.Add(entity);
+            _coreContext.SaveChanges();
+            return entity;
+        }
+
+        public T Update(int id, T entity)
+        {
+            _dbSet.Update(entity);
+			var elem = Get(id);
+            _coreContext.SaveChanges();
+            return elem;
+        }
+
+        public void Delete(int id)
+        {
+            _dbSet.Remove(Get(id));
+            _coreContext.SaveChanges();
+        }
+    }
+}

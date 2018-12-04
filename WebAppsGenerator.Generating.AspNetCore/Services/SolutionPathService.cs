@@ -13,7 +13,7 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
         }
 
         public string SolutionDirPath => Path.Combine(_generatorConfiguration.OutputPath, SolutionDirectoryName);
-        public string SolutionFilePath => Path.Combine(SolutionDirPath, _generatorConfiguration.ProjectName);
+        public string SolutionFilePath => Path.Combine(SolutionDirPath, $"{_generatorConfiguration.ProjectName}.sln");
         public string CoreDirPath => Path.Combine(SolutionDirPath, CoreProjectName);
         public string WebApiDirPath => Path.Combine(SolutionDirPath, WebApiProjectName);
 

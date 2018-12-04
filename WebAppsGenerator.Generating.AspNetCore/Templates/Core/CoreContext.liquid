@@ -5,8 +5,12 @@ namespace {{Params.CoreProjectName}}.CoreContext
 {
 	public class CoreContext: DbContext
 	{
+		public CoreContext(DbContextOptions options) :base(options)
+	    {
+	    }
+
 		{% for entity in Params.Entities %}
-			public DbSet<{{ entity.Name }}> {{ entity.PluralName }} { get; set; }
+		public DbSet<{{ entity.Name }}> {{ entity.PluralName }} { get; set; }
 		{% endfor %}
 	}
 }

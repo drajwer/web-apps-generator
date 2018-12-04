@@ -6,13 +6,17 @@
 
   <ItemGroup>
     <None Remove="Templates\Core\CoreContext.liquid" />
+    <None Remove="Templates\Core\Repository.liquid" />
     <None Remove="Templates\Entity.liquid" />
     <None Remove="Templates\WebApi\ProjectFile.liquid" />
+    <None Remove="Templates\WebApi\Startup.liquid" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Templates\Core\Repository.liquid" />
     <EmbeddedResource Include="Templates\Core\CoreContext.liquid" />
     <EmbeddedResource Include="Templates\Core\Entity.liquid" />
+    <EmbeddedResource Include="Templates\WebApi\Startup.liquid" />
     <EmbeddedResource Include="Templates\WebApi\ProjectFile.liquid" />
   </ItemGroup>
 

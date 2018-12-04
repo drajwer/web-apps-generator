@@ -22,6 +22,7 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
         public override void Generate(IEnumerable<Entity> entities)
         {
             GenerateCsProj();
+            GenerateStartup();
             GenerateControllers(entities);
         }
 
@@ -31,6 +32,17 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
             {
                 NameTemplate = "{{Params.WebApiProjectName}}.csproj",
                 TemplatePath = "WebApi.ProjectFile.liquid",
+                OutputPath = _pathService.WebApiDirPath
+            };
+
+            _fileService.CreateFromTemplate(csprojFileInfo, new WebApiBaseDrop(_pathService, GeneratorConfiguration));
+        }
+        private void GenerateStartup()
+        {
+            var csprojFileInfo = new FileInfo
+            {
+                NameTemplate = "Startup.cs",
+                TemplatePath = "WebApi.Startup.liquid",
                 OutputPath = _pathService.WebApiDirPath
             };
 
