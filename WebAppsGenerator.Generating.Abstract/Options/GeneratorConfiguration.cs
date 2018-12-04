@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using Microsoft.Extensions.Options;
 using WebAppsGenerator.Generating.Abstract.Interfaces;
 
 namespace WebAppsGenerator.Generating.Abstract.Options
@@ -9,5 +8,14 @@ namespace WebAppsGenerator.Generating.Abstract.Options
     {
         public string ProjectName { get; set; }
         public string OutputPath { get; set; }
+        public List<NuGetPackageDetails> CoreProjectPackages { get; set; }
+
+        public GeneratorConfiguration(IOptions<GeneratorOptions> generatorOptions)
+        {
+            var options = generatorOptions.Value;
+            ProjectName = options.ProjectName;
+            OutputPath = options.OutputPath;
+            CoreProjectPackages = options.CoreProjectPackages;
+        }
     }
 }

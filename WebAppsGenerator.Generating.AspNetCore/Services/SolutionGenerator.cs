@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using WebAppsGenerator.Core.Models;
 using WebAppsGenerator.Core.Services;
 using WebAppsGenerator.Generating.Abstract.Interfaces;
+using WebAppsGenerator.Generating.Abstract.Options;
 using WebAppsGenerator.Generating.Abstract.Services;
 
 namespace WebAppsGenerator.Generating.AspNetCore.Services
@@ -15,6 +16,7 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
         private readonly ICommandLineService _commandLineService;
         private readonly IGenerator _webApiProjectGenerator;
         private readonly IGenerator _coreProjectGenerator;
+        private readonly IGeneratorConfiguration _generatorConfiguration;
         private readonly SolutionPathService _pathService;
 
         public SolutionGenerator(IGeneratorConfiguration generatorConfiguration, ICommandLineService commandLineService,
@@ -23,6 +25,7 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
             _commandLineService = commandLineService;
             _webApiProjectGenerator = webApiProjectGenerator;
             _coreProjectGenerator = coreProjectGenerator;
+            _generatorConfiguration = generatorConfiguration;
             _pathService = new SolutionPathService(generatorConfiguration);
         }
 
@@ -32,6 +35,8 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
                 throw new ArgumentNullException();
 
             CreateSolutionWithProjects();
+
+            AddNuGetPackages($"{_pathService.CoreDirPath}\\{_pathService.CoreProjectName}.csproj", _generatorConfiguration.CoreProjectPackages);
 
             _coreProjectGenerator.Generate(entities);
             _webApiProjectGenerator.Generate(entities);
@@ -44,7 +49,14 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
             _commandLineService.RunCommand($"dotnet new webapi -o {_pathService.WebApiDirPath}");
             _commandLineService.RunCommand($"dotnet sln {_pathService.SolutionFilePath} add {_pathService.CoreDirPath}");
             _commandLineService.RunCommand($"dotnet sln {_pathService.SolutionFilePath} add {_pathService.WebApiDirPath}");
-            _commandLineService.RunCommand($"dotnet add {_pathService.CoreDirPath}\\{_pathService.CoreProjectName}.csproj package --version 2.1.4 Microsoft.EntityFrameworkCore");
+        }
+
+        private void AddNuGetPackages(string csprojPath, IEnumerable<NuGetPackageDetails> packages)
+        {
+            foreach (var package in packages)
+            {
+                _commandLineService.RunCommand($"dotnet add {csprojPath} package --version {package.Version} {package.Name}");
+            }
         }
     }
 }

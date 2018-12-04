@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Extensions.Options;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using WebAppsGenerator.Core.Models;
@@ -23,7 +24,7 @@ namespace WebAppsGenerator.Tests.Generating.AspNetCore
         [TestInitialize]
         public void Setup()
         {
-            _configuration = new GeneratorConfiguration();
+            _configuration = new GeneratorConfiguration(new OptionsWrapper<GeneratorOptions>(new GeneratorOptions { CoreProjectPackages = new List<NuGetPackageDetails>() }));
             _commandLineService = new CommandLineServiceMock();
             var webApiGenerator = new Mock<IGenerator>();
             webApiGenerator.Setup(g => g.Generate(It.IsAny<IEnumerable<Entity>>())).Callback(() => _webApiGeneratorCalled = true);
@@ -66,12 +67,12 @@ namespace WebAppsGenerator.Tests.Generating.AspNetCore
             var entity = new Entity();
 
             // Act
-            _generator.Generate(new List<Entity>(){entity});
+            _generator.Generate(new List<Entity>() { entity });
 
             // Assert
             Assert.IsTrue(_webApiGeneratorCalled);
             Assert.IsTrue(_coreGeneratorCalled);
-            Assert.AreEqual(6, _commandLineService.Commands.Count);
+            Assert.AreEqual(5, _commandLineService.Commands.Count);
             Assert.IsTrue(_commandLineService.Commands.All(c => c.StartsWith("dotnet")));
             // TODO: Assert if commands executed in correct order and with valid args.
         }

@@ -1,4 +1,18 @@
 {
+    "GeneratorOptions": {
+        "OutputPath": "Output",
+        "ProjectName": "Bookstore",
+        "CoreProjectPackages": [
+            {
+                "Name": "Microsoft.EntityFrameworkCore",
+                "Version": "2.1.4"
+            },
+            {
+                "Name": "Microsoft.EntityFrameworkCore.SqlServer",
+                "Version": "2.1.4"
+            }
+        ]
+    },
     "AllowedAnnotations": {
         "Annotations": [
             {

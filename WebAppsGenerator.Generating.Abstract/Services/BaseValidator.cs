@@ -1,25 +1,26 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Extensions.Options;
 using WebAppsGenerator.Core.Exceptions;
 using WebAppsGenerator.Core.Models;
 using WebAppsGenerator.Generating.Abstract.Interfaces;
+using WebAppsGenerator.Generating.Abstract.Options;
 
 namespace WebAppsGenerator.Generating.Abstract.Services
 {
     public class BaseValidator : IValidator
     {
-        private readonly List<AnnotationDefinition> _allowedAnnotations;
+        private readonly AnnotationOptions _annotationOptions;
 
-        public BaseValidator(List<AnnotationDefinition> allowedAnnotations)
+        public BaseValidator(IOptions<AnnotationOptions> annotationOptions)
         {
-            _allowedAnnotations = allowedAnnotations;
+            _annotationOptions = annotationOptions.Value;
         }
 
         public void ValidateEntities(IEnumerable<Entity> entities)
         {
             ValidateTypes(entities);
             ValidateAnnotations(entities);
-            throw new System.NotImplementedException();
         }
 
         public void ValidateAnnotations(IEnumerable<Entity> entities)
@@ -50,7 +51,7 @@ namespace WebAppsGenerator.Generating.Abstract.Services
         {
             foreach (var entityAnnotation in entity.Annotations)
             {
-                var annotation = _allowedAnnotations.FirstOrDefault(ann =>
+                var annotation = _annotationOptions.Annotations.FirstOrDefault(ann =>
                     ann.IsClassAnnotation && ann.Name == entityAnnotation.Name);
 
                 if (annotation == null)
@@ -77,7 +78,7 @@ namespace WebAppsGenerator.Generating.Abstract.Services
             {
                 foreach (var entityFieldAnnotation in entityField.Annotations)
                 {
-                    var annotation = _allowedAnnotations.FirstOrDefault(ann =>
+                    var annotation = _annotationOptions.Annotations.FirstOrDefault(ann =>
                         !ann.IsClassAnnotation && ann.Name == entityFieldAnnotation.Name);
 
                     if (annotation == null)

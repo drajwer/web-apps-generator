@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Antlr4.Runtime;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,7 +14,6 @@ using WebAppsGenerator.Generating.Abstract.Interfaces;
 using WebAppsGenerator.Generating.Abstract.Options;
 using WebAppsGenerator.Generating.Abstract.Services;
 using WebAppsGenerator.Generating.AspNetCore.IoC;
-using WebAppsGenerator.Generating.AspNetCore.Services;
 
 namespace WebAppsGenerator.Console
 {
@@ -24,6 +24,7 @@ namespace WebAppsGenerator.Console
 
         private static void Main(string[] args)
         {
+            AddConfiguration();
             ConfigureServices();
 
             var concatFileService = new ConcatFileService(new FlatDirectoryFilesProvider("./../../../TestDir", "txt"));
@@ -44,7 +45,9 @@ namespace WebAppsGenerator.Console
             var visitor = (SneakParserMappingVisitor) ServiceProvider.GetService<ISneakParserVisitor<object>>();
 
             visitor.Visit(fileContext);
-            
+
+            var validator = ServiceProvider.GetService<IValidator>();
+            validator.ValidateEntities(visitor.Entities.Values);
             // pass visitor's results to generator
             var generator = ServiceProvider.GetService<IGenerator>();
             generator.Generate(visitor.Entities.Values);
@@ -61,15 +64,26 @@ namespace WebAppsGenerator.Console
             var services = new ServiceCollection();
 
             services.AddOptions();
+            services.AddConfigurationOptions(Configuration);
             services.AddScoped<ISneakParserVisitor<object>, SneakParserMappingVisitor>();
             services.AddTransient<ITypeParser, BasicTypeParser>();
             services.AddTransient<IAnnotationParamParser, BasicAnnotationParamParser>();
-            services.AddSingleton<IGeneratorConfiguration>(new GeneratorConfiguration()
-                {OutputPath = "Output", ProjectName = "Bookstore"});
+            services.AddScoped<IGeneratorConfiguration, GeneratorConfiguration>();
             services.AddScoped<ICommandLineService, CommandLineService>();
             services.AddScoped<LiquidTemplateService>();
+            services.AddScoped<Generating.Abstract.Interfaces.IFileService, FileService>();
+            services.AddScoped<IValidator, BaseValidator>();
             services.AddAspNetCoreGenerator();
+
             ServiceProvider = services.BuildServiceProvider();
+        }
+
+        private static void AddConfiguration()
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("config.json");
+            Configuration = builder.Build();
         }
     }
 }
