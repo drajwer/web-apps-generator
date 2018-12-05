@@ -8,6 +8,9 @@ using WebAppsGenerator.Core.Extensions;
 
 namespace WebAppsGenerator.Generating.Abstract.Services
 {
+    /// <summary>
+    /// Service used to render Liquid templates
+    /// </summary>
     public class LiquidTemplateService
     {
         private readonly List<Type> _registerTypes;

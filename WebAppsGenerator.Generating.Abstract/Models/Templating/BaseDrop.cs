@@ -7,6 +7,9 @@ using WebAppsGenerator.Generating.Abstract.Interfaces;
 
 namespace WebAppsGenerator.Generating.Abstract.Models.Templating
 {
+    /// <summary>
+    /// Provides input data for template parser
+    /// </summary>
     public class BaseDrop : Drop
     {
         private readonly IGeneratorConfiguration _generatorConfiguration;

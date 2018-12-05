@@ -7,6 +7,9 @@ using FileInfo = WebAppsGenerator.Generating.Abstract.Models.FileInfo;
 
 namespace WebAppsGenerator.Generating.Abstract.Services
 {
+    /// <summary>
+    /// <inheritdoc cref="IFileService"/>
+    /// </summary>
     public class FileService : IFileService
     {
         private readonly TemplateFileProvider _fileProvider;

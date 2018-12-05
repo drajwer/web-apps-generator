@@ -4,6 +4,9 @@ using WebAppsGenerator.Generating.Abstract.Interfaces;
 
 namespace WebAppsGenerator.Generating.Abstract.Options
 {
+    /// <summary>
+    /// Default implementation of <see cref="IGeneratorConfiguration"/>
+    /// </summary>
     public class GeneratorConfiguration : IGeneratorConfiguration
     {
         public string ProjectName { get; set; }

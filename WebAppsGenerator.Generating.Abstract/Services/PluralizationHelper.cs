@@ -7,6 +7,9 @@ using PluralizationService.English;
 
 namespace WebAppsGenerator.Generating.Abstract.Services
 {
+    /// <summary>
+    /// Provides pluralization and singularization of English words
+    /// </summary>
     public class PluralizationHelper
     {
         private static readonly IPluralizationApi Api;

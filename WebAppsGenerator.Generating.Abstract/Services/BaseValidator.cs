@@ -8,6 +8,9 @@ using WebAppsGenerator.Generating.Abstract.Options;
 
 namespace WebAppsGenerator.Generating.Abstract.Services
 {
+    /// <summary>
+    /// Default implementation of <see cref="IValidator"/>.
+    /// </summary>
     public class BaseValidator : IValidator
     {
         private readonly AnnotationOptions _annotationOptions;
@@ -17,12 +20,18 @@ namespace WebAppsGenerator.Generating.Abstract.Services
             _annotationOptions = annotationOptions.Value;
         }
 
+        /// <summary>
+        /// Validates types and annotations for given entities
+        /// </summary>
         public void ValidateEntities(IEnumerable<Entity> entities)
         {
             ValidateTypes(entities);
             ValidateAnnotations(entities);
         }
 
+        /// <summary>
+        /// Validates all annotations for given entities
+        /// </summary>
         public void ValidateAnnotations(IEnumerable<Entity> entities)
         {
             foreach (var entity in entities)
@@ -32,6 +41,9 @@ namespace WebAppsGenerator.Generating.Abstract.Services
             }
         }
 
+        /// <summary>
+        /// Validates all <see cref="TypeKind.Entity"/> types are pointing to existing entities
+        /// </summary>
         public void ValidateTypes(IEnumerable<Entity> entities)
         {
             entities = entities.ToList();
@@ -47,6 +59,10 @@ namespace WebAppsGenerator.Generating.Abstract.Services
             }
         }
 
+        /// <summary>
+        /// Validates all entity's annotations have known names.
+        /// Also validates that all params have known names and correct value.
+        /// </summary>
         public void ValidateClassAnnotations(Entity entity)
         {
             foreach (var entityAnnotation in entity.Annotations)
@@ -72,6 +88,10 @@ namespace WebAppsGenerator.Generating.Abstract.Services
             }
         }
 
+        /// <summary>
+        /// Validates all entity properties' annotations have known names.
+        /// Also validates that all params have known names and correct value.
+        /// </summary>
         public void ValidatePropAnnotations(Entity entity)
         {
             foreach (var entityField in entity.Fields)

@@ -7,6 +7,9 @@ using WebAppsGenerator.Generating.Abstract.Interfaces;
 
 namespace WebAppsGenerator.Generating.Abstract.Models.Templating
 {
+    /// <summary>
+    /// Templating class containing all entities
+    /// </summary>
     public class DefaultDrop : BaseDrop
     {
         public List<Entity> Entities { get; }

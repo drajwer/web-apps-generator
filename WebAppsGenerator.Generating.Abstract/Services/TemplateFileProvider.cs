@@ -6,6 +6,9 @@ using System.Text;
 
 namespace WebAppsGenerator.Generating.Abstract.Services
 {
+    /// <summary>
+    /// Service for retrieving templates from embedded resources
+    /// </summary>
     public class TemplateFileProvider
     {
         private readonly Assembly _assembly;

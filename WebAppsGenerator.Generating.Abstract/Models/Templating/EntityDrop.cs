@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DotLiquid;
 using WebAppsGenerator.Core.Models;
 using WebAppsGenerator.Generating.Abstract.Services;
 
 namespace WebAppsGenerator.Generating.Abstract.Models.Templating
 {
-    public class EntityDrop
+    /// <summary>
+    /// Templating class to expose one entity only
+    /// </summary>
+    public class EntityDrop : Drop
     {
         public string Name { get; }
         public string PluralName { get; }

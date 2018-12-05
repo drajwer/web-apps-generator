@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using DotLiquid;
 using WebAppsGenerator.Core.Models;
 
 namespace WebAppsGenerator.Generating.Abstract.Models.Templating
 {
-    public class FieldDrop
+    /// <summary>
+    /// Templating class to expose one entity's field only
+    /// </summary>
+    public class FieldDrop : Drop
     {
         public string Name { get; }
         public TypeDrop Type { get; set; }

@@ -2,6 +2,9 @@
 
 namespace WebAppsGenerator.Generating.Abstract.Options
 {
+    /// <summary>
+    /// Helper class used for injecting configuration to generator
+    /// </summary>
     public class GeneratorOptions
     {
         public string ProjectName { get; set; }
