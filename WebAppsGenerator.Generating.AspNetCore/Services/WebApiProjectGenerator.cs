@@ -24,6 +24,7 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
             GenerateCsProj();
             GenerateStartup();
             GenerateControllers(entities);
+            GenerateAppsettings();
         }
 
         private void GenerateCsProj()
@@ -65,6 +66,18 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
             {
                 _fileService.CreateFromTemplate(controllerFileInfo, new SingleEntityDrop(GeneratorConfiguration, _pathService, entity));
             }
+        }
+
+        private void GenerateAppsettings()
+        {
+            var appsettingsFileInfo = new FileInfo
+            {
+                NameTemplate = "appsettings.json",
+                TemplatePath = "WebApi.appsettings.liquid",
+                OutputPath = _pathService.WebApiDirPath
+            };
+
+            _fileService.CreateFromTemplate(appsettingsFileInfo, new WebApiBaseDrop(_pathService, GeneratorConfiguration));
         }
     }
 }
