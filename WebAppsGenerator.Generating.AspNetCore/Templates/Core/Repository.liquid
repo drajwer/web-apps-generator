@@ -1,17 +1,17 @@
 ﻿using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
-namespace {{{Params.CoreProjectName}}.CoreContext
+namespace {{{Params.CoreProjectName}}.Context
 {
     public class Repository<T> where T : class
     {
         private readonly DbSet<T> _dbSet;
-        private readonly CoreContext _coreContext;
+        private readonly AppDbContext _dbContext;
 
-        public Repository(CoreContext coreContext)
+        public Repository(AppDbContext dbContext)
         {
-            _dbSet = coreContext.Set<T>();
-            _coreContext = coreContext;
+            _dbSet = dbContext.Set<T>();
+            _dbContext = dbContext;
         }
 
         public IQueryable<T> GetAll()
@@ -27,7 +27,7 @@ namespace {{{Params.CoreProjectName}}.CoreContext
 		public T Create(T entity)
         {
             _dbSet.Add(entity);
-            _coreContext.SaveChanges();
+            _dbContext.SaveChanges();
             return entity;
         }
 
@@ -35,14 +35,14 @@ namespace {{{Params.CoreProjectName}}.CoreContext
         {
             _dbSet.Update(entity);
 			var elem = Get(id);
-            _coreContext.SaveChanges();
+            _dbContext.SaveChanges();
             return elem;
         }
 
         public void Delete(int id)
         {
             _dbSet.Remove(Get(id));
-            _coreContext.SaveChanges();
+            _dbContext.SaveChanges();
         }
     }
 }

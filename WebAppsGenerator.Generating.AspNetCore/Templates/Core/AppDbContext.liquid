@@ -1,11 +1,11 @@
 ﻿using {{Params.CoreProjectName}}.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace {{Params.CoreProjectName}}.CoreContext
+namespace {{Params.CoreProjectName}}.Context
 {
-	public class CoreContext: DbContext
+	public class AppDbContext: DbContext
 	{
-		public CoreContext(DbContextOptions options) :base(options)
+		public AppDbContext(DbContextOptions options) :base(options)
 	    {
 	    }
 

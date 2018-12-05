@@ -38,8 +38,8 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
 
             AddNuGetPackages($"{_pathService.CoreDirPath}\\{_pathService.CoreProjectName}.csproj", _generatorConfiguration.CoreProjectPackages);
 
-            _coreProjectGenerator.Generate(entities);
             _webApiProjectGenerator.Generate(entities);
+            _coreProjectGenerator.Generate(entities);
         }
 
         private void CreateSolutionWithProjects()
@@ -49,6 +49,7 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
             _commandLineService.RunCommand($"dotnet new webapi -o {_pathService.WebApiDirPath}");
             _commandLineService.RunCommand($"dotnet sln {_pathService.SolutionFilePath} add {_pathService.CoreDirPath}");
             _commandLineService.RunCommand($"dotnet sln {_pathService.SolutionFilePath} add {_pathService.WebApiDirPath}");
+            _commandLineService.RunCommand($"dotnet add {_pathService.WebApiDirPath}\\{_pathService.WebApiProjectName}.csproj reference {_pathService.CoreDirPath}\\{_pathService.CoreProjectName}.csproj");
         }
 
         private void AddNuGetPackages(string csprojPath, IEnumerable<NuGetPackageDetails> packages)

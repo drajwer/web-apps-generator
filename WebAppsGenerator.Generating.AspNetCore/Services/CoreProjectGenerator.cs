@@ -54,9 +54,9 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
         {
             var modelFileInfo = new FileInfo
             {
-                NameTemplate = "CoreContext.cs",
-                TemplatePath = "Core.CoreContext.liquid",
-                OutputPath = Path.Combine(_pathService.CoreDirPath, "CoreContext")
+                NameTemplate = "AppDbContext.cs",
+                TemplatePath = "Core.AppDbContext.liquid",
+                OutputPath = Path.Combine(_pathService.CoreDirPath, "Context")
             };
 
             _fileService.CreateFromTemplate(modelFileInfo, new EntityListDrop(GeneratorConfiguration, _pathService, entities));
@@ -68,7 +68,7 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
             {
                 NameTemplate = "Repository.cs",
                 TemplatePath = "Core.Repository.liquid",
-                OutputPath = Path.Combine(_pathService.CoreDirPath, "CoreContext")
+                OutputPath = Path.Combine(_pathService.CoreDirPath, "Context")
             };
 
             _fileService.CreateFromTemplate(modelFileInfo, new EntityListDrop(GeneratorConfiguration, _pathService, entities));
