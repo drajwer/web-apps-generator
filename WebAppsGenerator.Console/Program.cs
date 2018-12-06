@@ -51,11 +51,7 @@ namespace WebAppsGenerator.Console
             // pass visitor's results to generator
             var generator = ServiceProvider.GetService<IGenerator>();
             generator.Generate(visitor.Entities.Values);
-
-            foreach (var token in commonTokenStream.GetTokens())
-                System.Console.WriteLine($"{token},");
-            System.Console.WriteLine(concatFileService.ConcatFile);
-
+            
             System.Console.ReadKey();
         }
 

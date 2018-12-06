@@ -3,7 +3,6 @@
 	public class {{ Params.Entity.Name }}
 	{
 		public int Id { get; set; }
-
 		{% for prop in Params.Entity.Fields %}
 		public {{ prop.Type.Name }} {{ prop.Name }} { get; set; }
 		{% endfor %}
