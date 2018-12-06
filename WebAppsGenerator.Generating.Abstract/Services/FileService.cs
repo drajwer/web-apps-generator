@@ -8,7 +8,7 @@ using FileInfo = WebAppsGenerator.Generating.Abstract.Models.FileInfo;
 namespace WebAppsGenerator.Generating.Abstract.Services
 {
     /// <summary>
-    /// <inheritdoc cref="IFileService"/>
+    /// Standard implementation of <see cref="IFileService"/>
     /// </summary>
     public class FileService : IFileService
     {

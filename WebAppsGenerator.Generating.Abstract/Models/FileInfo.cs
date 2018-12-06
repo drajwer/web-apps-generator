@@ -15,6 +15,10 @@ namespace WebAppsGenerator.Generating.Abstract.Models
         /// Location of template used to generate file content
         /// </summary>
         public string TemplatePath { get; set; }
+
+        /// <summary>
+        /// Location of output directory to put generated file on
+        /// </summary>
         public string OutputPath { get; set; }
     }
 }
