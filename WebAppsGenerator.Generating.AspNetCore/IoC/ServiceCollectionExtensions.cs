@@ -40,7 +40,9 @@ namespace WebAppsGenerator.Generating.AspNetCore.IoC
         {
             services.AddScoped(provider => new TemplateFileProvider(Assembly.GetAssembly(typeof(SolutionGenerator))));
             services.AddScoped<WebApiProjectGenerator>();
-            services.AddScoped<CoreProjectGenerator>();
+            services.AddScoped<CoreProjectGenerator>(); 
+            services.AddScoped<MigrationService>();
+            services.AddScoped<SolutionPathService>();
         }
     }
 }

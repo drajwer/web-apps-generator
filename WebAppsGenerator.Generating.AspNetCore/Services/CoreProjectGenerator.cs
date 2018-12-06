@@ -12,11 +12,13 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
     {
         private readonly SolutionPathService _pathService;
         private readonly IFileService _fileService;
+        private readonly MigrationService _migrationService;
 
-
-        public CoreProjectGenerator(IGeneratorConfiguration generatorConfiguration, IFileService fileService) : base(generatorConfiguration)
+        public CoreProjectGenerator(IGeneratorConfiguration generatorConfiguration, IFileService fileService,
+            MigrationService migrationService) : base(generatorConfiguration)
         {
             _fileService = fileService;
+            _migrationService = migrationService;
             _pathService = new SolutionPathService(generatorConfiguration);
         }
 
@@ -28,6 +30,9 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
             GenerateModels(entities);
             GenerateDbContext(entities);
             GenerateRepository(entities);
+
+            _migrationService.AddMigration("Init");
+            _migrationService.UpdateDatabase();
         }
 
         private void GenerateModels(IEnumerable<Entity> entities)
@@ -49,9 +54,9 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
         {
             var modelFileInfo = new FileInfo
             {
-                NameTemplate = "CoreContext.cs",
-                TemplatePath = "Core.CoreContext.liquid",
-                OutputPath = Path.Combine(_pathService.CoreDirPath, "CoreContext")
+                NameTemplate = "AppDbContext.cs",
+                TemplatePath = "Core.AppDbContext.liquid",
+                OutputPath = Path.Combine(_pathService.CoreDirPath, "Context")
             };
 
             _fileService.CreateFromTemplate(modelFileInfo, new EntityListDrop(GeneratorConfiguration, _pathService, entities));
@@ -63,7 +68,7 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
             {
                 NameTemplate = "Repository.cs",
                 TemplatePath = "Core.Repository.liquid",
-                OutputPath = Path.Combine(_pathService.CoreDirPath, "CoreContext")
+                OutputPath = Path.Combine(_pathService.CoreDirPath, "Context")
             };
 
             _fileService.CreateFromTemplate(modelFileInfo, new EntityListDrop(GeneratorConfiguration, _pathService, entities));
