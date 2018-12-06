@@ -27,7 +27,7 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
         /// <param name="targetMigrationName">Empty target migration name applies all existing migrations</param>
         public void UpdateDatabase(string targetMigrationName = "")
         {
-            _commandLineService.RunCommand($"cd {_pathService.CoreDirPath} \r\n dotnet ef database update --startup-project.csproj {targetMigrationName}");
+            _commandLineService.RunCommand($"dotnet ef database update --startup-project {_pathService.WebApiDirPath} --project {_pathService.CoreDirPath} {targetMigrationName}");
         }
     }
 }
