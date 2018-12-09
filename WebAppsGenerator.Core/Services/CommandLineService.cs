@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using WebAppsGenerator.Core.Interfaces;
 
 namespace WebAppsGenerator.Core.Services
 {

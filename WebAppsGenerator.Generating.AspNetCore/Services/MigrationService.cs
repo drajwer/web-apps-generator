@@ -1,4 +1,5 @@
-﻿using WebAppsGenerator.Core.Services;
+﻿using WebAppsGenerator.Core.Interfaces;
+using WebAppsGenerator.Core.Services;
 using WebAppsGenerator.Generating.Abstract.Interfaces;
 
 namespace WebAppsGenerator.Generating.AspNetCore.Services

@@ -44,9 +44,16 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
                 OutputPath = Path.Combine(_pathService.CoreDirPath, "Models")
             };
 
-            foreach (var entity in entities)
+            var joinModelFileInfo = new FileInfo(modelFileInfo);
+            joinModelFileInfo.OutputPath = Path.Combine(joinModelFileInfo.OutputPath, "Joins");
+
+            var service = new ModelService();
+            var drops = service.CreateModelDrops(entities);
+
+            foreach (var drop in drops)
             {
-                _fileService.CreateFromTemplate(modelFileInfo, new SingleEntityDrop(GeneratorConfiguration, _pathService, entity));
+                var fileInfo = drop.IsJoinModel ? joinModelFileInfo : modelFileInfo;
+                _fileService.CreateFromTemplate(fileInfo, new SingleEntityDrop(GeneratorConfiguration, _pathService, drop));
             }
         }
 

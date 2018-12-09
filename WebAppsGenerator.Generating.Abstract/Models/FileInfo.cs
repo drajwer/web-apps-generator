@@ -20,5 +20,17 @@ namespace WebAppsGenerator.Generating.Abstract.Models
         /// Location of output directory to put generated file on
         /// </summary>
         public string OutputPath { get; set; }
+
+        public FileInfo()
+        {
+            
+        }
+
+        public FileInfo(FileInfo fileInfo)
+        {
+            NameTemplate = fileInfo.NameTemplate;
+            TemplatePath = fileInfo.TemplatePath;
+            OutputPath = fileInfo.TemplatePath;
+        }
     }
 }

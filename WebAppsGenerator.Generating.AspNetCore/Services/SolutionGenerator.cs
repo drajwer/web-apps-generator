@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using WebAppsGenerator.Core.Interfaces;
 using WebAppsGenerator.Core.Models;
 using WebAppsGenerator.Core.Services;
 using WebAppsGenerator.Generating.Abstract.Interfaces;

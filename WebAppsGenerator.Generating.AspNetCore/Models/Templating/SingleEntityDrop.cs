@@ -17,6 +17,12 @@ namespace WebAppsGenerator.Generating.AspNetCore.Models.Templating
             Entity = new EntityDrop(entity);
         }
 
+        public SingleEntityDrop(IGeneratorConfiguration generatorConfiguration, SolutionPathService pathService, EntityDrop entity)
+            : base(pathService, generatorConfiguration)
+        {
+            Entity = entity;
+        }
+
         public EntityDrop Entity { get; }
     }
 }

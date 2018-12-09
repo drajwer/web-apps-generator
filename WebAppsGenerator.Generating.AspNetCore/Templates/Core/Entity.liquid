@@ -1,10 +1,13 @@
-﻿namespace {{Params.CoreProjectName}}.Models
+﻿using System;
+using System.Collections.Generic;
+
+
+namespace {{Params.CoreProjectName}}.Models
 {
 	public class {{ Params.Entity.Name }}
 	{
-		public int Id { get; set; }
 		{% for prop in Params.Entity.Fields %}
-		public {{ prop.Type.Name }} {{ prop.Name }} { get; set; }
+		public {{ prop.Type.Name }}{% if prop.Type.IsSimpleType and prop.Type.IsNullable %}?{% endif %} {{ prop.Name }} { get; set; }
 		{% endfor %}
 	}
 }

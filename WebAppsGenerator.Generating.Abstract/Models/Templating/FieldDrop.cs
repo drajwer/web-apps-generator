@@ -13,11 +13,13 @@ namespace WebAppsGenerator.Generating.Abstract.Models.Templating
     {
         public string Name { get; }
         public TypeDrop Type { get; set; }
-
+        public RelationDrop Relation { get; set; }
         public FieldDrop(Field field)
         {
             Name = field.Name;
             Type = new TypeDrop(field.Type);
+            if(field.Relation != null)
+                Relation = new RelationDrop(field.Relation);
         }
     }
 }

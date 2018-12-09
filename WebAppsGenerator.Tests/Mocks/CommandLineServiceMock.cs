@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using WebAppsGenerator.Core.Interfaces;
 using WebAppsGenerator.Core.Services;
 
 namespace WebAppsGenerator.Tests.Mocks
