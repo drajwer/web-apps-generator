@@ -46,7 +46,7 @@ namespace WebAppsGenerator.Core.Services
                     if(entityField.Type.BaseTypeKind != TypeKind.Entity)
                         continue;
                     var referencedEntity = entityList.First(e => e.Name == entityField.Type.EntityName);
-                    var referencedFields = referencedEntity.Fields.Where(f => f.Type.EntityName == entityField.Name).ToList();
+                    var referencedFields = referencedEntity.Fields.Where(f => f.Type.EntityName == entity.Name).ToList();
                     var referencedField = referencedFields.FirstOrDefault();
                     if (referencedFields.Count() > 1)
                     {
@@ -57,8 +57,8 @@ namespace WebAppsGenerator.Core.Services
                     entityField.Relation = new Relation()
                     {
                         HasOne = !entityField.Type.IsArray,
-                        WithOne = referencedField?.Type.IsArray ?? false,
-                        Primary = referencedField == null || entity.Name[0] < referencedEntity.Name[0]
+                        WithOne = !referencedField?.Type.IsArray ?? false,
+                        Primary = referencedField == null || entity.Name.CompareTo(referencedEntity.Name) >= 0
                     };
                 }
             }

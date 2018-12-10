@@ -1,0 +1,24 @@
+﻿using {{Params.CoreProjectName}}.Models;
+using {{Params.WebApiProjectName}}.ViewModels.Generated;
+
+namespace {{Params.WebApiProjectName}}.ViewModels
+{
+    /// <summary>
+    /// Use this class to modify the view model.
+    /// </summary>
+    public class {{Params.Entity.Name}}ViewModel : {{Params.Entity.Name}}BaseViewModel
+    {
+        public {{Params.Entity.Name}}ViewModel() : base()
+        {
+        }
+
+        public {{Params.Entity.Name}}ViewModel({{Params.Entity.Name}} entity) : base(entity)
+        {
+        }
+
+        public override {{Params.Entity.Name}} CreateModel()
+        {
+            return base.CreateModel();
+        }
+    }
+}

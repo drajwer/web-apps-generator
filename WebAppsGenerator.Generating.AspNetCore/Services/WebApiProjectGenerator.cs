@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using WebAppsGenerator.Core.Models;
 using WebAppsGenerator.Generating.Abstract.Interfaces;
 using WebAppsGenerator.Generating.Abstract.Services;
@@ -22,9 +23,35 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
         public override void Generate(IEnumerable<Entity> entities)
         {
             GenerateCsProj();
-            GenerateStartup();
-            GenerateControllers(entities);
             GenerateAppsettings();
+
+            GenerateStartup();
+            GenerateViewModels(entities);
+            GenerateControllers(entities);
+        }
+
+        private void GenerateViewModels(IEnumerable<Entity> entities)
+        {
+            var baseVmFileInfo = new FileInfo
+            {
+                NameTemplate = "{{Params.Entity.Name}}BaseViewModel.cs",
+                TemplatePath = "WebApi.BaseViewModel.liquid",
+                OutputPath = Path.Combine(_pathService.WebApiDirPath, "ViewModels", "Generated")
+            };
+            var vmFileInfo = new FileInfo()
+            {
+                NameTemplate = "{{Params.Entity.Name}}ViewModel.cs",
+                TemplatePath = "WebApi.ViewModel.liquid",
+                OutputPath = Path.Combine(_pathService.WebApiDirPath, "ViewModels")
+            };
+            var service = new ModelService();
+            var drops = service.CreateModelDrops(entities);
+
+            foreach (var drop in drops.Where(d => !d.IsJoinModel))
+            {
+                _fileService.CreateFromTemplate(baseVmFileInfo, new SingleEntityDrop(GeneratorConfiguration, _pathService, drop));
+                _fileService.CreateFromTemplate(vmFileInfo, new SingleEntityDrop(GeneratorConfiguration, _pathService, drop));
+            }
         }
 
         private void GenerateCsProj()

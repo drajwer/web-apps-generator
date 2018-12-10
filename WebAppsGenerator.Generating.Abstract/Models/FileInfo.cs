@@ -30,7 +30,7 @@ namespace WebAppsGenerator.Generating.Abstract.Models
         {
             NameTemplate = fileInfo.NameTemplate;
             TemplatePath = fileInfo.TemplatePath;
-            OutputPath = fileInfo.TemplatePath;
+            OutputPath = fileInfo.OutputPath;
         }
     }
 }
