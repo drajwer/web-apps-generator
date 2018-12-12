@@ -1,6 +1,8 @@
-﻿using {{Params.CoreProjectName}}.Context;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using {{Params.CoreProjectName}}.Models;
+using {{Params.CoreProjectName}}.Interfaces;
+using {{Params.WebApiProjectName}}.ViewModels;
 
 namespace {{Params.WebApiProjectName}}.Controllers
 {
@@ -8,51 +10,59 @@ namespace {{Params.WebApiProjectName}}.Controllers
     [ApiController]
     public class {{Params.Entity.PluralName}}Controller : ControllerBase
     {
-        private readonly Repository<{{Params.Entity.Name}}> _repo;
+        private readonly ICrudService<{{Params.Entity.Name}}> _service;
 
-        public {{Params.Entity.PluralName}}Controller(Repository<{{Params.Entity.Name}}> repo)
+        public {{Params.Entity.PluralName}}Controller(ICrudService<{{Params.Entity.Name}}> service)
         {
-            _repo = repo;
+            _service = service;
         }
 
         // GET api/{{ Params.Entity.PluralName | Downcase }}
         [HttpGet]
         public IActionResult Get()
         {
-            var queryable = _repo.GetAll();
-            return new JsonResult(queryable);
+            var entities = _service.GetAll();
+            var viewModels = entities.Select(e => new {{Params.Entity.Name}}ViewModel(e));
+            return new JsonResult(viewModels);
         }
 
         // GET api/{{ Params.Entity.PluralName | Downcase }}/5
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var entity = _repo.Get(id);
-            return new JsonResult(entity);
+            var entity = _service.GetWithChildren(id);
+            if(entity == null)
+                return new NotFoundResult();
+            var viewModel = new {{Params.Entity.Name}}ViewModel(entity);
+            return new JsonResult(viewModel);
         }
 
         // POST api/{{ Params.Entity.PluralName | Downcase }}
         [HttpPost]
-        public IActionResult Post([FromBody] {{Params.Entity.Name}} value)
+        public IActionResult Post([FromBody] {{Params.Entity.Name}}ViewModel value)
         {
-            var entity = _repo.Create(value);
-            return new JsonResult(entity);
+            var entity = value.CreateModel();
+            var returned = _service.Create(entity);
+            var viewModel = new {{Params.Entity.Name}}ViewModel(returned);
+            return new JsonResult(viewModel);
         }
 
         // PUT api/{{ Params.Entity.PluralName | Downcase }}/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] {{Params.Entity.Name}} value)
+        public IActionResult Put(int id, [FromBody] {{Params.Entity.Name}}ViewModel value)
         {
-			value.Id = id;
-            var entity = _repo.Update(id, value);
-            return new JsonResult(entity);
+			var entity = value.CreateModel();
+            var returned = _service.Update(id, entity);
+            var viewModel = new {{Params.Entity.Name}}ViewModel(returned);
+            return new JsonResult(viewModel);
         }
 
         // DELETE api/{{ Params.Entity.PluralName | Downcase }}/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
-            _repo.Delete(id);
+            _service.Delete(id);
+            return new JsonResult(id);
         }
     }
 }

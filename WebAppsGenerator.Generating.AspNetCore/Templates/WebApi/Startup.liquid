@@ -1,10 +1,11 @@
-﻿using {{Params.CoreProjectName}}.Context;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using {{Params.CoreProjectName}}.Context;
+using {{Params.CoreProjectName}}.Interfaces;
 
 namespace {{Params.WebApiProjectName}}
 {
@@ -22,7 +23,7 @@ namespace {{Params.WebApiProjectName}}
         {			
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddScoped(typeof(Repository<>));
+            services.AddScoped(typeof(IRepository<,>), typeof(DbRepository<,>));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 

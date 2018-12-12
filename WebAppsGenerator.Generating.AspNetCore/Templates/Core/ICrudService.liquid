@@ -1,0 +1,19 @@
+﻿using System.Linq;
+using Microsoft.EntityFrameworkCore;
+
+namespace {{{Params.CoreProjectName}}.Interfaces
+{
+	public interface ICrudService<T> : ICrudService<T, int> where T : class
+    {
+    }
+
+    public partial interface ICrudService<T, in TId> where T : class
+    {
+        T Create(T entity);
+        void Delete(TId id);
+        T Get(TId id);
+        T GetWithChildren(TId id);
+        IQueryable<T> GetAll();
+        T Update(TId id, T entity);
+    }
+}

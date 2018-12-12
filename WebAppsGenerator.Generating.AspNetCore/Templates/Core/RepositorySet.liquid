@@ -1,0 +1,25 @@
+﻿using Bookstore.Core.Interfaces;
+using Bookstore.Core.Models;
+
+namespace Bookstore.Core.Services
+{
+    public partial class RepositorySet
+    {
+        public RepositorySet(
+
+		{%- for entity in Params.Entities -%}
+		IRepository<{{ entity.Name }}, {{  entity.IdField.Type.Name }}> {{ entity.Name | Downcase}}Repo{%- unless forloop.last == true -%},{%- endunless -%}
+
+		{%- endfor -%}
+		)
+        {
+			{%- for entity in Params.Entities -%}
+			{{ entity.Name }}Repo = {{ entity.Name | Downcase}}Repo;
+			{%- endfor -%}
+        }
+
+		{%- for entity in Params.Entities -%}
+		public IRepository<{{ entity.Name }}, {{ entity.IdField.Type.Name }}> {{ entity.Name }}Repo { get; set; }
+		{%- endfor -%}
+    }
+}

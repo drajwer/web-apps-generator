@@ -29,6 +29,7 @@ namespace WebAppsGenerator.Core.Services
                         Annotations = new List<Annotation>(),
                         Type = new Models.Type()
                         {
+                            FullTypeName = "int",
                             BaseTypeKind = TypeKind.Int,
                         }
                     });
