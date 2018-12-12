@@ -11,5 +11,6 @@ namespace WebAppsGenerator.Core.Models
         public bool WithOne { get; set; }
         public bool WithMany => !WithOne;
         public bool Primary { get; set; }
+        public string SecondFieldName { get; set; }
     }
 }

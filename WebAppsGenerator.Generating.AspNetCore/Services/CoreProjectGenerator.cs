@@ -67,8 +67,8 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
                 TemplatePath = "Core.AppDbContext.liquid",
                 OutputPath = Path.Combine(_pathService.CoreDirPath, "Context")
             };
-
-            _fileService.CreateFromTemplate(modelFileInfo, new EntityListDrop(GeneratorConfiguration, _pathService, entities));
+            var drops = GetModelDrops(entities);
+            _fileService.CreateFromTemplate(modelFileInfo, new EntityListDrop(GeneratorConfiguration, _pathService, drops));
         }
 
         private void GenerateRepository(IEnumerable<Entity> entities)
@@ -119,6 +119,7 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
                 OutputPath = Path.Combine(_pathService.CoreDirPath, "Interfaces")
             };
             var drops = GetModelDrops(entities);
+
 
             _fileService.CreateFromTemplate(interfaceFileInfo, new WebApiBaseDrop(_pathService, GeneratorConfiguration));
 

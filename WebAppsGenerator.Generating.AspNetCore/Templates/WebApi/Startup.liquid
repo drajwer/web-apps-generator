@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using {{Params.CoreProjectName}}.Context;
 using {{Params.CoreProjectName}}.Interfaces;
+using {{Params.WebApiProjectName}}.Extensions;
 
 namespace {{Params.WebApiProjectName}}
 {
@@ -23,7 +24,7 @@ namespace {{Params.WebApiProjectName}}
         {			
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddScoped(typeof(IRepository<,>), typeof(DbRepository<,>));
+            services.AddGeneratedServices();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 

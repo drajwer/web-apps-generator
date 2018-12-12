@@ -12,7 +12,9 @@ namespace {{Params.WebApiProjectName}}.ViewModels.Generated
     {
         {%- for prop in Params.Entity.Fields -%}
 			{%- if prop.Type.IsSimpleType -%}
-		public {{ prop.Type.Name }}{%- if prop.Type.IsSimpleType and prop.Type.IsNullable -%}?{%- endif %} {{ prop.Name }} { get; set; }
+		public {{ prop.Type.Name }} {{ prop.Name }} { get; set; }
+			{%- elsif prop.Relation.HasMany -%}
+		public List<{{prop.Relation.SecondIdType.Name}}> {{ prop.Name }}Ids { get; set; }
 			{%- endif -%}
 		{%- endfor -%}
 
@@ -26,6 +28,10 @@ namespace {{Params.WebApiProjectName}}.ViewModels.Generated
 			{%- for prop in Params.Entity.Fields -%}
 				{%- if prop.Type.IsSimpleType -%}
 			{{ prop.Name }} = entity.{{prop.Name}};
+				{%- elsif prop.Relation.HasManyWithMany -%}
+			{{ prop.Name }}Ids = entity.{{prop.Name}}?.Select(elem => elem.{{prop.Relation.SecondEntityName}}Id).ToList();
+				{%- elsif prop.Relation.HasManyWithOne -%}
+			{{ prop.Name }}Ids = entity.{{prop.Name}}?.Select(elem => elem.Id).ToList();
 				{%- endif -%}
 			{%- endfor -%}
         }
@@ -36,7 +42,13 @@ namespace {{Params.WebApiProjectName}}.ViewModels.Generated
             {
                 {%- for prop in Params.Entity.Fields -%}
 					{%- if prop.Type.IsSimpleType -%}
+						{%- unless prop.Name == 'Id' -%}
 				{{ prop.Name }} = {{prop.Name}},
+						{%- endunless -%}
+					{%- elsif prop.Relation.HasManyWithMany -%}
+				{{ prop.Name }} = {{prop.Name}}Ids?.Select(id => new {{prop.Type.EntityName}}() { {{prop.Relation.SecondEntityName}}Id = id }).ToList(),
+					{%- elsif prop.Relation.HasManyWithOne -%}
+				{{ prop.Name }} = {{prop.Name}}Ids?.Select(id => new {{prop.Type.EntityName}}() { Id = id }).ToList(),
 					{%- endif -%}
 				{%- endfor -%}
             };

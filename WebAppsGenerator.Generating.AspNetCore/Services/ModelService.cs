@@ -12,6 +12,7 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
 {
     public class ModelService
     {
+        private const string Id = "Id";
         public List<ModelDrop> CreateModelDrops(IEnumerable<Entity> entities)
         {
             var entityDrops = entities.Select(e => new ModelDrop(e)).ToList();
@@ -19,8 +20,26 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
             ReplaceManyToManyWithJoins(entities, entityDrops);
             AddForeignKeys(entities, entityDrops);
             SetCSharpTypes(entities, entityDrops);
+            SetReferencedIdTypes(entities, entityDrops);
 
             return entityDrops;
+        }
+
+        private static void SetReferencedIdTypes(IEnumerable<Entity> entities, List<ModelDrop> entityDrops)
+        {
+            foreach (var entity in entities)
+            {
+                foreach (var entityField in entity.Fields)
+                {
+                    if (entityField.Type.BaseTypeKind == TypeKind.Entity && entityField.Relation != null)
+                    {
+                        var referencedEntity = entities.First(e => e.Name == entityField.Type.EntityName);
+                        var referencedIdField = referencedEntity.Fields.First(f => f.Name == Id);
+                        var drop = entityDrops.First(e => e.Name == entity.Name).Fields.First(f => f.Name == entityField.Name);
+                        drop.Relation = new SecondEntityRelationDrop(drop.Relation, new TypeDrop(referencedIdField.Type), referencedEntity.Name);
+                    }
+                }
+            }
         }
 
         private static void SetCSharpTypes(IEnumerable<Entity> entities, List<ModelDrop> entityDrops)
@@ -44,15 +63,19 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
                 {
                     var referencedEntity = entities.First(e => e.Name == relationField.Type.EntityName);
                     var referencedIdField = referencedEntity.Fields.First(e => e.Name == EntitiesFixer.Id);
+
+                    
                     var idField = new Field()
                     {
                         Name = $"{relationField.Name}Id",
                         Type = new Core.Models.Type()
                         {
-                            BaseTypeKind = referencedIdField.Type.BaseTypeKind
-                        }
+                            BaseTypeKind = referencedIdField.Type.BaseTypeKind,
+                            IsNullable = !entityDrop.IsJoinModel
+                        },
                     };
-                    fieldsToAdd.Add(new FieldDrop(idField));
+                    var drop = new FieldDrop(idField) {Relation = relationField.Relation};
+                    fieldsToAdd.Add(drop);
                 }
                 entityDrop.Fields.AddRange(fieldsToAdd);
             }
@@ -75,12 +98,12 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
                     joinTypeName = PluralizationHelper.Pluralize(joinTypeName);
                     var joinField = new Field()
                     {
-                        Name = manyToManyField.Name,
-                        Relation = new Relation() { Primary = true, HasOne = false, WithOne = true },
+                        Name = manyToManyField.Name, 
                         Type = new Core.Models.Type()
                         { BaseTypeKind = TypeKind.Entity, EntityName = joinTypeName, IsArray = true }
                     };
-                    entityDrop.Fields.Add(new FieldDrop(joinField));
+                    var drop = new FieldDrop(joinField) {Relation = manyToManyField.Relation};
+                    entityDrop.Fields.Add(drop);
 
                     var currentEntityRefField = new Field()
                     {

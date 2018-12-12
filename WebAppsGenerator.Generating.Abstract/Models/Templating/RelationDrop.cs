@@ -10,6 +10,7 @@ namespace WebAppsGenerator.Generating.Abstract.Models.Templating
         public bool WithOne { get;  }
         public bool WithMany { get;  }
         public bool Primary { get; }
+        public string SecondFieldName { get; }
 
         public bool HasOneWithOne => HasOne && WithOne;
         public bool HasOneWithMany => HasOne && WithMany;
@@ -25,6 +26,19 @@ namespace WebAppsGenerator.Generating.Abstract.Models.Templating
             WithMany = relation.WithMany;
 
             Primary = relation.Primary;
+            SecondFieldName = relation.SecondFieldName;
+        }
+
+        public RelationDrop(RelationDrop relationDrop)
+        {
+            HasOne = relationDrop.HasOne;
+            HasMany = relationDrop.HasMany;
+
+            WithOne = relationDrop.WithOne;
+            WithMany = relationDrop.WithMany;
+
+            Primary = relationDrop.Primary;
+            SecondFieldName = relationDrop.SecondFieldName;
         }
     }
 }

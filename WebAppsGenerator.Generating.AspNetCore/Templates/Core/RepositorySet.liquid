@@ -8,7 +8,7 @@ namespace Bookstore.Core.Services
         public RepositorySet(
 
 		{%- for entity in Params.Entities -%}
-		IRepository<{{ entity.Name }}, {{  entity.IdField.Type.Name }}> {{ entity.Name | Downcase}}Repo{%- unless forloop.last == true -%},{%- endunless -%}
+		IRepository<{{ entity.Name }}, {{  entity.IdField.Type.Name }}> {{ entity.Name | Downcase}}Repo{%- unless forloop.last -%},{%- endunless -%}
 
 		{%- endfor -%}
 		)
@@ -19,7 +19,7 @@ namespace Bookstore.Core.Services
         }
 
 		{%- for entity in Params.Entities -%}
-		public IRepository<{{ entity.Name }}, {{ entity.IdField.Type.Name }}> {{ entity.Name }}Repo { get; set; }
+		public IRepository<{{ entity.Name }}, {{ entity.IdField.Type.Name }}> {{ entity.Name }}Repo { get; }
 		{%- endfor -%}
     }
 }

@@ -3,14 +3,52 @@ using Microsoft.EntityFrameworkCore;
 
 namespace {{Params.CoreProjectName}}.Context
 {
-	public class AppDbContext: DbContext
+	public partial class AppDbContext: DbContext
 	{
 		public AppDbContext(DbContextOptions options) : base(options)
 	    {
 	    }
 
-		{% for entity in Params.Entities %}
+		{%- for entity in Params.Entities -%}
 		public DbSet<{{ entity.Name }}> {{ entity.PluralName }} { get; set; }
-		{% endfor %}
+		{%- endfor -%}
+
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
+	    {
+            base.OnModelCreating(modelBuilder);
+
+			{%- for entity in Params.Entities -%}
+				{%- if entity.IsJoinModel -%}
+			modelBuilder.Entity<{{entity.Name}}>()
+				.HasKey(t => new
+					{
+					{%- for prop in entity.Fields -%}
+						{%- if prop.Type.IsSimpleType -%}
+						t.{{prop.Name}}{%- unless forloop.last -%},{%- endunless %}
+						{%- endif -%}
+					{%- endfor -%}
+					}
+				);
+				{%- continue -%}
+				{%- endif -%}
+
+				{%- for prop in entity.Fields -%}
+					{%- unless prop.Type.IsSimpleType -%}
+						{%- if prop.Relation.HasManyWithMany -%}
+			modelBuilder.Entity<{{prop.Type.EntityName}}>()
+	            .HasOne(j => j.{{entity.Name}})
+	            .WithMany(e => e.{{prop.Name}})
+	            .HasForeignKey(j => j.{{entity.Name}}Id);
+						{%- elsif prop.Relation.HasOneWithOne -%}
+			modelBuilder.Entity<{{entity.Name}}>()
+	            .HasOne(e => e.{{prop.Name}})
+	            .WithOne(e => e.{{prop.Relation.SecondFieldName}})
+	            .HasForeignKey<{{prop.Type.EntityName}}>(e => e.{{prop.Relation.SecondFieldName}}Id);
+						{%- endif -%}
+					{%- endunless -%}
+				{%- endfor -%}
+			{%- endfor -%}
+
+		}
 	}
 }

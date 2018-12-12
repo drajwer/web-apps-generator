@@ -17,6 +17,7 @@
     <None Remove="Templates\WebApi\BaseViewModel.liquid" />
     <None Remove="Templates\WebApi\ProjectFile.liquid" />
     <None Remove="Templates\WebApi\Startup.liquid" />
+    <None Remove="Templates\WebApi\StartupExtensions.liquid" />
     <None Remove="Templates\WebApi\ViewModel.liquid" />
   </ItemGroup>
 
@@ -31,6 +32,7 @@
     <EmbeddedResource Include="Templates\Core\Entity.liquid" />
     <EmbeddedResource Include="Templates\WebApi\appsettings.liquid" />
     <EmbeddedResource Include="Templates\WebApi\BaseViewModel.liquid" />
+    <EmbeddedResource Include="Templates\WebApi\StartupExtensions.liquid" />
     <EmbeddedResource Include="Templates\WebApi\ViewModel.liquid" />
     <EmbeddedResource Include="Templates\WebApi\Startup.liquid" />
     <EmbeddedResource Include="Templates\WebApi\ProjectFile.liquid" />

@@ -59,7 +59,8 @@ namespace WebAppsGenerator.Core.Services
                     {
                         HasOne = !entityField.Type.IsArray,
                         WithOne = !referencedField?.Type.IsArray ?? false,
-                        Primary = referencedField == null || entity.Name.CompareTo(referencedEntity.Name) >= 0
+                        Primary = referencedField == null || entity.Name.CompareTo(referencedEntity.Name) >= 0,
+                        SecondFieldName = referencedField?.Name
                     };
                 }
             }

@@ -10,9 +10,9 @@ namespace {{Params.WebApiProjectName}}.Controllers
     [ApiController]
     public class {{Params.Entity.PluralName}}Controller : ControllerBase
     {
-        private readonly ICrudService<{{Params.Entity.Name}}> _service;
+        private readonly ICrudService<{{Params.Entity.Name}}, {{Params.Entity.IdField.Type.Name}}> _service;
 
-        public {{Params.Entity.PluralName}}Controller(ICrudService<{{Params.Entity.Name}}> service)
+        public {{Params.Entity.PluralName}}Controller(ICrudService<{{Params.Entity.Name}}, {{Params.Entity.IdField.Type.Name}}> service)
         {
             _service = service;
         }
@@ -26,9 +26,9 @@ namespace {{Params.WebApiProjectName}}.Controllers
             return new JsonResult(viewModels);
         }
 
-        // GET api/{{ Params.Entity.PluralName | Downcase }}/5
+        // GET api/{{ Params.Entity.PluralName | Downcase }}/{%- if Params.Entity.IdField.Type.Name == 'int' -%}5{%- else -%}some-string-id{%- endif %}
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public IActionResult Get({{Params.Entity.IdField.Type.Name}} id)
         {
             var entity = _service.GetWithChildren(id);
             if(entity == null)
@@ -47,9 +47,9 @@ namespace {{Params.WebApiProjectName}}.Controllers
             return new JsonResult(viewModel);
         }
 
-        // PUT api/{{ Params.Entity.PluralName | Downcase }}/5
+        // PUT api/{{ Params.Entity.PluralName | Downcase }}/{%- if Params.Entity.IdField.Type.Name == 'int' -%}5{%- else -%}some-string-id{%- endif %}
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] {{Params.Entity.Name}}ViewModel value)
+        public IActionResult Put({{Params.Entity.IdField.Type.Name}} id, [FromBody] {{Params.Entity.Name}}ViewModel value)
         {
 			var entity = value.CreateModel();
             var returned = _service.Update(id, entity);
@@ -57,9 +57,9 @@ namespace {{Params.WebApiProjectName}}.Controllers
             return new JsonResult(viewModel);
         }
 
-        // DELETE api/{{ Params.Entity.PluralName | Downcase }}/5
+        // DELETE api/{{ Params.Entity.PluralName | Downcase }}/{%- if Params.Entity.IdField.Type.Name == 'int' -%}5{%- else -%}some-string-id{%- endif %}
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public IActionResult Delete({{Params.Entity.IdField.Type.Name}} id)
         {
             _service.Delete(id);
             return new JsonResult(id);
