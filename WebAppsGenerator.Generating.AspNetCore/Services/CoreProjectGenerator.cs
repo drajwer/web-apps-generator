@@ -130,6 +130,27 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
             }
         }
 
+        private void GenerateTransactionScope()
+        {
+            var interfaceFileInfo = new FileInfo
+            {
+                NameTemplate = "ITransactionScope.cs",
+                TemplatePath = "Core.ITransactionScope.liquid",
+                OutputPath = Path.Combine(_pathService.CoreDirPath, "Interfaces")
+            };
+            var serviceFileInfo = new FileInfo
+            {
+                NameTemplate = "TransactionScope.cs",
+                TemplatePath = "Core.TransactionScope.liquid",
+                OutputPath = Path.Combine(_pathService.CoreDirPath, "Services")
+            };
+
+            _fileService.CreateFromTemplate(interfaceFileInfo, new WebApiBaseDrop(_pathService, GeneratorConfiguration));
+            _fileService.CreateFromTemplate(serviceFileInfo, new WebApiBaseDrop(_pathService, GeneratorConfiguration));
+        }
+
+
+
         private static List<ModelDrop> GetModelDrops(IEnumerable<Entity> entities)
         {
             var service = new ModelService();

@@ -11,10 +11,12 @@ namespace {{Params.WebApiProjectName}}.Controllers
     public class {{Params.Entity.PluralName}}Controller : ControllerBase
     {
         private readonly ICrudService<{{Params.Entity.Name}}, {{Params.Entity.IdField.Type.Name}}> _service;
+		private readonly ITransactionScopeFactory _scopeFactory;
 
-        public {{Params.Entity.PluralName}}Controller(ICrudService<{{Params.Entity.Name}}, {{Params.Entity.IdField.Type.Name}}> service)
+        public {{Params.Entity.PluralName}}Controller(ICrudService<{{Params.Entity.Name}}, {{Params.Entity.IdField.Type.Name}}> service, ITransactionScopeFactory scopeFactory)
         {
             _service = service;
+            _scopeFactory = scopeFactory;
         }
 
         // GET api/{{ Params.Entity.PluralName | Downcase }}
@@ -41,28 +43,43 @@ namespace {{Params.WebApiProjectName}}.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] {{Params.Entity.Name}}ViewModel value)
         {
-            var entity = value.CreateModel();
-            var returned = _service.Create(entity);
-            var viewModel = new {{Params.Entity.Name}}ViewModel(returned);
-            return new JsonResult(viewModel);
+			using (var tran = _scopeFactory.BeginTransaction())
+            {
+				var entity = value.CreateModel();
+				var returned = _service.Create(entity);
+				var viewModel = new {{Params.Entity.Name}}ViewModel(returned);
+                tran.Commit();
+				
+				return new JsonResult(viewModel);
+			}
         }
 
         // PUT api/{{ Params.Entity.PluralName | Downcase }}/{%- if Params.Entity.IdField.Type.Name == 'int' -%}5{%- else -%}some-string-id{%- endif %}
         [HttpPut("{id}")]
         public IActionResult Put({{Params.Entity.IdField.Type.Name}} id, [FromBody] {{Params.Entity.Name}}ViewModel value)
         {
-			var entity = value.CreateModel();
-            var returned = _service.Update(id, entity);
-            var viewModel = new {{Params.Entity.Name}}ViewModel(returned);
-            return new JsonResult(viewModel);
+			using (var tran = _scopeFactory.BeginTransaction())
+            {
+				var entity = value.CreateModel();
+				var returned = _service.Update(id, entity);
+				var viewModel = new {{Params.Entity.Name}}ViewModel(returned);
+                tran.Commit();
+				
+				return new JsonResult(viewModel);
+			}
         }
 
         // DELETE api/{{ Params.Entity.PluralName | Downcase }}/{%- if Params.Entity.IdField.Type.Name == 'int' -%}5{%- else -%}some-string-id{%- endif %}
         [HttpDelete("{id}")]
         public IActionResult Delete({{Params.Entity.IdField.Type.Name}} id)
         {
-            _service.Delete(id);
-            return new JsonResult(id);
+			using (var tran = _scopeFactory.BeginTransaction())
+            {
+				_service.Delete(id);
+                tran.Commit();
+				
+				return new JsonResult(id);
+			}
         }
     }
 }

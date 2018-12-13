@@ -24,7 +24,10 @@ namespace {{Params.WebApiProjectName}}
         {			
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddGeneratedServices();
+
+            services.AddDbServices();
+            services.AddGeneratedCrudServices();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 

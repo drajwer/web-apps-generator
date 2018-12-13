@@ -1,0 +1,59 @@
+﻿using {{Params.CoreProjectName}}.Context;
+using {{Params.CoreProjectName}}.Interfaces;
+using Microsoft.EntityFrameworkCore.Storage;
+
+namespace {{Params.CoreProjectName}}.Services
+{
+    public class DbTransactionScopeFactory : ITransactionScopeFactory
+    {
+        private readonly AppDbContext _dbContext;
+
+        public DbTransactionScopeFactory(AppDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
+        public ITransactionScope BeginTransaction()
+        {
+            return new DbTransactionScope(_dbContext);
+        }
+    }
+
+    public class DbTransactionScope : ITransactionScope
+    {
+        private readonly AppDbContext _dbContext;
+        private readonly IDbContextTransaction _transaction;
+        private bool _rollbackOnDisposal;
+        private bool _disposed;
+
+        public DbTransactionScope(AppDbContext dbContext)
+        {
+            _dbContext = dbContext;
+            _transaction = _dbContext.Database.BeginTransaction();
+            _rollbackOnDisposal = true;
+        }
+        public void Dispose()
+        {
+            if (!_disposed)
+            {
+                if(_rollbackOnDisposal)
+                    Rollback();
+                _transaction.Dispose();
+                _disposed = true;
+            }
+        }
+
+        public void Commit()
+        {
+            _dbContext.SaveChanges();
+            _transaction.Commit();
+            _rollbackOnDisposal = false;
+        }
+
+        public void Rollback()
+        {
+            _transaction.Rollback();
+            _rollbackOnDisposal = false;
+        }
+    }
+}

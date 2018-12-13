@@ -10,8 +10,10 @@
     <None Remove="Templates\Core\CrudService.liquid" />
     <None Remove="Templates\Core\ICrudService.liquid" />
     <None Remove="Templates\Core\IRepository.liquid" />
+    <None Remove="Templates\Core\ITransactionScope.liquid" />
     <None Remove="Templates\Core\Repository.liquid" />
     <None Remove="Templates\Core\RepositorySet.liquid" />
+    <None Remove="Templates\Core\TransactionScope.liquid" />
     <None Remove="Templates\Entity.liquid" />
     <None Remove="Templates\WebApi\appsettings.liquid" />
     <None Remove="Templates\WebApi\BaseViewModel.liquid" />
@@ -24,6 +26,8 @@
   <ItemGroup>
     <EmbeddedResource Include="Templates\Core\BaseCrudService.liquid" />
     <EmbeddedResource Include="Templates\Core\CrudService.liquid" />
+    <EmbeddedResource Include="Templates\Core\TransactionScope.liquid" />
+    <EmbeddedResource Include="Templates\Core\ITransactionScope.liquid" />
     <EmbeddedResource Include="Templates\Core\RepositorySet.liquid" />
     <EmbeddedResource Include="Templates\Core\ICrudService.liquid" />
     <EmbeddedResource Include="Templates\Core\IRepository.liquid" />
