@@ -1,0 +1,107 @@
+{
+  "Core": {
+    "ITransactionScope": {
+      "FileInfo": {
+        "NameTemplate": "ITransactionScope.cs",
+        "TemplatePath": "Core.ITransactionScope.liquid",
+        "OutputPath": "Interfaces"
+      },
+      "DropId": "WebApiBase",
+      "Multiple": false
+    },
+    "TransactionScope": {
+      "FileInfo": {
+        "NameTemplate": "DbTransactionScope.cs",
+        "TemplatePath": "Core.TransactionScope.liquid",
+        "OutputPath": "Services"
+      },
+      "DropId": "WebApiBase",
+      "Multiple": false
+
+    },
+    "BaseCrudService": {
+      "FileInfo": {
+        "NameTemplate": "{{Params.Entity.Name}}BaseCrudService.cs",
+        "TemplatePath": "Core.BaseCrudService.liquid",
+        "OutputPath": "Services/Generated"
+      },
+      "DropId": "ModelDropsNoJoins",
+      "Multiple": true
+    },
+    "CrudService": {
+      "FileInfo": {
+        "NameTemplate": "{{Params.Entity.Name}}CrudService.cs",
+        "TemplatePath": "Core.CrudService.liquid",
+        "OutputPath": "Services"
+      },
+      "DropId": "ModelDropsNoJoins",
+      "Multiple": true
+    },
+    "ICrudService": {
+      "FileInfo": {
+        "NameTemplate": "ICrudService.cs",
+        "TemplatePath": "Core.ICrudService.liquid",
+        "OutputPath": "Interfaces"
+      },
+      "DropId": "WebApiBase",
+      "Multiple": false
+    },
+    "DbContext": {
+      "FileInfo": {
+        "NameTemplate": "AppDbContext.cs",
+        "TemplatePath": "Core.AppDbContext.liquid",
+        "OutputPath": "Context"
+      },
+      "DropId": "ModelList",
+      "Multiple": false
+    },
+    "Model": {
+      "FileInfo": {
+        "NameTemplate": "{{Params.Entity.Name}}.cs",
+        "TemplatePath": "Core.Entity.liquid",
+        "OutputPath": "Models"
+      },
+      "DropId": "ModelDropsNoJoins",
+      "Multiple": true
+    },
+    "JoinModel": {
+      "FileInfo": {
+        "NameTemplate": "{{Params.Entity.Name}}.cs",
+        "TemplatePath": "Core.Entity.liquid",
+        "OutputPath": "Models/Joins"
+      },
+      "DropId": "ModelDropsJoins",
+      "Multiple": true
+    },
+    "Repository": {
+      "FileInfo": {
+        "NameTemplate": "Repository.cs",
+        "TemplatePath": "Core.Repository.liquid",
+        "OutputPath": "Context"
+      },
+      "DropId": "WebApiBase",
+      "Multiple": false
+    },
+    "IRepository": {
+      "FileInfo": {
+        "NameTemplate": "IRepository.cs",
+        "TemplatePath": "Core.IRepository.liquid",
+        "OutputPath": "Interfaces"
+      },
+      "DropId": "WebApiBase",
+      "Multiple": false
+    },
+    "RepositorySet": {
+      "FileInfo": {
+        "NameTemplate": "RepositorySet.cs",
+        "TemplatePath": "Core.RepositorySet.liquid",
+        "OutputPath": "Services"
+      },
+      "DropId": "ModelListNoJoins",
+      "Multiple": false
+    }
+  },
+  "WebApi": {
+
+  }
+}

@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="template-config.json" />
     <None Remove="Templates\Core\AppDbContext.liquid" />
     <None Remove="Templates\Core\BaseCrudService.liquid" />
     <None Remove="Templates\Core\CrudService.liquid" />
@@ -24,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="template-config.json" />
     <EmbeddedResource Include="Templates\Core\BaseCrudService.liquid" />
     <EmbeddedResource Include="Templates\Core\CrudService.liquid" />
     <EmbeddedResource Include="Templates\Core\TransactionScope.liquid" />

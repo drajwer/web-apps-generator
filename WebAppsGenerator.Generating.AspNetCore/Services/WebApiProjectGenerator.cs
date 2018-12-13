@@ -14,7 +14,9 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
         private readonly SolutionPathService _pathService;
         private readonly IFileService _fileService;
 
-        public WebApiProjectGenerator(IGeneratorConfiguration generatorConfiguration, IFileService fileService) : base(generatorConfiguration)
+        public WebApiProjectGenerator(IGeneratorConfiguration generatorConfiguration, IFileService fileService,
+            ICoreProjectTemplatingConfigProvider templatingConfigProvider, CSharpDropFactory dropFactory)
+            : base(generatorConfiguration, dropFactory, templatingConfigProvider, fileService)
         {
             _fileService = fileService;
             _pathService = new SolutionPathService(generatorConfiguration);

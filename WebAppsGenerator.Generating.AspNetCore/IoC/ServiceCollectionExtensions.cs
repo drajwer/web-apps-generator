@@ -44,6 +44,12 @@ namespace WebAppsGenerator.Generating.AspNetCore.IoC
             services.AddScoped<CoreProjectGenerator>(); 
             services.AddScoped<MigrationService>();
             services.AddScoped<SolutionPathService>();
+
+            services.AddScoped<ICoreProjectTemplatingConfigProvider, CoreProjectTemplatingConfigProvider>();
+            services.AddScoped<IWebApiProjectTemplatingConfigProvider, WebApiProjectTemplatingConfigProvider>();
+            services.AddScoped<CSharpDropFactory>();
+
+            services.AddScoped<ModelService>();
         }
     }
 }
