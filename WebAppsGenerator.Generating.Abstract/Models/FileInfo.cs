@@ -6,6 +6,16 @@ namespace WebAppsGenerator.Generating.Abstract.Models
 {
     public class FileInfo
     {
+        public FileInfo(string nameTemplate, string templatePath, string outputPath)
+        {
+            NameTemplate = nameTemplate;
+            TemplatePath = templatePath;
+            OutputPath = outputPath;
+        }
+
+        public FileInfo()
+        {
+        }
         /// <summary>
         /// Template used to generate file name
         /// </summary>

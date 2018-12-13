@@ -20,6 +20,7 @@ namespace WebAppsGenerator.Tests.Generating.AspNetCore
         private CommandLineServiceMock _commandLineService;
         private bool _webApiGeneratorCalled;
         private bool _coreGeneratorCalled;
+        private bool _webUiGeneratorCalled;
 
         [TestInitialize]
         public void Setup()
@@ -30,8 +31,10 @@ namespace WebAppsGenerator.Tests.Generating.AspNetCore
             webApiGenerator.Setup(g => g.Generate(It.IsAny<IEnumerable<Entity>>())).Callback(() => _webApiGeneratorCalled = true);
             var coreGenerator = new Mock<IGenerator>();
             coreGenerator.Setup(g => g.Generate(It.IsAny<IEnumerable<Entity>>())).Callback(() => _coreGeneratorCalled = true);
+            var webGenerator = new Mock<IGenerator>();
+            webGenerator.Setup(g => g.Generate(It.IsAny<IEnumerable<Entity>>())).Callback(() => _webUiGeneratorCalled = true);
 
-            _generator = new SolutionGenerator(_configuration, _commandLineService, webApiGenerator.Object, coreGenerator.Object);
+            _generator = new SolutionGenerator(_configuration, _commandLineService, webApiGenerator.Object, coreGenerator.Object, webGenerator.Object);
         }
 
         [TestMethod]
@@ -72,7 +75,8 @@ namespace WebAppsGenerator.Tests.Generating.AspNetCore
             // Assert
             Assert.IsTrue(_webApiGeneratorCalled);
             Assert.IsTrue(_coreGeneratorCalled);
-            Assert.AreEqual(5, _commandLineService.Commands.Count);
+            Assert.IsTrue(_webUiGeneratorCalled);
+            Assert.AreEqual(6, _commandLineService.Commands.Count);
             Assert.IsTrue(_commandLineService.Commands.All(c => c.StartsWith("dotnet")));
             // TODO: Assert if commands executed in correct order and with valid args.
         }
