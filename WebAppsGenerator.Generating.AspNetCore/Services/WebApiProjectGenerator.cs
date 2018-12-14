@@ -15,21 +15,11 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
         private readonly IFileService _fileService;
 
         public WebApiProjectGenerator(IGeneratorConfiguration generatorConfiguration, IFileService fileService,
-            ICoreProjectTemplatingConfigProvider templatingConfigProvider, CSharpDropFactory dropFactory)
+            IWebApiProjectTemplatingConfigProvider templatingConfigProvider, CSharpDropFactory dropFactory)
             : base(generatorConfiguration, dropFactory, templatingConfigProvider, fileService)
         {
             _fileService = fileService;
             _pathService = new SolutionPathService(generatorConfiguration);
-        }
-
-        public override void Generate(IEnumerable<Entity> entities)
-        {
-            GenerateCsProj();
-            GenerateAppsettings();
-
-            GenerateStartup(entities);
-            GenerateViewModels(entities);
-            GenerateControllers(entities);
         }
 
         private void GenerateViewModels(IEnumerable<Entity> entities)

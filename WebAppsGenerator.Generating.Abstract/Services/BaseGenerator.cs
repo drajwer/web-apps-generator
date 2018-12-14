@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using DotLiquid;
 using WebAppsGenerator.Core.Models;
 using WebAppsGenerator.Generating.Abstract.Interfaces;
@@ -24,12 +27,21 @@ namespace WebAppsGenerator.Generating.Abstract.Services
 
         public virtual void Generate(IEnumerable<Entity> entities)
         {
-            throw new System.NotImplementedException();
+            var templatingConfigs = ConfigProvider.GetTemplatingConfigs();
+            foreach (var templatingConfig in templatingConfigs)
+            {
+                GenerateSection(entities, templatingConfig);
+            }
         }
 
         public virtual void GenerateSection(string sectionName, IEnumerable<Entity> entities)
         {
             var templatingConfig = ConfigProvider.GetConfig(sectionName);
+            GenerateSection(entities, templatingConfig);
+        }
+
+        private void GenerateSection(IEnumerable<Entity> entities, Models.TemplatingConfig templatingConfig)
+        {
             if (templatingConfig.Multiple)
             {
                 var baseDrops = DropFactory.CreateDropList(templatingConfig.DropId, entities);
@@ -44,6 +56,7 @@ namespace WebAppsGenerator.Generating.Abstract.Services
                 FileService.CreateFromTemplate(templatingConfig.FileInfo, drop);
             }
         }
+
         public virtual void GenerateSection(string sectionName, IEnumerable<Drop> drops)
         {
             var templatingConfig = ConfigProvider.GetConfig(sectionName);

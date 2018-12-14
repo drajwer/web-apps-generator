@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using WebAppsGenerator.Generating.Abstract.Interfaces;
 using WebAppsGenerator.Generating.Abstract.Models;
@@ -24,9 +25,23 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
         protected override TemplatingConfig ReadConfig(string sectionName)
         {
             var config = base.ReadConfig(sectionName);
-            config.FileInfo.OutputPath = config.FileInfo.OutputPath.Split('/')
-                .Aggregate(_pathService.CoreDirPath, Path.Combine);
+            if (config?.FileInfo != null)
+            {
+                config.FileInfo.OutputPath = config.FileInfo.OutputPath.Split('/')
+                    .Aggregate(_pathService.WebApiDirPath, Path.Combine);
+            }
             return config;
+        }
+
+        public override IEnumerable<TemplatingConfig> GetTemplatingConfigs()
+        {
+            foreach (var templatingConfig in base.GetTemplatingConfigs())
+            {
+                templatingConfig.FileInfo.OutputPath =
+                    Path.Combine(_pathService.CoreDirPath, templatingConfig.FileInfo.OutputPath);
+
+                yield return templatingConfig;
+            }
         }
     }
 
@@ -41,9 +56,23 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
         protected override TemplatingConfig ReadConfig(string sectionName)
         {
             var config = base.ReadConfig(sectionName);
-            config.FileInfo.OutputPath = config.FileInfo.OutputPath.Split('/')
-                .Aggregate(_pathService.CoreDirPath, Path.Combine);
+            if (config?.FileInfo != null)
+            {
+                config.FileInfo.OutputPath = config.FileInfo.OutputPath.Split('/')
+                    .Aggregate(_pathService.WebApiDirPath, Path.Combine);
+            }
             return config;
+        }
+
+        public override IEnumerable<TemplatingConfig> GetTemplatingConfigs()
+        {
+            foreach (var templatingConfig in base.GetTemplatingConfigs())
+            {
+                templatingConfig.FileInfo.OutputPath =
+                    Path.Combine(_pathService.WebApiDirPath, templatingConfig.FileInfo.OutputPath);
+
+                yield return templatingConfig;
+            }
         }
     }
 }

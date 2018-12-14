@@ -28,45 +28,10 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
             var sampleControllerPath = Path.Combine(PathService.CoreDirPath, "Class1.cs");
             File.Delete(sampleControllerPath);
 
-            GenerateModels(entities);
-            GenerateDbContext(entities);
-            GenerateRepository(entities);
-            GenerateCrudServices(entities);
-            GenerateTransactionScope(entities);
+            base.Generate(entities);
 
             _migrationService.AddMigration("Init");
             _migrationService.UpdateDatabase();
-        }
-
-        private void GenerateModels(IEnumerable<Entity> entities)
-        {
-            GenerateSection("Model", entities);
-            GenerateSection("JoinModel", entities);
-        }
-
-        private void GenerateDbContext(IEnumerable<Entity> entities)
-        {
-            GenerateSection("DbContext", entities);
-        }
-
-        private void GenerateRepository(IEnumerable<Entity> entities)
-        {
-            GenerateSection("Repository", entities);
-            GenerateSection("IRepository", entities);
-            GenerateSection("RepositorySet", entities);
-        }
-
-        private void GenerateCrudServices(IEnumerable<Entity> entities)
-        {
-            GenerateSection("ICrudService", entities);
-            GenerateSection("BaseCrudService", entities);
-            GenerateSection("CrudService", entities);
-        }
-
-        private void GenerateTransactionScope(IEnumerable<Entity> entities)
-        {
-            GenerateSection("ITransactionScope", entities);
-            GenerateSection("TransactionScope", entities);
         }
     }
 }
