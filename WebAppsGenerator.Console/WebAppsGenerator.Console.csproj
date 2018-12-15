@@ -18,6 +18,7 @@
     <ProjectReference Include="..\WebAppsGenerator.Core\WebAppsGenerator.Core.csproj" />
     <ProjectReference Include="..\WebAppsGenerator.Generating.Abstract\WebAppsGenerator.Generating.Abstract.csproj" />
     <ProjectReference Include="..\WebAppsGenerator.Generating.AspNetCore\WebAppsGenerator.Generating.AspNetCore.csproj" />
+    <ProjectReference Include="..\WebAppsGenerator.Generating.WebUi\WebAppsGenerator.Generating.WebUi.csproj" />
   </ItemGroup>
 
 </Project>

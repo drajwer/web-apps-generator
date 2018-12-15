@@ -16,17 +16,15 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
         private readonly ICommandLineService _commandLineService;
         private readonly IGenerator _webApiProjectGenerator;
         private readonly IGenerator _coreProjectGenerator;
-        private readonly IGenerator _webGenerator;
         private readonly IGeneratorConfiguration _generatorConfiguration;
         private readonly SolutionPathService _pathService;
 
         public SolutionGenerator(IGeneratorConfiguration generatorConfiguration, ICommandLineService commandLineService,
-            IGenerator webApiProjectGenerator, IGenerator coreProjectGenerator, IGenerator webGenerator) : base(generatorConfiguration)
+            IGenerator webApiProjectGenerator, IGenerator coreProjectGenerator) : base(generatorConfiguration)
         {
             _commandLineService = commandLineService;
             _webApiProjectGenerator = webApiProjectGenerator;
             _coreProjectGenerator = coreProjectGenerator;
-            _webGenerator = webGenerator;
             _generatorConfiguration = generatorConfiguration;
             _pathService = new SolutionPathService(generatorConfiguration);
         }
@@ -42,7 +40,6 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
 
             _webApiProjectGenerator.Generate(entities);
             _coreProjectGenerator.Generate(entities);
-            _webGenerator.Generate(entities);
         }
 
         private void CreateSolutionWithProjects()

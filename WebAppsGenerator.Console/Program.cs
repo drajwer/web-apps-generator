@@ -14,6 +14,7 @@ using WebAppsGenerator.Generating.Abstract.Interfaces;
 using WebAppsGenerator.Generating.Abstract.Options;
 using WebAppsGenerator.Generating.Abstract.Services;
 using WebAppsGenerator.Generating.AspNetCore.IoC;
+using WebAppsGenerator.Generating.WebUi.IoC;
 
 namespace WebAppsGenerator.Console
 {
@@ -35,23 +36,27 @@ namespace WebAppsGenerator.Console
             lexer.AddErrorListener(new SneakLexerErrorListener(concatFileService));
 
             var commonTokenStream = new CommonTokenStream(lexer);
-            
+
             var parser = new SneakParser(commonTokenStream);
             parser.RemoveErrorListeners();
             parser.AddErrorListener(new SneakParserErrorListener(concatFileService));
 
             var fileContext = parser.file();
 
-            var visitor = (SneakParserMappingVisitor) ServiceProvider.GetService<ISneakParserVisitor<object>>();
+            var visitor = (SneakParserMappingVisitor)ServiceProvider.GetService<ISneakParserVisitor<object>>();
 
             visitor.Visit(fileContext);
 
             var validator = ServiceProvider.GetService<IValidator>();
             validator.ValidateEntities(visitor.Entities.Values);
+
             // pass visitor's results to generator
-            var generator = ServiceProvider.GetService<IGenerator>();
-            generator.Generate(visitor.Entities.Values);
-            
+            var generators = ServiceProvider.GetServices<IGenerator>();
+            foreach (var generator in generators)
+            {
+                generator.Generate(visitor.Entities.Values);
+            }
+
             System.Console.ReadKey();
         }
 
@@ -70,6 +75,7 @@ namespace WebAppsGenerator.Console
             services.AddScoped<Generating.Abstract.Interfaces.IFileService, FileService>();
             services.AddScoped<IValidator, BaseValidator>();
             services.AddAspNetCoreGenerator();
+            services.AddWebUiCoreGenerator();
 
             ServiceProvider = services.BuildServiceProvider();
         }

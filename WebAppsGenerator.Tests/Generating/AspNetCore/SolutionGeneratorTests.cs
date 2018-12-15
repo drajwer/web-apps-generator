@@ -34,7 +34,7 @@ namespace WebAppsGenerator.Tests.Generating.AspNetCore
             var webGenerator = new Mock<IGenerator>();
             webGenerator.Setup(g => g.Generate(It.IsAny<IEnumerable<Entity>>())).Callback(() => _webUiGeneratorCalled = true);
 
-            _generator = new SolutionGenerator(_configuration, _commandLineService, webApiGenerator.Object, coreGenerator.Object, webGenerator.Object);
+            _generator = new SolutionGenerator(_configuration, _commandLineService, webApiGenerator.Object, coreGenerator.Object);
         }
 
         [TestMethod]

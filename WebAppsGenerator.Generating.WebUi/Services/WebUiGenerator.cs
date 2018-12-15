@@ -6,11 +6,11 @@ using System.Reflection;
 using WebAppsGenerator.Core.Models;
 using WebAppsGenerator.Core.Services;
 using WebAppsGenerator.Generating.Abstract.Interfaces;
+using WebAppsGenerator.Generating.Abstract.Models.Templating;
 using WebAppsGenerator.Generating.Abstract.Services;
-using WebAppsGenerator.Generating.AspNetCore.Models.Templating;
 using FileInfo = WebAppsGenerator.Generating.Abstract.Models.FileInfo;
 
-namespace WebAppsGenerator.Generating.AspNetCore.Services
+namespace WebAppsGenerator.Generating.WebUi.Services
 {
     public class WebUiGenerator : BaseGenerator
     {
@@ -28,7 +28,7 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
 
         public override void Generate(IEnumerable<Entity> entities)
         {
-            CreateApp();
+            //CreateApp();
             RemoveUnnecessaryFiles();
             AddBasicFiles();
             AddManyTemplates("screens", _pathService.ScreensDir);
@@ -71,7 +71,7 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
                     TemplatePath = screen.Substring(screen.IndexOf("WebUI", StringComparison.Ordinal)),
                     OutputPath = Path.Combine(outputMainDirectory, parts[parts.Length - 4])
                 };
-                _fileService.CreateFromTemplate(fileInfo, new WebApiBaseDrop(_pathService, GeneratorConfiguration));
+                _fileService.CreateFromTemplate(fileInfo, new BaseDrop(GeneratorConfiguration));
             }
         }
 
@@ -84,7 +84,7 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
             };
             foreach (var fileInfo in fileInfos)
             {
-                _fileService.CreateFromTemplate(fileInfo, new WebApiBaseDrop(_pathService, GeneratorConfiguration));
+                _fileService.CreateFromTemplate(fileInfo, new BaseDrop(GeneratorConfiguration));
             }
 
         }

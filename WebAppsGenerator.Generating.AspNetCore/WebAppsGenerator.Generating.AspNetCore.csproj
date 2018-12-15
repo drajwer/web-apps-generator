@@ -11,12 +11,6 @@
     <None Remove="Templates\WebApi\appsettings.liquid" />
     <None Remove="Templates\WebApi\ProjectFile.liquid" />
     <None Remove="Templates\WebApi\Startup.liquid" />
-    <None Remove="Templates\WebUI\src\components\App.tsx.liquid" />
-    <None Remove="Templates\WebUI\src\index.tsx.liquid" />
-    <None Remove="Templates\WebUI\src\routing\Router.tsx.liquid" />
-    <None Remove="Templates\WebUI\src\screens\App\App.css.liquid" />
-    <None Remove="Templates\WebUI\src\screens\MainPage\MainPage.css.liquid" />
-    <None Remove="Templates\WebUI\src\screens\MainPage\MainPage.tsx.liquid" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,12 +20,6 @@
     <EmbeddedResource Include="Templates\WebApi\appsettings.liquid" />
     <EmbeddedResource Include="Templates\WebApi\Startup.liquid" />
     <EmbeddedResource Include="Templates\WebApi\ProjectFile.liquid" />
-    <EmbeddedResource Include="Templates\WebUI\src\screens\App\App.css.liquid" />
-    <EmbeddedResource Include="Templates\WebUI\src\screens\App\App.tsx.liquid" />
-    <EmbeddedResource Include="Templates\WebUI\src\index.tsx.liquid" />
-    <EmbeddedResource Include="Templates\WebUI\src\routing\Router.tsx.liquid" />
-    <EmbeddedResource Include="Templates\WebUI\src\screens\MainPage\MainPage.css.liquid" />
-    <EmbeddedResource Include="Templates\WebUI\src\screens\MainPage\MainPage.tsx.liquid" />
   </ItemGroup>
 
   <ItemGroup>
@@ -57,10 +45,6 @@
     <None Update="config.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Templates\WebUI\src\components\" />
   </ItemGroup>
 
 </Project>

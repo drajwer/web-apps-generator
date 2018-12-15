@@ -21,9 +21,8 @@ namespace WebAppsGenerator.Generating.AspNetCore.IoC
                 var commandLineService = provider.GetService<ICommandLineService>();
                 var webApiGenerator = provider.GetService<WebApiProjectGenerator>(); 
                 var coreGenerator = provider.GetService<CoreProjectGenerator>();
-                var webGenerator = provider.GetService<WebUiGenerator>();
 
-                return new SolutionGenerator(generatorConfiguration, commandLineService, webApiGenerator, coreGenerator, webGenerator);
+                return new SolutionGenerator(generatorConfiguration, commandLineService, webApiGenerator, coreGenerator);
             });
 
             return services;
@@ -39,12 +38,11 @@ namespace WebAppsGenerator.Generating.AspNetCore.IoC
 
         private static void RegisterGeneratorSpecificServices(IServiceCollection services)
         {
-            services.AddScoped(provider => new TemplateFileProvider(Assembly.GetAssembly(typeof(SolutionGenerator))));
+            //services.AddTransient(provider => new TemplateFileProvider(/*Assembly.GetAssembly(typeof(SolutionGenerator))*/));
             services.AddScoped<WebApiProjectGenerator>();
             services.AddScoped<CoreProjectGenerator>(); 
             services.AddScoped<MigrationService>();
             services.AddScoped<SolutionPathService>();
-            services.AddScoped<WebUiGenerator>();
         }
     }
 }

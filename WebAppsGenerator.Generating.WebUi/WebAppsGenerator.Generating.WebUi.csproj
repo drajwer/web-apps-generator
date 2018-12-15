@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Templates\WebUI\src\index.tsx.liquid" />
+    <None Remove="Templates\WebUI\src\routing\Router.tsx.liquid" />
+    <None Remove="Templates\WebUI\src\screens\App\App.css.liquid" />
+    <None Remove="Templates\WebUI\src\screens\App\App.tsx.liquid" />
+    <None Remove="Templates\WebUI\src\screens\MainPage\MainPage.css.liquid" />
+    <None Remove="Templates\WebUI\src\screens\MainPage\MainPage.tsx.liquid" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Templates\WebUI\src\index.tsx.liquid" />
+    <EmbeddedResource Include="Templates\WebUI\src\routing\Router.tsx.liquid" />
+    <EmbeddedResource Include="Templates\WebUI\src\screens\App\App.css.liquid" />
+    <EmbeddedResource Include="Templates\WebUI\src\screens\App\App.tsx.liquid" />
+    <EmbeddedResource Include="Templates\WebUI\src\screens\MainPage\MainPage.css.liquid" />
+    <EmbeddedResource Include="Templates\WebUI\src\screens\MainPage\MainPage.tsx.liquid" />
+  </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="DotLiquid" Version="2.0.298" />
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.1.1" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.1.1" />
+        <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.1.1" />
+    </ItemGroup>
+    
+  <ItemGroup>
+    <Folder Include="Templates\WebUI\src\components\" />
+  </ItemGroup>
+    
+  <ItemGroup>
+    <ProjectReference Include="..\WebAppsGenerator.Core\WebAppsGenerator.Core.csproj" />
+    <ProjectReference Include="..\WebAppsGenerator.Generating.Abstract\WebAppsGenerator.Generating.Abstract.csproj" />
+  </ItemGroup>
+
+</Project>
