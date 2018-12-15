@@ -12,38 +12,40 @@
     <None Remove="Templates\Core\ICrudService.liquid" />
     <None Remove="Templates\Core\IRepository.liquid" />
     <None Remove="Templates\Core\ITransactionScope.liquid" />
-    <None Remove="Templates\Core\Models\Joins\JoinEntity.liquid" />
+    <None Remove="Templates\Core\Models\Joins\JoinEntity.csh.liquid" />
     <None Remove="Templates\Core\Repository.liquid" />
     <None Remove="Templates\Core\RepositorySet.liquid" />
     <None Remove="Templates\Core\TransactionScope.liquid" />
     <None Remove="Templates\Entity.liquid" />
-    <None Remove="Templates\WebApi\appsettings.liquid" />
+    <None Remove="Templates\WebApi\appsettings.json.liquid" />
     <None Remove="Templates\WebApi\BaseViewModel.liquid" />
-    <None Remove="Templates\WebApi\ProjectFile.liquid" />
-    <None Remove="Templates\WebApi\Startup.liquid" />
+    <None Remove="Templates\WebApi\ProjectFile.csproj.liquid" />
+    <None Remove="Templates\WebApi\Startup.csh.liquid" />
     <None Remove="Templates\WebApi\StartupExtensions.liquid" />
     <None Remove="Templates\WebApi\ViewModel.liquid" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="template-config.json" />
-    <EmbeddedResource Include="Templates\Core\Models\Joins\JoinEntity.liquid" />
-    <EmbeddedResource Include="Templates\Core\Services\Generated\BaseCrudService.liquid" />
-    <EmbeddedResource Include="Templates\Core\Services\CrudService.liquid" />
-    <EmbeddedResource Include="Templates\Core\Services\TransactionScope.liquid" />
-    <EmbeddedResource Include="Templates\Core\Interfaces\ITransactionScope.liquid" />
-    <EmbeddedResource Include="Templates\Core\Services\RepositorySet.liquid" />
-    <EmbeddedResource Include="Templates\Core\Interfaces\ICrudService.liquid" />
-    <EmbeddedResource Include="Templates\Core\Interfaces\IRepository.liquid" />
-    <EmbeddedResource Include="Templates\Core\Context\Repository.liquid" />
-    <EmbeddedResource Include="Templates\Core\Context\AppDbContext.liquid" />
-    <EmbeddedResource Include="Templates\Core\Models\Entity.liquid" />
-    <EmbeddedResource Include="Templates\WebApi\appsettings.liquid" />
-    <EmbeddedResource Include="Templates\WebApi\ViewModels\Generated\BaseViewModel.liquid" />
-    <EmbeddedResource Include="Templates\WebApi\Extensions\StartupExtensions.liquid" />
-    <EmbeddedResource Include="Templates\WebApi\ViewModels\ViewModel.liquid" />
-    <EmbeddedResource Include="Templates\WebApi\Startup.liquid" />
-    <EmbeddedResource Include="Templates\WebApi\ProjectFile.liquid" />
+    <EmbeddedResource Include="Templates\Core\Models\Joins\JoinEntity.csh.liquid" />
+    <EmbeddedResource Include="Templates\Core\Services\Generated\BaseCrudService.csh.liquid" />
+    <EmbeddedResource Include="Templates\Core\Services\CrudService.csh.liquid" />
+    <EmbeddedResource Include="Templates\Core\Services\TransactionScope.csh.liquid" />
+    <EmbeddedResource Include="Templates\Core\Interfaces\ITransactionScope.csh.liquid" />
+    <EmbeddedResource Include="Templates\Core\Services\RepositorySet.csh.liquid" />
+    <EmbeddedResource Include="Templates\Core\Interfaces\ICrudService.csh.liquid" />
+    <EmbeddedResource Include="Templates\Core\Interfaces\IRepository.csh.liquid" />
+    <EmbeddedResource Include="Templates\Core\Context\Repository.csh.liquid" />
+    <EmbeddedResource Include="Templates\Core\Context\AppDbContext.csh.liquid">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\Core\Models\Entity.csh.liquid" />
+    <EmbeddedResource Include="Templates\WebApi\appsettings.json.liquid" />
+    <EmbeddedResource Include="Templates\WebApi\ViewModels\Generated\BaseViewModel.csh.liquid" />
+    <EmbeddedResource Include="Templates\WebApi\Extensions\StartupExtensions.csh.liquid" />
+    <EmbeddedResource Include="Templates\WebApi\ViewModels\ViewModel.csh.liquid" />
+    <EmbeddedResource Include="Templates\WebApi\Startup.csh.liquid" />
+    <EmbeddedResource Include="Templates\WebApi\ProjectFile.csproj.liquid" />
   </ItemGroup>
 
   <ItemGroup>
@@ -58,7 +60,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Templates\WebApi\Controllers\Controller.liquid" />
+    <EmbeddedResource Include="Templates\WebApi\Controllers\Controller.csh.liquid" />
   </ItemGroup>
 
   <ItemGroup>

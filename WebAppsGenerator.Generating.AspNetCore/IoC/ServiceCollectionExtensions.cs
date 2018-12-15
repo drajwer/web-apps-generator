@@ -6,6 +6,7 @@ using WebAppsGenerator.Core.Services;
 using WebAppsGenerator.Generating.Abstract.Interfaces;
 using WebAppsGenerator.Generating.Abstract.Options;
 using WebAppsGenerator.Generating.Abstract.Services;
+using WebAppsGenerator.Generating.AspNetCore.Interfaces;
 using WebAppsGenerator.Generating.AspNetCore.Services;
 
 namespace WebAppsGenerator.Generating.AspNetCore.IoC
@@ -39,7 +40,7 @@ namespace WebAppsGenerator.Generating.AspNetCore.IoC
 
         private static void RegisterGeneratorSpecificServices(IServiceCollection services)
         {
-            //services.AddTransient(provider => new TemplateFileProvider(/*Assembly.GetAssembly(typeof(SolutionGenerator))*/));
+            services.AddTransient<IAspNetCoreFileService, AspNetCoreFileService>();
             services.AddScoped<WebApiProjectGenerator>();
             services.AddScoped<CoreProjectGenerator>(); 
             services.AddScoped<MigrationService>();

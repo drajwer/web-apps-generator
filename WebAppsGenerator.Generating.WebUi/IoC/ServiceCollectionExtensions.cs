@@ -1,9 +1,11 @@
 ﻿using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using WebAppsGenerator.Core.Interfaces;
 using WebAppsGenerator.Generating.Abstract.Interfaces;
 using WebAppsGenerator.Generating.Abstract.Options;
 using WebAppsGenerator.Generating.Abstract.Services;
+using WebAppsGenerator.Generating.WebUi.Interfaces;
 using WebAppsGenerator.Generating.WebUi.Services;
 
 namespace WebAppsGenerator.Generating.WebUi.IoC
@@ -14,7 +16,15 @@ namespace WebAppsGenerator.Generating.WebUi.IoC
         {
             RegisterGeneratorSpecificServices(services);
 
-            services.AddScoped<IGenerator, WebUiGenerator>();
+            services.AddScoped<IGenerator>(provider =>
+            {
+                var webUiGenerator = provider.GetService<WebUiGenerator>();
+                //var generatorConfiguration = provider.GetService<IGeneratorConfiguration>();
+                var commandLineService = provider.GetService<ICommandLineService>();
+                var pathService = provider.GetService<SolutionPathService>();
+
+                return new WebClientProjectGenerator(pathService, commandLineService, webUiGenerator);
+            });
 
             return services;
         }
@@ -29,9 +39,12 @@ namespace WebAppsGenerator.Generating.WebUi.IoC
 
         private static void RegisterGeneratorSpecificServices(IServiceCollection services)
         {
-            services.AddTransient(provider => new TemplateFileProvider(Assembly.GetCallingAssembly()));
-            services.AddTransient<TemplateFileProvider>();//(provider => new TemplateFileProvider(/*Assembly.GetAssembly(typeof(SolutionGenerator))*/));
+            services.AddScoped<IWebUiFileService, WebUiFileService>();
+            services.AddScoped<IWebUiProjectTemplatingConfigProvider, WebUiTemplateConfigProvider>();
+            services.AddTransient<TemplateFileProvider>();
             services.AddScoped<SolutionPathService>();
+            services.AddScoped<WebUiGenerator>();
+            services.AddScoped<WebUiDropFactory>();
         }
     }
 }

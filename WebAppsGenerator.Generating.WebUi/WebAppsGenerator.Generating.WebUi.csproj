@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="template-config.json" />
     <None Remove="Templates\WebUI\src\index.tsx.liquid" />
     <None Remove="Templates\WebUI\src\routing\Router.tsx.liquid" />
     <None Remove="Templates\WebUI\src\screens\App\App.css.liquid" />
@@ -14,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="template-config.json" />
     <EmbeddedResource Include="Templates\WebUI\src\index.tsx.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\routing\Router.tsx.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\screens\App\App.css.liquid" />

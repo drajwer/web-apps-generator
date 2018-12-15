@@ -33,24 +33,30 @@ namespace WebAppsGenerator.Generating.Abstract.Services
             foreach (var resource in filtered)
             {
                 var parts = resource.Split('.');
-                var config = ReadConfig(parts[parts.Length - 2]);
+                if (parts[parts.Length - 2] == "csh")
+                    parts[parts.Length - 2] = "cs";
+
+                var config = ReadConfig($"{parts[parts.Length - 3]}.{parts[parts.Length - 2]}");
 
                 if (config == null)
                 {
                     var fullName = TruncateToRelativePath(parts).Aggregate("", (sum, next) => sum + "." + next).Trim('.');
                     if (!string.IsNullOrWhiteSpace(fullName))
                         fullName += ".";
-                    fullName += parts[parts.Length - 2];
-                    config = ReadConfig(fullName);
-                    if (config == null)
-                        continue;
+                    fullName += $"{parts[parts.Length - 3]}.{parts[parts.Length - 2]}";
+                    config = ReadConfig(fullName) ?? new TemplatingConfig
+                    {
+                        DropId = null,
+                        Multiple = false,
+                        NameTemplate = null
+                    };
                 }
 
                 if (config.FileInfo == null)
                 {
                     config.FileInfo = new FileInfo
                     {
-                        NameTemplate = config.NameTemplate,
+                        NameTemplate = config.NameTemplate ?? $"{parts[parts.Length - 3]}.{parts[parts.Length - 2]}",
                         TemplatePath = resource.Substring(resource.IndexOf(RootFolder, StringComparison.Ordinal) + RootFolder.Length + 1),
                         OutputPath = TruncateToRelativePath(parts).Aggregate("", Path.Combine)
                     };
@@ -62,7 +68,8 @@ namespace WebAppsGenerator.Generating.Abstract.Services
 
         private IEnumerable<string> TruncateToRelativePath(string[] parts)
         {
-            return parts.SkipWhile(e => _parentSectionName == null ? e != RootFolder : e != _parentSectionName).Skip(1).TakeWhile(e => e != parts[parts.Length - 2]);
+            return parts.SkipWhile(e => _parentSectionName == null ? e != RootFolder : e != _parentSectionName).Skip(1)
+                .SkipLast(3);//TakeWhile(e => e != parts[parts.Length - 3]);
         }
 
         public TemplatingConfig GetConfig(string sectionName)
@@ -85,13 +92,16 @@ namespace WebAppsGenerator.Generating.Abstract.Services
                 var json = reader.ReadToEnd();
                 var jObject = JObject.Parse(json);
                 var jToken = _parentSectionName == null ? jObject : jObject[_parentSectionName];
-                foreach (var section in sectionName.Split('.'))
+                var splitted = sectionName.Split('.');
+                foreach (var section in splitted.SkipLast(2))
                 {
                     jToken = jToken[section];
                     if (jToken == null)
                         return null;
                 }
-                config = jToken.ToObject<TemplatingConfig>();
+                
+                jToken = jToken[$"{splitted[splitted.Length - 2]}.{splitted[splitted.Length - 1]}"];
+                config = jToken?.ToObject<TemplatingConfig>();
             }
 
             return config;

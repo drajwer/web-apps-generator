@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Reflection;
-using System.Text;
+using WebAppsGenerator.Generating.Abstract.Interfaces;
 
 namespace WebAppsGenerator.Generating.Abstract.Services
 {
     /// <summary>
     /// Service for retrieving templates from embedded resources
     /// </summary>
-    public class TemplateFileProvider
+    public class TemplateFileProvider : ITemplateFileProvider
     {
         private readonly Assembly _assembly;
 

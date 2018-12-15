@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using WebAppsGenerator.Core.Models;
 using WebAppsGenerator.Generating.Abstract.Interfaces;
 using WebAppsGenerator.Generating.Abstract.Services;
-using WebAppsGenerator.Generating.AspNetCore.Models.Templating;
-using FileInfo = WebAppsGenerator.Generating.Abstract.Models.FileInfo;
+using WebAppsGenerator.Generating.AspNetCore.Interfaces;
 
 namespace WebAppsGenerator.Generating.AspNetCore.Services
 {
@@ -14,7 +12,7 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
         private readonly SolutionPathService PathService;
         private readonly MigrationService _migrationService;
 
-        public CoreProjectGenerator(IGeneratorConfiguration generatorConfiguration, IFileService fileService,
+        public CoreProjectGenerator(IGeneratorConfiguration generatorConfiguration, IAspNetCoreFileService fileService,
             MigrationService migrationService, ICoreProjectTemplatingConfigProvider templatingConfigProvider,
             CSharpDropFactory dropFactory) 
             : base(generatorConfiguration, dropFactory, templatingConfigProvider, fileService)

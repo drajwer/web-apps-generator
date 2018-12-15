@@ -5,24 +5,26 @@ using System.Text;
 using WebAppsGenerator.Core.Models;
 using WebAppsGenerator.Generating.Abstract.Interfaces;
 using WebAppsGenerator.Generating.Abstract.Models.Templating;
+using WebAppsGenerator.Generating.Abstract.Services;
 using WebAppsGenerator.Generating.AspNetCore.Models.Templating;
 
 namespace WebAppsGenerator.Generating.AspNetCore.Services
 {
-    public class CSharpDropFactory : IDropFactory
+    public class CSharpDropFactory : BaseDropFactory
     {
         private readonly SolutionPathService _pathService;
         private readonly IGeneratorConfiguration _generatorConfiguration;
         private readonly ModelService _modelService;
 
-        public CSharpDropFactory(SolutionPathService pathService, IGeneratorConfiguration generatorConfiguration, ModelService modelService)
+        public CSharpDropFactory(SolutionPathService pathService, IGeneratorConfiguration generatorConfiguration, 
+            ModelService modelService) : base(generatorConfiguration)
         {
             _pathService = pathService;
             _generatorConfiguration = generatorConfiguration;
             _modelService = modelService;
         }
 
-        public BaseDrop CreateDrop(string dropId, IEnumerable<Entity> entities)
+        public override BaseDrop CreateDrop(string dropId, IEnumerable<Entity> entities)
         {
             switch (dropId)
             {
@@ -36,11 +38,11 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
                     return new EntityListDrop(_generatorConfiguration, _pathService,
                         _modelService.CreateModelDrops(entities).Where(d => !d.IsJoinModel));
                 default:
-                    throw new ArgumentOutOfRangeException($"Cannot create drop for {dropId}");
+                    return base.CreateDrop(dropId, entities);
             }
         }
 
-        public List<BaseDrop> CreateDropList(string dropId, IEnumerable<Entity> entities)
+        public override List<BaseDrop> CreateDropList(string dropId, IEnumerable<Entity> entities)
         {
             switch (dropId)
             {
