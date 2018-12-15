@@ -1,0 +1,105 @@
+{
+  "Core": {
+    "Interfaces": {
+      "IRepository": {
+        "NameTemplate": "IRepository.cs",
+        "DropId": "WebApiBase",
+        "Multiple": false
+      },
+      "ITransactionScope": {
+        "NameTemplate": "ITransactionScope.cs",
+        "DropId": "WebApiBase",
+        "Multiple": false
+      },
+      "ICrudService": {
+        "NameTemplate": "ICrudService.cs",
+        "DropId": "WebApiBase",
+        "Multiple": false
+      }
+    },
+    "Context": {
+      "AppDbContext": {
+        "NameTemplate": "AppDbContext.cs",
+        "DropId": "ModelList",
+        "Multiple": false
+      },
+      "Repository": {
+        "NameTemplate": "Repository.cs",
+        "DropId": "WebApiBase",
+        "Multiple": false
+      }
+    },
+    "Services": {
+      "Generated": {
+        "BaseCrudService": {
+          "NameTemplate": "{{Params.Entity.Name}}BaseCrudService.cs",
+          "DropId": "ModelDropsNoJoins",
+          "Multiple": true
+        }
+      },
+      "CrudService": {
+        "NameTemplate": "{{Params.Entity.Name}}CrudService.cs",
+        "DropId": "ModelDropsNoJoins",
+        "Multiple": true
+      },
+      "RepositorySet": {
+        "NameTemplate": "RepositorySet.cs",
+        "DropId": "ModelListNoJoins",
+        "Multiple": false
+      },
+      "TransactionScope": {
+        "NameTemplate": "DbTransactionScope.cs",
+        "DropId": "WebApiBase",
+        "Multiple": false
+      }
+    }, 
+
+    "Entity": {
+      "NameTemplate": "{{Params.Entity.Name}}.cs",
+      "DropId": "ModelDropsNoJoins",
+      "Multiple": true
+    },
+    "JoinEntity": {
+      "NameTemplate": "{{Params.Entity.Name}}.cs",
+      "DropId": "ModelDropsJoins",
+      "Multiple": true
+    },
+  },
+  "WebApi": {
+    "BaseViewModel": {
+      "NameTemplate": "{{Params.Entity.Name}}BaseViewModel.cs",
+      "DropId": "ModelDropsNoJoins",
+      "Multiple": true
+    },
+    "ViewModel": {
+      "NameTemplate": "{{Params.Entity.Name}}ViewModel.cs",
+      "DropId": "ModelDropsNoJoins",
+      "Multiple": true
+    },
+    "Startup": {
+      "NameTemplate": "Startup.cs",
+      "DropId": "WebApiBase",
+      "Multiple": false
+    },
+    "StartupExtensions": {
+      "NameTemplate": "StartupExtensions.cs",
+      "DropId": "ModelListNoJoins",
+      "Multiple": false
+    },
+    "ProjectFile": {
+      "NameTemplate": "{{Params.WebApiProjectName}}.csproj",
+      "DropId": "WebApiBase",
+      "Multiple": false
+    },
+    "appsettings": {
+      "NameTemplate": "appsettings.json",
+      "DropId": "WebApiBase",
+      "Multiple": false
+    },
+    "Controller": {
+      "NameTemplate": "{{Params.Entity.Name}}Controller.cs",
+      "DropId": "ModelDropsNoJoins",
+      "Multiple": true
+    }
+  }
+}

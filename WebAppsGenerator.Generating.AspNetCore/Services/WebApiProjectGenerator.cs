@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using WebAppsGenerator.Core.Models;
 using WebAppsGenerator.Generating.Abstract.Interfaces;
 using WebAppsGenerator.Generating.Abstract.Services;
@@ -13,18 +14,35 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
         private readonly SolutionPathService _pathService;
         private readonly IFileService _fileService;
 
-        public WebApiProjectGenerator(IGeneratorConfiguration generatorConfiguration, IFileService fileService) : base(generatorConfiguration)
+        public WebApiProjectGenerator(IGeneratorConfiguration generatorConfiguration, IFileService fileService,
+            IWebApiProjectTemplatingConfigProvider templatingConfigProvider, CSharpDropFactory dropFactory)
+            : base(generatorConfiguration, dropFactory, templatingConfigProvider, fileService)
         {
             _fileService = fileService;
             _pathService = new SolutionPathService(generatorConfiguration);
         }
 
-        public override void Generate(IEnumerable<Entity> entities)
+        private void GenerateViewModels(IEnumerable<Entity> entities)
         {
-            GenerateCsProj();
-            GenerateStartup();
-            GenerateControllers(entities);
-            GenerateAppsettings();
+            var baseVmFileInfo = new FileInfo
+            {
+                NameTemplate = "{{Params.Entity.Name}}BaseViewModel.cs",
+                TemplatePath = "WebApi.BaseViewModel.liquid",
+                OutputPath = Path.Combine(_pathService.WebApiDirPath, "ViewModels", "Generated")
+            };
+            var vmFileInfo = new FileInfo()
+            {
+                NameTemplate = "{{Params.Entity.Name}}ViewModel.cs",
+                TemplatePath = "WebApi.ViewModel.liquid",
+                OutputPath = Path.Combine(_pathService.WebApiDirPath, "ViewModels")
+            };
+            var drops = GetModelDrops(entities);
+
+            foreach (var drop in drops.Where(d => !d.IsJoinModel))
+            {
+                _fileService.CreateFromTemplate(baseVmFileInfo, new SingleEntityDrop(GeneratorConfiguration, _pathService, drop));
+                _fileService.CreateFromTemplate(vmFileInfo, new SingleEntityDrop(GeneratorConfiguration, _pathService, drop));
+            }
         }
 
         private void GenerateCsProj()
@@ -38,16 +56,25 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
 
             _fileService.CreateFromTemplate(csprojFileInfo, new WebApiBaseDrop(_pathService, GeneratorConfiguration));
         }
-        private void GenerateStartup()
+        private void GenerateStartup(IEnumerable<Entity> entities)
         {
-            var csprojFileInfo = new FileInfo
+            var startupFileInfo = new FileInfo
             {
                 NameTemplate = "Startup.cs",
                 TemplatePath = "WebApi.Startup.liquid",
                 OutputPath = _pathService.WebApiDirPath
             };
+            var extensionsFileInfo = new FileInfo
+            {
+                NameTemplate = "StartupExtensions.cs",
+                TemplatePath = "WebApi.StartupExtensions.liquid",
+                OutputPath = Path.Combine(_pathService.WebApiDirPath, "Extensions")
+            };
 
-            _fileService.CreateFromTemplate(csprojFileInfo, new WebApiBaseDrop(_pathService, GeneratorConfiguration));
+            var drops = GetModelDrops(entities).Where(d => !d.IsJoinModel);
+
+            _fileService.CreateFromTemplate(startupFileInfo, new WebApiBaseDrop(_pathService, GeneratorConfiguration));
+            _fileService.CreateFromTemplate(extensionsFileInfo, new EntityListDrop(GeneratorConfiguration, _pathService, drops));
         }
 
         private void GenerateControllers(IEnumerable<Entity> entities)
@@ -62,9 +89,10 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
             var sampleControllerPath = Path.Combine(controllerFileInfo.OutputPath, "ValuesController.cs");
             File.Delete(sampleControllerPath);
 
-            foreach (var entity in entities)
+            var drops = GetModelDrops(entities).Where(d => !d.IsJoinModel);
+            foreach (var modelDrop in drops)
             {
-                _fileService.CreateFromTemplate(controllerFileInfo, new SingleEntityDrop(GeneratorConfiguration, _pathService, entity));
+                _fileService.CreateFromTemplate(controllerFileInfo, new SingleEntityDrop(GeneratorConfiguration, _pathService, modelDrop));
             }
         }
 
@@ -78,6 +106,13 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
             };
 
             _fileService.CreateFromTemplate(appsettingsFileInfo, new WebApiBaseDrop(_pathService, GeneratorConfiguration));
+        }
+
+        private static List<ModelDrop> GetModelDrops(IEnumerable<Entity> entities)
+        {
+            var service = new ModelService();
+            var drops = service.CreateModelDrops(entities);
+            return drops;
         }
     }
 }

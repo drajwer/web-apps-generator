@@ -12,6 +12,12 @@ namespace WebAppsGenerator.Generating.AspNetCore.Models.Templating
     public class EntityListDrop : WebApiBaseDrop
     {
         public EntityListDrop(IGeneratorConfiguration generatorConfiguration, SolutionPathService solutionPathService,
+            IEnumerable<EntityDrop> entities) : base(solutionPathService, generatorConfiguration)
+        {
+            Entities = entities.ToList();
+        }
+
+        public EntityListDrop(IGeneratorConfiguration generatorConfiguration, SolutionPathService solutionPathService,
             IEnumerable<Entity> entities)
             : base(solutionPathService, generatorConfiguration)
         {

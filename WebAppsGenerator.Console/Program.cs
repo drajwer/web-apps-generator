@@ -7,6 +7,7 @@ using WebAppsGenerator.Core.Files.FileSrevices;
 using WebAppsGenerator.Core.Files.Providers;
 using WebAppsGenerator.Core.Grammar;
 using WebAppsGenerator.Core.Grammar.ErrorListeners;
+using WebAppsGenerator.Core.Interfaces;
 using WebAppsGenerator.Core.Parsing.Annotations;
 using WebAppsGenerator.Core.Parsing.Types;
 using WebAppsGenerator.Core.Services;
@@ -46,9 +47,11 @@ namespace WebAppsGenerator.Console
             var visitor = (SneakParserMappingVisitor)ServiceProvider.GetService<ISneakParserVisitor<object>>();
 
             visitor.Visit(fileContext);
-
             var validator = ServiceProvider.GetService<IValidator>();
             validator.ValidateEntities(visitor.Entities.Values);
+
+            var fixer = ServiceProvider.GetService<IEntitiesFixer>();
+            fixer.FixEntities(visitor.Entities.Values);
 
             // pass visitor's results to generator
             var generators = ServiceProvider.GetServices<IGenerator>();
@@ -74,6 +77,7 @@ namespace WebAppsGenerator.Console
             services.AddScoped<LiquidTemplateService>();
             services.AddScoped<Generating.Abstract.Interfaces.IFileService, FileService>();
             services.AddScoped<IValidator, BaseValidator>();
+            services.AddScoped<IEntitiesFixer, EntitiesFixer>();
             services.AddAspNetCoreGenerator();
             services.AddWebUiCoreGenerator();
 

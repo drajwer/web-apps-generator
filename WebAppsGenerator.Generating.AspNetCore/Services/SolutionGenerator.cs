@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using WebAppsGenerator.Core.Interfaces;
 using WebAppsGenerator.Core.Models;
 using WebAppsGenerator.Core.Services;
 using WebAppsGenerator.Generating.Abstract.Interfaces;
@@ -11,7 +12,7 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
     /// <summary>
     /// Creates solution with subprojects and runs projects' generators.
     /// </summary>
-    public class SolutionGenerator : BaseGenerator
+    public class SolutionGenerator : IGenerator
     {
         private readonly ICommandLineService _commandLineService;
         private readonly IGenerator _webApiProjectGenerator;
@@ -20,7 +21,7 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
         private readonly SolutionPathService _pathService;
 
         public SolutionGenerator(IGeneratorConfiguration generatorConfiguration, ICommandLineService commandLineService,
-            IGenerator webApiProjectGenerator, IGenerator coreProjectGenerator) : base(generatorConfiguration)
+            IGenerator webApiProjectGenerator, IGenerator coreProjectGenerator)
         {
             _commandLineService = commandLineService;
             _webApiProjectGenerator = webApiProjectGenerator;
@@ -29,7 +30,7 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
             _pathService = new SolutionPathService(generatorConfiguration);
         }
 
-        public override void Generate(IEnumerable<Entity> entities)
+        public void Generate(IEnumerable<Entity> entities)
         {
             if (entities == null)
                 throw new ArgumentNullException();
@@ -44,7 +45,7 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
 
         private void CreateSolutionWithProjects()
         {
-            _commandLineService.RunCommand($"dotnet new sln -n {GeneratorConfiguration.ProjectName} -o {_pathService.SolutionDirPath}");
+            _commandLineService.RunCommand($"dotnet new sln -n {_generatorConfiguration.ProjectName} -o {_pathService.SolutionDirPath}");
             _commandLineService.RunCommand($"dotnet new classlib -o {_pathService.CoreDirPath}");
             _commandLineService.RunCommand($"dotnet new webapi -o {_pathService.WebApiDirPath}");
             _commandLineService.RunCommand($"dotnet sln {_pathService.SolutionFilePath} add {_pathService.CoreDirPath}");

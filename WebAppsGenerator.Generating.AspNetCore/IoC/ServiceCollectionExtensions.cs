@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using WebAppsGenerator.Core.Interfaces;
 using WebAppsGenerator.Core.Services;
 using WebAppsGenerator.Generating.Abstract.Interfaces;
 using WebAppsGenerator.Generating.Abstract.Options;
@@ -43,6 +44,12 @@ namespace WebAppsGenerator.Generating.AspNetCore.IoC
             services.AddScoped<CoreProjectGenerator>(); 
             services.AddScoped<MigrationService>();
             services.AddScoped<SolutionPathService>();
+
+            services.AddScoped<ICoreProjectTemplatingConfigProvider, CoreProjectTemplatingConfigProvider>();
+            services.AddScoped<IWebApiProjectTemplatingConfigProvider, WebApiProjectTemplatingConfigProvider>();
+            services.AddScoped<CSharpDropFactory>();
+
+            services.AddScoped<ModelService>();
         }
     }
 }

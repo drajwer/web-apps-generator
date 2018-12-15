@@ -1,4 +1,4 @@
-﻿namespace WebAppsGenerator.Core.Services
+﻿namespace WebAppsGenerator.Core.Interfaces
 {
     public interface ICommandLineService
     {

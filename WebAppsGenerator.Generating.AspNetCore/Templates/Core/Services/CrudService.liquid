@@ -1,0 +1,19 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using {{Params.CoreProjectName}}.Interfaces;
+using {{Params.CoreProjectName}}.Models;
+using {{Params.CoreProjectName}}.Services.Generated;
+
+namespace {{Params.CoreProjectName}}.Services
+{
+    /// <summary>
+    /// Modify the crud service logic here.
+    /// </summary>
+    public class {{Params.Entity.Name}}CrudService : {{Params.Entity.Name}}BaseCrudService
+    {
+        public {{Params.Entity.Name}}CrudService(RepositorySet repoSet) : base(repoSet)
+        {
+        }
+    }
+}
