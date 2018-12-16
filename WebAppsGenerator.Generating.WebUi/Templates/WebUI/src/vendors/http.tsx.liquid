@@ -1,0 +1,51 @@
+﻿import * as $ from 'jquery';
+import * as _ from 'lodash';
+
+export const jsonHttp = (options: any) => {
+	return {
+		...options,
+		contentType: 'application/json; charset=UTF-8',
+		dataType: 'json',
+	};
+};
+export const textHttp = (options: any) => {
+	return {
+		...options,
+		contentType: 'text/plain; charset=UTF-8',
+	};
+};
+
+export const jsonPayloadHttp = (options: any) => {
+	options.processData = false;
+	options.data = JSON.stringify(options.data);
+	return options;
+};
+
+export const jsonFilePayloadHttp = (options: any) => {
+	options.processData = false;
+	options.contentType = false;
+	return options;
+};
+
+const withToken = (options: any) => {
+	const token = localStorage.getItem('token');
+
+	if (!token) {
+		return options;
+	}
+
+	return {
+		...options,
+		headers: {
+			'Authorization': `Bearer ${token}`,
+		},
+	};
+};
+
+export const ajax = $.ajax;
+export const defaultAjax = _.flowRight(ajax, withToken);
+export const textAjax = _.flowRight(ajax, textHttp, withToken);
+export const jsonAjax = _.flowRight(ajax, jsonHttp, withToken);
+export const jsonPayloadAjax = _.flowRight(ajax, jsonPayloadHttp, jsonHttp, withToken);
+export const jsonFilePayloadAjax = _.flowRight(ajax, jsonFilePayloadHttp, withToken);
+export const parallelRequests = $.when;

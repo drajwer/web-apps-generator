@@ -1,0 +1,36 @@
+﻿import { Api } from '../config';
+import { jsonAjax, jsonPayloadAjax } from '../vendors/http';
+
+const controllerName = '/{{Params.Entity.PluralName}}';
+
+export const Get = (id: number) =>
+    jsonAjax({
+        type: 'GET',
+        url: Api + `${controllerName}/${id}`,
+    });
+
+export const GetAll = () =>
+    jsonAjax({
+        type: 'GET',
+        url: Api + controllerName
+    });
+
+export const Post = (data: any) => 
+    jsonPayloadAjax({
+        data,
+        type: 'POST',
+        url: Api + controllerName
+    });
+
+export const Put = (id: number, data: any) =>
+    jsonPayloadAjax({
+        data,
+        type: 'PUT',
+        url: Api + `${controllerName}/${id}`
+    });
+
+export const Delete = (id: number) =>
+    jsonPayloadAjax({
+        type: 'DELETE',
+        url: Api + `${controllerName}/${id}`,
+    });

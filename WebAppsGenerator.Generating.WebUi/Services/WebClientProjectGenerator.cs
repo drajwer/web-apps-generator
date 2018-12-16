@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using WebAppsGenerator.Core.Interfaces;
 using WebAppsGenerator.Core.Models;
 using WebAppsGenerator.Generating.Abstract.Interfaces;
-using WebAppsGenerator.Generating.Abstract.Models.Templating;
-using WebAppsGenerator.Generating.Abstract.Options;
-using WebAppsGenerator.Generating.Abstract.Services;
-using FileInfo = WebAppsGenerator.Generating.Abstract.Models.FileInfo;
 
 namespace WebAppsGenerator.Generating.WebUi.Services
 {
@@ -39,7 +33,10 @@ namespace WebAppsGenerator.Generating.WebUi.Services
             _commandLineService.RunCommand($"npx create-react-app {_pathService.WebProjectDirPath} --scripts-version=react-scripts-ts");
             _commandLineService.RunCommand("npm install --save @types/history");
             _commandLineService.RunCommand("npm install --save react-router-dom");
-            _commandLineService.RunCommand("npm install --save @types/react-router-dom");
+            _commandLineService.RunCommand("npm install --save @types/react-router-dom"); 
+            _commandLineService.RunCommand("npm install --save @types/lodash");
+            _commandLineService.RunCommand("npm install --save @types/jquery");
+            _commandLineService.RunCommand("npm install --save jquery");
         }
 
         private void RemoveUnnecessaryFiles()

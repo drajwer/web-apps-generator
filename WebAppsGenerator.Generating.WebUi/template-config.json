@@ -1,5 +1,13 @@
 {
     "WebUI": {
-
+        "src": {
+            "api": {
+                "Api.tsx": {
+                    "NameTemplate": "{{Params.Entity.PluralName}}Api.tsx",
+                    "DropId": "EntityDrop",
+                    "Multiple": true
+                }
+            }
+        }
     } 
 }

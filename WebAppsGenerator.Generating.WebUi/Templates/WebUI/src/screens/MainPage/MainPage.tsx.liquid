@@ -1,7 +1,41 @@
 ﻿import * as React from 'react';
+import { GetAll, Post, Delete, Put, Get} from '../../api/BooksApi';
 import './MainPage.css';
 
 class MainPage extends React.Component {
+    // api test / example of usage
+    public componentDidMount() {
+        const book: any = {
+            name: 'HP2'
+        };
+        GetAll().then(response => {
+            console.log('Fetched all books');
+            console.log(response);
+            Post(book).then(response2 => {
+                console.log(`Added book with id=${response2.id}`);
+                Get(response2.id).then(response3 => {
+                    console.log(`Got book with id ${response3.id}`);
+                    console.log(response3);
+                    const updatedBook = {
+                        ...response3,
+                        name: 'HP3'
+                    };
+                    Put(response3.id, updatedBook).then(response4 => {
+                        console.log('Updated book:');
+                        console.log(response4);
+                        Delete(response4.id).then(response5 =>{
+                            console.log('Deleted book');
+                            GetAll().then(response6 => {
+                                console.log('All books');
+                                console.log(response6);
+                            });
+                        });
+                    });
+                });
+            });
+        });
+    }
+
     public render() {
         return (
             <div>

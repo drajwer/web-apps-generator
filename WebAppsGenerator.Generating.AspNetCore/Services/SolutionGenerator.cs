@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using WebAppsGenerator.Core.Interfaces;
 using WebAppsGenerator.Core.Models;
-using WebAppsGenerator.Core.Services;
 using WebAppsGenerator.Generating.Abstract.Interfaces;
 using WebAppsGenerator.Generating.Abstract.Options;
-using WebAppsGenerator.Generating.Abstract.Services;
 
 namespace WebAppsGenerator.Generating.AspNetCore.Services
 {
