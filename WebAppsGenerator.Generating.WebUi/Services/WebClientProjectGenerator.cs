@@ -8,6 +8,7 @@ namespace WebAppsGenerator.Generating.WebUi.Services
 {
     public class WebClientProjectGenerator : IGenerator
     {
+        private const bool CreateReactApp = false;
         private readonly SolutionPathService _pathService;
         private readonly ICommandLineService _commandLineService;
         private readonly IGenerator _webUiGenerator;
@@ -21,8 +22,11 @@ namespace WebAppsGenerator.Generating.WebUi.Services
 
         public void Generate(IEnumerable<Entity> entities)
         {
-            CreateApp();
-            RemoveUnnecessaryFiles();
+            if (CreateReactApp)
+            {
+                CreateApp();
+                RemoveUnnecessaryFiles();
+            }
 
             _webUiGenerator.Generate(entities);
         }
@@ -37,6 +41,10 @@ namespace WebAppsGenerator.Generating.WebUi.Services
             _commandLineService.RunCommand("npm install --save @types/lodash");
             _commandLineService.RunCommand("npm install --save @types/jquery");
             _commandLineService.RunCommand("npm install --save jquery");
+            _commandLineService.RunCommand("npm install --save @material-ui/core");
+            _commandLineService.RunCommand("npm install --save @types/material-ui");
+            _commandLineService.RunCommand("npm install --save @material-ui/icons");
+
         }
 
         private void RemoveUnnecessaryFiles()

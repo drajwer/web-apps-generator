@@ -1,22 +1,68 @@
-﻿import * as React from 'react';
+﻿import AppBar from '@material-ui/core/AppBar'
+import * as React from 'react';
 import { BrowserRouter } from 'react-router-dom';
+import { withStyles } from '@material-ui/core/styles';
 import Routes from '../../routing/Router';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import Typography from '@material-ui/core/Typography';
 import './App.css';
+import Menu from 'src/components/Menu/Menu';
+const styles = {
+  root: {
+    flexGrow: 1,
+  },
+  grow: {
+    flexGrow: 1,
+  },
+  menuButton: {
+    marginLeft: -12,
+    marginRight: 20,
+  },
+  fullList: {
+    width: 250,
+  },
+  content: {
+    marginTop: 500
+  }
+};
 
-class App extends React.Component {
+
+class App extends React.Component<any, any> {
+  constructor(props : any) {
+    super(props);
+    this.state = {openDrawer: false};
+  }
   public render() {
+    const classes = this.props;
     return (
       <BrowserRouter >
         <div>
-          <div className="header">
-              put some header here.
-              Graphic design is my passion
-          </div>
+          <div>
+        <AppBar position="fixed" className="appBar">
+          <Toolbar>
+          <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" onClick ={this.toggleDrawer}>
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" color="inherit" className={classes.grow}>
+            {{Params.ProjectName}}
+          </Typography>
+        </Toolbar>
+        <Menu openMenu={this.state.openDrawer} onClose={this.toggleDrawer}/>
+      </AppBar>
+      </div>
+          <div className="content">
           <Routes />
+          </div>
         </div>
       </BrowserRouter>
     );
   }
+
+  private toggleDrawer = () => {
+    this.setState({openDrawer: !this.state.openDrawer})
+  }
 }
 
-export default App;
+export default withStyles(styles)(App);

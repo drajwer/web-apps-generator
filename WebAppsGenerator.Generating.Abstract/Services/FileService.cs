@@ -12,6 +12,7 @@ namespace WebAppsGenerator.Generating.Abstract.Services
     /// </summary>
     public class FileService : IFileService
     {
+        private const char PathSeparator = '/';
         private readonly TemplateFileProvider _fileProvider;
         private readonly LiquidTemplateService _templateService;
 
@@ -24,16 +25,18 @@ namespace WebAppsGenerator.Generating.Abstract.Services
         public void CreateFromTemplate(FileInfo fileInfo, Drop templatingObject)
         {
             var template = _fileProvider.GetTemplate(fileInfo);
-            var fileName = _templateService.RenderTemplate(fileInfo.NameTemplate, templatingObject);
+            var filePath = _templateService.RenderTemplate(fileInfo.NameTemplate, templatingObject);
             var rendered = _templateService.RenderTemplate(template, templatingObject);
-
-            Directory.CreateDirectory(fileInfo.OutputPath);
-            WriteFile(fileInfo, fileName, rendered);
+            var pathSplitted = filePath.Split(PathSeparator).ToList();
+            var dirPath = pathSplitted.SkipLast(1).Aggregate(fileInfo.OutputPath, Path.Combine);
+            var fileName = pathSplitted.Last();
+            Directory.CreateDirectory(dirPath);
+            WriteFile(dirPath, fileName, rendered);
         }
 
-        private void WriteFile(FileInfo fileInfo, string fileName, string rendered)
+        private void WriteFile(string dirPath, string fileName, string rendered)
         {
-            using (var streamWriter = File.CreateText(CreatePath(fileInfo.OutputPath, fileName)))
+            using (var streamWriter = File.CreateText(CreatePath(dirPath, fileName)))
             {
                 streamWriter.Write(rendered);
             }
@@ -48,7 +51,7 @@ namespace WebAppsGenerator.Generating.Abstract.Services
             Directory.CreateDirectory(fileInfo.OutputPath);
             for (int i = 0; i < fileNames.Length; i++)
             {
-                WriteFile(fileInfo, fileNames[i], renderedFiles[i]);
+                WriteFile(fileInfo.OutputPath, fileNames[i], renderedFiles[i]);
             }
         }
 

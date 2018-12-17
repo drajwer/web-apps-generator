@@ -7,13 +7,19 @@
   <ItemGroup>
     <None Remove="template-config.json" />
     <None Remove="Templates\WebUI\src\api\Api.tsx.liquid" />
+    <None Remove="Templates\WebUI\src\components\Menu\GeneratedLabels.tsc.liquid" />
+    <None Remove="Templates\WebUI\src\components\Menu\Menu.css.liquid" />
+    <None Remove="Templates\WebUI\src\components\Menu\Menu.tsx.liquid" />
     <None Remove="Templates\WebUI\src\config.tsx.liquid" />
     <None Remove="Templates\WebUI\src\index.tsx.liquid" />
+    <None Remove="Templates\WebUI\src\routing\GeneratedRoutes.tsc.liquid" />
     <None Remove="Templates\WebUI\src\routing\Router.tsx.liquid" />
     <None Remove="Templates\WebUI\src\screens\App\App.css.liquid" />
     <None Remove="Templates\WebUI\src\screens\App\App.tsx.liquid" />
     <None Remove="Templates\WebUI\src\screens\MainPage\MainPage.css.liquid" />
     <None Remove="Templates\WebUI\src\screens\MainPage\MainPage.tsx.liquid" />
+    <None Remove="Templates\WebUI\src\screens\TestPage\TestPage.css.liquid" />
+    <None Remove="Templates\WebUI\src\screens\TestPage\TestPage.tsx.liquid" />
     <None Remove="Templates\WebUI\src\vendors\http.tsx.liquid" />
     <None Remove="Templates\WebUI\tslint.json.liquid" />
   </ItemGroup>
@@ -21,11 +27,21 @@
   <ItemGroup>
     <EmbeddedResource Include="template-config.json" />
     <EmbeddedResource Include="Templates\WebUI\src\api\Api.tsx.liquid" />
+    <EmbeddedResource Include="Templates\WebUI\src\components\Menu\GeneratedLabels.tsc.liquid" />
+    <EmbeddedResource Include="Templates\WebUI\src\components\Menu\Menu.css.liquid" />
+    <EmbeddedResource Include="Templates\WebUI\src\components\Menu\Menu.tsx.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\config.tsx.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\index.tsx.liquid" />
+    <EmbeddedResource Include="Templates\WebUI\src\routing\GeneratedRoutes.tsc.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\routing\Router.tsx.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\screens\App\App.css.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\screens\App\App.tsx.liquid" />
+    <EmbeddedResource Include="Templates\WebUI\src\screens\Entities\EntityForm.css.liquid" />
+    <EmbeddedResource Include="Templates\WebUI\src\screens\Entities\EntityForm.tsx.liquid" />
+    <EmbeddedResource Include="Templates\WebUI\src\screens\Entities\EntityList.css.liquid" />
+    <EmbeddedResource Include="Templates\WebUI\src\screens\Entities\EntityList.tsx.liquid" />
+    <EmbeddedResource Include="Templates\WebUI\src\screens\TestPage\TestPage.css.liquid" />
+    <EmbeddedResource Include="Templates\WebUI\src\screens\TestPage\TestPage.tsx.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\screens\MainPage\MainPage.css.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\screens\MainPage\MainPage.tsx.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\vendors\http.tsx.liquid" />
@@ -38,10 +54,6 @@
         <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.1.1" />
         <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.1.1" />
     </ItemGroup>
-    
-  <ItemGroup>
-    <Folder Include="Templates\WebUI\src\components\" />
-  </ItemGroup>
     
   <ItemGroup>
     <ProjectReference Include="..\WebAppsGenerator.Core\WebAppsGenerator.Core.csproj" />

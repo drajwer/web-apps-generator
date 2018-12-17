@@ -35,6 +35,8 @@ namespace WebAppsGenerator.Generating.Abstract.Services
                 var parts = resource.Split('.');
                 if (parts[parts.Length - 2] == "csh")
                     parts[parts.Length - 2] = "cs";
+                if (parts[parts.Length - 2] == "tsc")
+                    parts[parts.Length - 2] = "ts";
 
                 var config = ReadConfig($"{parts[parts.Length - 3]}.{parts[parts.Length - 2]}");
 

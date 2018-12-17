@@ -2,11 +2,12 @@
 import { Route, Switch } from 'react-router-dom';
 
 import MainPage from '../screens/MainPage/MainPage';
+import generatedRoutes from "./GeneratedRoutes";
 
-
-const Routes: React.StatelessComponent = () => (
+const Routes: React.FunctionComponent = () => (
     <Switch>
-      <Route path="/" component={MainPage} />
+      <Route exact={true} path="/" component={MainPage} />
+      {generatedRoutes.map(r => (<Route key={r.path} path={`/${r.path}`} component={r.component} exact={r.exact} />))}
     </Switch>
 );
 

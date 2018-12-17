@@ -24,6 +24,8 @@ namespace WebAppsGenerator.Generating.WebUi.Services
         {
             switch (dropId)
             {
+                case "EntityList":
+                    return new EntityListDrop(_generatorConfiguration, _pathService, entities);
                 default:
                     return base.CreateDrop(dropId, entities);
             }

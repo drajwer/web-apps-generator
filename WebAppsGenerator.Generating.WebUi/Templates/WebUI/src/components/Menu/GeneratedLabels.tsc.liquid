@@ -1,0 +1,13 @@
+﻿interface ILabelInfo {
+    displayName : string,
+    path : string
+}
+
+const labels : ILabelInfo[] = 
+[
+	{%- for entity in Params.Entities -%}
+    {displayName: "{{entity.PluralName}}", path: "{{entity.PluralName | Downcase }}"},
+	{%- endfor -%}
+]
+
+export default labels;
