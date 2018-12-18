@@ -11,7 +11,7 @@ namespace WebAppsGenerator.Generating.Abstract.Models.Templating
     /// </summary>
     public class FieldDrop : Drop
     {
-        public string Name { get; }
+        public string Name { get; set; }
         public TypeDrop Type { get; set; }
         public RelationDrop Relation { get; set; }
         public FieldDrop(Field field)

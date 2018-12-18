@@ -19,8 +19,8 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
 
             ReplaceManyToManyWithJoins(entities, entityDrops);
             AddForeignKeys(entities, entityDrops);
-            SetCSharpTypes(entities, entityDrops);
             SetReferencedIdTypes(entities, entityDrops);
+            SetCSharpTypes(entities, entityDrops);
 
             return entityDrops;
         }
@@ -36,7 +36,7 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
                         var referencedEntity = entities.First(e => e.Name == entityField.Type.EntityName);
                         var referencedIdField = referencedEntity.Fields.First(f => f.Name == Id);
                         var drop = entityDrops.First(e => e.Name == entity.Name).Fields.First(f => f.Name == entityField.Name);
-                        drop.Relation = new SecondEntityRelationDrop(drop.Relation, new TypeDrop(referencedIdField.Type), referencedEntity.Name);
+                        drop.Relation = new SecondEntityRelationDrop(drop.Relation, new CSharpTypeDrop(new TypeDrop(referencedIdField.Type)), referencedEntity.Name);
                     }
                 }
             }

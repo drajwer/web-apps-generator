@@ -13,11 +13,13 @@ namespace WebAppsGenerator.Generating.WebUi.Services
     {
         private readonly IGeneratorConfiguration _generatorConfiguration;
         private readonly SolutionPathService _pathService;
+        private readonly TypeScriptEntityService _entityService;
 
-        public WebUiDropFactory(IGeneratorConfiguration generatorConfiguration, SolutionPathService pathService) : base(generatorConfiguration)
+        public WebUiDropFactory(IGeneratorConfiguration generatorConfiguration, SolutionPathService pathService, TypeScriptEntityService entityService) : base(generatorConfiguration)
         {
             _generatorConfiguration = generatorConfiguration;
             _pathService = pathService;
+            _entityService = entityService;
         }
 
         public override BaseDrop CreateDrop(string dropId, IEnumerable<Entity> entities)
@@ -25,7 +27,7 @@ namespace WebAppsGenerator.Generating.WebUi.Services
             switch (dropId)
             {
                 case "EntityList":
-                    return new EntityListDrop(_generatorConfiguration, _pathService, entities);
+                    return new EntityListDrop(_generatorConfiguration, _pathService, _entityService.GetDrops(entities));
                 default:
                     return base.CreateDrop(dropId, entities);
             }
@@ -37,7 +39,7 @@ namespace WebAppsGenerator.Generating.WebUi.Services
             switch (dropId)
             {
                 case "EntityDrop":
-                    return new List<BaseDrop>(entities.Select(e => new SingleEntityDrop(_generatorConfiguration, _pathService, e)).ToList());
+                    return new List<BaseDrop>(_entityService.GetDrops(entities).Select(e => new SingleEntityDrop(_generatorConfiguration, _pathService, e)).ToList());
                 default:
                     throw new ArgumentOutOfRangeException($"Cannot create drop for {dropId}");
 

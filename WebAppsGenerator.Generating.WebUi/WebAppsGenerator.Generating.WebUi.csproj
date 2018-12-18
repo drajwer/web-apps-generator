@@ -12,6 +12,7 @@
     <None Remove="Templates\WebUI\src\components\Menu\Menu.tsx.liquid" />
     <None Remove="Templates\WebUI\src\config.tsx.liquid" />
     <None Remove="Templates\WebUI\src\index.tsx.liquid" />
+    <None Remove="Templates\WebUI\src\models\Model.tsc.liquid" />
     <None Remove="Templates\WebUI\src\routing\GeneratedRoutes.tsc.liquid" />
     <None Remove="Templates\WebUI\src\routing\Router.tsx.liquid" />
     <None Remove="Templates\WebUI\src\screens\App\App.css.liquid" />
@@ -32,6 +33,7 @@
     <EmbeddedResource Include="Templates\WebUI\src\components\Menu\Menu.tsx.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\config.tsx.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\index.tsx.liquid" />
+    <EmbeddedResource Include="Templates\WebUI\src\models\Model.tsc.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\routing\GeneratedRoutes.tsc.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\routing\Router.tsx.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\screens\App\App.css.liquid" />

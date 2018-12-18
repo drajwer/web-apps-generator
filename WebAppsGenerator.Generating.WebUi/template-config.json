@@ -16,6 +16,13 @@
               }
             }
           },
+          "models": {
+            "Model.ts": {
+              "NameTemplate": "{{Params.Entity.Name}}.ts",
+              "DropId": "EntityDrop",
+              "Multiple": true
+            } 
+          }, 
           "routing": {
             "GeneratedRoutes.ts": {
               "DropId": "EntityList",
