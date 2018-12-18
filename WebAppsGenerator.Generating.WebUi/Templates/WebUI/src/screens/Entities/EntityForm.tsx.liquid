@@ -1,20 +1,32 @@
 ﻿import * as React from 'react';
 import './{{Params.Entity.Name}}Form.css';
-import { Grid, TextField } from '@material-ui/core';
+import { Grid, TextField, Typography, Button, CircularProgress } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+import SaveIcon from '@material-ui/icons/Save';
 import {{Params.Entity.Name}} from 'src/models/{{Params.Entity.Name}}';
+import * as moment from 'moment';
+import { Get, Put, Post, Delete } from 'src/api/{{Params.Entity.PluralName}}Api';
 
 interface IState {
     {{Params.Entity.Name | Downcase}}: {{Params.Entity.Name}}
+	editMode: boolean
+	isLoading: boolean
 }
 
 class {{Params.Entity.Name}}Form extends React.Component<any,IState> {
 	constructor(props: any) {
-        super(props);
+		super(props);
+		let id = 0;
+		if (this.props.match.params.id !== "new") {
+			id = parseInt(this.props.match.params.id, 10);
+		}
+		moment();
         this.state = { 
 			{{Params.Entity.Name | Downcase}}: { 
 			{%- for field in Params.Entity.Fields -%}
 				{%- if field.Type.IsSimpleType -%}
-				{{field.Name}}: {%- if field.Type.Name == 'string' -%}""{%- else -%}0{%- endif -%}{%- unless forloop.last -%},{%- endunless -%}
+				{{field.Name}}: {%- if field.Type.Name == 'string' -%}""{%- elsif field.Type.Name == 'Date' -%}new Date(){%-else-%}0{%- endif -%}{%- unless forloop.last -%},{%- endunless -%}
 
 				{%- elsif field.Relation.HasOne -%}
 				{{field.Name}}Id: {%- if field.Relation.SecondIdType.Name == 'string' -%}""{%- else -%}0{%- endif -%}{%- unless forloop.last -%},{%- endunless -%}
@@ -24,13 +36,58 @@ class {{Params.Entity.Name}}Form extends React.Component<any,IState> {
 
 				{%- endif -%}
 			{%- endfor -%}
-			}
+			},
+			editMode: id === 0,
+			isLoading: true
 		};
     }
+	public componentWillMount() {
+		if (this.props.match.params.id !== "new") {
+			Get(parseInt(this.props.match.params.id, 10)).then(r => this.setState({ isLoading: false, {{Params.Entity.Name | Downcase}}: r as {{Params.Entity.Name}} }));
+		}
+		else {
+			this.setState({ isLoading: false })
+		}
+	}
     public render() {
+		if (this.state.isLoading) {
+			return (<div className="loading-circle"><CircularProgress /></div>);
+		}
         return (
             <div>	
                 <Grid container={true} spacing={24}>
+					<Grid item={true} sm={12}>
+						<Typography variant="h3">
+							{{Params.Entity.Name}} { this.state.{{Params.Entity.Name | Downcase}}.id === 0 ? "- Create New" : this.state.editMode ? "- Edit Mode" : ""}
+						</Typography>
+					</Grid>
+					<Grid item={true} sm={12}>
+						{this.state.{{Params.Entity.Name | Downcase}}.id !== 0 ?
+							(
+								<Button variant="contained" color="secondary" onClick={this.onDeleteClick}>
+									Delete
+        							<DeleteIcon />
+								</Button>
+							)
+							: ""
+						}
+						{!this.state.editMode ?
+							(
+							{%- raw -%}
+								<Button variant="contained" color="primary" style={{ marginLeft: 10 }} onClick={this.toggleMode}>
+									Edit
+        							<EditIcon />
+								</Button>
+							)
+							: (
+								<Button variant="contained" color="primary" style={{ marginLeft: 10 }} onClick={this.onSaveClick}>
+									Save
+        							<SaveIcon />
+								</Button>
+							{%- endraw -%}
+							)
+						}
+					</Grid>
 				{%- for field in Params.Entity.Fields -%}
 					{%- if field.Type.IsSimpleType -%}
                     <Grid item={true} xs={12} sm={6}>
@@ -40,8 +97,18 @@ class {{Params.Entity.Name}}Form extends React.Component<any,IState> {
 						  id="{{field.Name}}"
 						  name="{{field.Name | Capitalize}}"
 						  label="{{field.Name | Capitalize}}"
+							{%- if field.Type.Name == 'number' -%}
+						  type="{{ field.Type.Name }}"
+							{%- elsif field.Type.Name == 'Date' -%}
+						  type="datetime-local" 
+							{%- endif -%}
 						  fullWidth={true}
+							{%- if field.Type.Name == 'Date' -%}
+						  value = { moment(this.state.{{Params.Entity.Name | Downcase}}.{{field.Name}}).format("YYYY-MM-DDTHH:mm") }
+							{%- else -%}
 						  value = { this.state.{{Params.Entity.Name | Downcase}}.{{field.Name}} }
+							{%- endif -%}
+						  disabled={!this.state.editMode}
 						  onChange={this.on{{field.Name}}Change}
 						/>
 						{%- else -%}
@@ -70,6 +137,8 @@ class {{Params.Entity.Name}}Form extends React.Component<any,IState> {
 	private on{{field.Name}}Change = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
 		{%- if field.Type.Name == 'number' -%}
         this.setState({ {{Params.Entity.Name | Downcase}}: {...this.state.{{Params.Entity.Name | Downcase}}, {{field.Name}}: parseInt(e.target.value, 10) }});
+		{%- elsif field.Type.Name == 'Date' -%}
+        this.setState({ {{Params.Entity.Name | Downcase}}: {...this.state.{{Params.Entity.Name | Downcase}}, {{field.Name}}: new Date(e.target.value) }});
 		{%- else -%}
 		this.setState({ {{Params.Entity.Name | Downcase}}: {...this.state.{{Params.Entity.Name | Downcase}}, {{field.Name}}: e.target.value}});
 		{%- endif -%}
@@ -77,6 +146,23 @@ class {{Params.Entity.Name}}Form extends React.Component<any,IState> {
 			{%- endunless -%}
 		{%- endif -%}
 	{%- endfor -%}
+
+	private toggleMode = () => this.setState({ editMode: !this.state.editMode });
+
+	private onSaveClick = () => {
+		this.setState({ editMode: !this.state.editMode, isLoading: true });
+		if (this.state.{{Params.Entity.Name | Downcase}}.id === 0) {
+			Post(this.state.{{Params.Entity.Name | Downcase}}).then(r => this.setState({ isLoading: false, {{Params.Entity.Name | Downcase}}: r as {{Params.Entity.Name}} }))
+		}
+		else {
+			Put(this.state.{{Params.Entity.Name | Downcase}}.id, this.state.{{Params.Entity.Name | Downcase}}).then(r => this.setState({ isLoading: false }))
+		}
+	}
+
+	private onDeleteClick = () => {
+		this.setState({ editMode: !this.state.editMode, isLoading: true });
+		Delete(this.state.{{Params.Entity.Name | Downcase}}.id);
+	}
 }
 
 export default {{Params.Entity.Name}}Form;
