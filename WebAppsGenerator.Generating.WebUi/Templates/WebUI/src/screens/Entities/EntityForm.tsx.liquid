@@ -1,16 +1,82 @@
 ﻿import * as React from 'react';
 import './{{Params.Entity.Name}}Form.css';
+import { Grid, TextField } from '@material-ui/core';
+import {{Params.Entity.Name}} from 'src/models/{{Params.Entity.Name}}';
 
-class {{Params.Entity.Name}}Form extends React.Component<any,{}> {
+interface IState {
+    {{Params.Entity.Name | Downcase}}: {{Params.Entity.Name}}
+}
+
+class {{Params.Entity.Name}}Form extends React.Component<any,IState> {
+	constructor(props: any) {
+        super(props);
+        this.state = { 
+			{{Params.Entity.Name | Downcase}}: { 
+			{%- for field in Params.Entity.Fields -%}
+				{%- if field.Type.IsSimpleType -%}
+				{{field.Name}}: {%- if field.Type.Name == 'string' -%}""{%- else -%}0{%- endif -%}{%- unless forloop.last -%},{%- endunless -%}
+
+				{%- elsif field.Relation.HasOne -%}
+				{{field.Name}}Id: {%- if field.Relation.SecondIdType.Name == 'string' -%}""{%- else -%}0{%- endif -%}{%- unless forloop.last -%},{%- endunless -%}
+
+				{%- elsif field.Relation.HasMany -%}
+				{{field.Name}}Ids: []{%- unless forloop.last -%},{%- endunless -%}
+
+				{%- endif -%}
+			{%- endfor -%}
+			}
+		};
+    }
     public render() {
         return (
-            <div>
-                <p className="text">
-                    I am a form for {{Params.Entity.PluralName}} with id: {this.props.match.params.id}.
-                </p>
-            </div>
-        )
+            <div>	
+                <Grid container={true} spacing={24}>
+				{%- for field in Params.Entity.Fields -%}
+					{%- if field.Type.IsSimpleType -%}
+                    <Grid item={true} xs={12} sm={6}>
+						{%- unless field.Name == 'id' -%}
+						<TextField
+						  required={true}
+						  id="{{field.Name}}"
+						  name="{{field.Name | Capitalize}}"
+						  label="{{field.Name | Capitalize}}"
+						  fullWidth={true}
+						  value = { this.state.{{Params.Entity.Name | Downcase}}.{{field.Name}} }
+						  onChange={this.on{{field.Name}}Change}
+						/>
+						{%- else -%}
+						<TextField
+						  required={true}
+						  id="{{field.Name}}"
+						  name="{{field.Name | Capitalize}}"
+						  label="{{field.Name | Capitalize}}"
+						  fullWidth={true}
+						  disabled={true}
+						  value = { this.state.{{Params.Entity.Name | Downcase}}.{{field.Name}} }
+						/>
+						{%- endunless -%}
+					</Grid>
+					{%- endif -%}
+				{%- endfor -%}
+				 </Grid>
+			</div>
+        );
     }
+
+	{%- for field in Params.Entity.Fields -%}
+		{%- if field.Type.IsSimpleType -%}
+			{%- unless field.Name == 'id' -%}
+
+	private on{{field.Name}}Change = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+		{%- if field.Type.Name == 'number' -%}
+        this.setState({ {{Params.Entity.Name | Downcase}}: {...this.state.{{Params.Entity.Name | Downcase}}, {{field.Name}}: parseInt(e.target.value, 10) }});
+		{%- else -%}
+		this.setState({ {{Params.Entity.Name | Downcase}}: {...this.state.{{Params.Entity.Name | Downcase}}, {{field.Name}}: e.target.value}});
+		{%- endif -%}
+    }
+			{%- endunless -%}
+		{%- endif -%}
+	{%- endfor -%}
 }
 
 export default {{Params.Entity.Name}}Form;

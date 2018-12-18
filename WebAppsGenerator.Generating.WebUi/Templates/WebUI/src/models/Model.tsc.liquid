@@ -1,11 +1,11 @@
-﻿class {{Params.Entity.Name}} {
+﻿export default class {{Params.Entity.Name}} {
 	{%- for field in Params.Entity.Fields -%}
 		{%- if field.Type.IsSimpleType -%}
-	{{field.Name}} : {{field.Type.Name}};
+	public {{field.Name}} : {{field.Type.Name}};
 		{%- elsif field.Relation.HasOne -%}
-	{{field.Name}}Id : {{field.Relation.SecondIdType.Name}}
+	public {{field.Name}}Id : {{field.Relation.SecondIdType.Name}}
 		{%- elsif field.Relation.HasMany -%}
-	{{field.Name}}Ids : {{field.Relation.SecondIdType.Name}}[]
+	public {{field.Name}}Ids : {{field.Relation.SecondIdType.Name}}[]
 		{%- endif -%}
 	{%- endfor -%}
 }
