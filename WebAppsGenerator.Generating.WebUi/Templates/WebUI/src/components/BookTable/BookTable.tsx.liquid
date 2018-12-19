@@ -1,0 +1,41 @@
+﻿import * as React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as Actions from '../../modules/books/actions';
+
+interface IBookTableProps {
+    booksState: any,
+    actions: any
+}
+
+class BookTable extends React.Component<IBookTableProps> {
+    public componentDidMount() {
+        this.props.actions.getBooks();
+        this.props.actions.addBook({ name: 'HP2' });
+    }
+
+    public getName(book: any) {
+        if (book) {
+            return book.name;
+        }
+        return 'No book found';
+    }
+    public render() {
+        const book = this.props.booksState.books[0];
+        return (
+            <div>
+                {this.getName(book)}
+            </div>
+        )
+    }
+}
+
+const mapStateToProps = (state: any) => ({
+    booksState: state.books
+});
+
+const mapDispatchToProps = (dispatch: any) => ({
+    actions: bindActionCreators(Actions, dispatch),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(BookTable);

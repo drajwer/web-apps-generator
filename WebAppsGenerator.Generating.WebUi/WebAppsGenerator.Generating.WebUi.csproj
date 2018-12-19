@@ -9,6 +9,10 @@
     <None Remove="Templates\WebUI\src\api\Api.tsx.liquid" />
     <None Remove="Templates\WebUI\src\config.tsx.liquid" />
     <None Remove="Templates\WebUI\src\index.tsx.liquid" />
+    <None Remove="Templates\WebUI\src\modules\actions.tsx.liquid" />
+    <None Remove="Templates\WebUI\src\modules\actionTypes.tsx.liquid" />
+    <None Remove="Templates\WebUI\src\modules\index.tsx.liquid" />
+    <None Remove="Templates\WebUI\src\modules\reducer.tsx.liquid" />
     <None Remove="Templates\WebUI\src\routing\Router.tsx.liquid" />
     <None Remove="Templates\WebUI\src\screens\App\App.css.liquid" />
     <None Remove="Templates\WebUI\src\screens\App\App.tsx.liquid" />
@@ -23,6 +27,10 @@
     <EmbeddedResource Include="Templates\WebUI\src\api\Api.tsx.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\config.tsx.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\index.tsx.liquid" />
+    <EmbeddedResource Include="Templates\WebUI\src\modules\actions.tsx.liquid" />
+    <EmbeddedResource Include="Templates\WebUI\src\modules\actionTypes.tsx.liquid" />
+    <EmbeddedResource Include="Templates\WebUI\src\modules\index.tsx.liquid" />
+    <EmbeddedResource Include="Templates\WebUI\src\modules\reducer.tsx.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\routing\Router.tsx.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\screens\App\App.css.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\screens\App\App.tsx.liquid" />
@@ -38,10 +46,6 @@
         <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.1.1" />
         <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.1.1" />
     </ItemGroup>
-    
-  <ItemGroup>
-    <Folder Include="Templates\WebUI\src\components\" />
-  </ItemGroup>
     
   <ItemGroup>
     <ProjectReference Include="..\WebAppsGenerator.Core\WebAppsGenerator.Core.csproj" />

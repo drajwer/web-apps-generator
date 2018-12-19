@@ -3,7 +3,29 @@
         "src": {
             "api": {
                 "Api.tsx": {
-                    "NameTemplate": "{{Params.Entity.PluralName}}Api.tsx",
+                    "NameTemplate": "{{Params.Entity.CamelCaseName}}Api.tsx",
+                    "DropId": "EntityDrop",
+                    "Multiple": true
+                }
+            },
+            "modules": {
+                "actions.tsx": {
+                    "NameTemplate": "{{Params.Entity.CamelCaseName}}/actions.tsx",
+                    "DropId": "EntityDrop",
+                    "Multiple": true
+                },
+                "actionTypes.tsx": {
+                    "NameTemplate": "{{Params.Entity.CamelCaseName}}/actionTypes.tsx",
+                    "DropId": "EntityDrop",
+                    "Multiple": true
+                },
+                "reducer.tsx": {
+                    "NameTemplate": "{{Params.Entity.CamelCaseName}}/reducer.tsx",
+                    "DropId": "EntityDrop",
+                    "Multiple": true
+                },
+                "index.tsx": {
+                    "NameTemplate": "index.tsx",
                     "DropId": "EntityDrop",
                     "Multiple": true
                 }

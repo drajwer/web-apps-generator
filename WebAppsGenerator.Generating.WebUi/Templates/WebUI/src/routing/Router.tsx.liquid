@@ -2,10 +2,11 @@
 import { Route, Switch } from 'react-router-dom';
 
 import MainPage from '../screens/MainPage/MainPage';
-
+import BookTable from '../components/BookTable/BookTable';
 
 const Routes: React.StatelessComponent = () => (
     <Switch>
+      <Route path="/:books" component={BookTable} />
       <Route path="/" component={MainPage} />
     </Switch>
 );

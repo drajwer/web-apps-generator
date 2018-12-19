@@ -33,12 +33,12 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
             if (entities == null)
                 throw new ArgumentNullException();
 
-            CreateSolutionWithProjects();
+            //CreateSolutionWithProjects();
 
-            AddNuGetPackages($"{_pathService.CoreDirPath}\\{_pathService.CoreProjectName}.csproj", _generatorConfiguration.CoreProjectPackages);
+            //AddNuGetPackages($"{_pathService.CoreDirPath}\\{_pathService.CoreProjectName}.csproj", _generatorConfiguration.CoreProjectPackages);
 
-            _webApiProjectGenerator.Generate(entities);
-            _coreProjectGenerator.Generate(entities);
+            //_webApiProjectGenerator.Generate(entities);
+            //_coreProjectGenerator.Generate(entities);
         }
 
         private void CreateSolutionWithProjects()

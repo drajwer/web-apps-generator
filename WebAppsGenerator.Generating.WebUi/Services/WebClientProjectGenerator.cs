@@ -21,8 +21,8 @@ namespace WebAppsGenerator.Generating.WebUi.Services
 
         public void Generate(IEnumerable<Entity> entities)
         {
-            CreateApp();
-            RemoveUnnecessaryFiles();
+            //CreateApp();
+            //RemoveUnnecessaryFiles();
 
             _webUiGenerator.Generate(entities);
         }
@@ -37,6 +37,9 @@ namespace WebAppsGenerator.Generating.WebUi.Services
             _commandLineService.RunCommand("npm install --save @types/lodash");
             _commandLineService.RunCommand("npm install --save @types/jquery");
             _commandLineService.RunCommand("npm install --save jquery");
+            _commandLineService.RunCommand("npm i --save @types/redux");
+            _commandLineService.RunCommand("npm i --save @types/react-redux");
+            _commandLineService.RunCommand("npm i --save @types/redux-thunk");
         }
 
         private void RemoveUnnecessaryFiles()

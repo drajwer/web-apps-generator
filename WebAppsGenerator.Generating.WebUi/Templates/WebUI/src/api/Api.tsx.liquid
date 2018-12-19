@@ -1,9 +1,11 @@
 ﻿import { Api } from '../config';
 import { jsonAjax, jsonPayloadAjax } from '../vendors/http';
 
-const controllerName = '/{{Params.Entity.PluralName}}';
+const controllerName = '/{{Params.Entity.CamelCaseName}}';
 
-export const Get = (id: number) =>
+type IdType = number | string;
+
+export const Get = (id: IdType) =>
     jsonAjax({
         type: 'GET',
         url: Api + `${controllerName}/${id}`,
@@ -22,14 +24,14 @@ export const Post = (data: any) =>
         url: Api + controllerName
     });
 
-export const Put = (id: number, data: any) =>
+export const Put = (id: IdType, data: any) =>
     jsonPayloadAjax({
         data,
         type: 'PUT',
         url: Api + `${controllerName}/${id}`
     });
 
-export const Delete = (id: number) =>
+export const Delete = (id: IdType) =>
     jsonPayloadAjax({
         type: 'DELETE',
         url: Api + `${controllerName}/${id}`,

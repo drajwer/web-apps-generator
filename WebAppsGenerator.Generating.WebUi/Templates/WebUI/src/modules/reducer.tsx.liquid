@@ -1,0 +1,102 @@
+﻿export interface I{{ Params.Entity.PluralName }}State {
+    readonly isFetching: boolean,
+    readonly isInvalid: boolean,
+    readonly {{ Params.Entity.CamelCasePluralName}}: any,
+    readonly {{ Params.Entity.CamelCaseName }}Id: number | string,
+}
+
+const initialState: I{{ Params.Entity.PluralName }}State = {
+    isFetching: false,
+    isInvalid: false,
+    {{ Params.Entity.CamelCasePluralName}}: [],
+    {{ Params.Entity.CamelCaseName }}Id: -1,
+};
+
+import {
+    RECEIVE_{{ Params.Entity.SnakeUppercasePluralName }}, REQUEST_{{ Params.Entity.SnakeUppercasePluralName }}, SET_FETCH_ERROR_{{ Params.Entity.SnakeUppercasePluralName }}, SELECT_{{ Params.Entity.SnakeUppercaseName}},
+    REQUEST_ADD_{{ Params.Entity.SnakeUppercaseName}}, REQUEST_UPDATE_{{ Params.Entity.SnakeUppercaseName}}, REQUEST_DELETE_{{ Params.Entity.SnakeUppercaseName}},
+    RESPONSE_ADD_{{ Params.Entity.SnakeUppercaseName}}, RESPONSE_UPDATE_{{ Params.Entity.SnakeUppercaseName}}, RESPONSE_DELETE_{{ Params.Entity.SnakeUppercaseName}},
+    SET_ADD_{{ Params.Entity.SnakeUppercaseName}}_ERROR, SET_UPDATE_{{ Params.Entity.SnakeUppercaseName}}_ERROR, SET_DELETE_{{ Params.Entity.SnakeUppercaseName}}_ERROR
+} from './actionTypes';
+
+const {{ Params.Entity.CamelCasePluralName}}Reducer = (state = initialState, action: any) => {
+    switch (action.type) {
+        case SELECT_{{ Params.Entity.SnakeUppercaseName}}:
+            return {
+                ...state,
+                {{ Params.Entity.CamelCaseName }}Id: action.{{ Params.Entity.CamelCaseName }}Id
+            };
+        case REQUEST_UPDATE_{{ Params.Entity.SnakeUppercaseName}}:
+        case REQUEST_DELETE_{{ Params.Entity.SnakeUppercaseName}}:
+        case REQUEST_ADD_{{ Params.Entity.SnakeUppercaseName}}:
+        case REQUEST_{{ Params.Entity.SnakeUppercasePluralName }}:
+            return {
+                ...state,
+                isFetching: true,
+                isInvalid: false,
+            };
+        case RESPONSE_UPDATE_{{ Params.Entity.SnakeUppercaseName}}:
+            return responseUpdate{{ Params.Entity.Name }}(state, action.{{ Params.Entity.CamelCaseName }});
+        case RESPONSE_DELETE_{{ Params.Entity.SnakeUppercaseName}}:
+            return responseDelete{{ Params.Entity.Name }}(state, action.id);
+        case RESPONSE_ADD_{{ Params.Entity.SnakeUppercaseName}}:
+            return responseAdd{{ Params.Entity.Name }}(state, action.{{ Params.Entity.CamelCaseName }});
+        case RECEIVE_{{ Params.Entity.SnakeUppercasePluralName }}:
+            return {
+                ...state,
+                {{ Params.Entity.CamelCasePluralName}}: action.{{ Params.Entity.CamelCasePluralName}},
+                isFetching: false
+            };
+        case SET_ADD_{{ Params.Entity.SnakeUppercaseName}}_ERROR:
+        case SET_UPDATE_{{ Params.Entity.SnakeUppercaseName}}_ERROR:
+        case SET_DELETE_{{ Params.Entity.SnakeUppercaseName}}_ERROR:
+        case SET_FETCH_ERROR_{{ Params.Entity.SnakeUppercasePluralName }}:
+            return {
+                ...state,
+                isInvalid: true
+            };
+
+        default:
+            return state;
+    }
+}
+
+const responseAdd{{ Params.Entity.Name }} = (state: I{{ Params.Entity.PluralName }}State, {{ Params.Entity.CamelCaseName }}: any) => {
+    const {{ Params.Entity.CamelCasePluralName}} = state.{{ Params.Entity.CamelCasePluralName}};
+    {{ Params.Entity.CamelCasePluralName}}.push({{ Params.Entity.CamelCaseName }});
+    return {
+        ...state,
+        isFetching: false,
+        showToast: true,
+        {{ Params.Entity.CamelCasePluralName}}
+    };
+};
+
+const responseDelete{{ Params.Entity.Name }} = (state: I{{ Params.Entity.PluralName }}State, id: number | string) => {
+    const {{ Params.Entity.CamelCasePluralName}} = state.{{ Params.Entity.CamelCasePluralName}};
+    const toDel = state.{{ Params.Entity.CamelCasePluralName}}.find((c: any) => c.id === id);
+    const index = {{ Params.Entity.CamelCasePluralName}}.indexOf(toDel);
+    {{ Params.Entity.CamelCasePluralName}}.splice(index, 1);
+    return {
+        ...state,
+        isFetching: false,
+        showToast: true,
+        {{ Params.Entity.CamelCasePluralName}}
+    };
+};
+
+const responseUpdate{{ Params.Entity.Name }} = (state: I{{ Params.Entity.PluralName }}State, {{ Params.Entity.CamelCaseName }}: any) => {
+    const {{ Params.Entity.CamelCasePluralName}} = state.{{ Params.Entity.CamelCasePluralName}};
+    const old{{ Params.Entity.Name }} = state.{{ Params.Entity.CamelCasePluralName}}.find((c: any) => c.id === {{ Params.Entity.CamelCaseName }}.id);
+    const index = {{ Params.Entity.CamelCasePluralName}}.indexOf(old{{ Params.Entity.Name }});
+    {{ Params.Entity.CamelCasePluralName}}[index] = {{ Params.Entity.CamelCaseName }};
+    return {
+        ...state,
+        isFetching: false,
+        showToast: true,
+        {{ Params.Entity.CamelCasePluralName}}
+    };
+};
+
+
+export default {{ Params.Entity.CamelCasePluralName}}Reducer;
