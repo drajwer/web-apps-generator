@@ -71,8 +71,8 @@
                 },
                 "index.tsx": {
                     "NameTemplate": "index.tsx",
-                    "DropId": "EntityDrop",
-                    "Multiple": true
+                    "DropId": "EntityList",
+                    "Multiple": false
                 }
             }
         }

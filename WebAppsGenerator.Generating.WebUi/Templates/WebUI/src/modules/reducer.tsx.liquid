@@ -19,7 +19,7 @@ import {
     SET_ADD_{{ Params.Entity.SnakeUppercaseName}}_ERROR, SET_UPDATE_{{ Params.Entity.SnakeUppercaseName}}_ERROR, SET_DELETE_{{ Params.Entity.SnakeUppercaseName}}_ERROR
 } from './actionTypes';
 
-const {{ Params.Entity.CamelCasePluralName}}Reducer = (state = initialState, action: any) => {
+const {{ Params.Entity.CamelCaseName}}Reducer = (state = initialState, action: any) => {
     switch (action.type) {
         case SELECT_{{ Params.Entity.SnakeUppercaseName}}:
             return {
@@ -61,9 +61,9 @@ const {{ Params.Entity.CamelCasePluralName}}Reducer = (state = initialState, act
     }
 }
 
-const responseAdd{{ Params.Entity.Name }} = (state: I{{ Params.Entity.PluralName }}State, {{ Params.Entity.CamelCaseName }}: any) => {
+const responseAdd{{ Params.Entity.Name }} = (state: I{{ Params.Entity.PluralName }}State, new{{ Params.Entity.Name }}: any) => {
     const {{ Params.Entity.CamelCasePluralName}} = state.{{ Params.Entity.CamelCasePluralName}};
-    {{ Params.Entity.CamelCasePluralName}}.push({{ Params.Entity.CamelCaseName }});
+    {{ Params.Entity.CamelCasePluralName}}.push(new{{ Params.Entity.Name }});
     return {
         ...state,
         isFetching: false,
@@ -85,11 +85,11 @@ const responseDelete{{ Params.Entity.Name }} = (state: I{{ Params.Entity.PluralN
     };
 };
 
-const responseUpdate{{ Params.Entity.Name }} = (state: I{{ Params.Entity.PluralName }}State, {{ Params.Entity.CamelCaseName }}: any) => {
+const responseUpdate{{ Params.Entity.Name }} = (state: I{{ Params.Entity.PluralName }}State, new{{ Params.Entity.Name }}: any) => {
     const {{ Params.Entity.CamelCasePluralName}} = state.{{ Params.Entity.CamelCasePluralName}};
-    const old{{ Params.Entity.Name }} = state.{{ Params.Entity.CamelCasePluralName}}.find((c: any) => c.id === {{ Params.Entity.CamelCaseName }}.id);
+    const old{{ Params.Entity.Name }} = state.{{ Params.Entity.CamelCasePluralName}}.find((c: any) => c.id === new{{ Params.Entity.Name }}.id);
     const index = {{ Params.Entity.CamelCasePluralName}}.indexOf(old{{ Params.Entity.Name }});
-    {{ Params.Entity.CamelCasePluralName}}[index] = {{ Params.Entity.CamelCaseName }};
+    {{ Params.Entity.CamelCasePluralName}}[index] = new{{ Params.Entity.Name }};
     return {
         ...state,
         isFetching: false,
@@ -99,4 +99,4 @@ const responseUpdate{{ Params.Entity.Name }} = (state: I{{ Params.Entity.PluralN
 };
 
 
-export default {{ Params.Entity.CamelCasePluralName}}Reducer;
+export default {{ Params.Entity.CamelCaseName}}Reducer;

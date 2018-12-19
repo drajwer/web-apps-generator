@@ -1,8 +1,12 @@
 ﻿import { combineReducers } from 'redux';
-import books from './books/reducer';
+{%- for entity in Params.Entities -%}
+import {{ entity.CamelCaseName }} from './{{ entity.CamelCaseName }}/reducer';
+{%- endfor -%}
 
 const combinedReducers = combineReducers({
-    books
+{%- for entity in Params.Entities -%}
+	{{ entity.CamelCaseName }},
+{%- endfor -%}
 });
 
 export default combinedReducers;

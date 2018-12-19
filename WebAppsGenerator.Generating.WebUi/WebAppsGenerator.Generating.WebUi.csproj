@@ -7,6 +7,7 @@
   <ItemGroup>
     <None Remove="template-config.json" />
     <None Remove="Templates\WebUI\src\api\Api.tsx.liquid" />
+    <None Remove="Templates\WebUI\src\components\BookTable\BookTable.tsx.liquid" />
     <None Remove="Templates\WebUI\src\components\Menu\GeneratedLabels.tsc.liquid" />
     <None Remove="Templates\WebUI\src\components\Menu\Menu.css.liquid" />
     <None Remove="Templates\WebUI\src\components\Menu\Menu.tsx.liquid" />
@@ -32,6 +33,7 @@
   <ItemGroup>
     <EmbeddedResource Include="template-config.json" />
     <EmbeddedResource Include="Templates\WebUI\src\api\Api.tsx.liquid" />
+    <EmbeddedResource Include="Templates\WebUI\src\components\BookTable\BookTable.tsx.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\components\Menu\GeneratedLabels.tsc.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\components\Menu\Menu.css.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\components\Menu\Menu.tsx.liquid" />
