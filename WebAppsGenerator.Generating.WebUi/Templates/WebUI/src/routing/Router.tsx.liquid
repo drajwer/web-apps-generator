@@ -3,11 +3,13 @@ import { Route, Switch } from 'react-router-dom';
 
 import MainPage from '../screens/MainPage/MainPage';
 import BookTable from '../components/BookTable/BookTable';
+import generatedRoutes from "./GeneratedRoutes";
 
-const Routes: React.StatelessComponent = () => (
+const Routes: React.FunctionComponent = () => (
     <Switch>
+      <Route exact={true} path="/" component={MainPage} />
+      {generatedRoutes.map(r => (<Route key={r.path} path={`/${r.path}`} component={r.component} exact={r.exact} />))}
       <Route path="/:books" component={BookTable} />
-      <Route path="/" component={MainPage} />
     </Switch>
 );
 

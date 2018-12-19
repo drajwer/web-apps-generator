@@ -1,0 +1,53 @@
+﻿import * as React from 'react';
+import { Drawer, ListItem, ListItemText, ListItemIcon, List, Divider } from "@material-ui/core";
+import './Menu.css';
+import labels from "./GeneratedLabels";
+
+import CollectionsRoundedIcon from '@material-ui/icons/CollectionsRounded';
+import { Link } from 'react-router-dom';
+
+interface IMenuProps {
+    openMenu: boolean,
+    onClose: () => void
+}
+
+class Menu extends React.Component<IMenuProps, {}>{
+    public render() {
+        const generatedLabels = labels.map(l => (
+            <ListItem key={l.displayName}>
+                <ListItemIcon><CollectionsRoundedIcon /></ListItemIcon>
+                {%- raw -%}
+                <Link to={`/${l.path}`} style={{ textDecoration: 'none' }} onClick={this.props.onClose}>
+                    <ListItemText primary={l.displayName} style={{ paddingLeft: 13 }} />
+                </Link>
+				{%- endraw -%}
+            </ListItem>
+        ))
+        return (
+            <Drawer anchor="left" open={this.props.openMenu} onClose={this.props.onClose}>
+                <div
+                    tabIndex={0}
+                    role="button"
+                >
+                    <List>
+                        <ListItem>
+                            {%- raw -%}
+							<Link to={'/'} style={{ textDecoration: 'none' }} onClick={this.props.onClose}>
+							{%- endraw -%}
+                                <ListItemText primary="{{Params.ProjectName}}"/>
+                            </Link>
+                        </ListItem>
+                        <Divider />
+						{%- raw -%}
+                        <div style={{marginTop: 20}}>
+						{%- endraw -%}
+                        {generatedLabels}
+                        </div>
+                    </List>
+                </div>
+            </Drawer>
+        );
+    }
+}
+
+export default Menu;

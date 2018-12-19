@@ -15,6 +15,17 @@ namespace WebAppsGenerator.Core.Services
         {
             FixIds(entities);
             FixRelations(entities);
+            SortFields(entities);
+        }
+
+        private void SortFields(IEnumerable<Entity> entities)
+        {
+            foreach (var entity in entities)
+            {
+                var idField = entity.Fields.First(f => f.Name == Id);
+                entity.Fields.Remove(idField);
+                entity.Fields.Insert(0, idField);
+            }
         }
 
         private void FixIds(IEnumerable<Entity> entities)

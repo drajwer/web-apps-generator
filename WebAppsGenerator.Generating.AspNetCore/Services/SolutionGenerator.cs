@@ -12,6 +12,8 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
     /// </summary>
     public class SolutionGenerator : IGenerator
     {
+        private const bool IsEnabled = false;
+
         private readonly ICommandLineService _commandLineService;
         private readonly IGenerator _webApiProjectGenerator;
         private readonly IGenerator _coreProjectGenerator;
@@ -30,6 +32,9 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
 
         public void Generate(IEnumerable<Entity> entities)
         {
+            if(!IsEnabled)
+                return;
+
             if (entities == null)
                 throw new ArgumentNullException();
 

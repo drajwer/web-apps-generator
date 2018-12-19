@@ -45,6 +45,7 @@ namespace WebAppsGenerator.Generating.WebUi.IoC
             services.AddScoped<SolutionPathService>();
             services.AddScoped<WebUiGenerator>();
             services.AddScoped<WebUiDropFactory>();
+            services.AddScoped<TypeScriptEntityService>();
         }
     }
 }

@@ -1,0 +1,21 @@
+﻿import * as React from 'react';
+{%- for entity in Params.Entities -%}
+import {{entity.Name}}List from "../screens/Entities/{{entity.Name}}/List/{{entity.Name}}List";
+import {{entity.Name}}Form from "../screens/Entities/{{entity.Name}}/Form/{{entity.Name}}Form"; 
+{%- endfor -%}
+
+interface ILabelInfo {
+    component : React.ComponentType<any>,
+    path : string,
+	exact: boolean
+}
+
+const routes : ILabelInfo[] = 
+[
+    {%- for entity in Params.Entities -%}
+    {component: {{entity.Name}}List, path: "{{entity.PluralName | Downcase }}", exact: true},
+    {component: {{entity.Name}}Form, path: "{{entity.PluralName | Downcase }}/:id", exact: false},
+	{%- endfor -%}
+]
+
+export default routes;
