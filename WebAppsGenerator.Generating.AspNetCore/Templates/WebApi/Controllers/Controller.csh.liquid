@@ -20,16 +20,29 @@ namespace {{Params.WebApiProjectName}}.Controllers
         }
 
         // GET api/{{ Params.Entity.PluralName | Downcase }}
-        [HttpGet]
+		/// <summary>
+        /// Returns all books.
+        /// </summary>
+        /// <returns>Array with all books</returns>
+        /// <response code="200">Array with all books</response>
+		[HttpGet] // GET api/{{ Params.Entity.PluralName | Downcase }}
+        [ProducesResponseType(typeof(BookViewModel[]), 200)]
         public IActionResult Get()
         {
             var entities = _service.GetAll();
             var viewModels = entities.Select(e => new {{Params.Entity.Name}}ViewModel(e));
             return new JsonResult(viewModels);
         }
-
-        // GET api/{{ Params.Entity.PluralName | Downcase }}/{%- if Params.Entity.IdField.Type.Name == 'int' -%}5{%- else -%}some-string-id{%- endif %}
-        [HttpGet("{id}")]
+		/// <summary>
+        /// Returns book with specified id.
+        /// </summary>
+        /// <param name="id">Id of the book</param>
+        /// <returns>Requested book</returns>
+        /// <response code="200">Returns requested book</response>
+        /// <response code="404">If book with given id does not exist</response>
+        [HttpGet("{id}")] // GET api/{{ Params.Entity.PluralName | Downcase }}/{%- if Params.Entity.IdField.Type.Name == 'int' -%}5{%- else -%}some-string-id{%- endif %}
+        [ProducesResponseType(typeof(BookViewModel),200)]
+        [ProducesResponseType(404)]
         public IActionResult Get({{Params.Entity.IdField.Type.Name}} id)
         {
             var entity = _service.GetWithChildren(id);
@@ -39,8 +52,14 @@ namespace {{Params.WebApiProjectName}}.Controllers
             return new JsonResult(viewModel);
         }
 
-        // POST api/{{ Params.Entity.PluralName | Downcase }}
-        [HttpPost]
+		/// <summary>
+        /// Creates a book.
+        /// </summary>
+        /// <param name="value">Book to add</param>
+        /// <returns>The newly created item</returns>
+        /// <response code="200">Returns the newly created item</response>
+        [HttpPost] // POST api/{{ Params.Entity.PluralName | Downcase }}
+        [ProducesResponseType(typeof(BookViewModel),200)]
         public IActionResult Post([FromBody] {{Params.Entity.Name}}ViewModel value)
         {
 			using (var tran = _scopeFactory.BeginTransaction())
