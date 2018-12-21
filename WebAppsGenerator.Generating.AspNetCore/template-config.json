@@ -2,29 +2,24 @@
   "Core": {
     "Interfaces": {
       "IRepository.cs": {
-        "NameTemplate": "IRepository.cs",
         "DropId": "WebApiBase",
         "Multiple": false
       },
       "ITransactionScope.cs": {
-        "NameTemplate": "ITransactionScope.cs",
         "DropId": "WebApiBase",
         "Multiple": false
       },
       "ICrudService.cs": {
-        "NameTemplate": "ICrudService.cs",
         "DropId": "WebApiBase",
         "Multiple": false
       }
     },
     "Context": {
       "AppDbContext.cs": {
-        "NameTemplate": "AppDbContext.cs",
         "DropId": "ModelList",
         "Multiple": false
       },
       "Repository.cs": {
-        "NameTemplate": "Repository.cs",
         "DropId": "WebApiBase",
         "Multiple": false
       }
@@ -43,7 +38,6 @@
         "Multiple": true
       },
       "RepositorySet.cs": {
-        "NameTemplate": "RepositorySet.cs",
         "DropId": "ModelListNoJoins",
         "Multiple": false
       },
@@ -77,13 +71,15 @@
       "Multiple": true
     },
     "Startup.cs": {
-      "NameTemplate": "Startup.cs",
       "DropId": "WebApiBase",
       "Multiple": false
     },
-    "StartupExtensions.cs": {
-      "NameTemplate": "StartupExtensions.cs",
+    "CrudStartupExtensions.cs": {
       "DropId": "ModelListNoJoins",
+      "Multiple": false
+    },
+    "SwaggerStartupExtensions.cs": {
+      "DropId": "WebApiBase",
       "Multiple": false
     },
     "ProjectFile.csproj": {
@@ -92,7 +88,10 @@
       "Multiple": false
     },
     "appsettings.json": {
-      "NameTemplate": "appsettings.json",
+      "DropId": "WebApiBase",
+      "Multiple": false
+    },
+    "launchSettings.json": {
       "DropId": "WebApiBase",
       "Multiple": false
     },

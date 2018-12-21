@@ -19,7 +19,9 @@
     <None Remove="Templates\Entity.liquid" />
     <None Remove="Templates\WebApi\appsettings.json.liquid" />
     <None Remove="Templates\WebApi\BaseViewModel.liquid" />
+    <None Remove="Templates\WebApi\Extensions\SwaggerStartupExtensions.csh.liquid" />
     <None Remove="Templates\WebApi\ProjectFile.csproj.liquid" />
+    <None Remove="Templates\WebApi\Properties\launchSettings.json.liquid" />
     <None Remove="Templates\WebApi\Startup.csh.liquid" />
     <None Remove="Templates\WebApi\StartupExtensions.liquid" />
     <None Remove="Templates\WebApi\ViewModel.liquid" />
@@ -41,8 +43,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Templates\Core\Models\Entity.csh.liquid" />
     <EmbeddedResource Include="Templates\WebApi\appsettings.json.liquid" />
+    <EmbeddedResource Include="Templates\WebApi\Extensions\SwaggerStartupExtensions.csh.liquid" />
+    <EmbeddedResource Include="Templates\WebApi\Properties\launchSettings.json.liquid" />
     <EmbeddedResource Include="Templates\WebApi\ViewModels\Generated\BaseViewModel.csh.liquid" />
-    <EmbeddedResource Include="Templates\WebApi\Extensions\StartupExtensions.csh.liquid" />
+    <EmbeddedResource Include="Templates\WebApi\Extensions\CrudStartupExtensions.csh.liquid" />
     <EmbeddedResource Include="Templates\WebApi\ViewModels\ViewModel.csh.liquid" />
     <EmbeddedResource Include="Templates\WebApi\Startup.csh.liquid" />
     <EmbeddedResource Include="Templates\WebApi\ProjectFile.csproj.liquid" />
