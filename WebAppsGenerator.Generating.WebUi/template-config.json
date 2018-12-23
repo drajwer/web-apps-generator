@@ -1,5 +1,15 @@
 {
     "WebUI": {
+        "package.json": {
+            "NameTemplate": "package.json",
+            "DropId": "WebUiBaseDrop",
+            "Multiple": false
+        },
+        "package-lock.json": {
+            "NameTemplate": "package-lock.json",
+            "DropId": "WebUiBaseDrop",
+            "Multiple": false
+        },
         "src": {
             "api": {
                 "Api.tsx": {

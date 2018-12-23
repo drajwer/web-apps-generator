@@ -14,3 +14,11 @@ export const SET_UPDATE_{{ Params.Entity.SnakeUppercaseName}}_ERROR = 'SET_UPDAT
 export const REQUEST_DELETE_{{ Params.Entity.SnakeUppercaseName}} = 'REQUEST_DELETE_{{ Params.Entity.SnakeUppercaseName}}';
 export const RESPONSE_DELETE_{{ Params.Entity.SnakeUppercaseName}} = 'RESPONSE_DELETE_{{ Params.Entity.SnakeUppercaseName}}';
 export const SET_DELETE_{{ Params.Entity.SnakeUppercaseName}}_ERROR = 'SET_DELETE_{{ Params.Entity.SnakeUppercaseName}}_ERROR';
+
+export enum {{ Params.Entity.Name }}ActionTypes {
+	REQUEST_{{ Params.Entity.SnakeUppercasePluralName }}, RECEIVE_{{ Params.Entity.SnakeUppercasePluralName }}, SELECT_{{ Params.Entity.SnakeUppercaseName}}, SET_FETCH_ERROR_{{ Params.Entity.SnakeUppercasePluralName }},
+	REQUEST_ADD_{{ Params.Entity.SnakeUppercaseName}}, RESPONSE_ADD_{{ Params.Entity.SnakeUppercaseName}}, SET_ADD_{{ Params.Entity.SnakeUppercaseName}}_ERROR,
+	REQUEST_UPDATE_{{ Params.Entity.SnakeUppercaseName}}, RESPONSE_UPDATE_{{ Params.Entity.SnakeUppercaseName}}, SET_UPDATE_{{ Params.Entity.SnakeUppercaseName}}_ERROR,
+	REQUEST_DELETE_{{ Params.Entity.SnakeUppercaseName}}, RESPONSE_DELETE_{{ Params.Entity.SnakeUppercaseName}}, SET_DELETE_{{ Params.Entity.SnakeUppercaseName}}_ERROR
+}
+

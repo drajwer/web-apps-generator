@@ -28,6 +28,8 @@ namespace WebAppsGenerator.Generating.WebUi.Services
             {
                 case "EntityList":
                     return new EntityListDrop(_generatorConfiguration, _pathService, _entityService.GetDrops(entities));
+                case "WebUiBaseDrop":
+                    return new WebUiBaseDrop(_pathService, _generatorConfiguration);
                 default:
                     return base.CreateDrop(dropId, entities);
             }

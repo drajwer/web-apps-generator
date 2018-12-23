@@ -1,12 +1,36 @@
 ﻿import { combineReducers } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import thunk, {ThunkMiddleware }  from 'redux-thunk';
+
 {%- for entity in Params.Entities -%}
-import {{ entity.CamelCaseName }} from './{{ entity.CamelCaseName }}/reducer';
+import {{ entity.CamelCaseName }}, { I{{ entity.Name }}State } from './{{ entity.CamelCaseName }}/reducer';
 {%- endfor -%}
 
-const combinedReducers = combineReducers({
+{%- for entity in Params.Entities -%}
+import { {{ entity.Name }}Actions } from './{{ entity.CamelCaseName }}/actions';
+{%- endfor -%}
+
+export type RootActions = 
+{%- for entity in Params.Entities -%}
+	{{ entity.Name }}Actions {% unless forloop.last %} | {% endunless %}
+{%- endfor -%};
+
+export interface IRootState {
+{%- for entity in Params.Entities -%}
+	{{ entity.CamelCaseName }}: I{{ entity.Name }}State,
+{%- endfor -%}
+}
+
+export type GetStateType = () => IRootState;
+
+const rootReducer = combineReducers<IRootState, RootActions>({
 {%- for entity in Params.Entities -%}
 	{{ entity.CamelCaseName }},
 {%- endfor -%}
 });
 
-export default combinedReducers;
+const store = createStore<IRootState, RootActions, {}, {}>(
+	rootReducer,
+	applyMiddleware(thunk as ThunkMiddleware<IRootState, RootActions>));
+
+export default store;

@@ -6,7 +6,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import SaveIcon from '@material-ui/icons/Save';
 import {{Params.Entity.Name}} from 'src/models/{{Params.Entity.Name}}';
 import * as moment from 'moment';
-import { Get, Put, Post, Delete } from 'src/api/{{Params.Entity.PluralName}}Api';
+import { Get, Put, Post, Delete } from 'src/api/{{ Params.Entity.CamelCaseName }}Api';
 
 interface IState {
     {{Params.Entity.Name | Downcase}}: {{Params.Entity.Name}}

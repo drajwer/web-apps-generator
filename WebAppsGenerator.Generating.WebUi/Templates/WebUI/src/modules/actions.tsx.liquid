@@ -1,16 +1,33 @@
 ﻿import { GetAll, Post, Put, Delete } from '../../api/{{ Params.Entity.CamelCaseName }}Api';
+import { ThunkAction } from 'redux-thunk';
+import { IRootState, RootActions } from '../index';
+import { {{ Params.Entity.Name }}ActionTypes } from './actionTypes';
+import { GetStateType } from '../index';
+import {{ Params.Entity.Name }} from '../../models/{{ Params.Entity.Name }}';
 
-import {
-    RECEIVE_{{ Params.Entity.SnakeUppercasePluralName }}, REQUEST_{{ Params.Entity.SnakeUppercasePluralName }}, SET_FETCH_ERROR_{{ Params.Entity.SnakeUppercasePluralName }}, SELECT_{{ Params.Entity.SnakeUppercaseName}},
-    REQUEST_ADD_{{ Params.Entity.SnakeUppercaseName}}, REQUEST_UPDATE_{{ Params.Entity.SnakeUppercaseName}}, REQUEST_DELETE_{{ Params.Entity.SnakeUppercaseName}},
-    RESPONSE_ADD_{{ Params.Entity.SnakeUppercaseName}}, RESPONSE_UPDATE_{{ Params.Entity.SnakeUppercaseName}}, RESPONSE_DELETE_{{ Params.Entity.SnakeUppercaseName}},
-    SET_ADD_{{ Params.Entity.SnakeUppercaseName}}_ERROR, SET_UPDATE_{{ Params.Entity.SnakeUppercaseName}}_ERROR, SET_DELETE_{{ Params.Entity.SnakeUppercaseName}}_ERROR
-} from './actionTypes';
+type ThunkResult<R> = ThunkAction<R, IRootState, undefined, RootActions>;
 
-type IdType = number | string;
+export type {{ Params.Entity.Name }}Actions =
+	{ type: {{ Params.Entity.Name }}ActionTypes.SELECT_{{ Params.Entity.SnakeUppercaseName}}, {{ Params.Entity.CamelCaseName }}Id: number } |
+	{ type: {{ Params.Entity.Name }}ActionTypes.REQUEST_{{ Params.Entity.SnakeUppercasePluralName }} } |
+	{ type: {{ Params.Entity.Name }}ActionTypes.RECEIVE_{{ Params.Entity.SnakeUppercasePluralName }}, {{ Params.Entity.CamelCasePluralName }}: {{ Params.Entity.Name }}[] } |
+	{ type: {{ Params.Entity.Name }}ActionTypes.SET_FETCH_ERROR_{{ Params.Entity.SnakeUppercasePluralName }} } |
 
-export const get{{ Params.Entity.PluralName }} = () => {
-    return (dispatch: any, getState: any) => {
+	{ type: {{ Params.Entity.Name }}ActionTypes.REQUEST_ADD_{{ Params.Entity.SnakeUppercaseName}} } |
+	{ type: {{ Params.Entity.Name }}ActionTypes.RESPONSE_ADD_{{ Params.Entity.SnakeUppercaseName}}, {{ Params.Entity.CamelCaseName }}: {{ Params.Entity.Name }} } |
+	{ type: {{ Params.Entity.Name }}ActionTypes.SET_ADD_{{ Params.Entity.SnakeUppercaseName}}_ERROR } |
+
+	{ type: {{ Params.Entity.Name }}ActionTypes.REQUEST_UPDATE_{{ Params.Entity.SnakeUppercaseName}}, {{ Params.Entity.CamelCaseName }}Id: number } |
+	{ type: {{ Params.Entity.Name }}ActionTypes.RESPONSE_UPDATE_{{ Params.Entity.SnakeUppercaseName}}, {{ Params.Entity.CamelCaseName }}: {{ Params.Entity.Name }} } |
+	{ type: {{ Params.Entity.Name }}ActionTypes.SET_UPDATE_{{ Params.Entity.SnakeUppercaseName}}_ERROR } |
+
+	{ type: {{ Params.Entity.Name }}ActionTypes.REQUEST_DELETE_{{ Params.Entity.SnakeUppercaseName}} } |
+	{ type: {{ Params.Entity.Name }}ActionTypes.RESPONSE_DELETE_{{ Params.Entity.SnakeUppercaseName}}, {{ Params.Entity.CamelCaseName }}Id: number } |
+	{ type: {{ Params.Entity.Name }}ActionTypes.SET_DELETE_{{ Params.Entity.SnakeUppercaseName}}_ERROR };
+
+
+export const get{{ Params.Entity.PluralName }}: ThunkResult<void> = () => {
+    return (dispatch: any, getState: GetStateType) => {
         dispatch(request{{ Params.Entity.PluralName }}());
         GetAll()
             .then(response => dispatch(receive{{ Params.Entity.PluralName }}(response)))
@@ -18,29 +35,33 @@ export const get{{ Params.Entity.PluralName }} = () => {
     }
 }
 
-export const add{{ Params.Entity.Name }} = ({{ Params.Entity.CamelCaseName }}: any) => {
-    return (dispatch: any, getState: any) => {
+export const add{{ Params.Entity.Name }}: ({{ Params.Entity.CamelCaseName }}: {{ Params.Entity.Name }}) => ThunkResult<void> = ({{ Params.Entity.CamelCaseName }}: {{ Params.Entity.Name }}) => {
+    return (dispatch: any, getState: GetStateType) => {
         dispatch(requestAdd{{ Params.Entity.Name }}());
         Post({{ Params.Entity.CamelCaseName }})
-            .then((response: any) => dispatch(responseAdd{{ Params.Entity.Name }}(response)))
+            .then((response: {{ Params.Entity.Name }}) => dispatch(responseAdd{{ Params.Entity.Name }}(response)))
             .catch(() => dispatch(setAdd{{ Params.Entity.Name }}Error()));
     };
 };
 
-export const update{{ Params.Entity.Name }} = (id: IdType, new{{ Params.Entity.Name }}: any) => {
-    return (dispatch: any, getState: any) => {
+export const update{{ Params.Entity.Name }}: (id: number, new{{ Params.Entity.Name }}: {{ Params.Entity.Name }}) => ThunkResult<void> = (id: number, new{{ Params.Entity.Name }}: {{ Params.Entity.Name }}) => {
+    return (dispatch: any, getState: GetStateType) => {
         dispatch(requestUpdate{{ Params.Entity.Name }}());
-        const {{ Params.Entity.CamelCasePluralName}} = getState().{{ Params.Entity.CamelCasePluralName}}.{{ Params.Entity.CamelCasePluralName}};
-        const old{{ Params.Entity.Name }} = { ...{{ Params.Entity.CamelCasePluralName}}.find((c: any) => c.id === id) };
-        old{{ Params.Entity.Name }}.name = new{{ Params.Entity.Name }}.name;
-        Put(id, old{{ Params.Entity.Name }})
+        const {{ Params.Entity.CamelCasePluralName}} = getState().{{ Params.Entity.CamelCaseName }}.{{ Params.Entity.CamelCasePluralName}};
+        const old{{ Params.Entity.Name }} = {{ Params.Entity.CamelCasePluralName}}.find(c => c.id === id);
+        if (old{{ Params.Entity.Name }} === undefined) {
+            dispatch(setUpdate{{ Params.Entity.Name }}Error());
+            return;
+        }
+        
+		Put(id, new{{ Params.Entity.Name }})
             .then(() => dispatch(responseUpdate{{ Params.Entity.Name }}(old{{ Params.Entity.Name }})))
             .catch(() => dispatch(setUpdate{{ Params.Entity.Name }}Error()));
     };
 };
 
-export const delete{{ Params.Entity.Name }} = (id: IdType) => {
-    return (dispatch: any, getState: any) => {
+export const delete{{ Params.Entity.Name }}: (id: number) => ThunkResult<void> = (id: number) => {
+    return (dispatch: any, getState: GetStateType) => {
         dispatch(requestDelete{{ Params.Entity.Name }}());
         Delete(id)
             .then(() => dispatch(responseDelete{{ Params.Entity.Name }}(id)))
@@ -49,59 +70,59 @@ export const delete{{ Params.Entity.Name }} = (id: IdType) => {
 };
 
 
-export const select{{ Params.Entity.Name }} = (id: IdType) => ({
-    type: SELECT_{{ Params.Entity.SnakeUppercaseName}},
+export const select{{ Params.Entity.Name }} = (id: number) => ({
+    type: {{ Params.Entity.Name }}ActionTypes.SELECT_{{ Params.Entity.SnakeUppercaseName}},
     {{ Params.Entity.CamelCaseName }}Id: id,
 });
 
 const request{{ Params.Entity.PluralName }} = () => ({
-    type: REQUEST_{{ Params.Entity.SnakeUppercasePluralName }},
+    type: {{ Params.Entity.Name }}ActionTypes.REQUEST_{{ Params.Entity.SnakeUppercasePluralName }},
 });
 
-const receive{{ Params.Entity.PluralName }} = ({{ Params.Entity.CamelCasePluralName}}: any) => ({
-    type: RECEIVE_{{ Params.Entity.SnakeUppercasePluralName }},
+const receive{{ Params.Entity.PluralName }} = ({{ Params.Entity.CamelCasePluralName}}: {{ Params.Entity.Name }}[]) => ({
+    type: {{ Params.Entity.Name }}ActionTypes.RECEIVE_{{ Params.Entity.SnakeUppercasePluralName }},
     {{ Params.Entity.CamelCasePluralName}}
 });
 
 const setFetchError = () => ({
-    type: SET_FETCH_ERROR_{{ Params.Entity.SnakeUppercasePluralName }},
+    type: {{ Params.Entity.Name }}ActionTypes.SET_FETCH_ERROR_{{ Params.Entity.SnakeUppercasePluralName }},
 });
 
 const requestAdd{{ Params.Entity.Name }} = () => ({
-    type: REQUEST_ADD_{{ Params.Entity.SnakeUppercaseName}},
+    type: {{ Params.Entity.Name }}ActionTypes.REQUEST_ADD_{{ Params.Entity.SnakeUppercaseName}},
 });
 
-const responseAdd{{ Params.Entity.Name }} = ({{ Params.Entity.CamelCaseName }}: any) => ({
-    type: RESPONSE_ADD_{{ Params.Entity.SnakeUppercaseName}},
+const responseAdd{{ Params.Entity.Name }} = ({{ Params.Entity.CamelCaseName }}: {{ Params.Entity.Name }}) => ({
+    type: {{ Params.Entity.Name }}ActionTypes.RESPONSE_ADD_{{ Params.Entity.SnakeUppercaseName}},
     {{ Params.Entity.CamelCaseName }}
 });
 
 const setAdd{{ Params.Entity.Name }}Error = () => ({
-    type: SET_ADD_{{ Params.Entity.SnakeUppercaseName}}_ERROR
+    type: {{ Params.Entity.Name }}ActionTypes.SET_ADD_{{ Params.Entity.SnakeUppercaseName}}_ERROR
 });
 
 const requestUpdate{{ Params.Entity.Name }} = () => ({
-    type: REQUEST_UPDATE_{{ Params.Entity.SnakeUppercaseName}},
+    type: {{ Params.Entity.Name }}ActionTypes.REQUEST_UPDATE_{{ Params.Entity.SnakeUppercaseName}},
 });
 
-const responseUpdate{{ Params.Entity.Name }} = ({{ Params.Entity.CamelCaseName }}: any) => ({
-    type: RESPONSE_UPDATE_{{ Params.Entity.SnakeUppercaseName}},
+const responseUpdate{{ Params.Entity.Name }} = ({{ Params.Entity.CamelCaseName }}: {{ Params.Entity.Name }}) => ({
+    type: {{ Params.Entity.Name }}ActionTypes.RESPONSE_UPDATE_{{ Params.Entity.SnakeUppercaseName}},
     {{ Params.Entity.CamelCaseName }},
 });
 
 const setUpdate{{ Params.Entity.Name }}Error = () => ({
-    type: SET_UPDATE_{{ Params.Entity.SnakeUppercaseName}}_ERROR
+    type: {{ Params.Entity.Name }}ActionTypes.SET_UPDATE_{{ Params.Entity.SnakeUppercaseName}}_ERROR
 });
 
 const requestDelete{{ Params.Entity.Name }} = () => ({
-    type: REQUEST_DELETE_{{ Params.Entity.SnakeUppercaseName}},
+    type: {{ Params.Entity.Name }}ActionTypes.REQUEST_DELETE_{{ Params.Entity.SnakeUppercaseName}},
 });
 
-const responseDelete{{ Params.Entity.Name }} = (id: IdType) => ({
-    type: RESPONSE_DELETE_{{ Params.Entity.SnakeUppercaseName}},
+const responseDelete{{ Params.Entity.Name }} = (id: number) => ({
+    type: {{ Params.Entity.Name }}ActionTypes.RESPONSE_DELETE_{{ Params.Entity.SnakeUppercaseName}},
     id
 });
 
 const setDelete{{ Params.Entity.Name }}Error = () => ({
-    type: SET_DELETE_{{ Params.Entity.SnakeUppercaseName}}_ERROR
+    type: {{ Params.Entity.Name }}ActionTypes.SET_DELETE_{{ Params.Entity.SnakeUppercaseName}}_ERROR
 });

@@ -35,19 +35,6 @@ namespace WebAppsGenerator.Generating.WebUi.Services
         {
             _commandLineService.RunCommand("npm i create-react-app -g");
             _commandLineService.RunCommand($"npx create-react-app {_pathService.WebProjectDirPath} --scripts-version=react-scripts-ts");
-            _commandLineService.RunCommand("npm install --save @types/history");
-            _commandLineService.RunCommand("npm install --save react-router-dom");
-            _commandLineService.RunCommand("npm install --save @types/react-router-dom"); 
-            _commandLineService.RunCommand("npm install --save @types/lodash");
-            _commandLineService.RunCommand("npm install --save @types/jquery");
-            _commandLineService.RunCommand("npm install --save jquery");
-            _commandLineService.RunCommand("npm i --save @types/redux");
-            _commandLineService.RunCommand("npm i --save @types/react-redux");
-            _commandLineService.RunCommand("npm i --save @types/redux-thunk");
-            _commandLineService.RunCommand("npm install --save @material-ui/core");
-            _commandLineService.RunCommand("npm install --save @types/material-ui");
-            _commandLineService.RunCommand("npm install --save @material-ui/icons");
-
         }
 
         private void RemoveUnnecessaryFiles()
