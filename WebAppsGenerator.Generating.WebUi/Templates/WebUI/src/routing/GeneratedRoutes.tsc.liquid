@@ -13,8 +13,8 @@ interface ILabelInfo {
 const routes : ILabelInfo[] = 
 [
     {%- for entity in Params.Entities -%}
-    {component: {{entity.Name}}List, path: "{{entity.PluralName | Downcase }}", exact: true},
-    {component: {{entity.Name}}Form, path: "{{entity.PluralName | Downcase }}/:id", exact: false},
+    {component: {{entity.Name}}List, path: "{{entity.PluralName | DeCapitalize }}", exact: true},
+    {component: {{entity.Name}}Form, path: "{{entity.PluralName | DeCapitalize }}/:id", exact: false},
 	{%- endfor -%}
 ]
 

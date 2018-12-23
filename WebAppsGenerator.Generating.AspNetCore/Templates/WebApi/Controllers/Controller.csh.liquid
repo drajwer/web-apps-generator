@@ -19,17 +19,29 @@ namespace {{Params.WebApiProjectName}}.Controllers
             _scopeFactory = scopeFactory;
         }
 
-        // GET api/{{ Params.Entity.PluralName | Downcase }}
-        [HttpGet]
+		/// <summary>
+        /// Returns all {{ Params.Entity.PluralName | SplitCamelCase }}.
+        /// </summary>
+        /// <returns>Array with all {{ Params.Entity.PluralName | SplitCamelCase }}</returns>
+        /// <response code="200">Array with all {{ Params.Entity.PluralName | SplitCamelCase }}</response>
+		[HttpGet] // GET api/{{ Params.Entity.PluralName | Downcase }}
+        [ProducesResponseType(typeof({{Params.Entity.Name}}ViewModel[]), 200)]
         public IActionResult Get()
         {
             var entities = _service.GetAll();
             var viewModels = entities.Select(e => new {{Params.Entity.Name}}ViewModel(e));
             return new JsonResult(viewModels);
         }
-
-        // GET api/{{ Params.Entity.PluralName | Downcase }}/{%- if Params.Entity.IdField.Type.Name == 'int' -%}5{%- else -%}some-string-id{%- endif %}
-        [HttpGet("{id}")]
+		/// <summary>
+        /// Returns {{ Params.Entity.Name | SplitCamelCase }} with specified id.
+        /// </summary>
+        /// <param name="id">Id of the {{ Params.Entity.Name | SplitCamelCase }}</param>
+        /// <returns>Requested {{ Params.Entity.Name | SplitCamelCase }}</returns>
+        /// <response code="200">Returns requested {{ Params.Entity.Name | SplitCamelCase }}</response>
+        /// <response code="404">If {{ Params.Entity.Name | SplitCamelCase }} with given id does not exist</response>
+        [HttpGet("{id}")] // GET api/{{ Params.Entity.PluralName | Downcase }}/{%- if Params.Entity.IdField.Type.Name == 'int' -%}5{%- else -%}some-string-id{%- endif %}
+        [ProducesResponseType(typeof({{Params.Entity.Name}}ViewModel), 200)]
+        [ProducesResponseType(404)]
         public IActionResult Get({{Params.Entity.IdField.Type.Name}} id)
         {
             var entity = _service.GetWithChildren(id);
@@ -39,8 +51,14 @@ namespace {{Params.WebApiProjectName}}.Controllers
             return new JsonResult(viewModel);
         }
 
-        // POST api/{{ Params.Entity.PluralName | Downcase }}
-        [HttpPost]
+		/// <summary>
+        /// Creates {{ Params.Entity.Name | SplitCamelCase }}.
+        /// </summary>
+        /// <param name="value">{{Params.Entity.Name}} to add</param>
+        /// <returns>The newly created item</returns>
+        /// <response code="200">Returns the newly created item</response>
+        [HttpPost] // POST api/{{ Params.Entity.PluralName | SplitCamelCase }}
+        [ProducesResponseType(typeof({{Params.Entity.Name}}ViewModel), 200)]
         public IActionResult Post([FromBody] {{Params.Entity.Name}}ViewModel value)
         {
 			using (var tran = _scopeFactory.BeginTransaction())
@@ -54,8 +72,15 @@ namespace {{Params.WebApiProjectName}}.Controllers
 			}
         }
 
-        // PUT api/{{ Params.Entity.PluralName | Downcase }}/{%- if Params.Entity.IdField.Type.Name == 'int' -%}5{%- else -%}some-string-id{%- endif %}
-        [HttpPut("{id}")]
+		/// <summary>
+        /// Updates {{ Params.Entity.Name | SplitCamelCase }} with specified id.
+        /// </summary>
+        /// <param name="id">Id of modified {{ Params.Entity.Name | SplitCamelCase }}</param>
+        /// <param name="value">{{Params.Entity.Name}} that should replace the old version</param>
+        /// <returns>Requested {{ Params.Entity.Name | SplitCamelCase }}</returns>
+        /// <response code="200">Returns the updated item</response>
+		[HttpPut("{id}")] // PUT api/{{ Params.Entity.PluralName | Downcase }}/{%- if Params.Entity.IdField.Type.Name == 'int' -%}5{%- else -%}some-string-id{%- endif %}
+        [ProducesResponseType(typeof({{Params.Entity.Name}}ViewModel), 200)]
         public IActionResult Put({{Params.Entity.IdField.Type.Name}} id, [FromBody] {{Params.Entity.Name}}ViewModel value)
         {
 			using (var tran = _scopeFactory.BeginTransaction())
@@ -69,8 +94,14 @@ namespace {{Params.WebApiProjectName}}.Controllers
 			}
         }
 
-        // DELETE api/{{ Params.Entity.PluralName | Downcase }}/{%- if Params.Entity.IdField.Type.Name == 'int' -%}5{%- else -%}some-string-id{%- endif %}
-        [HttpDelete("{id}")]
+		/// <summary>
+        /// Deletes {{ Params.Entity.Name | SplitCamelCase }} with specified id.
+        /// </summary>
+        /// <param name="id">Id of deleted {{ Params.Entity.Name | SplitCamelCase }}</param>
+        /// <returns>Id of deleted {{ Params.Entity.Name | SplitCamelCase }}</returns>
+        /// <response code="200">Returns id of deleted {{ Params.Entity.Name | SplitCamelCase }}</response>
+        [HttpDelete("{id}")] // DELETE api/{{ Params.Entity.PluralName | Downcase }}/{%- if Params.Entity.IdField.Type.Name == 'int' -%}5{%- else -%}some-string-id{%- endif %}
+        [ProducesResponseType(typeof({{Params.Entity.IdField.Type.Name}}),200)]
         public IActionResult Delete({{Params.Entity.IdField.Type.Name}} id)
         {
 			using (var tran = _scopeFactory.BeginTransaction())

@@ -6,7 +6,7 @@
 const labels : ILabelInfo[] = 
 [
 	{%- for entity in Params.Entities -%}
-    {displayName: "{{entity.PluralName}}", path: "{{entity.PluralName | Downcase }}"},
+    {displayName: "{{entity.PluralName | SplitCamelCase}}", path: "{{entity.PluralName | DeCapitalize }}"},
 	{%- endfor -%}
 ]
 

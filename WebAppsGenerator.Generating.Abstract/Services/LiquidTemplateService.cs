@@ -18,6 +18,7 @@ namespace WebAppsGenerator.Generating.Abstract.Services
         static LiquidTemplateService()
         {
             Template.NamingConvention = new CSharpNamingConvention();
+            Template.RegisterFilter(typeof(LiquidFilters));
         }
 
         public LiquidTemplateService()

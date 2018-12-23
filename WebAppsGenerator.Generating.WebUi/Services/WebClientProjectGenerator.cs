@@ -8,7 +8,9 @@ namespace WebAppsGenerator.Generating.WebUi.Services
 {
     public class WebClientProjectGenerator : IGenerator
     {
+        private const bool IsEnabled = true;
         private const bool CreateReactApp = false;
+
         private readonly SolutionPathService _pathService;
         private readonly ICommandLineService _commandLineService;
         private readonly IGenerator _webUiGenerator;
@@ -22,6 +24,9 @@ namespace WebAppsGenerator.Generating.WebUi.Services
 
         public void Generate(IEnumerable<Entity> entities)
         {
+            if(!IsEnabled)
+                return;
+
             if (CreateReactApp)
             {
                 CreateApp();

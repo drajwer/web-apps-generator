@@ -24,6 +24,7 @@
     <None Remove="Templates\WebUI\src\routing\Router.tsx.liquid" />
     <None Remove="Templates\WebUI\src\screens\App\App.css.liquid" />
     <None Remove="Templates\WebUI\src\screens\App\App.tsx.liquid" />
+    <None Remove="Templates\WebUI\src\screens\MainPage\Libraries.tsc.liquid" />
     <None Remove="Templates\WebUI\src\screens\MainPage\MainPage.css.liquid" />
     <None Remove="Templates\WebUI\src\screens\MainPage\MainPage.tsx.liquid" />
     <None Remove="Templates\WebUI\src\screens\TestPage\TestPage.css.liquid" />
@@ -56,6 +57,7 @@
     <EmbeddedResource Include="Templates\WebUI\src\screens\Entities\EntityForm.tsx.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\screens\Entities\EntityList.css.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\screens\Entities\EntityList.tsx.liquid" />
+    <EmbeddedResource Include="Templates\WebUI\src\screens\MainPage\Libraries.tsc.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\screens\TestPage\TestPage.css.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\screens\TestPage\TestPage.tsx.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\screens\MainPage\MainPage.css.liquid" />

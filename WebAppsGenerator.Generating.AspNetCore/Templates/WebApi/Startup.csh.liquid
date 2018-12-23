@@ -12,6 +12,8 @@ namespace {{Params.WebApiProjectName}}
 {
     public class Startup
     {
+		private const string DevPolicyName = "Development";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -21,19 +23,21 @@ namespace {{Params.WebApiProjectName}}
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {			
-            services.AddDbContext<AppDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
-            services.AddDbServices();
-            services.AddGeneratedCrudServices();
-			
-            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+        {	
+			services.AddCors(o => o.AddPolicy(DevPolicyName, builder =>
             {
                 builder.AllowAnyOrigin()
                     .AllowAnyMethod()
                     .AllowAnyHeader();
             }));
+
+            services.AddDbContext<AppDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddDbServices();
+            services.AddGeneratedCrudServices();
+
+			services.AddSwagger();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -49,8 +53,11 @@ namespace {{Params.WebApiProjectName}}
             {
                 app.UseHsts();
             }
-            app.UseCors("MyPolicy");
+
+            app.UseCors(DevPolicyName);
             app.UseHttpsRedirection();
+
+            app.UseSwaggerWithUi();
             app.UseMvc();
         }
     }
