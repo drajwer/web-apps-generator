@@ -9,9 +9,13 @@
     <None Remove="Templates\WebUI\package-lock.json.liquid" />
     <None Remove="Templates\WebUI\src\api\Api.tsx.liquid" />
     <None Remove="Templates\WebUI\src\components\BookTable\BookTable.tsx.liquid" />
+    <None Remove="Templates\WebUI\src\components\CustomTableHead\CustomTableHead.tsx.liquid" />
+    <None Remove="Templates\WebUI\src\components\GenericTable\GenericTable.tsx.liquid" />
     <None Remove="Templates\WebUI\src\components\Menu\GeneratedLabels.tsc.liquid" />
     <None Remove="Templates\WebUI\src\components\Menu\Menu.css.liquid" />
     <None Remove="Templates\WebUI\src\components\Menu\Menu.tsx.liquid" />
+    <None Remove="Templates\WebUI\src\components\Tables\Table.tsx.liquid" />
+    <None Remove="Templates\WebUI\src\components\TableToolbar\TableToolbar.tsx.liquid" />
     <None Remove="Templates\WebUI\src\config.tsx.liquid" />
     <None Remove="Templates\WebUI\src\index.tsx.liquid" />
     <None Remove="Templates\WebUI\src\modules\actions.tsx.liquid" />
@@ -34,10 +38,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Templates\WebUI\src\components\Tables\Table.tsx.liquid" />
+    <EmbeddedResource Include="Templates\WebUI\src\components\TableToolbar\TableToolbar.tsx.liquid" />
+  </ItemGroup>
+
+  <ItemGroup>
     <EmbeddedResource Include="template-config.json" />
     <EmbeddedResource Include="Templates\WebUI\package-lock.json.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\api\Api.tsx.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\components\BookTable\BookTable.tsx.liquid" />
+    <EmbeddedResource Include="Templates\WebUI\src\components\CustomTableHead\CustomTableHead.tsx.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\components\Menu\GeneratedLabels.tsc.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\components\Menu\Menu.css.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\components\Menu\Menu.tsx.liquid" />
@@ -71,6 +81,10 @@
         <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.1.1" />
         <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.1.1" />
         <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.1.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Include="Templates\WebUI\src\components\GenericTable\GenericTable.tsx.liquid" />
     </ItemGroup>
     
   <ItemGroup>

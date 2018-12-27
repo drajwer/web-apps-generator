@@ -1,0 +1,65 @@
+﻿import * as React from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as Actions from '../../modules/{{ Params.Entity.CamelCaseName }}/actions';
+import GenericTable from '../GenericTable/GenericTable';
+import {{ Params.Entity.Name }} from '../../models/{{ Params.Entity.Name }}';
+import { IRootState } from '../../modules';
+
+
+interface IStoreProps {
+    {{ Params.Entity.CamelCasePluralName }}: {{ Params.Entity.Name }}[],
+    actions: any
+}
+
+interface I{{ Params.Entity.Name }}TableProps {
+    showCheckboxes: boolean,
+    multipleSelects: boolean
+}
+
+type ICombinedProps = IStoreProps & I{{ Params.Entity.Name }}TableProps;
+
+class {{ Params.Entity.Name }}Table extends React.Component<ICombinedProps> {
+    public componentDidMount() {
+        this.props.actions.get{{ Params.Entity.PluralName }}();
+    }
+    public render() {
+        const data = !this.props.{{ Params.Entity.CamelCasePluralName }}? [] : this.props.{{ Params.Entity.CamelCasePluralName }}.map(({{ Params.Entity.CamelCaseName }}: {{ Params.Entity.Name }}) => ({
+            {%- for field in Params.Entity.Fields -%}
+				{%- if field.Type.IsSimpleType -%}
+			{{ field.Name }}: {{ Params.Entity.CamelCaseName }}.{{ field.Name }},
+				{%- endif -%}
+			{%- endfor -%}
+        }));
+
+        const tableHeadLabels = 
+			[
+				{%- for field in Params.Entity.Fields -%}
+					{%- if field.Type.IsSimpleType -%}
+				'{{ field.Name | capitalize }}',
+					{%- endif -%}
+				{%- endfor -%}
+			];
+		
+        return (
+            <GenericTable
+                data={data}
+                selected={[]}
+                tableTitle="{{ Params.Entity.PluralName }}"
+                tableHeadLabels={tableHeadLabels}
+                showCheckboxes={true}
+                multipleSelects={true}
+            />
+        )
+    }
+}
+
+const mapStateToProps = (state: IRootState, ownProps: I{{ Params.Entity.Name }}TableProps) => ({
+    {{ Params.Entity.CamelCasePluralName }}: state.{{ Params.Entity.CamelCaseName }}.{{ Params.Entity.CamelCasePluralName }},
+    ...ownProps
+});
+
+const mapDispatchToProps = (dispatch: any) => ({
+    actions: bindActionCreators(Actions, dispatch),
+});
+export default connect(mapStateToProps, mapDispatchToProps)({{ Params.Entity.Name }}Table);

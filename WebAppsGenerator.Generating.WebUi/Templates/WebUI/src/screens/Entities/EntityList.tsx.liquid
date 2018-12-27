@@ -1,13 +1,12 @@
 ﻿import * as React from 'react';
 import './{{Params.Entity.Name}}List.css';
+import {{Params.Entity.Name}}Table from '../../../../components/Tables/{{Params.Entity.Name}}Table';
 
 class {{Params.Entity.Name}}List extends React.Component {
     public render() {
         return (
             <div>
-                <p className="text">
-                    I am a list for {{Params.Entity.PluralName}}.
-                </p>
+				<{{Params.Entity.Name}}Table showCheckboxes={true} multipleSelects={false}/>
             </div>
         )
     }

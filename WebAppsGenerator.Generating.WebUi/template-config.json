@@ -24,7 +24,14 @@
                         "DropId": "EntityList",
                         "Multiple": false
                     }
-                }
+                },
+                "Tables": {
+                    "Table.tsx": {
+                        "NameTemplate": "{{Params.Entity.Name}}Table.tsx",
+                        "DropId": "EntityDrop",
+                        "Multiple": true
+                    } 
+                } 
             },
             "models": {
                 "Model.ts": {
