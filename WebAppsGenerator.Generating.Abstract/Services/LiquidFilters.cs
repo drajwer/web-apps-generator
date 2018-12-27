@@ -29,5 +29,10 @@ namespace WebAppsGenerator.Generating.Abstract.Services
 
             return result;
         }
+
+        public static string SnakeUppercase(string text)
+        {
+            return string.Concat(text.Select((x, i) => i > 0 && char.IsUpper(x) ? "_" + x.ToString() : x.ToString().ToUpper()));
+        }
     }
 }

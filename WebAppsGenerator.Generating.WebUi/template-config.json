@@ -13,7 +13,7 @@
         "src": {
             "api": {
                 "Api.tsx": {
-                    "NameTemplate": "{{Params.Entity.CamelCaseName}}Api.tsx",
+                    "NameTemplate": "{{Params.Entity.Name | DeCapitalize}}Api.tsx",
                     "DropId": "EntityDrop",
                     "Multiple": true
                 }
@@ -72,17 +72,17 @@
             },
             "modules": {
                 "actions.tsx": {
-                    "NameTemplate": "{{Params.Entity.CamelCaseName}}/actions.tsx",
+                    "NameTemplate": "{{Params.Entity.Name | DeCapitalize}}/actions.tsx",
                     "DropId": "EntityDrop",
                     "Multiple": true
                 },
                 "actionTypes.tsx": {
-                    "NameTemplate": "{{Params.Entity.CamelCaseName}}/actionTypes.tsx",
+                    "NameTemplate": "{{Params.Entity.Name | DeCapitalize}}/actionTypes.tsx",
                     "DropId": "EntityDrop",
                     "Multiple": true
                 },
                 "reducer.tsx": {
-                    "NameTemplate": "{{Params.Entity.CamelCaseName}}/reducer.tsx",
+                    "NameTemplate": "{{Params.Entity.Name | DeCapitalize}}/reducer.tsx",
                     "DropId": "EntityDrop",
                     "Multiple": true
                 },

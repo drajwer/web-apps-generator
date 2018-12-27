@@ -1,7 +1,7 @@
 ﻿import { Api } from '../config';
 import { jsonAjax, jsonPayloadAjax } from '../vendors/http';
 
-const controllerName = '/{{Params.Entity.CamelCasePluralName}}';
+const controllerName = '/{{Params.Entity.PluralName | DeCapitalize}}';
 
 type IdType = number | string;
 

@@ -1,14 +1,14 @@
 ﻿import * as React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as Actions from '../../modules/{{ Params.Entity.CamelCaseName }}/actions';
+import * as Actions from '../../modules/{{ Params.Entity.Name | DeCapitalize }}/actions';
 import GenericTable from '../GenericTable/GenericTable';
 import {{ Params.Entity.Name }} from '../../models/{{ Params.Entity.Name }}';
 import { IRootState } from '../../modules';
 
 
 interface IStoreProps {
-    {{ Params.Entity.CamelCasePluralName }}: {{ Params.Entity.Name }}[],
+    {{ Params.Entity.PluralName | DeCapitalize }}: {{ Params.Entity.Name }}[],
     actions: any
 }
 
@@ -24,10 +24,10 @@ class {{ Params.Entity.Name }}Table extends React.Component<ICombinedProps> {
         this.props.actions.get{{ Params.Entity.PluralName }}();
     }
     public render() {
-        const data = !this.props.{{ Params.Entity.CamelCasePluralName }}? [] : this.props.{{ Params.Entity.CamelCasePluralName }}.map(({{ Params.Entity.CamelCaseName }}: {{ Params.Entity.Name }}) => ({
+        const data = !this.props.{{ Params.Entity.PluralName | DeCapitalize }}? [] : this.props.{{ Params.Entity.PluralName | DeCapitalize }}.map(({{ Params.Entity.Name | DeCapitalize }}: {{ Params.Entity.Name }}) => ({
             {%- for field in Params.Entity.Fields -%}
 				{%- if field.Type.IsSimpleType -%}
-			{{ field.Name }}: {{ Params.Entity.CamelCaseName }}.{{ field.Name }},
+			{{ field.Name }}: {{ Params.Entity.Name | DeCapitalize }}.{{ field.Name }},
 				{%- endif -%}
 			{%- endfor -%}
         }));
@@ -36,7 +36,7 @@ class {{ Params.Entity.Name }}Table extends React.Component<ICombinedProps> {
 			[
 				{%- for field in Params.Entity.Fields -%}
 					{%- if field.Type.IsSimpleType -%}
-				'{{ field.Name | capitalize }}',
+				'{{ field.Name | Capitalize | SplitCamelCase }}',
 					{%- endif -%}
 				{%- endfor -%}
 			];
@@ -55,7 +55,7 @@ class {{ Params.Entity.Name }}Table extends React.Component<ICombinedProps> {
 }
 
 const mapStateToProps = (state: IRootState, ownProps: I{{ Params.Entity.Name }}TableProps) => ({
-    {{ Params.Entity.CamelCasePluralName }}: state.{{ Params.Entity.CamelCaseName }}.{{ Params.Entity.CamelCasePluralName }},
+    {{ Params.Entity.PluralName | DeCapitalize }}: state.{{ Params.Entity.Name | DeCapitalize }}.{{ Params.Entity.PluralName | DeCapitalize }},
     ...ownProps
 });
 

@@ -3,11 +3,11 @@ import { createStore, applyMiddleware } from 'redux';
 import thunk, {ThunkMiddleware }  from 'redux-thunk';
 
 {%- for entity in Params.Entities -%}
-import {{ entity.CamelCaseName }}, { I{{ entity.Name }}State } from './{{ entity.CamelCaseName }}/reducer';
+import {{ entity.Name | DeCapitalize }}, { I{{ entity.Name }}State } from './{{ entity.Name | DeCapitalize }}/reducer';
 {%- endfor -%}
 
 {%- for entity in Params.Entities -%}
-import { {{ entity.Name }}Actions } from './{{ entity.CamelCaseName }}/actions';
+import { {{ entity.Name }}Actions } from './{{ entity.Name | DeCapitalize }}/actions';
 {%- endfor -%}
 
 export type RootActions = 
@@ -17,7 +17,7 @@ export type RootActions =
 
 export interface IRootState {
 {%- for entity in Params.Entities -%}
-	{{ entity.CamelCaseName }}: I{{ entity.Name }}State,
+	{{ entity.Name | DeCapitalize }}: I{{ entity.Name }}State,
 {%- endfor -%}
 }
 
@@ -25,7 +25,7 @@ export type GetStateType = () => IRootState;
 
 const rootReducer = combineReducers<IRootState, RootActions>({
 {%- for entity in Params.Entities -%}
-	{{ entity.CamelCaseName }},
+	{{ entity.Name | DeCapitalize }},
 {%- endfor -%}
 });
 
