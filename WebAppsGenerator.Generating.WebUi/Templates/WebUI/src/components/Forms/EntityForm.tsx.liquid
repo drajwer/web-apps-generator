@@ -38,7 +38,7 @@ class {{Params.Entity.Name}}Form extends React.Component<IProps, {}>{
 			{%- for field in Params.Entity.Fields -%}
 				{%- if field.Type.IsSimpleType -%}
 					{%- unless field.Name == 'id' -%}
-				<Grid item={true} xs={12} sm={6}>
+				<Grid item={true} xs={12} sm={4}>
 						{%- if field.Type.Name == 'boolean' -%}
 							<FormControlLabel
 								label="{{ field.Name | SplitCamelCase }}"

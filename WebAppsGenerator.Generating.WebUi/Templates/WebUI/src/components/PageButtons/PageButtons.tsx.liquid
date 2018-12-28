@@ -14,15 +14,17 @@ interface ITableToolbarProps {
 
 const PageButtons = (props: ITableToolbarProps) => {
     return (
-        <div>
-            <Button variant="contained" color="primary" onClick={props.onBackClick}>
+	{%- raw -%}
+        <div style={{textAlign: "right"}}>
+            <Button variant="contained" color="primary" onClick={props.onBackClick} style={{marginTop: "10px"}}>
                 Back
                 <KeyboardArrowLeftIcon/>
             </Button>
+	{%- endraw -%}
             {props.showEdit ?
                 (
 				{%- raw -%}
-                    <Button variant="contained" color="primary" onClick={props.onEditClick} style={{marginLeft: "10px"}}>
+                    <Button variant="contained" color="primary" onClick={props.onEditClick} style={{marginLeft: "10px", marginTop: "10px"}}>
                         Edit
             			<EditIcon />
                     </Button>
@@ -33,7 +35,7 @@ const PageButtons = (props: ITableToolbarProps) => {
             {props.showDelete ?
                 (
 				{%- raw -%}
-                    <Button variant="contained" color="secondary" onClick={props.onDeleteClick} style={{marginLeft: "10px"}}>
+                    <Button variant="contained" color="secondary" onClick={props.onDeleteClick} style={{marginLeft: "10px", marginTop: "10px"}}>
                         Delete
             		    <DeleteIcon />
                     </Button>
