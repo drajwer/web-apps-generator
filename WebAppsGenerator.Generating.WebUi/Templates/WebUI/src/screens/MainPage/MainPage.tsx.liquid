@@ -1,6 +1,6 @@
 ﻿import * as React from 'react';
 import './MainPage.css';
-import { Typography, Grid, Paper, List, ListItem, ListItemText, ListItemIcon, Card, CardContent } from '@material-ui/core';
+import { Typography, Grid, Paper, List, ListItem, ListItemText, ListItemIcon } from '@material-ui/core';
 import LabelIcon from '@material-ui/icons/Label';
 import libraries from "./Libraries";
 
@@ -84,31 +84,23 @@ class MainPage extends React.Component {
                                     </Typography>
                                 </Grid>
                                 <Grid item={true} sm={12}>
-                                    <Card>
-                                        <CardContent>
-                                            <Typography gutterBottom={true} variant="h5" component="h2">
-                                                Authors
-                                            </Typography>
-                                            <Typography component="p">
-                                                Kacper Drejer
-                                            </Typography>
-                                            <Typography component="p">
-                                                Michał Dzidziewicz
-                                            </Typography>
-                                        </CardContent>
-                                    </Card>
+                                    <Typography gutterBottom={true} variant="h5" component="h2">
+                                        Authors
+                                    </Typography>
+                                    <Typography component="p">
+                                        Kacper Drejer
+                                    </Typography>
+                                    <Typography component="p">
+                                        Michał Dzidziewicz
+                                    </Typography>
                                 </Grid>
                                 <Grid item={true} sm={12}>
-                                    <Card>
-                                        <CardContent>
-                                            <Typography gutterBottom={true} variant="h5" component="h2">
-                                                Thesis supervisor
-                                            </Typography>
-                                            <Typography component="p">
-                                                Jan Bródka, PhD
-                                            </Typography>
-                                        </CardContent>
-                                    </Card>
+                                    <Typography gutterBottom={true} variant="h5" component="h2">
+                                        Thesis supervisor
+                                    </Typography>
+                                    <Typography component="p">
+                                        Jan Bródka, PhD
+                                    </Typography>
                                 </Grid>
                             </Grid>
                         </div>
