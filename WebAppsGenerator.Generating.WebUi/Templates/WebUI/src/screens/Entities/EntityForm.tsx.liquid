@@ -75,6 +75,14 @@ class {{Params.Entity.Name}}Form extends React.Component<any,IState> {
 						<Typography variant="h3">
 							{{Params.Entity.Name}} { this.state.{{Params.Entity.Name | DeCapitalize}}.id === 0 ? "- Create New" : this.state.editMode ? "- Edit Mode" : ""}
 						</Typography>
+						{this.state.{{Params.Entity.Name | DeCapitalize }}.id !== 0 ?
+							(
+								<Typography variant="h6">
+									Id: {this.state.{{Params.Entity.Name | DeCapitalize }}.id}
+								</Typography>
+							)
+							: ""
+						}
 					</Grid>
 					<Grid item={true} sm={12}>
 						{this.state.{{Params.Entity.Name | DeCapitalize}}.id !== 0 ?
@@ -105,8 +113,22 @@ class {{Params.Entity.Name}}Form extends React.Component<any,IState> {
 					</Grid>
 				{%- for field in Params.Entity.Fields -%}
 					{%- if field.Type.IsSimpleType -%}
-                    <Grid item={true} xs={12} sm={6}>
 						{%- unless field.Name == 'id' -%}
+                    <Grid item={true} xs={12} sm={6}>
+							{%- if field.Type.Name == 'boolean' -%}
+								<FormControlLabel
+									label="{{ field.Name | SplitCamelCase }}"
+									control={
+										<Checkbox
+											id="{{ field.Name | DeCapitalize }}"
+											checked={this.state.{{Params.Entity.Name | DeCapitalize }}.{{ field.Name | DeCapitalize }}}
+											onChange={this.on{{ field.Name }}Change}
+											color="primary"
+											disabled={!this.state.editMode}
+										/>
+									}
+								/>
+							{%- else -%}
 						<TextField
 						  required={true}
 						  id="{{field.Name}}"
@@ -124,20 +146,11 @@ class {{Params.Entity.Name}}Form extends React.Component<any,IState> {
 						  value = { this.state.{{Params.Entity.Name | DeCapitalize}}.{{field.Name}} }
 							{%- endif -%}
 						  disabled={!this.state.editMode}
-						  onChange={this.on{{field.Name}}Change}
+						  onChange={this.on{{ field.Name }}Change}
 						/>
-						{%- else -%}
-						<TextField
-						  required={true}
-						  id="{{field.Name}}"
-						  name="{{field.Name | Capitalize}}"
-						  label="{{field.Name | Capitalize}}"
-						  fullWidth={true}
-						  disabled={true}
-						  value = { this.state.{{Params.Entity.Name | DeCapitalize}}.{{field.Name}} }
-						/>
-						{%- endunless -%}
+							{%- endif -%}
 					</Grid>
+						{%- endunless -%}
 					{%- endif -%}
 				{%- endfor -%}
 				 </Grid>
@@ -155,8 +168,10 @@ class {{Params.Entity.Name}}Form extends React.Component<any,IState> {
 			this.setState({ {{Params.Entity.Name | DeCapitalize}}: {...this.state.{{Params.Entity.Name | DeCapitalize}}, {{field.Name}}: parseInt(e.target.value, 10) }});
 			{%- elsif field.Type.Name == 'Date' -%}
 			this.setState({ {{Params.Entity.Name | DeCapitalize}}: {...this.state.{{Params.Entity.Name | DeCapitalize}}, {{field.Name}}: new Date(e.target.value) }});
+			{%- elsif field.Type.Name == 'boolean' -%}
+			this.setState({ {{Params.Entity.Name | DeCapitalize}}: {...this.state.{{Params.Entity.Name | DeCapitalize}}, {{field.Name}}: !this.state.{{Params.Entity.Name | DeCapitalize}}.{{field.Name}}}});
 			{%- else -%}
-			this.setState({ {{Params.Entity.Name | DeCapitalize}}: {...this.state.{{Params.Entity.Name | DeCapitalize}}, {{field.Name}}: e.target.value}});
+			this.setState({ {{Params.Entity.Name | DeCapitalize}}: {...this.state.{{Params.Entity.Name | DeCapitalize}}, {{field.Name}}: e.target.value }});
 			{%- endif -%}
 		}
     }
