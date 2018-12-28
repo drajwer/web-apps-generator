@@ -1,16 +1,17 @@
 ﻿import * as React from 'react';
 import './{{Params.Entity.Name}}Form.css';
-import { Grid, TextField, Typography, Button, CircularProgress } from '@material-ui/core';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
-import SaveIcon from '@material-ui/icons/Save';
+import { Grid, Typography, CircularProgress } from '@material-ui/core';
 import {{Params.Entity.Name}}, { Create{{Params.Entity.Name}} } from 'src/models/{{Params.Entity.Name}}';
-import * as moment from 'moment';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import * as Actions from 'src/modules/{{Params.Entity.Name | DeCapitalize}}/actions';
 import { IRootState } from 'src/modules';
 import RouteComponentProps  from 'src/routing/RouteComponentProps';
+import {{Params.Entity.Name}}FormComponent from 'src/components/Forms/{{Params.Entity.Name}}/{{Params.Entity.Name}}Form';
+import PageButtons from 'src/components/PageButtons/PageButtons';
+import history from 'src/history';
+import FormButtons from 'src/components/FormButtons/FormButtons';
+import EntityPageTitle from 'src/components/EntityPageTitle/EntityPageTitle';
 
 interface IProps extends RouteComponentProps {
 	{{Params.Entity.Name | DeCapitalize}}: {{Params.Entity.Name }} | undefined
@@ -24,14 +25,13 @@ interface IState {
 	editMode: boolean
 }
 
-class {{Params.Entity.Name}}Form extends React.Component<any,IState> {
+class {{Params.Entity.Name}}Form extends React.Component<IProps,IState> {
 	constructor(props: any) {
 		super(props);
 		let id = 0;
 		if (this.props.match.params.id !== "new") {
 			id = parseInt(this.props.match.params.id, 10);
 		}
-		moment();
         this.state = { 
 			{{Params.Entity.Name | DeCapitalize}}: this.props.{{Params.Entity.Name | DeCapitalize}},
 			editMode: id === 0
@@ -58,6 +58,10 @@ class {{Params.Entity.Name}}Form extends React.Component<any,IState> {
 	}
 
     public render() {
+		const newItem = this.props.match.params.id === 'new';
+		const showDelete = !this.state.editMode;
+		const showEdit = !this.state.editMode;
+
 		if (this.props.isLoading && !this.props.isInvalid) {
 			return (<div className="loading-circle"><CircularProgress /></div>);
 		}
@@ -69,115 +73,58 @@ class {{Params.Entity.Name}}Form extends React.Component<any,IState> {
 			);
 		}
         return (
-            <div>	
-                <Grid container={true} spacing={24}>
+            <div>
+				<Grid container={true} spacing={24}>
 					<Grid item={true} sm={12}>
-						<Typography variant="h3">
-							{{Params.Entity.Name}} { this.state.{{Params.Entity.Name | DeCapitalize}}.id === 0 ? "- Create New" : this.state.editMode ? "- Edit Mode" : ""}
-						</Typography>
-						{this.state.{{Params.Entity.Name | DeCapitalize }}.id !== 0 ?
-							(
-								<Typography variant="h6">
-									Id: {this.state.{{Params.Entity.Name | DeCapitalize }}.id}
-								</Typography>
-							)
-							: ""
-						}
-					</Grid>
-					<Grid item={true} sm={12}>
-						{this.state.{{Params.Entity.Name | DeCapitalize}}.id !== 0 ?
-							(
-								<Button variant="contained" color="secondary" onClick={this.onDeleteClick}>
-									Delete
-        							<DeleteIcon />
-								</Button>
-							)
-							: ""
-						}
-						{!this.state.editMode ?
-							(
-							{%- raw -%}
-								<Button variant="contained" color="primary" style={{ marginLeft: 10 }} onClick={this.toggleMode}>
-									Edit
-        							<EditIcon />
-								</Button>
-							)
-							: (
-								<Button variant="contained" color="primary" style={{ marginLeft: 10 }} onClick={this.onSaveClick}>
-									Save
-        							<SaveIcon />
-								</Button>
-							{%- endraw -%}
-							)
-						}
-					</Grid>
-				{%- for field in Params.Entity.Fields -%}
-					{%- if field.Type.IsSimpleType -%}
-						{%- unless field.Name == 'id' -%}
-                    <Grid item={true} xs={12} sm={6}>
-							{%- if field.Type.Name == 'boolean' -%}
-								<FormControlLabel
-									label="{{ field.Name | SplitCamelCase }}"
-									control={
-										<Checkbox
-											id="{{ field.Name | DeCapitalize }}"
-											checked={this.state.{{Params.Entity.Name | DeCapitalize }}.{{ field.Name | DeCapitalize }}}
-											onChange={this.on{{ field.Name }}Change}
-											color="primary"
-											disabled={!this.state.editMode}
-										/>
-									}
+						<Grid container={true} spacing={24}>
+							<Grid item={true} sm={6} xs={12}>
+								<EntityPageTitle
+									newItem={newItem}
+									editMode={this.state.editMode}
+									entityName="{{Params.Entity.Name}}"
+									id={ this.state.{{Params.Entity.Name | DeCapitalize}}.id.toString() }
 								/>
-							{%- else -%}
-						<TextField
-						  required={true}
-						  id="{{field.Name}}"
-						  name="{{field.Name | Capitalize}}"
-						  label="{{field.Name | Capitalize}}"
-							{%- if field.Type.Name == 'number' -%}
-						  type="{{ field.Type.Name }}"
-							{%- elsif field.Type.Name == 'Date' -%}
-						  type="datetime-local" 
-							{%- endif -%}
-						  fullWidth={true}
-							{%- if field.Type.Name == 'Date' -%}
-						  value = { moment(this.state.{{Params.Entity.Name | DeCapitalize}}.{{field.Name}}).format("YYYY-MM-DDTHH:mm") }
-							{%- else -%}
-						  value = { this.state.{{Params.Entity.Name | DeCapitalize}}.{{field.Name}} }
-							{%- endif -%}
-						  disabled={!this.state.editMode}
-						  onChange={this.on{{ field.Name }}Change}
-						/>
-							{%- endif -%}
+							</Grid>
+							<Grid item={true} sm={6} xs={12}>
+								<PageButtons
+									showDelete={showDelete}
+									showEdit={showEdit}
+									onDeleteClick={this.onDeleteClick}
+									onEditClick={this.toggleMode}
+									onBackClick={this.onBackClick}
+								/>
+							</Grid>
+						</Grid>
 					</Grid>
-						{%- endunless -%}
-					{%- endif -%}
-				{%- endfor -%}
-				 </Grid>
+					<Grid item={true} sm={12}>
+						<{{Params.Entity.Name}}FormComponent
+							{{Params.Entity.Name | DeCapitalize}}={this.state.{{Params.Entity.Name | DeCapitalize}}}
+							readonly={!this.state.editMode}
+							on{{Params.Entity.Name}}Change={this.on{{Params.Entity.Name}}Change}
+						/>
+					</Grid>
+					{this.state.editMode ?
+						(
+							<Grid item={true} sm={12}>
+								<FormButtons
+									onSaveClick={this.onSaveClick}
+									onCancelClick={this.onCancelClick}
+								/>
+							</Grid>
+						)
+						: ""
+					}
+				</Grid>
 			</div>
         );
     }
 
-	{%- for field in Params.Entity.Fields -%}
-		{%- if field.Type.IsSimpleType -%}
-			{%- unless field.Name == 'id' -%}
-
-	private on{{field.Name}}Change = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+	private on{{Params.Entity.Name}}Change = ({{Params.Entity.Name | DeCapitalize}}: {{Params.Entity.Name}}) => {
 		if (this.state.{{Params.Entity.Name | DeCapitalize}} != null) {
-			{%- if field.Type.Name == 'number' -%}
-			this.setState({ {{Params.Entity.Name | DeCapitalize}}: {...this.state.{{Params.Entity.Name | DeCapitalize}}, {{field.Name}}: parseInt(e.target.value, 10) }});
-			{%- elsif field.Type.Name == 'Date' -%}
-			this.setState({ {{Params.Entity.Name | DeCapitalize}}: {...this.state.{{Params.Entity.Name | DeCapitalize}}, {{field.Name}}: new Date(e.target.value) }});
-			{%- elsif field.Type.Name == 'boolean' -%}
-			this.setState({ {{Params.Entity.Name | DeCapitalize}}: {...this.state.{{Params.Entity.Name | DeCapitalize}}, {{field.Name}}: !this.state.{{Params.Entity.Name | DeCapitalize}}.{{field.Name}}}});
-			{%- else -%}
-			this.setState({ {{Params.Entity.Name | DeCapitalize}}: {...this.state.{{Params.Entity.Name | DeCapitalize}}, {{field.Name}}: e.target.value }});
-			{%- endif -%}
+			this.setState({ {{Params.Entity.Name | DeCapitalize}} });
 		}
-    }
-			{%- endunless -%}
-		{%- endif -%}
-	{%- endfor -%}
+	}
+
 
 	private toggleMode = () => this.setState({ editMode: !this.state.editMode });
 
@@ -201,6 +148,19 @@ class {{Params.Entity.Name}}Form extends React.Component<any,IState> {
 		}
 		this.setState({ editMode: !this.state.editMode });
 		this.props.actions.delete{{Params.Entity.Name }}(this.state.{{Params.Entity.Name | DeCapitalize}}.id);
+	}
+
+	private onBackClick = () => {
+		history.push('/{{Params.Entity.PluralName | DeCapitalize}}');
+	}
+
+	private onCancelClick = () => {
+		if(this.props.match.params.id === 'new'){
+			this.onBackClick();
+		}
+		else{
+			this.setState({editMode: false, {{Params.Entity.Name | DeCapitalize}}: this.props.{{Params.Entity.Name | DeCapitalize}}});
+		}
 	}
 }
 const mapStateToProps = (state: IRootState) => {

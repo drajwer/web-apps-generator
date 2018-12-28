@@ -1,0 +1,29 @@
+﻿import { Button } from "@material-ui/core";
+import SaveIcon from '@material-ui/icons/Save';
+import ClearIcon from '@material-ui/icons/Clear';
+
+import * as React from 'react';
+
+interface ITableToolbarProps {
+    onSaveClick: () => void
+    onCancelClick: () => void
+};
+
+const FormButtons = (props: ITableToolbarProps) => {
+    return (
+        <div>
+            <Button variant="contained" color="secondary" onClick={props.onCancelClick}>
+                Cancel
+            	<ClearIcon />
+            </Button>
+			{%- raw -%}
+            <Button variant="contained" color="primary" onClick={props.onSaveClick} style={{ marginLeft: "10px" }}>
+                Save
+            	<SaveIcon />
+            </Button>
+			{%- endraw -%}
+        </div>
+    );
+}
+
+export default FormButtons;

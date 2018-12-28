@@ -10,10 +10,14 @@
     <None Remove="Templates\WebUI\src\api\Api.tsx.liquid" />
     <None Remove="Templates\WebUI\src\components\BookTable\BookTable.tsx.liquid" />
     <None Remove="Templates\WebUI\src\components\CustomTableHead\CustomTableHead.tsx.liquid" />
+    <None Remove="Templates\WebUI\src\components\EntityPageTitle\EntityPageTitle.liquid" />
+    <None Remove="Templates\WebUI\src\components\FormButtons\FormButtons.tsx.liquid" />
+    <None Remove="Templates\WebUI\src\components\Forms\EntityForm.tsx.liquid" />
     <None Remove="Templates\WebUI\src\components\GenericTable\GenericTable.tsx.liquid" />
     <None Remove="Templates\WebUI\src\components\Menu\GeneratedLabels.tsc.liquid" />
     <None Remove="Templates\WebUI\src\components\Menu\Menu.css.liquid" />
     <None Remove="Templates\WebUI\src\components\Menu\Menu.tsx.liquid" />
+    <None Remove="Templates\WebUI\src\components\PageButtons\PageButtons.tsx.liquid" />
     <None Remove="Templates\WebUI\src\components\Tables\Table.tsx.liquid" />
     <None Remove="Templates\WebUI\src\components\TableToolbar\TableToolbar.tsx.liquid" />
     <None Remove="Templates\WebUI\src\config.tsx.liquid" />
@@ -40,6 +44,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Templates\WebUI\src\components\EntityPageTitle\EntityPageTitle.liquid" />
+    <EmbeddedResource Include="Templates\WebUI\src\components\FormButtons\FormButtons.tsx.liquid" />
+    <EmbeddedResource Include="Templates\WebUI\src\components\Forms\EntityForm.tsx.liquid" />
+    <EmbeddedResource Include="Templates\WebUI\src\components\PageButtons\PageButtons.tsx.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\components\Tables\Table.tsx.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\components\TableToolbar\TableToolbar.tsx.liquid" />
   </ItemGroup>

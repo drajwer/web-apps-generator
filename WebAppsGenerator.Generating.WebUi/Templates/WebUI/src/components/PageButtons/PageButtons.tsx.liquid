@@ -1,0 +1,48 @@
+﻿import { Button } from "@material-ui/core";
+import DeleteIcon from '@material-ui/icons/Delete';
+import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
+import EditIcon from '@material-ui/icons/Edit';
+import * as React from 'react';
+
+interface ITableToolbarProps {
+    showDelete: boolean,
+    showEdit: boolean,
+    onDeleteClick: () => void
+    onEditClick: () => void
+    onBackClick: () => void
+};
+
+const PageButtons = (props: ITableToolbarProps) => {
+    return (
+        <div>
+            <Button variant="contained" color="primary" onClick={props.onBackClick}>
+                Back
+                <KeyboardArrowLeftIcon/>
+            </Button>
+            {props.showEdit ?
+                (
+				{%- raw -%}
+                    <Button variant="contained" color="primary" onClick={props.onEditClick} style={{marginLeft: "10px"}}>
+                        Edit
+            			<EditIcon />
+                    </Button>
+				{%- endraw -%}
+                )
+                : ""
+            }
+            {props.showDelete ?
+                (
+				{%- raw -%}
+                    <Button variant="contained" color="secondary" onClick={props.onDeleteClick} style={{marginLeft: "10px"}}>
+                        Delete
+            		    <DeleteIcon />
+                    </Button>
+				{%- endraw -%}
+                )
+                : ""
+            }
+        </div>
+    );
+}
+
+export default PageButtons;

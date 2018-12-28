@@ -1,0 +1,105 @@
+﻿import * as React from 'react';
+import {{Params.Entity.Name}} from 'src/models/{{Params.Entity.Name}}';
+import { Grid } from '@material-ui/core';
+{%- for field in Params.Entity.Fields -%}
+	{%- if field.Type.IsSimpleType -%}
+		{%- unless field.Name == 'id' -%}
+			{%- unless field.Type.Name == 'boolean' -%}
+import { TextField } from '@material-ui/core';
+				{%- break -%}
+			{%- endunless -%}
+		{%- endunless -%}
+	{%- endif -%}
+{%- endfor -%}
+{%- for field in Params.Entity.Fields -%}
+	{%- if field.Type.Name == 'boolean' -%}
+import { FormControlLabel, Checkbox } from '@material-ui/core';
+		{%- break -%}
+	{%- endif -%}
+{%- endfor -%}
+{%- for field in Params.Entity.Fields -%}
+	{%- if field.Type.Name == 'Date' -%}
+import * as moment from 'moment';
+		{%- break -%}
+	{%- endif -%}
+{%- endfor -%}
+
+interface IProps {
+    {{Params.Entity.Name | DeCapitalize}}: {{Params.Entity.Name}}
+    readonly: boolean
+    on{{Params.Entity.Name}}Change: ({{Params.Entity.Name | DeCapitalize}}: {{Params.Entity.Name}}) => void
+}
+
+class {{Params.Entity.Name}}Form extends React.Component<IProps, {}>{
+    public render() {
+        return (
+            <Grid container={true} spacing={24}>
+			{""}
+			{%- for field in Params.Entity.Fields -%}
+				{%- if field.Type.IsSimpleType -%}
+					{%- unless field.Name == 'id' -%}
+				<Grid item={true} xs={12} sm={6}>
+						{%- if field.Type.Name == 'boolean' -%}
+							<FormControlLabel
+								label="{{ field.Name | SplitCamelCase }}"
+								control={
+									<Checkbox
+										id="{{ field.Name | DeCapitalize }}"
+										checked={this.props.{{Params.Entity.Name | DeCapitalize }}.{{ field.Name | DeCapitalize }}}
+										onChange={this.on{{ field.Name }}Change}
+										color="primary"
+										disabled={this.props.readonly}
+									/>
+								}
+							/>
+						{%- else -%}
+					<TextField
+					  required={true}
+					  id="{{field.Name}}"
+					  name="{{field.Name | Capitalize}}"
+					  label="{{field.Name | Capitalize}}"
+						{%- if field.Type.Name == 'number' -%}
+					  type="{{ field.Type.Name }}"
+						{%- elsif field.Type.Name == 'Date' -%}
+					  type="datetime-local" 
+						{%- endif -%}
+					  fullWidth={true}
+						{%- if field.Type.Name == 'Date' -%}
+					  value = { moment(this.props.{{Params.Entity.Name | DeCapitalize}}.{{field.Name}}).format("YYYY-MM-DDTHH:mm") }
+						{%- else -%}
+					  value = { this.props.{{Params.Entity.Name | DeCapitalize}}.{{field.Name}} }
+						{%- endif -%}
+					  disabled={this.props.readonly}
+					  onChange={this.on{{ field.Name }}Change}
+					/>
+						{%- endif -%}
+				</Grid>
+					{%- endunless -%}
+				{%- endif -%}
+			{%- endfor -%}
+            </Grid>
+        )
+    }
+	{%- for field in Params.Entity.Fields -%}
+	{%- if field.Type.IsSimpleType -%}
+		{%- unless field.Name == 'id' -%}
+
+	private on{{field.Name}}Change = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+		const {{Params.Entity.Name | DeCapitalize}} = {...this.props.{{Params.Entity.Name | DeCapitalize}}};
+		{%- if field.Type.Name == 'number' -%}
+		{{Params.Entity.Name | DeCapitalize}}.{{field.Name}} = parseInt(e.target.value, 10);
+		{%- elsif field.Type.Name == 'Date' -%}				 
+		{{Params.Entity.Name | DeCapitalize}}.{{field.Name}} = new Date(e.target.value);
+		{%- elsif field.Type.Name == 'boolean' -%}			 
+		{{Params.Entity.Name | DeCapitalize}}.{{field.Name}} = !this.props.{{Params.Entity.Name | DeCapitalize}}.{{field.Name}};
+		{%- else -%}										 
+		{{Params.Entity.Name | DeCapitalize}}.{{field.Name}} = e.target.value;
+		{%- endif -%}
+		this.props.on{{Params.Entity.Name}}Change({{Params.Entity.Name | DeCapitalize}});
+    }
+			{%- endunless -%}
+		{%- endif -%}
+	{%- endfor -%}
+}
+
+export default {{Params.Entity.Name}}Form;

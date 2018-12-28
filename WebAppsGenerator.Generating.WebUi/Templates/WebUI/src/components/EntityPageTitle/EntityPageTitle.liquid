@@ -1,0 +1,30 @@
+﻿import {Typography } from "@material-ui/core";
+import * as React from 'react';
+
+interface ITableToolbarProps {
+    editMode: boolean
+    newItem: boolean
+    id: string
+    entityName: string
+};
+
+const EntityPageTitle = (props: ITableToolbarProps) => {
+    return (
+        <div>
+            <Typography variant="h3">
+                {props.entityName} {props.newItem ? "- Create New" : props.editMode ? "- Edit Mode" : ""}
+            </Typography>
+            {!props.newItem ?
+                (
+                    <Typography variant="h6">
+                        Id: {props.id}
+                    </Typography>
+                )
+                : ""
+            }
+
+        </div>
+    );
+}
+
+export default EntityPageTitle;

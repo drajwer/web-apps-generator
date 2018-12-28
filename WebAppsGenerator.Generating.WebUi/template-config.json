@@ -25,13 +25,20 @@
                         "Multiple": false
                     }
                 },
-                "Tables": {
-                    "Table.tsx": {
-                        "NameTemplate": "{{Params.Entity.Name}}Table.tsx",
-                        "DropId": "EntityDrop",
-                        "Multiple": true
-                    } 
-                } 
+              "Tables": {
+                "Table.tsx": {
+                  "NameTemplate": "{{Params.Entity.Name}}Table.tsx",
+                  "DropId": "EntityDrop",
+                  "Multiple": true
+                }
+              },
+              "Forms": {
+                "EntityForm.tsx": {
+                  "NameTemplate": "{{Params.Entity.Name}}/{{Params.Entity.Name}}Form.tsx",
+                  "DropId": "EntityDrop",
+                  "Multiple": true
+                }
+              } 
             },
             "models": {
                 "Model.ts": {
