@@ -4,14 +4,24 @@ import { Grid, TextField, Typography, Button, CircularProgress } from '@material
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import SaveIcon from '@material-ui/icons/Save';
-import {{Params.Entity.Name}} from 'src/models/{{Params.Entity.Name}}';
+import {{Params.Entity.Name}}, { Create{{Params.Entity.Name}} } from 'src/models/{{Params.Entity.Name}}';
 import * as moment from 'moment';
-import { Get, Put, Post, Delete } from 'src/api/{{ Params.Entity.Name | DeCapitalize }}Api';
+import { connect } from 'react-redux';
+import { bindActionCreators, Dispatch } from 'redux';
+import * as Actions from 'src/modules/{{Params.Entity.Name | DeCapitalize}}/actions';
+import { IRootState } from 'src/modules';
+import RouteComponentProps  from 'src/routing/RouteComponentProps';
+
+interface IProps extends RouteComponentProps {
+	{{Params.Entity.Name | DeCapitalize}}: {{Params.Entity.Name }} | undefined
+	isLoading: boolean
+	isInvalid: boolean
+	actions: any
+}
 
 interface IState {
-    {{Params.Entity.Name | DeCapitalize}}: {{Params.Entity.Name}}
+    {{Params.Entity.Name | DeCapitalize}}: {{Params.Entity.Name}} | undefined
 	editMode: boolean
-	isLoading: boolean
 }
 
 class {{Params.Entity.Name}}Form extends React.Component<any,IState> {
@@ -23,35 +33,40 @@ class {{Params.Entity.Name}}Form extends React.Component<any,IState> {
 		}
 		moment();
         this.state = { 
-			{{Params.Entity.Name | DeCapitalize}}: { 
-			{%- for field in Params.Entity.Fields -%}
-				{%- if field.Type.IsSimpleType -%}
-				{{field.Name}}: {%- if field.Type.Name == 'string' -%}""{%- elsif field.Type.Name == 'Date' -%}new Date(){%-else-%}0{%- endif -%}{%- unless forloop.last -%},{%- endunless -%}
-
-				{%- elsif field.Relation.HasOne -%}
-				{{field.Name}}Id: {%- if field.Relation.SecondIdType.Name == 'string' -%}""{%- else -%}0{%- endif -%}{%- unless forloop.last -%},{%- endunless -%}
-
-				{%- elsif field.Relation.HasMany -%}
-				{{field.Name}}Ids: []{%- unless forloop.last -%},{%- endunless -%}
-
-				{%- endif -%}
-			{%- endfor -%}
-			},
-			editMode: id === 0,
-			isLoading: true
+			{{Params.Entity.Name | DeCapitalize}}: this.props.{{Params.Entity.Name | DeCapitalize}},
+			editMode: id === 0
 		};
     }
-	public componentWillMount() {
-		if (this.props.match.params.id !== "new") {
-			Get(parseInt(this.props.match.params.id, 10)).then(r => this.setState({ isLoading: false, {{Params.Entity.Name | DeCapitalize}}: r as {{Params.Entity.Name}} }));
-		}
-		else {
-			this.setState({ isLoading: false })
+
+	public componentWillReceiveProps(props: IProps) {
+		if (this.state.{{Params.Entity.Name | DeCapitalize}} !== props.{{Params.Entity.Name | DeCapitalize}}) {
+			this.setState({ {{Params.Entity.Name | DeCapitalize}}: props.{{Params.Entity.Name | DeCapitalize}} });
 		}
 	}
+
+	public componentWillMount() {
+		if (this.props.match.params.id !== "new") {
+			const {{Params.Entity.Name | DeCapitalize}} = this.props.{{Params.Entity.Name | DeCapitalize}};
+			const id = parseInt(this.props.match.params.id, 10);
+			if ({{Params.Entity.Name | DeCapitalize}} == null || id !== {{Params.Entity.Name | DeCapitalize}}.id) {
+				this.props.actions.get{{Params.Entity.Name }}(id);
+			}
+		}
+		else {
+			this.setState({ {{Params.Entity.Name | DeCapitalize}}: Create{{Params.Entity.Name }}() })
+		}
+	}
+
     public render() {
-		if (this.state.isLoading) {
+		if (this.props.isLoading && !this.props.isInvalid) {
 			return (<div className="loading-circle"><CircularProgress /></div>);
+		}
+		if (this.state.{{Params.Entity.Name | DeCapitalize}} == null) {
+			return (
+				<Typography variant="h4">
+					{{Params.Entity.Name }} with id {this.props.match.params.id} does not exist.
+				</Typography>
+			);
 		}
         return (
             <div>	
@@ -135,13 +150,15 @@ class {{Params.Entity.Name}}Form extends React.Component<any,IState> {
 			{%- unless field.Name == 'id' -%}
 
 	private on{{field.Name}}Change = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-		{%- if field.Type.Name == 'number' -%}
-        this.setState({ {{Params.Entity.Name | DeCapitalize}}: {...this.state.{{Params.Entity.Name | DeCapitalize}}, {{field.Name}}: parseInt(e.target.value, 10) }});
-		{%- elsif field.Type.Name == 'Date' -%}
-        this.setState({ {{Params.Entity.Name | DeCapitalize}}: {...this.state.{{Params.Entity.Name | DeCapitalize}}, {{field.Name}}: new Date(e.target.value) }});
-		{%- else -%}
-		this.setState({ {{Params.Entity.Name | DeCapitalize}}: {...this.state.{{Params.Entity.Name | DeCapitalize}}, {{field.Name}}: e.target.value}});
-		{%- endif -%}
+		if (this.state.{{Params.Entity.Name | DeCapitalize}} != null) {
+			{%- if field.Type.Name == 'number' -%}
+			this.setState({ {{Params.Entity.Name | DeCapitalize}}: {...this.state.{{Params.Entity.Name | DeCapitalize}}, {{field.Name}}: parseInt(e.target.value, 10) }});
+			{%- elsif field.Type.Name == 'Date' -%}
+			this.setState({ {{Params.Entity.Name | DeCapitalize}}: {...this.state.{{Params.Entity.Name | DeCapitalize}}, {{field.Name}}: new Date(e.target.value) }});
+			{%- else -%}
+			this.setState({ {{Params.Entity.Name | DeCapitalize}}: {...this.state.{{Params.Entity.Name | DeCapitalize}}, {{field.Name}}: e.target.value}});
+			{%- endif -%}
+		}
     }
 			{%- endunless -%}
 		{%- endif -%}
@@ -150,19 +167,37 @@ class {{Params.Entity.Name}}Form extends React.Component<any,IState> {
 	private toggleMode = () => this.setState({ editMode: !this.state.editMode });
 
 	private onSaveClick = () => {
-		this.setState({ editMode: !this.state.editMode, isLoading: true });
+		if (this.state.{{Params.Entity.Name | DeCapitalize}} == null) {
+			throw new Error("Save could not be done for empty item.")
+		}
+		this.setState({ editMode: !this.state.editMode });
+
 		if (this.state.{{Params.Entity.Name | DeCapitalize}}.id === 0) {
-			Post(this.state.{{Params.Entity.Name | DeCapitalize}}).then(r => this.setState({ isLoading: false, {{Params.Entity.Name | DeCapitalize}}: r as {{Params.Entity.Name}} }))
+			this.props.actions.add{{Params.Entity.Name }}(this.state.{{Params.Entity.Name | DeCapitalize}});
 		}
 		else {
-			Put(this.state.{{Params.Entity.Name | DeCapitalize}}.id, this.state.{{Params.Entity.Name | DeCapitalize}}).then(r => this.setState({ isLoading: false }))
+			this.props.actions.update{{Params.Entity.Name }}(this.state.{{Params.Entity.Name | DeCapitalize}}.id, this.state.{{Params.Entity.Name | DeCapitalize}});
 		}
 	}
 
 	private onDeleteClick = () => {
-		this.setState({ editMode: !this.state.editMode, isLoading: true });
-		Delete(this.state.{{Params.Entity.Name | DeCapitalize}}.id);
+		if (this.state.{{Params.Entity.Name | DeCapitalize}} == null) {
+			throw new Error("Delete could not be done for empty item.");
+		}
+		this.setState({ editMode: !this.state.editMode });
+		this.props.actions.delete{{Params.Entity.Name }}(this.state.{{Params.Entity.Name | DeCapitalize}}.id);
 	}
 }
+const mapStateToProps = (state: IRootState) => {
+	return {
+		{{Params.Entity.Name | DeCapitalize}}: state.{{Params.Entity.Name | DeCapitalize}}.{{Params.Entity.Name | DeCapitalize}},
+		isLoading: state.{{Params.Entity.Name | DeCapitalize}}.isFetching,
+		isInvalid: state.{{Params.Entity.Name | DeCapitalize}}.isInvalid
+	};
+};
 
-export default {{Params.Entity.Name}}Form;
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+	actions: bindActionCreators(Actions, dispatch),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)({{Params.Entity.Name}}Form);

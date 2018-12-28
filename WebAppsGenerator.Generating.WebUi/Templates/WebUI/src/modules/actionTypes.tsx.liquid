@@ -1,24 +1,19 @@
-﻿export const REQUEST_{{ Params.Entity.PluralName | SnakeUppercase }} = 'REQUEST_{{ Params.Entity.PluralName | SnakeUppercase }}';
-export const RECEIVE_{{ Params.Entity.PluralName | SnakeUppercase }} = 'RECEIVE_{{ Params.Entity.PluralName | SnakeUppercase }}';
-export const SELECT_{{ Params.Entity.Name | SnakeUppercase}} = 'SELECT_{{ Params.Entity.Name | SnakeUppercase}}';
-export const SET_FETCH_ERROR_{{ Params.Entity.PluralName | SnakeUppercase }} = 'SET_FETCH_ERROR_{{ Params.Entity.PluralName | SnakeUppercase }}';
-
-export const REQUEST_ADD_{{ Params.Entity.Name | SnakeUppercase}} = 'REQUEST_ADD_{{ Params.Entity.Name | SnakeUppercase}}';
-export const RESPONSE_ADD_{{ Params.Entity.Name | SnakeUppercase}} = 'RESPONSE_ADD_{{ Params.Entity.Name | SnakeUppercase}}';
-export const SET_ADD_{{ Params.Entity.Name | SnakeUppercase}}_ERROR = 'SET_ADD_{{ Params.Entity.Name | SnakeUppercase}}_ERROR';
-
-export const REQUEST_UPDATE_{{ Params.Entity.Name | SnakeUppercase}} = 'REQUEST_UPDATE_{{ Params.Entity.Name | SnakeUppercase}}';
-export const RESPONSE_UPDATE_{{ Params.Entity.Name | SnakeUppercase}} = 'RESPONSE_UPDATE_{{ Params.Entity.Name | SnakeUppercase}}';
-export const SET_UPDATE_{{ Params.Entity.Name | SnakeUppercase}}_ERROR = 'SET_UPDATE_{{ Params.Entity.Name | SnakeUppercase}}_ERROR';
-
-export const REQUEST_DELETE_{{ Params.Entity.Name | SnakeUppercase}} = 'REQUEST_DELETE_{{ Params.Entity.Name | SnakeUppercase}}';
-export const RESPONSE_DELETE_{{ Params.Entity.Name | SnakeUppercase}} = 'RESPONSE_DELETE_{{ Params.Entity.Name | SnakeUppercase}}';
-export const SET_DELETE_{{ Params.Entity.Name | SnakeUppercase}}_ERROR = 'SET_DELETE_{{ Params.Entity.Name | SnakeUppercase}}_ERROR';
-
-export enum {{ Params.Entity.Name }}ActionTypes {
-	REQUEST_{{ Params.Entity.PluralName | SnakeUppercase }}, RECEIVE_{{ Params.Entity.PluralName | SnakeUppercase }}, SELECT_{{ Params.Entity.Name | SnakeUppercase}}, SET_FETCH_ERROR_{{ Params.Entity.PluralName | SnakeUppercase }},
-	REQUEST_ADD_{{ Params.Entity.Name | SnakeUppercase}}, RESPONSE_ADD_{{ Params.Entity.Name | SnakeUppercase}}, SET_ADD_{{ Params.Entity.Name | SnakeUppercase}}_ERROR,
-	REQUEST_UPDATE_{{ Params.Entity.Name | SnakeUppercase}}, RESPONSE_UPDATE_{{ Params.Entity.Name | SnakeUppercase}}, SET_UPDATE_{{ Params.Entity.Name | SnakeUppercase}}_ERROR,
-	REQUEST_DELETE_{{ Params.Entity.Name | SnakeUppercase}}, RESPONSE_DELETE_{{ Params.Entity.Name | SnakeUppercase}}, SET_DELETE_{{ Params.Entity.Name | SnakeUppercase}}_ERROR
+﻿export const enum {{ Params.Entity.Name }}ActionTypes {
+	REQUEST_{{ Params.Entity.PluralName | SnakeUppercase }} = 'REQUEST_{{ Params.Entity.PluralName | SnakeUppercase }}',
+	RECEIVE_{{ Params.Entity.PluralName | SnakeUppercase }} = 'RECEIVE_{{ Params.Entity.PluralName | SnakeUppercase }}',
+	REQUEST_{{ Params.Entity.Name | SnakeUppercase }} = 'REQUEST_{{ Params.Entity.Name | SnakeUppercase }}',
+	RECEIVE_{{ Params.Entity.Name | SnakeUppercase }} = 'RECEIVE_{{ Params.Entity.Name | SnakeUppercase }}',
+	SET_FETCH_ERROR_{{ Params.Entity.Name | SnakeUppercase }} = 'SET_FETCH_ERROR_{{ Params.Entity.Name | SnakeUppercase }}',
+	
+	REQUEST_ADD_{{ Params.Entity.Name | SnakeUppercase}} = 'REQUEST_ADD_{{ Params.Entity.Name | SnakeUppercase}}',
+	RESPONSE_ADD_{{ Params.Entity.Name | SnakeUppercase}} = 'RESPONSE_ADD_{{ Params.Entity.Name | SnakeUppercase}}',
+	SET_ADD_{{ Params.Entity.Name | SnakeUppercase}}_ERROR = 'SET_ADD_{{ Params.Entity.Name | SnakeUppercase}}_ERROR',
+	
+	REQUEST_UPDATE_{{ Params.Entity.Name | SnakeUppercase}} = 'REQUEST_UPDATE_{{ Params.Entity.Name | SnakeUppercase}}',
+	RESPONSE_UPDATE_{{ Params.Entity.Name | SnakeUppercase}} = 'RESPONSE_UPDATE_{{ Params.Entity.Name | SnakeUppercase}}',
+	SET_UPDATE_{{ Params.Entity.Name | SnakeUppercase}}_ERROR = 'SET_UPDATE_{{ Params.Entity.Name | SnakeUppercase}}_ERROR',
+	
+	REQUEST_DELETE_{{ Params.Entity.Name | SnakeUppercase}} = 'REQUEST_DELETE_{{ Params.Entity.Name | SnakeUppercase}}',
+	RESPONSE_DELETE_{{ Params.Entity.Name | SnakeUppercase}} = 'RESPONSE_DELETE_{{ Params.Entity.Name | SnakeUppercase}}',
+	SET_DELETE_{{ Params.Entity.Name | SnakeUppercase}}_ERROR = 'SET_DELETE_{{ Params.Entity.Name | SnakeUppercase}}_ERROR',
 }
-

@@ -1,6 +1,6 @@
 ﻿import AppBar from '@material-ui/core/AppBar'
 import * as React from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { Router } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Routes from '../../routing/Router';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -9,6 +9,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Typography from '@material-ui/core/Typography';
 import './App.css';
 import Menu from 'src/components/Menu/Menu';
+import history from 'src/history';
+
 const styles = {
   root: {
     flexGrow: 1,
@@ -37,7 +39,7 @@ class App extends React.Component<any, any> {
   public render() {
     const classes = this.props;
     return (
-      <BrowserRouter >
+      <Router history={history}>
         <div>
           <div>
         <AppBar position="fixed" className="appBar">
@@ -53,10 +55,10 @@ class App extends React.Component<any, any> {
       </AppBar>
       </div>
           <div className="content">
-          <Routes />
+			<Routes />
           </div>
         </div>
-      </BrowserRouter>
+      </Router>
     );
   }
 

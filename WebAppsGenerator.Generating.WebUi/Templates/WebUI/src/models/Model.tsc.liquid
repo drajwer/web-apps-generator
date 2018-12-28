@@ -9,3 +9,20 @@
 		{%- endif -%}
 	{%- endfor -%}
 }
+
+export function Create{{Params.Entity.Name}}(): {{Params.Entity.Name}} {
+	return {
+		{%- for field in Params.Entity.Fields -%}
+			{%- if field.Type.IsSimpleType -%}
+				{{field.Name}}: {%- if field.Type.Name == 'string' -%}""{%- elsif field.Type.Name == 'Date' -%}new Date(){%-else-%}0{%- endif -%}{%- unless forloop.last -%},{%- endunless -%}
+
+			{%- elsif field.Relation.HasOne -%}
+				{{field.Name}}Id: {%- if field.Relation.SecondIdType.Name == 'string' -%}""{%- else -%}0{%- endif -%}{%- unless forloop.last -%},{%- endunless -%}
+
+			{%- elsif field.Relation.HasMany -%}
+				{{field.Name}}Ids: []{%- unless forloop.last -%},{%- endunless -%}
+
+			{%- endif -%}
+		{%- endfor -%}
+	}
+}

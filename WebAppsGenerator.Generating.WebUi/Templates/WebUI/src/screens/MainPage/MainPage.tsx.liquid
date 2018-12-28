@@ -41,7 +41,7 @@ class MainPage extends React.Component {
                                 <Grid item={true} sm={12}>
                                     <List>
                                         {libraries.map(lib => (
-                                            <ListItem>
+                                            <ListItem key={lib.displayName}>
                                                 <ListItemIcon><LabelIcon /></ListItemIcon>
                                                 <ListItemText>
 												{%- raw -%}

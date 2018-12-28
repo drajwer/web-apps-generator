@@ -8,26 +8,22 @@ export interface I{{ Params.Entity.Name }}State {
     readonly isFetching: boolean,
     readonly isInvalid: boolean,
     readonly {{ Params.Entity.PluralName | DeCapitalize}}: {{ Params.Entity.Name }}[],
-    readonly {{ Params.Entity.Name | DeCapitalize }}Id: number,
+    readonly {{ Params.Entity.Name | DeCapitalize }}: {{ Params.Entity.Name }} | undefined,
 }
 
 const initialState: I{{ Params.Entity.Name }}State = {
     isFetching: false,
     isInvalid: false,
     {{ Params.Entity.PluralName | DeCapitalize}}: [],
-    {{ Params.Entity.Name | DeCapitalize }}Id: -1,
+    {{ Params.Entity.Name | DeCapitalize }}: undefined,
 };
 
 const {{ Params.Entity.Name | DeCapitalize}}Reducer: Reducer<I{{ Params.Entity.Name }}State, {{ Params.Entity.Name }}Actions> = (state = initialState, action: {{ Params.Entity.Name }}Actions) => {
     switch (action.type) {
-        case {{ Params.Entity.Name }}ActionTypes.SELECT_{{ Params.Entity.Name | SnakeUppercase}}:
-            return {
-                ...state,
-                {{ Params.Entity.Name | DeCapitalize }}Id: action.{{ Params.Entity.Name | DeCapitalize }}Id
-            };
         case {{ Params.Entity.Name }}ActionTypes.REQUEST_UPDATE_{{ Params.Entity.Name | SnakeUppercase}}:
         case {{ Params.Entity.Name }}ActionTypes.REQUEST_DELETE_{{ Params.Entity.Name | SnakeUppercase}}:
         case {{ Params.Entity.Name }}ActionTypes.REQUEST_ADD_{{ Params.Entity.Name | SnakeUppercase}}:
+        case {{ Params.Entity.Name }}ActionTypes.REQUEST_{{ Params.Entity.Name | SnakeUppercase }}:
         case {{ Params.Entity.Name }}ActionTypes.REQUEST_{{ Params.Entity.PluralName | SnakeUppercase }}:
             return {
                 ...state,
@@ -46,10 +42,16 @@ const {{ Params.Entity.Name | DeCapitalize}}Reducer: Reducer<I{{ Params.Entity.N
                 {{ Params.Entity.PluralName | DeCapitalize}}: action.{{ Params.Entity.PluralName | DeCapitalize}},
                 isFetching: false
             };
+		case {{ Params.Entity.Name }}ActionTypes.RECEIVE_{{ Params.Entity.Name | SnakeUppercase }}:
+            return {
+                ...state,
+                {{ Params.Entity.Name | DeCapitalize}}: action.{{ Params.Entity.Name | DeCapitalize}},
+                isFetching: false
+            };
         case {{ Params.Entity.Name }}ActionTypes.SET_ADD_{{ Params.Entity.Name | SnakeUppercase}}_ERROR:
         case {{ Params.Entity.Name }}ActionTypes.SET_UPDATE_{{ Params.Entity.Name | SnakeUppercase}}_ERROR:
         case {{ Params.Entity.Name }}ActionTypes.SET_DELETE_{{ Params.Entity.Name | SnakeUppercase}}_ERROR:
-        case {{ Params.Entity.Name }}ActionTypes.SET_FETCH_ERROR_{{ Params.Entity.PluralName | SnakeUppercase }}:
+        case {{ Params.Entity.Name }}ActionTypes.SET_FETCH_ERROR_{{ Params.Entity.Name | SnakeUppercase }}:
             return {
                 ...state,
                 isInvalid: true
@@ -62,44 +64,56 @@ const {{ Params.Entity.Name | DeCapitalize}}Reducer: Reducer<I{{ Params.Entity.N
 
 const responseAdd{{ Params.Entity.Name }} = (state: I{{ Params.Entity.Name }}State, new{{ Params.Entity.Name }}: {{ Params.Entity.Name }}) => {
     const {{ Params.Entity.PluralName | DeCapitalize}} = state.{{ Params.Entity.PluralName | DeCapitalize}};
-    {{ Params.Entity.PluralName | DeCapitalize}}.push(new{{ Params.Entity.Name }});
-    return {
+	if ({{ Params.Entity.PluralName | DeCapitalize}} != null) {
+		{{ Params.Entity.PluralName | DeCapitalize}}.push(new{{ Params.Entity.Name }});
+    }
+	return {
         ...state,
         isFetching: false,
         showToast: true,
-        {{ Params.Entity.PluralName | DeCapitalize}}
+        {{ Params.Entity.PluralName | DeCapitalize}},
+		{{ Params.Entity.Name | DeCapitalize}} : new{{ Params.Entity.Name }}
     };
 };
 
 const responseDelete{{ Params.Entity.Name }} = (state: I{{ Params.Entity.Name }}State, id: number) => {
     const {{ Params.Entity.PluralName | DeCapitalize}} = state.{{ Params.Entity.PluralName | DeCapitalize}};
-    const toDel = state.{{ Params.Entity.PluralName | DeCapitalize}}.find(c => c.id === id);
-    if(toDel === undefined) {
-        return state;
-    }
-	const index = {{ Params.Entity.PluralName | DeCapitalize}}.indexOf(toDel);
-    {{ Params.Entity.PluralName | DeCapitalize}}.splice(index, 1);
+	if ({{ Params.Entity.PluralName | DeCapitalize}} != null) {
+		const toDel = state.{{ Params.Entity.PluralName | DeCapitalize}}.find(c => c.id === id);
+		if(toDel != null) {
+			const index = {{ Params.Entity.PluralName | DeCapitalize}}.indexOf(toDel);
+			{{ Params.Entity.PluralName | DeCapitalize}}.splice(index, 1);
+		}
+	}
+
     return {
         ...state,
         isFetching: false,
         showToast: true,
-        {{ Params.Entity.PluralName | DeCapitalize}}
+        {{ Params.Entity.PluralName | DeCapitalize}},
+		{{ Params.Entity.Name | DeCapitalize}} : undefined
     };
 };
 
 const responseUpdate{{ Params.Entity.Name }} = (state: I{{ Params.Entity.Name }}State, new{{ Params.Entity.Name }}: {{ Params.Entity.Name }}) => {
     const {{ Params.Entity.PluralName | DeCapitalize}} = state.{{ Params.Entity.PluralName | DeCapitalize}};
-    const old{{ Params.Entity.Name }} = state.{{ Params.Entity.PluralName | DeCapitalize}}.find(c => c.id === new{{ Params.Entity.Name }}.id);
-    if(old{{ Params.Entity.Name }} === undefined) {
-        return state;
-    }
-	const index = {{ Params.Entity.PluralName | DeCapitalize}}.indexOf(old{{ Params.Entity.Name }});
-    {{ Params.Entity.PluralName | DeCapitalize}}[index] = new{{ Params.Entity.Name }};
+	if ({{ Params.Entity.PluralName | DeCapitalize}} != null) {
+		const old{{ Params.Entity.Name }} = state.{{ Params.Entity.PluralName | DeCapitalize}}.find(c => c.id === new{{ Params.Entity.Name }}.id);
+		if(old{{ Params.Entity.Name }} != null) {
+		    const index = {{ Params.Entity.PluralName | DeCapitalize}}.indexOf(old{{ Params.Entity.Name }});
+			{{ Params.Entity.PluralName | DeCapitalize}}[index] = new{{ Params.Entity.Name }};
+		}
+		else{
+			{{ Params.Entity.PluralName | DeCapitalize}}.push(new{{ Params.Entity.Name }});
+		}
+	}
+
     return {
         ...state,
         isFetching: false,
         showToast: true,
-        {{ Params.Entity.PluralName | DeCapitalize}}
+        {{ Params.Entity.PluralName | DeCapitalize}},
+		{{ Params.Entity.Name | DeCapitalize}} : new{{ Params.Entity.Name }}
     };
 };
 
