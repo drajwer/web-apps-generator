@@ -23,7 +23,7 @@ type ICombinedProps = IStoreProps & I{{ Params.Entity.Name }}TableProps;
 
 class {{ Params.Entity.Name }}Table extends React.Component<ICombinedProps> {
     public componentDidMount() {
-        this.props.actions.get{{ Params.Entity.PluralName }}();
+        this.refreshData();
     }
     public render() {
 		const { showCheckboxes, multipleSelects } = this.props;
@@ -53,8 +53,13 @@ class {{ Params.Entity.Name }}Table extends React.Component<ICombinedProps> {
                 showCheckboxes={showCheckboxes}
                 multipleSelects={multipleSelects}
 				onSelect={this.props.onSelect}
+				onRefresh={this.refreshData}
             />
         )
+    }
+	
+	private refreshData = () => {
+		this.props.actions.get{{ Params.Entity.PluralName }}();
     }
 }
 
