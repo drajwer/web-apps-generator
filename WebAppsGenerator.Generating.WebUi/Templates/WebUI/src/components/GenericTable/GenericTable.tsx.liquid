@@ -96,7 +96,7 @@ class GenericTable extends React.Component<IGenericTableProps, IGenericTableStat
     };
 
     public handleRecordSelection = (event: any, id: number) => {
-        history.replace(`${history.location.pathname}/${id}`);
+        history.push(`${history.location.pathname}/${id}`);
     };
 
     public handleChangePage = (event: any, page: number) => {
