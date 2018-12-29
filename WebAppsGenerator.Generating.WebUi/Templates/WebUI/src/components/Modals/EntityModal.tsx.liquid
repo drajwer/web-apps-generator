@@ -1,0 +1,68 @@
+﻿import * as React from 'react';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@material-ui/core';
+import SaveIcon from '@material-ui/icons/Save';
+import ClearIcon from '@material-ui/icons/Clear';
+
+import {{ Params.Entity.Name }}Table from 'src/components/Tables/{{ Params.Entity.Name }}Table';
+
+interface IProps {
+    multiple: boolean
+    open: boolean
+    selected: {{ Params.Entity.IdField.Type.Name }}[]
+    onSave: (selected: {{ Params.Entity.IdField.Type.Name }}[]) => void
+    onClose: () => void
+}
+
+interface IState {
+    selected: {{ Params.Entity.IdField.Type.Name }}[]
+}
+
+class {{ Params.Entity.Name }}Modal extends React.Component<IProps, IState>{
+    constructor(props: IProps) {
+        super(props);
+        this.state = { selected: this.props.selected };
+    }
+
+    public render() {
+        return (
+            <Dialog
+                open={this.props.open}
+                fullScreen={true}
+                onClose={this.props.onClose}
+            >
+                <DialogTitle id="max-width-dialog-title">
+                    {{ Params.Entity.PluralName }}
+                </DialogTitle>
+                <DialogContent>
+                    <div>
+                        <{{ Params.Entity.Name }}Table
+                            selected={this.state.selected}
+                            showCheckboxes={true}
+                            multipleSelects={this.props.multiple}
+                            onSelect={this.onSelect}
+                         />
+                    </div>
+                </DialogContent>
+                <DialogActions>
+                    <Button variant="contained" color="secondary" onClick={this.props.onClose}>
+                        Cancel
+            	        <ClearIcon />
+                    </Button>
+                    <Button variant="contained" color="primary" onClick={this.handleSave}>
+                        Save
+            	        <SaveIcon />
+                    </Button>
+                </DialogActions>
+            </Dialog>
+        )
+    }
+    private onSelect = (selected: {{ Params.Entity.IdField.Type.Name }}[]) => {
+        this.setState({selected});
+    }
+    private handleSave = () => {
+        this.props.onSave(this.state.selected);
+        this.props.onClose();
+    }
+}
+
+export default {{ Params.Entity.Name }}Modal;

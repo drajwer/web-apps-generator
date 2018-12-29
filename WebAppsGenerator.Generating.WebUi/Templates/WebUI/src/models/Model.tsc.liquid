@@ -3,7 +3,7 @@
 		{%- if field.Type.IsSimpleType -%}
 	public {{field.Name}} : {{field.Type.Name}};
 		{%- elsif field.Relation.HasOne -%}
-	public {{field.Name}}Id : {{field.Relation.SecondIdType.Name}}
+	public {{field.Name}}Id? : {{field.Relation.SecondIdType.Name}}
 		{%- elsif field.Relation.HasMany -%}
 	public {{field.Name}}Ids : {{field.Relation.SecondIdType.Name}}[]
 		{%- endif -%}
@@ -25,7 +25,7 @@ export function Create{{Params.Entity.Name}}(): {{Params.Entity.Name}} {
 				{%- endif -%}
 
 			{%- elsif field.Relation.HasOne -%}
-			{{field.Name}}Id: {%- if field.Relation.SecondIdType.Name == 'string' -%}""{%- else -%}0{%- endif -%}{%- unless forloop.last -%},{%- endunless -%}
+			{{field.Name}}Id: undefined{%- unless forloop.last -%},{%- endunless -%}
 
 			{%- elsif field.Relation.HasMany -%}
 			{{field.Name}}Ids: []{%- unless forloop.last -%},{%- endunless -%}

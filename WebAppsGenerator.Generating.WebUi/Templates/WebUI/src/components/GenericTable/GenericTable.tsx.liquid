@@ -21,7 +21,8 @@ interface IGenericTableProps {
     tableHeadLabels: string[],
     classes: any,
     showCheckboxes: boolean,
-    multipleSelects: boolean
+    multipleSelects: boolean,
+	onSelect? : (selected: number[]) => void;
 };
 
 interface IGenericTableState {
@@ -86,6 +87,9 @@ class GenericTable extends React.Component<IGenericTableProps, IGenericTableStat
             );
         }
 
+		if(this.props.onSelect != null){
+            this.props.onSelect(newSelected);
+        }
         this.setState({ selected: newSelected });
     };
 

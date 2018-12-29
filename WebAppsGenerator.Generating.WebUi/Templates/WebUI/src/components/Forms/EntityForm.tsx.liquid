@@ -2,14 +2,12 @@
 import {{Params.Entity.Name}} from 'src/models/{{Params.Entity.Name}}';
 import { Grid } from '@material-ui/core';
 {%- for field in Params.Entity.Fields -%}
-	{%- if field.Type.IsSimpleType -%}
-		{%- unless field.Name == 'id' -%}
-			{%- unless field.Type.Name == 'boolean' -%}
+	{%- unless field.Name == 'id' -%}
+		{%- unless field.Type.Name == 'boolean' -%}
 import { TextField } from '@material-ui/core';
-				{%- break -%}
-			{%- endunless -%}
+			{%- break -%}
 		{%- endunless -%}
-	{%- endif -%}
+	{%- endunless -%}
 {%- endfor -%}
 {%- for field in Params.Entity.Fields -%}
 	{%- if field.Type.Name == 'boolean' -%}
@@ -23,25 +21,66 @@ import * as moment from 'moment';
 		{%- break -%}
 	{%- endif -%}
 {%- endfor -%}
-
+{%- for field in Params.Entity.Fields -%}
+	{%- if field.Relation.HasOne or field.Relation.HasMany -%}
+import {{ field.Type.EntityName }}Modal from 'src/components/Modals/{{ field.Type.EntityName }}/{{ field.Type.EntityName }}Modal';
+	{%- endif -%}
+{%- endfor -%}
 interface IProps {
     {{Params.Entity.Name | DeCapitalize}}: {{Params.Entity.Name}}
     readonly: boolean
     on{{Params.Entity.Name}}Change: ({{Params.Entity.Name | DeCapitalize}}: {{Params.Entity.Name}}) => void
 }
 
-class {{Params.Entity.Name}}Form extends React.Component<IProps, {}>{
+interface IState {
+	{%- for field in Params.Entity.Fields -%}
+		{%- if field.Relation.HasOne or field.Relation.HasMany -%}
+	open{{field.Name}}Modal: boolean
+		{%- endif -%}
+	{%- endfor -%}
+}
+
+class {{Params.Entity.Name}}Form extends React.Component<IProps, IState>{
+	constructor(props: IProps) {
+		super(props);
+		this.state = { 
+		{%- for field in Params.Entity.Fields -%}
+			{%- if field.Relation.HasOne or field.Relation.HasMany -%}
+			open{{field.Name}}Modal: false,
+			{%- endif -%}
+		{%- endfor -%}
+		};
+	}
     public render() {
         return (
             <Grid container={true} spacing={24}>
+			{%- for field in Params.Entity.Fields -%}
+				{%- if field.Relation.HasOne or field.Relation.HasMany -%}
+				<{{ field.Type.EntityName }}Modal
+					{%- if field.Relation.HasMany -%}
+					multiple = {true}
+						{%- else -%}
+					multiple = {false}
+					{%- endif -%}
+					open={this.state.open{{ field.Name }}Modal}
+					onClose={this.toggle{{ field.Name }}Modal}
+					onSave={this.on{{ field.Name }}Change}
+					{%- if field.Relation.HasMany -%}
+					selected = {this.props.{{Params.Entity.Name | DeCapitalize}}.{{field.Name}}Ids}
+						{%- else -%}
+					selected = { this.props.{{Params.Entity.Name | DeCapitalize}}.{{field.Name}}Id != null ? [this.props.{{Params.Entity.Name | DeCapitalize}}.{{field.Name}}Id] : [] }
+					{%- endif -%}
+				/>
+				{%- endif -%}
+			{%- endfor -%}
 			{""}
 			{%- for field in Params.Entity.Fields -%}
-				{%- if field.Type.IsSimpleType -%}
-					{%- unless field.Name == 'id' -%}
+				{%- unless field.Name == 'id' -%}
 				<Grid item={true} xs={12} sm={4}>
+					{%- if field.Type.IsSimpleType -%}
 						{%- if field.Type.Name == 'boolean' -%}
 							<FormControlLabel
-								label="{{ field.Name | SplitCamelCase }}"
+								label="{{ field.Name | SplitCamelCase | Capitalize }}"
 								control={
 									<Checkbox
 										id="{{ field.Name | DeCapitalize }}"
@@ -56,8 +95,8 @@ class {{Params.Entity.Name}}Form extends React.Component<IProps, {}>{
 					<TextField
 					  required={true}
 					  id="{{field.Name}}"
-					  name="{{field.Name | Capitalize}}"
-					  label="{{field.Name | Capitalize}}"
+					  name="{{field.Name | SplitCamelCase | Capitalize}}"
+					  label="{{field.Name | SplitCamelCase | Capitalize}}"
 						{%- if field.Type.Name == 'number' -%}
 					  type="{{ field.Type.Name }}"
 						{%- elsif field.Type.Name == 'Date' -%}
@@ -73,16 +112,32 @@ class {{Params.Entity.Name}}Form extends React.Component<IProps, {}>{
 					  onChange={this.on{{ field.Name }}Change}
 					/>
 						{%- endif -%}
+					{%- else -%}
+					<TextField
+					  required={true}
+					  id="{{field.Name}}"
+					  name="{{field.Name | SplitCamelCase | Capitalize}}"
+					  label="{{field.Name | SplitCamelCase | Capitalize}}"
+					  type="string"
+					  fullWidth={true}
+						{%- if field.Relation.HasMany -%}
+					  value = {`${this.props.{{Params.Entity.Name | DeCapitalize}}.{{field.Name}}Ids.length} selected`}
+						{%- else -%}
+					  value = { this.props.{{Params.Entity.Name | DeCapitalize}}.{{field.Name}}Id == null ? 'Empty' : 'Item selected' }
+						{%- endif -%}
+					  disabled={this.props.readonly}
+					  onClick={this.toggle{{field.Name}}Modal}
+					/>
+					{%- endif -%}
 				</Grid>
-					{%- endunless -%}
-				{%- endif -%}
+				{%- endunless -%}
 			{%- endfor -%}
             </Grid>
         )
     }
 	{%- for field in Params.Entity.Fields -%}
-	{%- if field.Type.IsSimpleType -%}
-		{%- unless field.Name == 'id' -%}
+		{%- if field.Type.IsSimpleType -%}
+			{%- unless field.Name == 'id' -%}
 
 	private on{{field.Name}}Change = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
 		const {{Params.Entity.Name | DeCapitalize}} = {...this.props.{{Params.Entity.Name | DeCapitalize}}};
@@ -98,6 +153,23 @@ class {{Params.Entity.Name}}Form extends React.Component<IProps, {}>{
 		this.props.on{{Params.Entity.Name}}Change({{Params.Entity.Name | DeCapitalize}});
     }
 			{%- endunless -%}
+		{%- else -%}
+
+	private toggle{{ field.Name }}Modal = () => {
+		if (!this.props.readonly) {
+			this.setState({ open{{ field.Name }}Modal: !this.state.open{{ field.Name }}Modal });
+		}
+	}
+
+	private on{{ field.Name }}Change = (selected: number[]) => {
+		const {{Params.Entity.Name | DeCapitalize}} = {...this.props.{{Params.Entity.Name | DeCapitalize}}};
+		{%- if field.Relation.HasMany -%}
+		{{Params.Entity.Name | DeCapitalize}}.{{ field.Name }}Ids = selected;
+		{%- else -%}
+		{{Params.Entity.Name | DeCapitalize}}.{{ field.Name }}Id = selected.length > 0 ? selected[0] : undefined;
+		{%- endif -%}
+		this.props.on{{Params.Entity.Name}}Change({{Params.Entity.Name | DeCapitalize}});
+	}
 		{%- endif -%}
 	{%- endfor -%}
 }

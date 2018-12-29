@@ -10,6 +10,8 @@ import { IRootState } from '../../modules';
 interface IStoreProps {
     {{ Params.Entity.PluralName | DeCapitalize }}: {{ Params.Entity.Name }}[],
     actions: any
+	onSelect? : ((selected: {{ Params.Entity.IdField.Type.Name }}[]) => void);
+    selected: {{ Params.Entity.IdField.Type.Name }}[]
 }
 
 interface I{{ Params.Entity.Name }}TableProps {
@@ -44,11 +46,12 @@ class {{ Params.Entity.Name }}Table extends React.Component<ICombinedProps> {
         return (
             <GenericTable
                 data={data}
-                selected={[]}
+                selected={this.props.selected}
                 tableTitle="{{ Params.Entity.PluralName }}"
                 tableHeadLabels={tableHeadLabels}
                 showCheckboxes={true}
                 multipleSelects={true}
+				onSelect={this.props.onSelect}
             />
         )
     }

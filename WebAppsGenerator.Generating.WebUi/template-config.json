@@ -18,28 +18,35 @@
                     "Multiple": true
                 }
             },
-            "components": {
-                "Menu": {
-                    "GeneratedLabels.ts": {
-                        "DropId": "EntityList",
-                        "Multiple": false
-                    }
-                },
-              "Tables": {
-                "Table.tsx": {
-                  "NameTemplate": "{{Params.Entity.Name}}Table.tsx",
-                  "DropId": "EntityDrop",
-                  "Multiple": true
-                }
-              },
-              "Forms": {
-                "EntityForm.tsx": {
-                  "NameTemplate": "{{Params.Entity.Name}}/{{Params.Entity.Name}}Form.tsx",
-                  "DropId": "EntityDrop",
-                  "Multiple": true
-                }
-              } 
+          "components": {
+            "Menu": {
+              "GeneratedLabels.ts": {
+                "DropId": "EntityList",
+                "Multiple": false
+              }
             },
+            "Tables": {
+              "Table.tsx": {
+                "NameTemplate": "{{Params.Entity.Name}}Table.tsx",
+                "DropId": "EntityDrop",
+                "Multiple": true
+              }
+            },
+            "Forms": {
+              "EntityForm.tsx": {
+                "NameTemplate": "{{Params.Entity.Name}}/{{Params.Entity.Name}}Form.tsx",
+                "DropId": "EntityDrop",
+                "Multiple": true
+              }
+            },
+            "Modals": {
+              "EntityModal.tsx": {
+                "NameTemplate": "{{Params.Entity.Name}}/{{Params.Entity.Name}}Modal.tsx",
+                "DropId": "EntityDrop",
+                "Multiple": true
+              }
+            }
+          },
             "models": {
                 "Model.ts": {
                     "NameTemplate": "{{Params.Entity.Name}}.ts",

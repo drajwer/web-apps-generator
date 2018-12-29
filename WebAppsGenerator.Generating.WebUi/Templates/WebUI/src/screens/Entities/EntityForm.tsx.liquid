@@ -81,7 +81,7 @@ class {{Params.Entity.Name}}Form extends React.Component<IProps,IState> {
 								<EntityPageTitle
 									newItem={newItem}
 									editMode={this.state.editMode}
-									entityName="{{Params.Entity.Name}}"
+									entityName="{{Params.Entity.Name | SplitCamelCase}}"
 									id={ this.state.{{Params.Entity.Name | DeCapitalize}}.id.toString() }
 								/>
 							</Grid>
