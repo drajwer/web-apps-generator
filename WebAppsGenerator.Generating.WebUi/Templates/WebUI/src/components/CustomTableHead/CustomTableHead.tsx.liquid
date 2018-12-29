@@ -44,11 +44,11 @@ export default class CustomTableHead extends React.Component<IProps> {
                                     onChange={onSelectAllClick}
                                 />
                                 :
-                                ''
+                                null
                             }
                         </TableCell>
                         :
-                        ''}
+                        null}
                     {rows.map(row => {
                         return (
                             <TableCell

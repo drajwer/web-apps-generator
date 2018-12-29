@@ -10,13 +10,13 @@ import { IRootState } from '../../modules';
 interface IStoreProps {
     {{ Params.Entity.PluralName | DeCapitalize }}: {{ Params.Entity.Name }}[],
     actions: any
-	onSelect? : ((selected: {{ Params.Entity.IdField.Type.Name }}[]) => void);
     selected: {{ Params.Entity.IdField.Type.Name }}[]
 }
 
 interface I{{ Params.Entity.Name }}TableProps {
     showCheckboxes: boolean,
-    multipleSelects: boolean
+    multipleSelects: boolean,
+	onSelect? : ((selected: {{ Params.Entity.IdField.Type.Name }}[]) => void);
 }
 
 type ICombinedProps = IStoreProps & I{{ Params.Entity.Name }}TableProps;
@@ -26,6 +26,7 @@ class {{ Params.Entity.Name }}Table extends React.Component<ICombinedProps> {
         this.props.actions.get{{ Params.Entity.PluralName }}();
     }
     public render() {
+		const { showCheckboxes, multipleSelects } = this.props;
         const data = !this.props.{{ Params.Entity.PluralName | DeCapitalize }}? [] : this.props.{{ Params.Entity.PluralName | DeCapitalize }}.map(({{ Params.Entity.Name | DeCapitalize }}: {{ Params.Entity.Name }}) => ({
             {%- for field in Params.Entity.Fields -%}
 				{%- if field.Type.IsSimpleType -%}
@@ -49,8 +50,8 @@ class {{ Params.Entity.Name }}Table extends React.Component<ICombinedProps> {
                 selected={this.props.selected}
                 tableTitle="{{ Params.Entity.PluralName }}"
                 tableHeadLabels={tableHeadLabels}
-                showCheckboxes={true}
-                multipleSelects={true}
+                showCheckboxes={showCheckboxes}
+                multipleSelects={multipleSelects}
 				onSelect={this.props.onSelect}
             />
         )

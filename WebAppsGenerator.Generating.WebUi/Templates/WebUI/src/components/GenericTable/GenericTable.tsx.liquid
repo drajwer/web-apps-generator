@@ -3,6 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { Table, TableBody, TableCell, TablePagination, TableRow, Paper, Checkbox } from '@material-ui/core';
 import CustomTableHead, { IRowDescription } from '../CustomTableHead/CustomTableHead';
 import TableToolbar from '../TableToolbar/TableToolbar';
+import history from 'src/history';
 
 function stableSort(array: any, cmp: any) {
     const stabilizedThis = array.map((el: any, index: number) => [el, index]);
@@ -21,7 +22,7 @@ interface IGenericTableProps {
     tableHeadLabels: string[],
     classes: any,
     showCheckboxes: boolean,
-    multipleSelects: boolean,
+    multipleSelects: boolean
 	onSelect? : (selected: number[]) => void;
 };
 
@@ -65,7 +66,7 @@ class GenericTable extends React.Component<IGenericTableProps, IGenericTableStat
         this.setState({ selected: [] });
     };
 
-    public handleClick = (event: any, id: number) => {
+    public handleCheckboxTick = (event: any, id: number) => {
         const { selected } = this.state;
         const selectedIndex = selected.indexOf(id);
         let newSelected: number[] = [];
@@ -90,7 +91,12 @@ class GenericTable extends React.Component<IGenericTableProps, IGenericTableStat
 		if(this.props.onSelect != null){
             this.props.onSelect(newSelected);
         }
+
         this.setState({ selected: newSelected });
+    };
+
+    public handleRecordSelection = (event: any, id: number) => {
+        history.replace(`${history.location.pathname}/${id}`);
     };
 
     public handleChangePage = (event: any, page: number) => {
@@ -137,7 +143,6 @@ class GenericTable extends React.Component<IGenericTableProps, IGenericTableStat
                 disablePadding: false,
                 label: key
             }));
-
         return (
             <Paper className={classes.root}>
                 <TableToolbar numSelected={selected.length} tableTitle={tableTitle} />
@@ -159,11 +164,17 @@ class GenericTable extends React.Component<IGenericTableProps, IGenericTableStat
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 .map((n: any, elementIndex: number) => {
                                     const isSelected = this.isSelected(n.id);
+                                    const handleClick = showCheckboxes ?
+                                        ((event: React.MouseEvent<HTMLTableRowElement>) => this.handleCheckboxTick(event, n.id))
+                                        :
+                                        ((event: React.MouseEvent<HTMLTableRowElement>) => this.handleRecordSelection(event, n.id));
+
+
                                     return (
                                         <TableRow
                                             hover={true}
-                                            onClick={event => this.handleClick(event, n.id)}
-                                            role={showCheckboxes ? "checkbox" : ""}
+                                            onClick={handleClick}
+                                            role={showCheckboxes ? "checkbox" : undefined}
                                             aria-checked={isSelected}
                                             tabIndex={-1}
                                             key={elementIndex}
@@ -174,7 +185,7 @@ class GenericTable extends React.Component<IGenericTableProps, IGenericTableStat
                                                     <Checkbox checked={isSelected} />
                                                 </TableCell>)
                                                 :
-                                                ''}
+                                                null}
                                             {
                                                 Object.keys(n).map((value: string, index: number) => {
                                                     if (index === 0) {
@@ -199,7 +210,7 @@ class GenericTable extends React.Component<IGenericTableProps, IGenericTableStat
                                     );
                                 })}
                             {emptyRows > 0 && (
-                                <TableRow style={% raw %}{{ height: 49 * emptyRows }}{% endraw %}>
+                                <TableRow style={% raw %} {{ height: 49 * emptyRows }} {% endraw %}>
                                     <TableCell colSpan={6} />
                                 </TableRow>
                             )}
@@ -212,13 +223,12 @@ class GenericTable extends React.Component<IGenericTableProps, IGenericTableStat
                     count={data.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
-                    backIconButtonProps={% raw %}{{
+                    backIconButtonProps={% raw %} {{
                         'aria-label': 'Previous Page',
-                    }}{% endraw %}
-                    nextIconButtonProps={% raw %}{{
+                    }} {% endraw %}
+                    nextIconButtonProps={% raw %} {{
                         'aria-label': 'Next Page',
-                    }}{% endraw %}
-
+                    }} {% endraw %}
                     onChangePage={this.handleChangePage}
                     onChangeRowsPerPage={this.handleChangeRowsPerPage}
                 />
