@@ -6,7 +6,7 @@ import TableToolbar from '../TableToolbar/TableToolbar';
 import history from 'src/history';
 
 function stableSort(array: dataType, cmp: any) {
-	if(array === null) {
+	if(array == null) {
         return [];
     }
     const stabilizedThis = array.map((el: any, index: number) => [el, index]);
@@ -65,7 +65,7 @@ class GenericTable extends React.Component<IGenericTableProps, IGenericTableStat
 
     public handleSelectAllClick = (event: any) => {
 		let selected: number[];
-		if(this.props.data === null) {
+		if(this.props.data == null) {
             return;
         }
 
@@ -214,13 +214,13 @@ class GenericTable extends React.Component<IGenericTableProps, IGenericTableStat
                                                                 scope="row"
                                                                 padding={"dense"}
                                                                 key={index} >
-                                                                {n[value]}
+                                                                {n[value] != null? n[value].toString() : null}
                                                             </TableCell>
                                                         );
                                                     }
                                                     return (
                                                         <TableCell align="left" padding="dense" key={index}>
-                                                            {n[value]}
+                                                            {n[value] != null? n[value].toString() : null}
                                                         </TableCell>
                                                     );
                                                 })

@@ -25,7 +25,7 @@ type ICombinedProps = IStoreProps & I{{ Params.Entity.Name }}TableProps;
 
 class {{ Params.Entity.Name }}Table extends React.Component<ICombinedProps> {
     public componentWillMount() {
-		if (this.props.{{ Params.Entity.PluralName | DeCapitalize }} === null) {
+		if (this.props.{{ Params.Entity.PluralName | DeCapitalize }} == null) {
 			this.refreshData();
 		}
     }
