@@ -9,7 +9,6 @@
     <None Remove="Templates\run.ps1.liquid" />
     <None Remove="Templates\WebUI\package-lock.json.liquid" />
     <None Remove="Templates\WebUI\src\api\Api.tsx.liquid" />
-    <None Remove="Templates\WebUI\src\components\BookTable\BookTable.tsx.liquid" />
     <None Remove="Templates\WebUI\src\components\CustomTableHead\CustomTableHead.tsx.liquid" />
     <None Remove="Templates\WebUI\src\components\EntityPageTitle\EntityPageTitle.tsx.liquid" />
     <None Remove="Templates\WebUI\src\components\FormButtons\FormButtons.tsx.liquid" />
@@ -62,7 +61,6 @@
     <EmbeddedResource Include="template-config.json" />
     <EmbeddedResource Include="Templates\WebUI\package-lock.json.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\api\Api.tsx.liquid" />
-    <EmbeddedResource Include="Templates\WebUI\src\components\BookTable\BookTable.tsx.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\components\CustomTableHead\CustomTableHead.tsx.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\components\Menu\GeneratedLabels.tsc.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\components\Menu\Menu.css.liquid" />
