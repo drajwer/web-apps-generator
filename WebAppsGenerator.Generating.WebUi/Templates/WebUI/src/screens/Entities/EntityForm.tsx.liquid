@@ -39,7 +39,9 @@ class {{Params.Entity.Name}}Form extends React.Component<IProps,IState> {
     }
 
 	public componentWillReceiveProps(props: IProps) {
-		if (this.state.{{Params.Entity.Name | DeCapitalize}} == null) {
+		const id = parseInt(this.props.match.params.id, 10);
+		const {{Params.Entity.Name | DeCapitalize}} = this.state.{{Params.Entity.Name | DeCapitalize}};
+		if ({{Params.Entity.Name | DeCapitalize}} == null || id !== {{Params.Entity.Name | DeCapitalize}}.id) {
 			this.setState({ {{Params.Entity.Name | DeCapitalize}}: props.{{Params.Entity.Name | DeCapitalize}} });
 		}
 	}

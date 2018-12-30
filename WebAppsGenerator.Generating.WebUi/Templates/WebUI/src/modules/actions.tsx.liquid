@@ -60,7 +60,7 @@ export const add{{ Params.Entity.Name }}: ({{ Params.Entity.Name | DeCapitalize 
 
 export const update{{ Params.Entity.Name }}: (id: {{Params.Entity.IdField.Type.Name}}, new{{ Params.Entity.Name }}: {{ Params.Entity.Name }}) => ThunkResult<void> = (id: {{Params.Entity.IdField.Type.Name}}, new{{ Params.Entity.Name }}: {{ Params.Entity.Name }}) => {
     return (dispatch: any, getState: GetStateType) => {
-        dispatch(requestUpdate{{ Params.Entity.Name }}());
+        dispatch(requestUpdate{{ Params.Entity.Name }}(id));
 		Put(id, new{{ Params.Entity.Name }})
             .then(() => dispatch(responseUpdate{{ Params.Entity.Name }}(new{{ Params.Entity.Name }})))
             .catch(() => dispatch(setUpdate{{ Params.Entity.Name }}Error()));
@@ -80,63 +80,64 @@ export const delete{{ Params.Entity.Name }}: (id: {{Params.Entity.IdField.Type.N
     };
 };
 
-const request{{ Params.Entity.Name }} = () => ({
+const request{{ Params.Entity.Name }}: () => {{ Params.Entity.Name }}Actions = () => ({
     type: {{ Params.Entity.Name }}ActionTypes.REQUEST_{{ Params.Entity.Name | SnakeUppercase }},
 });
 
-const request{{ Params.Entity.PluralName }} = () => ({
+const request{{ Params.Entity.PluralName }}: () => {{ Params.Entity.Name }}Actions = () => ({
     type: {{ Params.Entity.Name }}ActionTypes.REQUEST_{{ Params.Entity.PluralName | SnakeUppercase }},
 });
 
-const receive{{ Params.Entity.Name }} = ({{ Params.Entity.Name | DeCapitalize }}: {{ Params.Entity.Name }}) => ({
+const receive{{ Params.Entity.Name }}: ({{ Params.Entity.Name | DeCapitalize }}: {{ Params.Entity.Name }}) => {{ Params.Entity.Name }}Actions = ({{ Params.Entity.Name | DeCapitalize }}: {{ Params.Entity.Name }}) => ({
     type: {{ Params.Entity.Name }}ActionTypes.RECEIVE_{{ Params.Entity.Name | SnakeUppercase }},
     {{ Params.Entity.Name | DeCapitalize }}
 });
 
-const receive{{ Params.Entity.PluralName }} = ({{ Params.Entity.PluralName | DeCapitalize }}: {{ Params.Entity.Name }}[]) => ({
+const receive{{ Params.Entity.PluralName }}: ({{ Params.Entity.PluralName | DeCapitalize }}: {{ Params.Entity.Name }}[]) => {{ Params.Entity.Name }}Actions = ({{ Params.Entity.PluralName | DeCapitalize }}: {{ Params.Entity.Name }}[]) => ({
     type: {{ Params.Entity.Name }}ActionTypes.RECEIVE_{{ Params.Entity.PluralName | SnakeUppercase }},
     {{ Params.Entity.PluralName | DeCapitalize}}
 });
 
-const setFetchError = () => ({
+const setFetchError: () => {{ Params.Entity.Name }}Actions = () => ({
     type: {{ Params.Entity.Name }}ActionTypes.SET_FETCH_ERROR_{{ Params.Entity.Name | SnakeUppercase }},
 });
 
-const requestAdd{{ Params.Entity.Name }} = () => ({
+const requestAdd{{ Params.Entity.Name }}: () => {{ Params.Entity.Name }}Actions = () => ({
     type: {{ Params.Entity.Name }}ActionTypes.REQUEST_ADD_{{ Params.Entity.Name | SnakeUppercase}},
 });
 
-const responseAdd{{ Params.Entity.Name }} = ({{ Params.Entity.Name | DeCapitalize }}: {{ Params.Entity.Name }}) => ({
+const responseAdd{{ Params.Entity.Name }}: ({{ Params.Entity.Name | DeCapitalize }}: {{ Params.Entity.Name }}) => {{ Params.Entity.Name }}Actions = ({{ Params.Entity.Name | DeCapitalize }}: {{ Params.Entity.Name }}) => ({
     type: {{ Params.Entity.Name }}ActionTypes.RESPONSE_ADD_{{ Params.Entity.Name | SnakeUppercase}},
     {{ Params.Entity.Name | DeCapitalize }}
 });
 
-const setAdd{{ Params.Entity.Name }}Error = () => ({
+const setAdd{{ Params.Entity.Name }}Error: () => {{ Params.Entity.Name }}Actions = () => ({
     type: {{ Params.Entity.Name }}ActionTypes.SET_ADD_{{ Params.Entity.Name | SnakeUppercase}}_ERROR
 });
 
-const requestUpdate{{ Params.Entity.Name }} = () => ({
+const requestUpdate{{ Params.Entity.Name }}: (id: {{Params.Entity.IdField.Type.Name}}) => {{ Params.Entity.Name }}Actions = (id: {{Params.Entity.IdField.Type.Name}}) => ({
     type: {{ Params.Entity.Name }}ActionTypes.REQUEST_UPDATE_{{ Params.Entity.Name | SnakeUppercase}},
+	{{Params.Entity.Name | DeCapitalize }}Id: id
 });
 
-const responseUpdate{{ Params.Entity.Name }} = ({{ Params.Entity.Name | DeCapitalize }}: {{ Params.Entity.Name }}) => ({
+const responseUpdate{{ Params.Entity.Name }}: ({{ Params.Entity.Name | DeCapitalize }}: {{ Params.Entity.Name }}) => {{ Params.Entity.Name }}Actions = ({{ Params.Entity.Name | DeCapitalize }}: {{ Params.Entity.Name }}) => ({
     type: {{ Params.Entity.Name }}ActionTypes.RESPONSE_UPDATE_{{ Params.Entity.Name | SnakeUppercase}},
     {{ Params.Entity.Name | DeCapitalize }},
 });
 
-const setUpdate{{ Params.Entity.Name }}Error = () => ({
+const setUpdate{{ Params.Entity.Name }}Error: () => {{ Params.Entity.Name }}Actions = () => ({
     type: {{ Params.Entity.Name }}ActionTypes.SET_UPDATE_{{ Params.Entity.Name | SnakeUppercase}}_ERROR
 });
 
-const requestDelete{{ Params.Entity.Name }} = () => ({
+const requestDelete{{ Params.Entity.Name }}: () => {{ Params.Entity.Name }}Actions = () => ({
     type: {{ Params.Entity.Name }}ActionTypes.REQUEST_DELETE_{{ Params.Entity.Name | SnakeUppercase}},
 });
 
-const responseDelete{{ Params.Entity.Name }} = (id: {{Params.Entity.IdField.Type.Name}}) => ({
+const responseDelete{{ Params.Entity.Name }}: (id: {{Params.Entity.IdField.Type.Name}}) => {{ Params.Entity.Name }}Actions = (id: {{Params.Entity.IdField.Type.Name}}) => ({
     type: {{ Params.Entity.Name }}ActionTypes.RESPONSE_DELETE_{{ Params.Entity.Name | SnakeUppercase}},
-    id
+	{{ Params.Entity.Name | DeCapitalize }}Id : id
 });
 
-const setDelete{{ Params.Entity.Name }}Error = () => ({
+const setDelete{{ Params.Entity.Name }}Error: () => {{ Params.Entity.Name }}Actions = () => ({
     type: {{ Params.Entity.Name }}ActionTypes.SET_DELETE_{{ Params.Entity.Name | SnakeUppercase}}_ERROR
 });

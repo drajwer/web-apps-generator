@@ -64,14 +64,22 @@ class GenericTable extends React.Component<IGenericTableProps, IGenericTableStat
     };
 
     public handleSelectAllClick = (event: any) => {
+		let selected: number[];
 		if(this.props.data === null) {
             return;
         }
+
         if (event.target.checked) {
-            this.setState({ selected: this.props.data.map((n: any) => n.id) });
-            return;
+            selected = this.props.data.map((n: any) => n.id);
         }
-        this.setState({ selected: [] });
+        else{
+            selected = [];
+        }
+
+        if(this.props.onSelect != null){
+            this.props.onSelect(selected);
+        }
+        this.setState({ selected});
     };
 
     public handleCheckboxTick = (event: any, id: number) => {
