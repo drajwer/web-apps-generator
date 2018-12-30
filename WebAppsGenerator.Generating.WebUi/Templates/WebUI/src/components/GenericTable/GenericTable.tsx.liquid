@@ -118,8 +118,10 @@ class GenericTable extends React.Component<IGenericTableProps, IGenericTableStat
             valueB = this.isSelected(b.id);
         }
         else {
-            valueA = a[orderBy];
-            valueB = b[orderBy];
+            const propNumber = this.props.tableHeadLabels.findIndex(l => l === orderBy);
+            const propName = Object.keys(a)[propNumber];
+            valueA = a[propName];
+            valueB = b[propName];
         }
         if (valueB < valueA) {
             return -1;
