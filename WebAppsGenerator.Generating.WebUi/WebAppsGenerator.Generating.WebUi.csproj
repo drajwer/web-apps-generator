@@ -19,6 +19,7 @@
     <None Remove="Templates\WebUI\src\components\Menu\Menu.tsx.liquid" />
     <None Remove="Templates\WebUI\src\components\Modals\EntityModal.tsx.liquid" />
     <None Remove="Templates\WebUI\src\components\PageButtons\PageButtons.tsx.liquid" />
+    <None Remove="Templates\WebUI\src\components\Tables\Table.css.liquid" />
     <None Remove="Templates\WebUI\src\components\Tables\Table.tsx.liquid" />
     <None Remove="Templates\WebUI\src\components\TableToolbar\TableToolbar.tsx.liquid" />
     <None Remove="Templates\WebUI\src\config.tsx.liquid" />
@@ -50,6 +51,7 @@
     <EmbeddedResource Include="Templates\WebUI\src\components\Forms\EntityForm.tsx.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\components\Modals\EntityModal.tsx.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\components\PageButtons\PageButtons.tsx.liquid" />
+    <EmbeddedResource Include="Templates\WebUI\src\components\Tables\Table.css.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\components\Tables\Table.tsx.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\components\TableToolbar\TableToolbar.tsx.liquid" />
   </ItemGroup>

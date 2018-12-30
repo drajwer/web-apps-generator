@@ -5,7 +5,10 @@ import CustomTableHead, { IRowDescription } from '../CustomTableHead/CustomTable
 import TableToolbar from '../TableToolbar/TableToolbar';
 import history from 'src/history';
 
-function stableSort(array: any, cmp: any) {
+function stableSort(array: dataType, cmp: any) {
+	if(array === null) {
+        return [];
+    }
     const stabilizedThis = array.map((el: any, index: number) => [el, index]);
     stabilizedThis.sort((a: any, b: any) => {
         const order = cmp(a[0], b[0]);
@@ -14,9 +17,10 @@ function stableSort(array: any, cmp: any) {
     });
     return stabilizedThis.map((el: any) => el[0]);
 }
+type dataType = any[] | null;
 
 interface IGenericTableProps {
-    data: any,
+    data: dataType,
     selected: number[],
     tableTitle: string,
     tableHeadLabels: string[],
@@ -60,6 +64,9 @@ class GenericTable extends React.Component<IGenericTableProps, IGenericTableStat
     };
 
     public handleSelectAllClick = (event: any) => {
+		if(this.props.data === null) {
+            return;
+        }
         if (event.target.checked) {
             this.setState({ selected: this.props.data.map((n: any) => n.id) });
             return;
@@ -139,7 +146,8 @@ class GenericTable extends React.Component<IGenericTableProps, IGenericTableStat
     public render() {
         const { data, classes, showCheckboxes, multipleSelects, tableTitle, tableHeadLabels, onRefresh } = this.props;
         const { order, orderBy, selected, rowsPerPage, page } = this.state;
-        const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
+        const dataLength = data ? data.length : 0;
+        const emptyRows = rowsPerPage - Math.min(rowsPerPage, dataLength - page * rowsPerPage);
         const rows: IRowDescription[] =
             tableHeadLabels.map((key: any, index: number) => ({
                 id: key,
@@ -157,7 +165,7 @@ class GenericTable extends React.Component<IGenericTableProps, IGenericTableStat
                             orderBy={orderBy}
                             onSelectAllClick={this.handleSelectAllClick}
                             onRequestSort={this.handleRequestSort}
-                            rowCount={this.props.data.length}
+                            rowCount={dataLength}
                             rows={rows}
                             showCheckboxes={showCheckboxes}
                             multipleSelects={multipleSelects}
@@ -223,7 +231,7 @@ class GenericTable extends React.Component<IGenericTableProps, IGenericTableStat
                 <TablePagination
                     rowsPerPageOptions={[5, 10, 25]}
                     component="div"
-                    count={data.length}
+                    count={dataLength}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     backIconButtonProps={% raw %} {{

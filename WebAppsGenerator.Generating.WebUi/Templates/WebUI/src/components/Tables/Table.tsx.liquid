@@ -1,16 +1,18 @@
 ﻿import * as React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { CircularProgress } from '@material-ui/core';
 import * as Actions from '../../modules/{{ Params.Entity.Name | DeCapitalize }}/actions';
 import GenericTable from '../GenericTable/GenericTable';
 import {{ Params.Entity.Name }} from '../../models/{{ Params.Entity.Name }}';
 import { IRootState } from '../../modules';
-
+import './Table.css';
 
 interface IStoreProps {
-    {{ Params.Entity.PluralName | DeCapitalize }}: {{ Params.Entity.Name }}[],
-    actions: any
-    selected: {{ Params.Entity.IdField.Type.Name }}[]
+    {{ Params.Entity.PluralName | DeCapitalize }}: {{ Params.Entity.Name }}[] | null,
+    actions: any,
+    selected: {{ Params.Entity.IdField.Type.Name }}[],
+	isFetching: boolean
 }
 
 interface I{{ Params.Entity.Name }}TableProps {
@@ -22,12 +24,23 @@ interface I{{ Params.Entity.Name }}TableProps {
 type ICombinedProps = IStoreProps & I{{ Params.Entity.Name }}TableProps;
 
 class {{ Params.Entity.Name }}Table extends React.Component<ICombinedProps> {
-    public componentDidMount() {
-        this.refreshData();
+    public componentWillMount() {
+		if (this.props.{{ Params.Entity.PluralName | DeCapitalize }} === null) {
+			this.refreshData();
+		}
     }
     public render() {
-		const { showCheckboxes, multipleSelects } = this.props;
-        const data = !this.props.{{ Params.Entity.PluralName | DeCapitalize }}? [] : this.props.{{ Params.Entity.PluralName | DeCapitalize }}.map(({{ Params.Entity.Name | DeCapitalize }}: {{ Params.Entity.Name }}) => ({
+		const { {{ Params.Entity.PluralName | DeCapitalize }}, showCheckboxes, multipleSelects, isFetching } = this.props;
+		
+        if (isFetching) {
+            return (
+				<div className="loading-circle">
+					<CircularProgress />
+				</div>
+				);
+        }
+
+        const data = !{{ Params.Entity.PluralName | DeCapitalize }}? null : {{ Params.Entity.PluralName | DeCapitalize }}.map(({{ Params.Entity.Name | DeCapitalize }}: {{ Params.Entity.Name }}) => ({
             {%- for field in Params.Entity.Fields -%}
 				{%- if field.Type.IsSimpleType -%}
 			{{ field.Name }}: {{ Params.Entity.Name | DeCapitalize }}.{{ field.Name }},
@@ -65,7 +78,8 @@ class {{ Params.Entity.Name }}Table extends React.Component<ICombinedProps> {
 
 const mapStateToProps = (state: IRootState, ownProps: I{{ Params.Entity.Name }}TableProps) => ({
     {{ Params.Entity.PluralName | DeCapitalize }}: state.{{ Params.Entity.Name | DeCapitalize }}.{{ Params.Entity.PluralName | DeCapitalize }},
-    ...ownProps
+    isFetching: state.{{ Params.Entity.Name | DeCapitalize }}.isFetching,
+	...ownProps
 });
 
 const mapDispatchToProps = (dispatch: any) => ({

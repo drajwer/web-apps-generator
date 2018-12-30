@@ -7,14 +7,14 @@ import {{ Params.Entity.Name }} from '../../models/{{ Params.Entity.Name }}';
 export interface I{{ Params.Entity.Name }}State {
     readonly isFetching: boolean,
     readonly isInvalid: boolean,
-    readonly {{ Params.Entity.PluralName | DeCapitalize}}: {{ Params.Entity.Name }}[],
+    readonly {{ Params.Entity.PluralName | DeCapitalize}}: {{ Params.Entity.Name }}[] | null,
     readonly {{ Params.Entity.Name | DeCapitalize }}: {{ Params.Entity.Name }} | undefined,
 }
 
 const initialState: I{{ Params.Entity.Name }}State = {
     isFetching: false,
     isInvalid: false,
-    {{ Params.Entity.PluralName | DeCapitalize}}: [],
+    {{ Params.Entity.PluralName | DeCapitalize}}: null,
     {{ Params.Entity.Name | DeCapitalize }}: undefined,
 };
 
@@ -63,10 +63,10 @@ const {{ Params.Entity.Name | DeCapitalize}}Reducer: Reducer<I{{ Params.Entity.N
 }
 
 const responseAdd{{ Params.Entity.Name }} = (state: I{{ Params.Entity.Name }}State, new{{ Params.Entity.Name }}: {{ Params.Entity.Name }}) => {
-    const {{ Params.Entity.PluralName | DeCapitalize}} = state.{{ Params.Entity.PluralName | DeCapitalize}};
-	if ({{ Params.Entity.PluralName | DeCapitalize}} != null) {
-		{{ Params.Entity.PluralName | DeCapitalize}}.push(new{{ Params.Entity.Name }});
-    }
+    const {{ Params.Entity.PluralName | DeCapitalize}} = state.{{ Params.Entity.PluralName | DeCapitalize}} || [];
+	
+	{{ Params.Entity.PluralName | DeCapitalize}}.push(new{{ Params.Entity.Name }});
+	
 	return {
         ...state,
         isFetching: false,
@@ -79,7 +79,7 @@ const responseAdd{{ Params.Entity.Name }} = (state: I{{ Params.Entity.Name }}Sta
 const responseDelete{{ Params.Entity.Name }} = (state: I{{ Params.Entity.Name }}State, id: number) => {
     const {{ Params.Entity.PluralName | DeCapitalize}} = state.{{ Params.Entity.PluralName | DeCapitalize}};
 	if ({{ Params.Entity.PluralName | DeCapitalize}} != null) {
-		const toDel = state.{{ Params.Entity.PluralName | DeCapitalize}}.find(c => c.id === id);
+		const toDel = {{ Params.Entity.PluralName | DeCapitalize}}.find(c => c.id === id);
 		if(toDel != null) {
 			const index = {{ Params.Entity.PluralName | DeCapitalize}}.indexOf(toDel);
 			{{ Params.Entity.PluralName | DeCapitalize}}.splice(index, 1);
@@ -98,7 +98,7 @@ const responseDelete{{ Params.Entity.Name }} = (state: I{{ Params.Entity.Name }}
 const responseUpdate{{ Params.Entity.Name }} = (state: I{{ Params.Entity.Name }}State, new{{ Params.Entity.Name }}: {{ Params.Entity.Name }}) => {
     const {{ Params.Entity.PluralName | DeCapitalize}} = state.{{ Params.Entity.PluralName | DeCapitalize}};
 	if ({{ Params.Entity.PluralName | DeCapitalize}} != null) {
-		const old{{ Params.Entity.Name }} = state.{{ Params.Entity.PluralName | DeCapitalize}}.find(c => c.id === new{{ Params.Entity.Name }}.id);
+		const old{{ Params.Entity.Name }} = {{ Params.Entity.PluralName | DeCapitalize}}.find(c => c.id === new{{ Params.Entity.Name }}.id);
 		if(old{{ Params.Entity.Name }} != null) {
 		    const index = {{ Params.Entity.PluralName | DeCapitalize}}.indexOf(old{{ Params.Entity.Name }});
 			{{ Params.Entity.PluralName | DeCapitalize}}[index] = new{{ Params.Entity.Name }};
@@ -116,6 +116,5 @@ const responseUpdate{{ Params.Entity.Name }} = (state: I{{ Params.Entity.Name }}
 		{{ Params.Entity.Name | DeCapitalize}} : new{{ Params.Entity.Name }}
     };
 };
-
 
 export default {{ Params.Entity.Name | DeCapitalize}}Reducer;
