@@ -21,4 +21,10 @@
     <ProjectReference Include="..\WebAppsGenerator.Generating.WebUi\WebAppsGenerator.Generating.WebUi.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="config.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
