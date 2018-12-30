@@ -29,7 +29,7 @@ namespace WebAppsGenerator.Console
             AddConfiguration();
             ConfigureServices();
 
-            var concatFileService = new ConcatFileService(new FlatDirectoryFilesProvider("./../../../TestDir", "txt"));
+            var concatFileService = new ConcatFileService(new FlatDirectoryFilesProvider("./../../../TestDir", "sn"));
             var inputStream = new AntlrInputStream(concatFileService.ConcatFile);
             var lexer = new SneakLexer(inputStream);
 
@@ -59,8 +59,6 @@ namespace WebAppsGenerator.Console
             {
                 generator.Generate(visitor.Entities.Values);
             }
-
-            System.Console.ReadKey();
         }
 
         private static void ConfigureServices()

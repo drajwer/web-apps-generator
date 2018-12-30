@@ -3,23 +3,24 @@ using System.IO;
 using WebAppsGenerator.Core.Interfaces;
 using WebAppsGenerator.Core.Models;
 using WebAppsGenerator.Generating.Abstract.Interfaces;
+using WebAppsGenerator.Generating.WebUi.Interfaces;
 
 namespace WebAppsGenerator.Generating.WebUi.Services
 {
     public class WebClientProjectGenerator : IGenerator
     {
         private const bool IsEnabled = true;
-        private const bool CreateReactApp = false;
+        private const bool CreateReactApp = true;
 
         private readonly SolutionPathService _pathService;
         private readonly ICommandLineService _commandLineService;
-        private readonly IGenerator _webUiGenerator;
+        private readonly IEnumerable<IWebUiChildGenerator> _webUiGenerators;
 
-        public WebClientProjectGenerator(SolutionPathService pathService, ICommandLineService commandLineService, IGenerator webUiGenerator)
+        public WebClientProjectGenerator(SolutionPathService pathService, ICommandLineService commandLineService, IEnumerable<IWebUiChildGenerator> webUiGenerators)
         {
             _pathService = pathService;
             _commandLineService = commandLineService;
-            _webUiGenerator = webUiGenerator;
+            _webUiGenerators = webUiGenerators;
         }
 
         public void Generate(IEnumerable<Entity> entities)
@@ -33,7 +34,10 @@ namespace WebAppsGenerator.Generating.WebUi.Services
                 RemoveUnnecessaryFiles();
             }
 
-            _webUiGenerator.Generate(entities);
+            foreach (var webUiChildGenerator in _webUiGenerators)
+            {
+                webUiChildGenerator.Generate(entities);
+            }
         }
 
         private void CreateApp()

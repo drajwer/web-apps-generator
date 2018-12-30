@@ -12,7 +12,7 @@ namespace WebAppsGenerator.Generating.WebUi.Services
         {
             _generatorConfiguration = generatorConfiguration;
         }
-
+        public string OutputPath => _generatorConfiguration.OutputPath;
         public string WebUiDirPath => Path.Combine(_generatorConfiguration.OutputPath, WebProjectDirectoryName);
         public string WebProjectDirPath => Path.Combine(WebUiDirPath, WebUiProjectName);
 
@@ -21,6 +21,5 @@ namespace WebAppsGenerator.Generating.WebUi.Services
         public string SrcDir => Path.Combine(WebProjectDirPath, "src");
         public string ScreensDir => Path.Combine(SrcDir, "screens");
         public string ComponentsDir => Path.Combine(SrcDir, "components");
-
     }
 }

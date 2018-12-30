@@ -1,111 +1,116 @@
 {
-    "WebUI": {
-        "package.json": {
-            "NameTemplate": "package.json",
-            "DropId": "WebUiBaseDrop",
-            "Multiple": false
-        },
-        "package-lock.json": {
-            "NameTemplate": "package-lock.json",
-            "DropId": "WebUiBaseDrop",
-            "Multiple": false
-        },
-        "src": {
-            "api": {
-                "Api.tsx": {
-                    "NameTemplate": "{{Params.Entity.Name | DeCapitalize}}Api.tsx",
-                    "DropId": "EntityDrop",
-                    "Multiple": true
-                }
-            },
-          "components": {
-            "Menu": {
-              "GeneratedLabels.ts": {
-                "DropId": "EntityList",
-                "Multiple": false
-              }
-            },
-            "Tables": {
-              "Table.tsx": {
-                "NameTemplate": "{{Params.Entity.Name}}Table.tsx",
-                "DropId": "EntityDrop",
-                "Multiple": true
-              }
-            },
-            "Forms": {
-              "EntityForm.tsx": {
-                "NameTemplate": "{{Params.Entity.Name}}/{{Params.Entity.Name}}Form.tsx",
-                "DropId": "EntityDrop",
-                "Multiple": true
-              }
-            },
-            "Modals": {
-              "EntityModal.tsx": {
-                "NameTemplate": "{{Params.Entity.Name}}/{{Params.Entity.Name}}Modal.tsx",
-                "DropId": "EntityDrop",
-                "Multiple": true
-              }
-            }
-          },
-            "models": {
-                "Model.ts": {
-                    "NameTemplate": "{{Params.Entity.Name}}.ts",
-                    "DropId": "EntityDrop",
-                    "Multiple": true
-                }
-            },
-            "routing": {
-                "GeneratedRoutes.ts": {
-                    "DropId": "EntityList",
-                    "Multiple": false
-                }
-            },
-            "screens": {
-                "Entities": {
-                    "EntityForm.tsx": {
-                        "NameTemplate": "{{Params.Entity.Name}}/Form/{{Params.Entity.Name}}Form.tsx",
-                        "DropId": "EntityDrop",
-                        "Multiple": true
-                    },
-                    "EntityForm.css": {
-                        "NameTemplate": "{{Params.Entity.Name}}/Form/{{Params.Entity.Name}}Form.css",
-                        "DropId": "EntityDrop",
-                        "Multiple": true
-                    },
-                    "EntityList.tsx": {
-                        "NameTemplate": "{{Params.Entity.Name}}/List/{{Params.Entity.Name}}List.tsx",
-                        "DropId": "EntityDrop",
-                        "Multiple": true
-                    },
-                    "EntityList.css": {
-                        "NameTemplate": "{{Params.Entity.Name}}/List/{{Params.Entity.Name}}List.css",
-                        "DropId": "EntityDrop",
-                        "Multiple": true
-                    }
-                }
-            },
-            "modules": {
-                "actions.tsx": {
-                    "NameTemplate": "{{Params.Entity.Name | DeCapitalize}}/actions.tsx",
-                    "DropId": "EntityDrop",
-                    "Multiple": true
-                },
-                "actionTypes.tsx": {
-                    "NameTemplate": "{{Params.Entity.Name | DeCapitalize}}/actionTypes.tsx",
-                    "DropId": "EntityDrop",
-                    "Multiple": true
-                },
-                "reducer.tsx": {
-                    "NameTemplate": "{{Params.Entity.Name | DeCapitalize}}/reducer.tsx",
-                    "DropId": "EntityDrop",
-                    "Multiple": true
-                },
-                "index.tsx": {
-                    "NameTemplate": "index.tsx",
-                    "DropId": "EntityList",
-                    "Multiple": false
-                }
-            }
+  "run.ps1": {
+    "DropId": "WebUiBaseDrop",
+    "Multiple": false
+  },
+
+  "WebUI": {
+    "package.json": {
+      "NameTemplate": "package.json",
+      "DropId": "WebUiBaseDrop",
+      "Multiple": false
+    },
+    "package-lock.json": {
+      "NameTemplate": "package-lock.json",
+      "DropId": "WebUiBaseDrop",
+      "Multiple": false
+    },
+    "src": {
+      "api": {
+        "Api.tsx": {
+          "NameTemplate": "{{Params.Entity.Name | DeCapitalize}}Api.tsx",
+          "DropId": "EntityDrop",
+          "Multiple": true
         }
-    } 
+      },
+      "components": {
+        "Menu": {
+          "GeneratedLabels.ts": {
+            "DropId": "EntityList",
+            "Multiple": false
+          }
+        },
+        "Tables": {
+          "Table.tsx": {
+            "NameTemplate": "{{Params.Entity.Name}}Table.tsx",
+            "DropId": "EntityDrop",
+            "Multiple": true
+          }
+        },
+        "Forms": {
+          "EntityForm.tsx": {
+            "NameTemplate": "{{Params.Entity.Name}}/{{Params.Entity.Name}}Form.tsx",
+            "DropId": "EntityDrop",
+            "Multiple": true
+          }
+        },
+        "Modals": {
+          "EntityModal.tsx": {
+            "NameTemplate": "{{Params.Entity.Name}}/{{Params.Entity.Name}}Modal.tsx",
+            "DropId": "EntityDrop",
+            "Multiple": true
+          }
+        }
+      },
+      "models": {
+        "Model.ts": {
+          "NameTemplate": "{{Params.Entity.Name}}.ts",
+          "DropId": "EntityDrop",
+          "Multiple": true
+        }
+      },
+      "routing": {
+        "GeneratedRoutes.ts": {
+          "DropId": "EntityList",
+          "Multiple": false
+        }
+      },
+      "screens": {
+        "Entities": {
+          "EntityForm.tsx": {
+            "NameTemplate": "{{Params.Entity.Name}}/Form/{{Params.Entity.Name}}Form.tsx",
+            "DropId": "EntityDrop",
+            "Multiple": true
+          },
+          "EntityForm.css": {
+            "NameTemplate": "{{Params.Entity.Name}}/Form/{{Params.Entity.Name}}Form.css",
+            "DropId": "EntityDrop",
+            "Multiple": true
+          },
+          "EntityList.tsx": {
+            "NameTemplate": "{{Params.Entity.Name}}/List/{{Params.Entity.Name}}List.tsx",
+            "DropId": "EntityDrop",
+            "Multiple": true
+          },
+          "EntityList.css": {
+            "NameTemplate": "{{Params.Entity.Name}}/List/{{Params.Entity.Name}}List.css",
+            "DropId": "EntityDrop",
+            "Multiple": true
+          }
+        }
+      },
+      "modules": {
+        "actions.tsx": {
+          "NameTemplate": "{{Params.Entity.Name | DeCapitalize}}/actions.tsx",
+          "DropId": "EntityDrop",
+          "Multiple": true
+        },
+        "actionTypes.tsx": {
+          "NameTemplate": "{{Params.Entity.Name | DeCapitalize}}/actionTypes.tsx",
+          "DropId": "EntityDrop",
+          "Multiple": true
+        },
+        "reducer.tsx": {
+          "NameTemplate": "{{Params.Entity.Name | DeCapitalize}}/reducer.tsx",
+          "DropId": "EntityDrop",
+          "Multiple": true
+        },
+        "index.tsx": {
+          "NameTemplate": "index.tsx",
+          "DropId": "EntityList",
+          "Multiple": false
+        }
+      }
+    }
+  }
 }

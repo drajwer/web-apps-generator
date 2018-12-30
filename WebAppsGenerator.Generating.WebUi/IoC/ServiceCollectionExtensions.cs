@@ -15,16 +15,7 @@ namespace WebAppsGenerator.Generating.WebUi.IoC
         public static IServiceCollection AddWebUiCoreGenerator(this IServiceCollection services)
         {
             RegisterGeneratorSpecificServices(services);
-
-            services.AddScoped<IGenerator>(provider =>
-            {
-                var webUiGenerator = provider.GetService<WebUiGenerator>();
-                //var generatorConfiguration = provider.GetService<IGeneratorConfiguration>();
-                var commandLineService = provider.GetService<ICommandLineService>();
-                var pathService = provider.GetService<SolutionPathService>();
-
-                return new WebClientProjectGenerator(pathService, commandLineService, webUiGenerator);
-            });
+            RegisterGenerators(services);
 
             return services;
         }
@@ -43,9 +34,15 @@ namespace WebAppsGenerator.Generating.WebUi.IoC
             services.AddScoped<IWebUiProjectTemplatingConfigProvider, WebUiTemplateConfigProvider>();
             services.AddTransient<TemplateFileProvider>();
             services.AddScoped<SolutionPathService>();
-            services.AddScoped<WebUiGenerator>();
             services.AddScoped<WebUiDropFactory>();
             services.AddScoped<TypeScriptEntityService>();
+        }
+
+        private static void RegisterGenerators(IServiceCollection services)
+        {
+            services.AddScoped<IWebUiChildGenerator, WebUiGenerator>();
+            services.AddScoped<IWebUiChildGenerator, ScriptGenerator>();
+            services.AddScoped<IGenerator, WebClientProjectGenerator>();
         }
     }
 }

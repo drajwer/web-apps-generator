@@ -4,7 +4,7 @@ using WebAppsGenerator.Generating.WebUi.Interfaces;
 
 namespace WebAppsGenerator.Generating.WebUi.Services
 {
-    public class WebUiGenerator : BaseGenerator
+    public class WebUiGenerator : BaseGenerator, IWebUiChildGenerator
     {
         public WebUiGenerator(IGeneratorConfiguration generatorConfiguration, IWebUiFileService fileService,
             IWebUiProjectTemplatingConfigProvider templatingConfigProvider, WebUiDropFactory dropFactory)

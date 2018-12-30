@@ -1,0 +1,2 @@
+﻿start powershell {dotnet run --project WebApi/{{ Params.ProjectName }}.WebApi}
+start powershell {cd WebUI/{{ Params.ProjectName | DeCapitalize }}.web; npm install; npm start}
