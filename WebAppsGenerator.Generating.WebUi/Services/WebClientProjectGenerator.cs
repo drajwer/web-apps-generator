@@ -10,7 +10,7 @@ namespace WebAppsGenerator.Generating.WebUi.Services
     public class WebClientProjectGenerator : IGenerator
     {
         private const bool IsEnabled = true;
-        private const bool CreateReactApp = false;
+        private const bool CreateReactApp = true;
 
         private readonly SolutionPathService _pathService;
         private readonly ICommandLineService _commandLineService;
