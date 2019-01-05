@@ -31,7 +31,13 @@ interface IProps {
     readonly: boolean
     on{{Params.Entity.Name}}Change: ({{Params.Entity.Name | DeCapitalize}}: {{Params.Entity.Name}}) => void
 }
-
+{%- assign createState = false -%}
+{%- for field in Params.Entity.Fields -%}
+		{%- if field.Relation.HasOne or field.Relation.HasMany -%}
+			{%- assign createState = true -%}
+		{%- endif -%}
+{%- endfor -%}
+{%- if createState -%}
 interface IState {
 	{%- for field in Params.Entity.Fields -%}
 		{%- if field.Relation.HasOne or field.Relation.HasMany -%}
@@ -39,8 +45,9 @@ interface IState {
 		{%- endif -%}
 	{%- endfor -%}
 }
+{%- endif -%}
 
-class {{Params.Entity.Name}}Form extends React.Component<IProps, IState>{
+class {{Params.Entity.Name}}Form extends React.Component<IProps, {%- if createState -%}IState{%-else-%}{}{%-endif -%}> {
 	constructor(props: IProps) {
 		super(props);
 		this.state = { 
@@ -73,9 +80,10 @@ class {{Params.Entity.Name}}Form extends React.Component<IProps, IState>{
 				/>
 				{%- endif -%}
 			{%- endfor -%}
-			{""}
+			{%- assign addPlaceholder = true -%}
 			{%- for field in Params.Entity.Fields -%}
 				{%- unless field.Name == 'id' -%}
+				{%- assign addPlaceholder = false -%}
 				<Grid item={true} xs={12} sm={4}>
 					{%- if field.Type.IsSimpleType -%}
 						{%- if field.Type.Name == 'boolean' -%}
@@ -132,6 +140,9 @@ class {{Params.Entity.Name}}Form extends React.Component<IProps, IState>{
 				</Grid>
 				{%- endunless -%}
 			{%- endfor -%}
+			{%- if addPlaceholder -%}
+			<div>This form is empty. Please check the input file.</div>
+			{%- endif -%}
             </Grid>
         )
     }
