@@ -28,6 +28,7 @@ namespace WebAppsGenerator.Generating.Abstract.Services
             // TODO : Add Id validation here
             ValidateTypes(entities);
             ValidateAnnotations(entities);
+            ValidateProperties(entities);
         }
 
         /// <summary>
@@ -121,6 +122,23 @@ namespace WebAppsGenerator.Generating.Abstract.Services
                             throw new InvalidAnnotationParameterValueTypeException(annotation.Name, param.Name,
                                 entityFieldAnnotationParam.Type, param.Type);
                     }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Validates if properties are unique for given entities
+        /// </summary>
+        private void ValidateProperties(IEnumerable<Entity> entities)
+        {
+            foreach (var entity in entities)
+            {
+                var dict = new HashSet<string>();
+                foreach (var entityField in entity.Fields)
+                {
+                    if (dict.Contains(entityField.Name))
+                        throw new MultiplePropException(entityField.Name, entity.Name);
+                    dict.Add(entityField.Name);
                 }
             }
         }
