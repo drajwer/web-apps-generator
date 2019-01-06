@@ -31,7 +31,7 @@ namespace WebAppsGenerator.Console
             AddConfiguration();
             ConfigureServices();
 
-            var concatFileService = new ConcatFileService(new FlatDirectoryFilesProvider("./../../../TestDir", "sn"));
+            var concatFileService = new ConcatFileService(new DeepDirectoryFilesProvider("./../../../TestDir", "sn"));
             var inputStream = new AntlrInputStream(concatFileService.ConcatFile);
             var lexer = new SneakLexer(inputStream);
 

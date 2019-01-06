@@ -1,0 +1,3 @@
+﻿class Club
+	Name: string
+	People: Person[]
