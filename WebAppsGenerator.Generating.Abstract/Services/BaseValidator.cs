@@ -8,8 +8,9 @@ using WebAppsGenerator.Generating.Abstract.Options;
 
 namespace WebAppsGenerator.Generating.Abstract.Services
 {
+    /// <inheritdoc />
     /// <summary>
-    /// Default implementation of <see cref="IValidator"/>.
+    /// Default implementation of <see cref="T:WebAppsGenerator.Generating.Abstract.Interfaces.IValidator" />.
     /// </summary>
     public class BaseValidator : IValidator
     {
@@ -25,7 +26,7 @@ namespace WebAppsGenerator.Generating.Abstract.Services
         /// </summary>
         public void ValidateEntities(IEnumerable<Entity> entities)
         {
-            // TODO : Add Id validation here
+            ValidateIdProps(entities);
             ValidateTypes(entities);
             ValidateAnnotations(entities);
             ValidateProperties(entities);
@@ -140,6 +141,18 @@ namespace WebAppsGenerator.Generating.Abstract.Services
                         throw new MultiplePropException(entityField.Name, entity.Name);
                     dict.Add(entityField.Name);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Validates if no entity contains property Id or id
+        /// </summary>
+        /// <param name="entities"></param>
+        private void ValidateIdProps(IEnumerable<Entity> entities)
+        {
+            if (entities.Any(entity => entity.Fields.Exists(f => f.Name.ToLowerInvariant() == "id")))
+            {
+                throw new IdPropExistsException();
             }
         }
     }
