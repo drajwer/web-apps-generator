@@ -11,8 +11,18 @@ import { TextField } from '@material-ui/core';
 {%- endfor -%}
 {%- for field in Params.Entity.Fields -%}
 	{%- if field.Type.Name == 'boolean' -%}
+		{%- unless field.Type.IsNullable -%}
 import { FormControlLabel, Checkbox } from '@material-ui/core';
 		{%- break -%}
+		{%- endunless -%}
+	{%- endif -%}
+{%- endfor -%}
+{%- for field in Params.Entity.Fields -%}
+	{%- if field.Type.Name == 'boolean' -%}
+		{%- if field.Type.IsNullable -%}
+import { MenuItem } from '@material-ui/core';
+		{%- break -%}
+		{%- endif -%}
 	{%- endif -%}
 {%- endfor -%}
 {%- for field in Params.Entity.Fields -%}
@@ -87,21 +97,48 @@ class {{Params.Entity.Name}}Form extends React.Component<IProps, {%- if createSt
 				<Grid item={true} xs={12} sm={4}>
 					{%- if field.Type.IsSimpleType -%}
 						{%- if field.Type.Name == 'boolean' -%}
+							{%- if field.Type.IsNullable -%}
+							<TextField
+								id="{{ field.Name }}"
+								label="{{field.Name | SplitCamelCase | Capitalize}}"
+								select={true}
+								required={false}
+								value={this.props.{{Params.Entity.Name | DeCapitalize }}.{{ field.Name | DeCapitalize }} == null ? "" : this.props.{{Params.Entity.Name | DeCapitalize }}.{{ field.Name | DeCapitalize }}.toString()}
+								onChange={this.on{{ field.Name }}Change}
+								disabled={this.props.readonly}
+								fullWidth={true}
+							>
+								<MenuItem key={"undefined"} value={""}>
+									None
+								</MenuItem>
+								<MenuItem key={"true"} value={"true"}>
+									True
+								</MenuItem>
+								<MenuItem key={"false"} value={"false"}>
+									False
+								</MenuItem>
+							</TextField>
+							{%- else -%}
 							<FormControlLabel
 								label="{{ field.Name | SplitCamelCase | Capitalize }}"
 								control={
 									<Checkbox
 										id="{{ field.Name | DeCapitalize }}"
-										checked={this.props.{{Params.Entity.Name | DeCapitalize }}.{{ field.Name | DeCapitalize }}}
+										checked={this.props.{{Params.Entity.Name | DeCapitalize }}.{{ field.Name | DeCapitalize }} == null ? false : this.props.{{Params.Entity.Name | DeCapitalize }}.{{ field.Name | DeCapitalize }}}
 										onChange={this.on{{ field.Name }}Change}
 										color="primary"
 										disabled={this.props.readonly}
 									/>
 								}
 							/>
+							{%- endif -%}
 						{%- else -%}
 					<TextField
+					{%- if field.Type.IsNullable -%}
+					  required={false}
+					{%-else-%}
 					  required={true}
+					{%-endif-%}
 					  id="{{field.Name}}"
 					  name="{{field.Name | SplitCamelCase | Capitalize}}"
 					  label="{{field.Name | SplitCamelCase | Capitalize}}"
@@ -112,9 +149,11 @@ class {{Params.Entity.Name}}Form extends React.Component<IProps, {%- if createSt
 						{%- endif -%}
 					  fullWidth={true}
 						{%- if field.Type.Name == 'Date' -%}
-					  value = { moment(this.props.{{Params.Entity.Name | DeCapitalize}}.{{field.Name}}).format("YYYY-MM-DDTHH:mm") }
+					  value = { this.props.{{Params.Entity.Name | DeCapitalize}}.{{field.Name}} == null ? "" : moment(this.props.{{Params.Entity.Name | DeCapitalize}}.{{field.Name}}).format("YYYY-MM-DDTHH:mm") }
+						{%- elsif field.Type.Name == 'number' -%}
+					  value = { this.props.{{Params.Entity.Name | DeCapitalize}}.{{field.Name}} == null || isNaN(this.props.{{Params.Entity.Name | DeCapitalize}}.{{field.Name}}) ? "" : this.props.{{Params.Entity.Name | DeCapitalize}}.{{field.Name}} }
 						{%- else -%}
-					  value = { this.props.{{Params.Entity.Name | DeCapitalize}}.{{field.Name}} }
+					  value = { this.props.{{Params.Entity.Name | DeCapitalize}}.{{field.Name}} == null ? "" : this.props.{{Params.Entity.Name | DeCapitalize}}.{{field.Name}} }
 						{%- endif -%}
 					  disabled={this.props.readonly}
 					  onChange={this.on{{ field.Name }}Change}
@@ -152,12 +191,23 @@ class {{Params.Entity.Name}}Form extends React.Component<IProps, {%- if createSt
 
 	private on{{field.Name}}Change = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
 		const {{Params.Entity.Name | DeCapitalize}} = {...this.props.{{Params.Entity.Name | DeCapitalize}}};
+	{%- if field.Type.IsNullable -%}
+		if(e.target.value === "") {
+			{{Params.Entity.Name | DeCapitalize}}.{{field.Name}} = undefined;
+			this.props.on{{Params.Entity.Name}}Change({{Params.Entity.Name | DeCapitalize}});
+			return;
+		}
+	{%- endif -%}
 		{%- if field.Type.Name == 'number' -%}
-		{{Params.Entity.Name | DeCapitalize}}.{{field.Name}} = parseInt(e.target.value, 10);
+		{{Params.Entity.Name | DeCapitalize}}.{{field.Name}} = {%if field.Type.IsFloat -%}parseFloat(e.target.value){%-else-%}parseInt(e.target.value, 10){%-endif-%};
 		{%- elsif field.Type.Name == 'Date' -%}				 
 		{{Params.Entity.Name | DeCapitalize}}.{{field.Name}} = new Date(e.target.value);
-		{%- elsif field.Type.Name == 'boolean' -%}			 
-		{{Params.Entity.Name | DeCapitalize}}.{{field.Name}} = !this.props.{{Params.Entity.Name | DeCapitalize}}.{{field.Name}};
+		{%- elsif field.Type.Name == 'boolean' -%}
+			{%- if field.Type.IsNullable -%}
+		{{Params.Entity.Name | DeCapitalize}}.{{field.Name}} = e.target.value === "true";
+			{%- else -%}
+		{{Params.Entity.Name | DeCapitalize}}.{{field.Name}} = !{{Params.Entity.Name | DeCapitalize}}.{{field.Name}};
+			{%- endif -%}
 		{%- else -%}										 
 		{{Params.Entity.Name | DeCapitalize}}.{{field.Name}} = e.target.value;
 		{%- endif -%}

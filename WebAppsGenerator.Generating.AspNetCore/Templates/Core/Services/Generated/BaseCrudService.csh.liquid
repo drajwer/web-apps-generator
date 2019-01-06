@@ -106,8 +106,11 @@ namespace {{Params.CoreProjectName}}.Services.Generated
 		protected virtual void Update{{prop.Name}}({{Params.Entity.Name}} entity, {{Params.Entity.Name}} dbEntity)
         {
             {%- if prop.Relation.HasManyWithMany -%}
-			dbEntity.{{prop.Name}} = entity.{{prop.Name}};
+			if (entity.{{prop.Name}} != null)
+				dbEntity.{{prop.Name}} = entity.{{prop.Name}};
 			{%- elsif prop.Relation.HasManyWithOne -%}
+			if (entity.{{prop.Name}} == null)
+				return;
             var children = entity.{{prop.Name}}?.Select(s => RepoSet.{{prop.Type.EntityName}}Repo.Get(s.Id)).ToList();
 			dbEntity.{{prop.Name}} = children;
 			{%- else -%}

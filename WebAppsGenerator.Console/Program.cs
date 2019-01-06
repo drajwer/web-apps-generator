@@ -77,7 +77,7 @@ namespace WebAppsGenerator.Console
             services.AddValidators();
             services.AddRootGenerator();
             services.AddScoped<IEntitiesFixer, EntitiesFixer>();
-            services.AddAspNetCoreGenerator();
+            //services.AddAspNetCoreGenerator();
             services.AddWebUiCoreGenerator();
 
             ServiceProvider = services.BuildServiceProvider();

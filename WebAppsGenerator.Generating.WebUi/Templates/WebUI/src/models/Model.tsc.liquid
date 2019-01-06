@@ -1,7 +1,7 @@
 ﻿export default class {{Params.Entity.Name}} {
 	{%- for field in Params.Entity.Fields -%}
 		{%- if field.Type.IsSimpleType -%}
-	public {{field.Name}} : {{field.Type.Name}};
+	public {{field.Name}}{%-if field.Type.IsNullable -%}?{%-endif%} : {{field.Type.Name}};
 		{%- elsif field.Relation.HasOne -%}
 	public {{field.Name}}Id? : {{field.Relation.SecondIdType.Name}}
 		{%- elsif field.Relation.HasMany -%}
@@ -14,7 +14,9 @@ export function Create{{Params.Entity.Name}}(): {{Params.Entity.Name}} {
 	return {
 		{%- for field in Params.Entity.Fields -%}
 			{%- if field.Type.IsSimpleType -%}
-				{%- if field.Type.Name == 'string' -%}
+				{%- if field.Type.IsNullable -%}
+			{{field.Name}}: undefined{%- unless forloop.last -%},{%- endunless -%}
+				{%- elsif field.Type.Name == 'string' -%}
 			{{field.Name}}: ""{%- unless forloop.last -%},{%- endunless -%}
 				{%- elsif field.Type.Name == 'Date' -%}
 			{{field.Name}}: new Date(){%- unless forloop.last -%},{%- endunless -%}

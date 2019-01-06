@@ -96,7 +96,7 @@
       "Multiple": false
     },
     "Controller.cs": {
-      "NameTemplate": "{{Params.Entity.Name}}Controller.cs",
+      "NameTemplate": "{{Params.Entity.PluralName}}Controller.cs",
       "DropId": "ModelDropsNoJoins",
       "Multiple": true
     }
