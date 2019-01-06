@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using WebAppsGenerator.Core.Exceptions;
 using WebAppsGenerator.Core.Interfaces;
 using WebAppsGenerator.Core.Models;
@@ -6,12 +7,14 @@ using WebAppsGenerator.Generating.Abstract.Interfaces;
 
 namespace WebAppsGenerator.Generating.Abstract.Services.Validators
 {
+    /// <inheritdoc />
     /// <summary>
-    /// Validates if all properties are unique.
+    /// Validates if all properties are unique within entity 
+    /// and no entity contains Id nor id property.
     /// </summary>
     public class PropertyValidator : IValidator
     {
-        private IExceptionHandler _exceptionHandler;
+        private readonly IExceptionHandler _exceptionHandler;
 
         public PropertyValidator(IExceptionHandler exceptionHandler)
         {
@@ -19,6 +22,16 @@ namespace WebAppsGenerator.Generating.Abstract.Services.Validators
         }
 
         public void Validate(IEnumerable<Entity> entities)
+        {
+            ValidateUniqueness(entities);
+            ValidateIdExistence(entities);
+        }
+
+        /// <summary>
+        /// Validates if all properties are unique.
+        /// </summary>
+        /// <param name="entities"></param>
+        public void ValidateUniqueness(IEnumerable<Entity> entities)
         {
             foreach (var entity in entities)
             {
@@ -29,6 +42,18 @@ namespace WebAppsGenerator.Generating.Abstract.Services.Validators
                         _exceptionHandler.ThrowException(new MultiplePropException(entityField.Name, entity.Name));
                     dict.Add(entityField.Name);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Validates if no entity contains property Id nor id.
+        /// </summary>
+        /// <param name="entities"></param>
+        private void ValidateIdExistence(IEnumerable<Entity> entities)
+        {
+            if (entities.Any(entity => entity.Fields.Exists(f => f.Name.ToLowerInvariant() == "id")))
+            {
+                _exceptionHandler.ThrowException(new IdPropExistsException());
             }
         }
     }
