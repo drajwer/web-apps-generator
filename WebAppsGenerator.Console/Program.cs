@@ -12,8 +12,10 @@ using WebAppsGenerator.Core.Parsing.Annotations;
 using WebAppsGenerator.Core.Parsing.Types;
 using WebAppsGenerator.Core.Services;
 using WebAppsGenerator.Generating.Abstract.Interfaces;
+using WebAppsGenerator.Generating.Abstract.IoC;
 using WebAppsGenerator.Generating.Abstract.Options;
 using WebAppsGenerator.Generating.Abstract.Services;
+using WebAppsGenerator.Generating.Abstract.Services.Validators;
 using WebAppsGenerator.Generating.AspNetCore.IoC;
 using WebAppsGenerator.Generating.WebUi.IoC;
 
@@ -47,18 +49,15 @@ namespace WebAppsGenerator.Console
             var visitor = (SneakParserMappingVisitor)ServiceProvider.GetService<ISneakParserVisitor<object>>();
 
             visitor.Visit(fileContext);
-            var validator = ServiceProvider.GetService<IValidator>();
-            validator.ValidateEntities(visitor.Entities.Values);
+            var validator = ServiceProvider.GetService<RootValidator>();
+            validator.Validate(visitor.Entities.Values);
 
             var fixer = ServiceProvider.GetService<IEntitiesFixer>();
             fixer.FixEntities(visitor.Entities.Values);
 
             // pass visitor's results to generator
-            var generators = ServiceProvider.GetServices<IGenerator>();
-            foreach (var generator in generators)
-            {
-                generator.Generate(visitor.Entities.Values);
-            }
+            var generator = ServiceProvider.GetService<RootGenerator>();
+            generator.Generate(visitor.Entities.Values);
         }
 
         private static void ConfigureServices()
@@ -74,7 +73,9 @@ namespace WebAppsGenerator.Console
             services.AddScoped<ICommandLineService, CommandLineService>();
             services.AddScoped<LiquidTemplateService>();
             services.AddScoped<Generating.Abstract.Interfaces.IFileService, FileService>();
-            services.AddScoped<IValidator, BaseValidator>();
+            services.AddScoped<IExceptionHandler, ImmediateExceptionHandler>();
+            services.AddValidators();
+            services.AddRootGenerator();
             services.AddScoped<IEntitiesFixer, EntitiesFixer>();
             services.AddAspNetCoreGenerator();
             services.AddWebUiCoreGenerator();
