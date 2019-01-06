@@ -4,12 +4,10 @@ using WebAppsGenerator.Core.Models;
 namespace WebAppsGenerator.Generating.Abstract.Interfaces
 {
     /// <summary>
-    /// Provides validating given entities. It validates types and annotations.
+    /// Provides validating given entities.
     /// </summary>
     public interface IValidator
     {
-        void ValidateEntities(IEnumerable<Entity> entities);
-        void ValidateTypes(IEnumerable<Entity> entities);
-        void ValidateAnnotations(IEnumerable<Entity> entities);
+        void Validate(IEnumerable<Entity> entities);
     }
 }

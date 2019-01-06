@@ -6,59 +6,27 @@ using WebAppsGenerator.Core.Models;
 using WebAppsGenerator.Generating.Abstract.Interfaces;
 using WebAppsGenerator.Generating.Abstract.Options;
 
-namespace WebAppsGenerator.Generating.Abstract.Services
+namespace WebAppsGenerator.Generating.Abstract.Services.Validators
 {
-    /// <inheritdoc />
     /// <summary>
-    /// Default implementation of <see cref="T:WebAppsGenerator.Generating.Abstract.Interfaces.IValidator" />.
+    /// Validates all entity's and properties' annotations have known names.
+    /// Also validates that all params have known names and correct value.
     /// </summary>
-    public class BaseValidator : IValidator
+    public class AnnotationValidator : IValidator
     {
         private readonly AnnotationOptions _annotationOptions;
 
-        public BaseValidator(IOptions<AnnotationOptions> annotationOptions)
+        public AnnotationValidator(IOptions<AnnotationOptions> annotationOptions)
         {
             _annotationOptions = annotationOptions.Value;
         }
 
-        /// <summary>
-        /// Validates types and annotations for given entities
-        /// </summary>
-        public void ValidateEntities(IEnumerable<Entity> entities)
-        {
-            ValidateIdProps(entities);
-            ValidateTypes(entities);
-            ValidateAnnotations(entities);
-            ValidateProperties(entities);
-        }
-
-        /// <summary>
-        /// Validates all annotations for given entities
-        /// </summary>
-        public void ValidateAnnotations(IEnumerable<Entity> entities)
+        public void Validate(IEnumerable<Entity> entities)
         {
             foreach (var entity in entities)
             {
                 ValidateClassAnnotations(entity);
                 ValidatePropAnnotations(entity);
-            }
-        }
-
-        /// <summary>
-        /// Validates all <see cref="TypeKind.Entity"/> types are pointing to existing entities
-        /// </summary>
-        public void ValidateTypes(IEnumerable<Entity> entities)
-        {
-            entities = entities.ToList();
-            var declaredClasses = entities.Select(e => e.Name).ToList();
-
-            foreach (var entity in entities)
-            {
-                foreach (var prop in entity.Fields)
-                {
-                    if (prop.Type.BaseTypeKind == TypeKind.Entity && !declaredClasses.Contains(prop.Type.EntityName))
-                        throw new UnknownTypeException(prop.Type.EntityName);
-                }
             }
         }
 
@@ -124,35 +92,6 @@ namespace WebAppsGenerator.Generating.Abstract.Services
                                 entityFieldAnnotationParam.Type, param.Type);
                     }
                 }
-            }
-        }
-
-        /// <summary>
-        /// Validates if properties are unique for given entities
-        /// </summary>
-        private void ValidateProperties(IEnumerable<Entity> entities)
-        {
-            foreach (var entity in entities)
-            {
-                var dict = new HashSet<string>();
-                foreach (var entityField in entity.Fields)
-                {
-                    if (dict.Contains(entityField.Name))
-                        throw new MultiplePropException(entityField.Name, entity.Name);
-                    dict.Add(entityField.Name);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Validates if no entity contains property Id or id
-        /// </summary>
-        /// <param name="entities"></param>
-        private void ValidateIdProps(IEnumerable<Entity> entities)
-        {
-            if (entities.Any(entity => entity.Fields.Exists(f => f.Name.ToLowerInvariant() == "id")))
-            {
-                throw new IdPropExistsException();
             }
         }
     }
