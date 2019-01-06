@@ -92,7 +92,7 @@ namespace {{Params.CoreProjectName}}.Services.Generated
 		protected virtual void Init{{prop.Name}}({{Params.Entity.Name}} entity)
         {
             {%- if prop.Relation.HasManyWithOne -%}
-			entity.{{prop.Name}} = entity.{{prop.Name}}.Select(e => RepoSet.{{prop.Type.EntityName}}Repo.Get(e.Id)).ToList();
+			entity.{{prop.Name}} = entity.{{prop.Name}}?.Select(e => RepoSet.{{prop.Type.EntityName}}Repo.Get(e.Id)).ToList();
 			{%- endif -%}
         }
 
@@ -108,18 +108,8 @@ namespace {{Params.CoreProjectName}}.Services.Generated
             {%- if prop.Relation.HasManyWithMany -%}
 			dbEntity.{{prop.Name}} = entity.{{prop.Name}};
 			{%- elsif prop.Relation.HasManyWithOne -%}
-			dbEntity.{{prop.Name}} = dbEntity.{{prop.Name}}.Where(e => entity.{{prop.Name}}.Any(n => n.Id == e.Id)).ToList();
-            foreach (var child in dbEntity.{{prop.Name}})
-            {
-                if (entity.{{prop.Name}}.All(e => e.Id != child.Id))
-                    dbEntity.{{prop.Name}}.Remove(child);
-            }
-
-            var children = entity.{{prop.Name}}.Select(s => RepoSet.{{prop.Type.EntityName}}Repo.Get(s.Id)).ToList();
-            foreach (var child in children)
-            {
-                child.{{prop.Relation.SecondFieldName}}Id = dbEntity.Id;
-            }
+            var children = entity.{{prop.Name}}?.Select(s => RepoSet.{{prop.Type.EntityName}}Repo.Get(s.Id)).ToList();
+			dbEntity.{{prop.Name}} = children;
 			{%- else -%}
 			dbEntity.{{prop.Name}}Id = entity.{{prop.Name}}Id;
 			{%- endif -%}
@@ -133,7 +123,7 @@ namespace {{Params.CoreProjectName}}.Services.Generated
         {
 			{%- for prop in Params.Entity.Fields -%}
 				{%- if prop.Type.IsSimpleType and prop.Relation == nil -%}
-					{%- unless prop.Name == 'Id' -%}					
+					{%- unless prop.Name == 'Id' -%}
 			dbEntity.{{prop.Name}} = entity.{{prop.Name}};
 					{%- endunless -%}
 				{%- endif -%}
