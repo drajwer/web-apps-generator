@@ -7,6 +7,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Typography from '@material-ui/core/Typography';
+import { MuiPickersUtilsProvider } from 'material-ui-pickers';
+import LuxonUtils from '@date-io/luxon';
 import './App.css';
 import Menu from 'src/components/Menu/Menu';
 import history from 'src/history';
@@ -54,9 +56,11 @@ class App extends React.Component<any, any> {
         <Menu openMenu={this.state.openDrawer} onClose={this.toggleDrawer}/>
       </AppBar>
       </div>
+	  <MuiPickersUtilsProvider utils={LuxonUtils}>
           <div className="content">
 			<Routes />
           </div>
+	  </MuiPickersUtilsProvider>
         </div>
       </Router>
     );

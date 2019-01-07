@@ -27,7 +27,7 @@ import { MenuItem } from '@material-ui/core';
 {%- endfor -%}
 {%- for field in Params.Entity.Fields -%}
 	{%- if field.Type.Name == 'Date' -%}
-import * as moment from 'moment';
+import { DateTimePicker } from 'material-ui-pickers';
 		{%- break -%}
 	{%- endif -%}
 {%- endfor -%}
@@ -132,6 +132,24 @@ class {{Params.Entity.Name}}Form extends React.Component<IProps, {%- if createSt
 								}
 							/>
 							{%- endif -%}
+						{%- elsif field.Type.Name == 'Date' -%}
+					<DateTimePicker
+						id="{{field.Name}}"
+						name="{{field.Name | SplitCamelCase | Capitalize}}"
+						label="{{field.Name | SplitCamelCase | Capitalize}}"
+						value={this.props.{{Params.Entity.Name | DeCapitalize}}.{{field.Name}} == null ? null : this.props.{{Params.Entity.Name | DeCapitalize}}.{{field.Name}}}
+						onChange={this.on{{field.Name}}Change}
+						showTodayButton={true}
+						{%- if field.Type.IsNullable -%}
+						clearable={true}
+						required={false}
+						{%-else-%}
+						clearable={false}
+						required={true}
+						{%-endif-%}
+						fullWidth={true}
+						disabled={this.props.readonly}
+					/>
 						{%- else -%}
 					<TextField
 					{%- if field.Type.IsNullable -%}
@@ -144,13 +162,9 @@ class {{Params.Entity.Name}}Form extends React.Component<IProps, {%- if createSt
 					  label="{{field.Name | SplitCamelCase | Capitalize}}"
 						{%- if field.Type.Name == 'number' -%}
 					  type="{{ field.Type.Name }}"
-						{%- elsif field.Type.Name == 'Date' -%}
-					  type="datetime-local" 
 						{%- endif -%}
 					  fullWidth={true}
-						{%- if field.Type.Name == 'Date' -%}
-					  value = { this.props.{{Params.Entity.Name | DeCapitalize}}.{{field.Name}} == null ? "" : moment(this.props.{{Params.Entity.Name | DeCapitalize}}.{{field.Name}}).format("YYYY-MM-DDTHH:mm") }
-						{%- elsif field.Type.Name == 'number' -%}
+						{%- if field.Type.Name == 'number' -%}
 					  value = { this.props.{{Params.Entity.Name | DeCapitalize}}.{{field.Name}} == null || isNaN(this.props.{{Params.Entity.Name | DeCapitalize}}.{{field.Name}}) ? "" : this.props.{{Params.Entity.Name | DeCapitalize}}.{{field.Name}} }
 						{%- else -%}
 					  value = { this.props.{{Params.Entity.Name | DeCapitalize}}.{{field.Name}} == null ? "" : this.props.{{Params.Entity.Name | DeCapitalize}}.{{field.Name}} }
@@ -188,11 +202,18 @@ class {{Params.Entity.Name}}Form extends React.Component<IProps, {%- if createSt
 	{%- for field in Params.Entity.Fields -%}
 		{%- if field.Type.IsSimpleType -%}
 			{%- unless field.Name == 'id' -%}
-
+				{%- if field.Type.Name == 'Date' -%}
+	private on{{field.Name}}Change = (date: Date {% if field.Type.IsNullable -%}| null {%-endif-%}) => { 
+				{%- else -%}
 	private on{{field.Name}}Change = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+				{%- endif -%}
 		const {{Params.Entity.Name | DeCapitalize}} = {...this.props.{{Params.Entity.Name | DeCapitalize}}};
 	{%- if field.Type.IsNullable -%}
+		{%- if field.Type.Name == 'Date' -%}
+		if (date == null) { 
+		{%- else -%}
 		if(e.target.value === "") {
+		{%- endif -%}
 			{{Params.Entity.Name | DeCapitalize}}.{{field.Name}} = undefined;
 			this.props.on{{Params.Entity.Name}}Change({{Params.Entity.Name | DeCapitalize}});
 			return;
@@ -200,21 +221,22 @@ class {{Params.Entity.Name}}Form extends React.Component<IProps, {%- if createSt
 	{%- endif -%}
 		{%- if field.Type.Name == 'number' -%}
 		{{Params.Entity.Name | DeCapitalize}}.{{field.Name}} = {%if field.Type.IsFloat -%}parseFloat(e.target.value){%-else-%}parseInt(e.target.value, 10){%-endif-%};
-		{%- elsif field.Type.Name == 'Date' -%}				 
-		{{Params.Entity.Name | DeCapitalize}}.{{field.Name}} = new Date(e.target.value);
 		{%- elsif field.Type.Name == 'boolean' -%}
 			{%- if field.Type.IsNullable -%}
 		{{Params.Entity.Name | DeCapitalize}}.{{field.Name}} = e.target.value === "true";
 			{%- else -%}
 		{{Params.Entity.Name | DeCapitalize}}.{{field.Name}} = !{{Params.Entity.Name | DeCapitalize}}.{{field.Name}};
 			{%- endif -%}
-		{%- else -%}										 
+		{%- elsif field.Type.Name == 'Date' -%}	
+		{{Params.Entity.Name | DeCapitalize}}.{{field.Name}} = date;
+		{%- else -%}
 		{{Params.Entity.Name | DeCapitalize}}.{{field.Name}} = e.target.value;
 		{%- endif -%}
 		this.props.on{{Params.Entity.Name}}Change({{Params.Entity.Name | DeCapitalize}});
     }
 			{%- endunless -%}
 		{%- else -%}
+
 
 	private toggle{{ field.Name }}Modal = () => {
 		if (!this.props.readonly) {
