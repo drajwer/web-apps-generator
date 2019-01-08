@@ -1,0 +1,43 @@
+﻿import {{Params.Entity.Name}} from 'src/models/{{Params.Entity.Name}}';
+
+export class {{Params.Entity.Name}}ValidationErrors {
+	public enabled: boolean
+{%- for field in Params.Entity.Fields -%}
+	{%- unless field.Name == 'id' -%}
+	public {{field.Name}}Error: string | undefined
+	{%- endunless -%}
+{%- endfor -%}
+
+	constructor() {
+		this.enabled = false;
+{%- for field in Params.Entity.Fields -%}
+	{%- unless field.Name == 'id' -%}
+		this.{{field.Name}}Error = undefined;
+	{%- endunless -%}
+{%- endfor -%}
+	}
+}
+
+export interface IProps {
+    {{Params.Entity.Name | DeCapitalize}}: {{Params.Entity.Name}}
+	validationErrors: {{Params.Entity.Name}}ValidationErrors
+    readonly: boolean
+    on{{Params.Entity.Name}}Change: ({{Params.Entity.Name | DeCapitalize}}: {{Params.Entity.Name}}) => void
+	onValidationErrorsChange: (validationErrors: {{Params.Entity.Name}}ValidationErrors) => void
+}
+
+{%- assign createState = false -%}
+{%- for field in Params.Entity.Fields -%}
+		{%- if field.Relation.HasOne or field.Relation.HasMany -%}
+			{%- assign createState = true -%}
+		{%- endif -%}
+{%- endfor -%}
+{%- if createState -%}
+export interface IState {
+	{%- for field in Params.Entity.Fields -%}
+		{%- if field.Relation.HasOne or field.Relation.HasMany -%}
+	open{{field.Name}}Modal: boolean
+		{%- endif -%}
+	{%- endfor -%}
+}
+{%- endif -%}

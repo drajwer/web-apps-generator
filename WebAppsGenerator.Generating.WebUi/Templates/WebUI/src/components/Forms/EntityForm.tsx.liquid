@@ -1,5 +1,4 @@
 ﻿import * as React from 'react';
-import {{Params.Entity.Name}} from 'src/models/{{Params.Entity.Name}}';
 import { Grid } from '@material-ui/core';
 {%- for field in Params.Entity.Fields -%}
 	{%- unless field.Name == 'id' -%}
@@ -36,38 +35,44 @@ import { DateTimePicker } from 'material-ui-pickers';
 import {{ field.Type.EntityName }}Modal from 'src/components/Modals/{{ field.Type.EntityName }}/{{ field.Type.EntityName }}Modal';
 	{%- endif -%}
 {%- endfor -%}
-interface IProps {
-    {{Params.Entity.Name | DeCapitalize}}: {{Params.Entity.Name}}
-    readonly: boolean
-    on{{Params.Entity.Name}}Change: ({{Params.Entity.Name | DeCapitalize}}: {{Params.Entity.Name}}) => void
-}
+import { IProps, IState } from './{{Params.Entity.Name}}FormData';
+export { {{Params.Entity.Name}}ValidationErrors } from './{{Params.Entity.Name}}FormData';
+{%- assign renderValidateAll = false -%}
+{%- for field in Params.Entity.Fields -%}
+	{%- if field.Type.IsSimpleType -%}
+		{%- unless field.Name == 'id' -%}
+			{%- assign renderValidateAll = true -%}
+		{%- endunless -%}
+	{%- endif -%}
+{%- endfor -%}
+{%- if renderValidateAll -%}
+import { {{Params.Entity.Name}}ValidationErrors } from './{{Params.Entity.Name}}FormData';
+{%- endif -%}
+
 {%- assign createState = false -%}
 {%- for field in Params.Entity.Fields -%}
 		{%- if field.Relation.HasOne or field.Relation.HasMany -%}
 			{%- assign createState = true -%}
 		{%- endif -%}
 {%- endfor -%}
-{%- if createState -%}
-interface IState {
-	{%- for field in Params.Entity.Fields -%}
-		{%- if field.Relation.HasOne or field.Relation.HasMany -%}
-	open{{field.Name}}Modal: boolean
-		{%- endif -%}
-	{%- endfor -%}
-}
-{%- endif -%}
-
 class {{Params.Entity.Name}}Form extends React.Component<IProps, {%- if createState -%}IState{%-else-%}{}{%-endif -%}> {
 	constructor(props: IProps) {
 		super(props);
 		this.state = { 
-		{%- for field in Params.Entity.Fields -%}
-			{%- if field.Relation.HasOne or field.Relation.HasMany -%}
+{%- for field in Params.Entity.Fields -%}
+	{%- if field.Relation.HasOne or field.Relation.HasMany -%}
 			open{{field.Name}}Modal: false,
-			{%- endif -%}
-		{%- endfor -%}
+	{%- endif -%}
+{%- endfor -%}
 		};
 	}
+{%- if renderValidateAll -%}
+
+	public componentWillMount() {
+		this.validateAllFields();
+	}
+{%- endif -%}
+
     public render() {
         return (
             <Grid container={true} spacing={24}>
@@ -107,6 +112,8 @@ class {{Params.Entity.Name}}Form extends React.Component<IProps, {%- if createSt
 								onChange={this.on{{ field.Name }}Change}
 								disabled={this.props.readonly}
 								fullWidth={true}
+								error={this.props.validationErrors.enabled && this.props.validationErrors.{{field.Name}}Error != null}
+								helperText={this.props.validationErrors.enabled ? this.props.validationErrors.{{field.Name}}Error : ""}
 							>
 								<MenuItem key={"undefined"} value={""}>
 									None
@@ -149,6 +156,8 @@ class {{Params.Entity.Name}}Form extends React.Component<IProps, {%- if createSt
 						{%-endif-%}
 						fullWidth={true}
 						disabled={this.props.readonly}
+						error={this.props.validationErrors.enabled && this.props.validationErrors.{{field.Name}}Error != null}
+						helperText={this.props.validationErrors.enabled ? this.props.validationErrors.{{field.Name}}Error : ""}
 					/>
 						{%- else -%}
 					<TextField
@@ -171,6 +180,8 @@ class {{Params.Entity.Name}}Form extends React.Component<IProps, {%- if createSt
 						{%- endif -%}
 					  disabled={this.props.readonly}
 					  onChange={this.on{{ field.Name }}Change}
+					  error={this.props.validationErrors.enabled && this.props.validationErrors.{{field.Name}}Error != null}
+					  helperText={this.props.validationErrors.enabled ? this.props.validationErrors.{{field.Name}}Error : ""}
 					/>
 						{%- endif -%}
 					{%- else -%}
@@ -216,6 +227,7 @@ class {{Params.Entity.Name}}Form extends React.Component<IProps, {%- if createSt
 		{%- endif -%}
 			{{Params.Entity.Name | DeCapitalize}}.{{field.Name}} = undefined;
 			this.props.on{{Params.Entity.Name}}Change({{Params.Entity.Name | DeCapitalize}});
+			this.validate{{field.Name | Capitalize}}({{Params.Entity.Name | DeCapitalize}}.{{field.Name}});
 			return;
 		}
 	{%- endif -%}
@@ -233,10 +245,11 @@ class {{Params.Entity.Name}}Form extends React.Component<IProps, {%- if createSt
 		{{Params.Entity.Name | DeCapitalize}}.{{field.Name}} = e.target.value;
 		{%- endif -%}
 		this.props.on{{Params.Entity.Name}}Change({{Params.Entity.Name | DeCapitalize}});
+		this.validate{{field.Name | Capitalize}}({{Params.Entity.Name | DeCapitalize}}.{{field.Name}});
     }
+
 			{%- endunless -%}
 		{%- else -%}
-
 
 	private toggle{{ field.Name }}Modal = () => {
 		if (!this.props.readonly) {
@@ -253,6 +266,62 @@ class {{Params.Entity.Name}}Form extends React.Component<IProps, {%- if createSt
 		{%- endif -%}
 		this.props.on{{Params.Entity.Name}}Change({{Params.Entity.Name | DeCapitalize}});
 	}
+		{%- endif -%}
+	{%- endfor -%}
+
+{%- if renderValidateAll -%}
+	private validateAllFields() {
+		const validationErrors = { ...this.props.validationErrors };
+
+	{%- for field in Params.Entity.Fields -%}
+		{%- if field.Type.IsSimpleType -%}
+			{%- unless field.Name == 'id' -%}
+		this.add{{field.Name | Capitalize}}ValidationErrors(validationErrors, this.props.{{Params.Entity.Name | DeCapitalize}}.{{field.Name}});
+			{%- endunless -%}
+		{%- endif -%}
+	{%- endfor -%}
+		this.props.onValidationErrorsChange(validationErrors);
+	}
+{%- endif -%}
+
+
+	{%- for field in Params.Entity.Fields -%}
+		{%- if field.Type.IsSimpleType -%}
+			{%- unless field.Name == 'id' -%}
+	private validate{{field.Name | Capitalize}}({{field.Name}}?: {{field.Type.Name}}) {
+		const validationErrors = { ...this.props.validationErrors };
+		const noErrors = this.add{{field.Name | Capitalize}}ValidationErrors(validationErrors, {{field.Name}});
+
+		if(!noErrors ) {
+			this.props.onValidationErrorsChange(validationErrors);
+		}
+		else if (validationErrors.{{field.Name}}Error != null) {
+			validationErrors.{{field.Name}}Error = undefined;
+			this.props.onValidationErrorsChange(validationErrors);
+		}
+	}
+
+	private add{{field.Name | Capitalize}}ValidationErrors(validationErrors : {{Params.Entity.Name}}ValidationErrors, {{field.Name}}?: {{field.Type.Name}}) : boolean {
+				{%- unless field.Type.IsNullable -%}
+					{%- if field.Type.Name == "number" -%}
+		if ({{field.Name}} == null || isNaN({{field.Name}})) {
+			validationErrors.{{field.Name}}Error = "{{field.Name | Capitalize}} should be a valid number";
+			return false;
+		}
+					{%- else -%}
+						{%- if field.Type.Name == "string" -%}
+		if ({{field.Name}} == null || {{field.Name}} === "") {
+						{%- else -%}
+		if ({{field.Name}} == null) {
+						{%- endif -%}
+			validationErrors.{{field.Name}}Error = "This field is required.";
+			return false;
+		}
+					{%- endif -%}
+				{%- endunless -%}
+		return true;
+	}
+			{%- endunless -%}
 		{%- endif -%}
 	{%- endfor -%}
 }

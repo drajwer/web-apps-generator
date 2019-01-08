@@ -42,6 +42,11 @@
             "NameTemplate": "{{Params.Entity.Name}}/{{Params.Entity.Name}}Form.tsx",
             "DropId": "EntityDrop",
             "Multiple": true
+          },
+          "EntityFormData.ts": {
+            "NameTemplate": "{{Params.Entity.Name}}/{{Params.Entity.Name}}FormData.ts",
+            "DropId": "EntityDrop",
+            "Multiple": true
           }
         },
         "Modals": {

@@ -7,7 +7,7 @@ import { bindActionCreators, Dispatch } from 'redux';
 import * as Actions from 'src/modules/{{Params.Entity.Name | DeCapitalize}}/actions';
 import { IRootState } from 'src/modules';
 import RouteComponentProps  from 'src/routing/RouteComponentProps';
-import {{Params.Entity.Name}}FormComponent from 'src/components/Forms/{{Params.Entity.Name}}/{{Params.Entity.Name}}Form';
+import {{Params.Entity.Name}}FormComponent, { {{Params.Entity.Name}}ValidationErrors } from 'src/components/Forms/{{Params.Entity.Name}}/{{Params.Entity.Name}}Form';
 import PageButtons from 'src/components/PageButtons/PageButtons';
 import history from 'src/history';
 import FormButtons from 'src/components/FormButtons/FormButtons';
@@ -23,9 +23,10 @@ interface IProps extends RouteComponentProps {
 interface IState {
     {{Params.Entity.Name | DeCapitalize}}: {{Params.Entity.Name}} | undefined
 	editMode: boolean
+	validationErrors: {{Params.Entity.Name}}ValidationErrors
 }
 
-class {{Params.Entity.Name}}Form extends React.Component<IProps,IState> {
+class {{Params.Entity.Name}}Form extends React.Component<IProps, IState> {
 	constructor(props: any) {
 		super(props);
 		let id = 0;
@@ -34,7 +35,8 @@ class {{Params.Entity.Name}}Form extends React.Component<IProps,IState> {
 		}
         this.state = { 
 			{{Params.Entity.Name | DeCapitalize}}: this.props.{{Params.Entity.Name | DeCapitalize}},
-			editMode: id === 0
+			editMode: id === 0,
+			validationErrors: new {{Params.Entity.Name}}ValidationErrors()
 		};
     }
 
@@ -102,6 +104,8 @@ class {{Params.Entity.Name}}Form extends React.Component<IProps,IState> {
 							{{Params.Entity.Name | DeCapitalize}}={this.state.{{Params.Entity.Name | DeCapitalize}}}
 							readonly={!this.state.editMode}
 							on{{Params.Entity.Name}}Change={this.on{{Params.Entity.Name}}Change}
+							onValidationErrorsChange={this.onValidationErrorsChange}
+							validationErrors={this.state.validationErrors}
 						/>
 					</Grid>
 					{this.state.editMode ?
@@ -110,6 +114,7 @@ class {{Params.Entity.Name}}Form extends React.Component<IProps,IState> {
 								<FormButtons
 									onSaveClick={this.onSaveClick}
 									onCancelClick={this.onCancelClick}
+									saveDisabled={this.state.validationErrors.enabled && this.hasValidationErrors()}
 								/>
 							</Grid>
 						)
@@ -126,14 +131,29 @@ class {{Params.Entity.Name}}Form extends React.Component<IProps,IState> {
 		}
 	}
 
+	private onValidationErrorsChange = (validationErrors: {{Params.Entity.Name}}ValidationErrors) => {
+		if (this.state.{{Params.Entity.Name | DeCapitalize}} != null) {
+			this.setState({ validationErrors });
+		}
+	}
 
-	private toggleMode = () => this.setState({ editMode: !this.state.editMode });
+	private toggleMode = () => {
+		if(this.state.editMode) {
+			this.setState({validationErrors: new {{Params.Entity.Name}}ValidationErrors()});
+		}
+		this.setState({ editMode: !this.state.editMode });
+	}
 
 	private onSaveClick = () => {
 		if (this.state.{{Params.Entity.Name | DeCapitalize}} == null) {
 			throw new Error("Save could not be done for empty item.")
 		}
-		this.setState({ editMode: !this.state.editMode });
+		if(this.hasValidationErrors()) {
+			const validationErrors = {...this.state.validationErrors, enabled: true};
+			this.setState({validationErrors});
+			return;
+		}
+		this.toggleMode();
 
 		if (this.state.{{Params.Entity.Name | DeCapitalize}}.id === 0) {
 			this.props.actions.add{{Params.Entity.Name }}(this.state.{{Params.Entity.Name | DeCapitalize}});
@@ -147,7 +167,7 @@ class {{Params.Entity.Name}}Form extends React.Component<IProps,IState> {
 		if (this.state.{{Params.Entity.Name | DeCapitalize}} == null) {
 			throw new Error("Delete could not be done for empty item.");
 		}
-		this.setState({ editMode: !this.state.editMode });
+		this.toggleMode();
 		this.props.actions.delete{{Params.Entity.Name }}(this.state.{{Params.Entity.Name | DeCapitalize}}.id);
 	}
 
@@ -160,8 +180,13 @@ class {{Params.Entity.Name}}Form extends React.Component<IProps,IState> {
 			this.onBackClick();
 		}
 		else{
-			this.setState({editMode: false, {{Params.Entity.Name | DeCapitalize}}: this.props.{{Params.Entity.Name | DeCapitalize}}});
+			this.toggleMode();
+			this.setState({ {{Params.Entity.Name | DeCapitalize}}: this.props.{{Params.Entity.Name | DeCapitalize}}});
 		}
+	}
+
+	private hasValidationErrors() : boolean {
+		return Object.keys(this.state.validationErrors).filter(key => this.state.validationErrors[key] != null).length > 1;
 	}
 }
 const mapStateToProps = (state: IRootState) => {
