@@ -74,7 +74,7 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
                             IsNullable = !entityDrop.IsJoinModel
                         },
                     };
-                    var drop = new FieldDrop(idField) {Relation = relationField.Relation};
+                    var drop = new AnnotatedFieldDrop(idField) {Relation = relationField.Relation};
                     fieldsToAdd.Add(drop);
                 }
                 entityDrop.Fields.AddRange(fieldsToAdd);
@@ -102,7 +102,7 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
                         Type = new Core.Models.Type()
                         { BaseTypeKind = TypeKind.Entity, EntityName = joinTypeName, IsArray = true }
                     };
-                    var drop = new FieldDrop(joinField) {Relation = manyToManyField.Relation};
+                    var drop = new AnnotatedFieldDrop(joinField) {Relation = manyToManyField.Relation};
                     entityDrop.Fields.Add(drop);
 
                     var currentEntityRefField = new Field()
