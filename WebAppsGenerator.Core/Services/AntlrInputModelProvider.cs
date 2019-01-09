@@ -27,8 +27,6 @@ namespace WebAppsGenerator.Core.Services
 
         public IEnumerable<Entity> CreateModel()
         {
-            var concatFileService = new ConcatFileService(new DeepDirectoryFilesProvider("./../../../TestDir", "sn"));
-
             var parser = _parserProvider.CreateParser();
             var fileContext = parser.file();
             _visitor.VisitFile(fileContext);
