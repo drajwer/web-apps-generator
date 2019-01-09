@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using WebAppsGenerator.Core.Models;
 using WebAppsGenerator.Generating.Abstract.Models.Templating;
 using WebAppsGenerator.Generating.WebUi.Models.Templating;
@@ -12,7 +10,7 @@ namespace WebAppsGenerator.Generating.WebUi.Services
     {
         public List<EntityDrop> GetDrops(IEnumerable<Entity> entities)
         {
-            var drops = entities.Select(e => new EntityDrop(e)).ToList();
+            var drops = entities.Select(e => new AnnotatedEntityDrop(e)).OfType<EntityDrop>().ToList();
             SetReferencedIdTypes(entities, drops);
             SetTypescriptTypes(drops);
 

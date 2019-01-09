@@ -14,14 +14,17 @@ namespace WebAppsGenerator.Generating.Abstract.Models.Templating
         public string Name { get; }
         public string PluralName { get; }
 
-        public List<FieldDrop> Fields { get;}
-        public FieldDrop IdField { get; }
+        public List<FieldDrop> Fields { get; protected set; }
+        public FieldDrop IdField { get; protected set; }
+
+
         public EntityDrop(Entity entity)
         {
             Name = entity.Name;
             PluralName = PluralizationHelper.Pluralize(Name);
             Fields = entity.Fields.Select(f => new FieldDrop(f)).ToList();
-            IdField = Fields.FirstOrDefault(f => f.Name == "Id");
+            IdField = Fields.FirstOrDefault(f => f.Name == "Id"); 
         }
+        
     }
 }
