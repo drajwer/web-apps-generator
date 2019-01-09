@@ -4,6 +4,8 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using Microsoft.Extensions.DependencyInjection;
+using WebAppsGenerator.Core.Interfaces;
+using WebAppsGenerator.Core.Services;
 using WebAppsGenerator.Generating.Abstract.Interfaces;
 using WebAppsGenerator.Generating.Abstract.Services;
 using WebAppsGenerator.Generating.Abstract.Services.Validators;
@@ -15,6 +17,11 @@ namespace WebAppsGenerator.Generating.Abstract.IoC
         public static IServiceCollection AddRootGenerator(this IServiceCollection services)
         {
             services.AddScoped<RootGenerator>();
+
+            services.AddScoped<LiquidTemplateService>();
+            services.AddScoped<IFileService, FileService>();
+            services.AddScoped<IEntitiesFixer, EntitiesFixer>();
+
             return services;
         }
 
