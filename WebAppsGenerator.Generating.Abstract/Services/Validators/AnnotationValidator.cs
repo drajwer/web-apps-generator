@@ -65,34 +65,36 @@ namespace WebAppsGenerator.Generating.Abstract.Services.Validators
         /// </summary>
         public void ValidatePropAnnotations(Entity entity)
         {
-            foreach (var entityField in entity.Fields)
-            {
-                foreach (var entityFieldAnnotation in entityField.Annotations)
-                {
-                    var annotation = _annotationOptions.Annotations.FirstOrDefault(ann =>
-                        !ann.IsClassAnnotation && ann.Name == entityFieldAnnotation.Name);
+            // todo: change validation
 
-                    if (annotation == null)
-                        throw new UnknownPropAnnotationException(entityFieldAnnotation.Name);
+            //foreach (var entityField in entity.Fields)
+            //{
+            //    foreach (var entityFieldAnnotation in entityField.Annotations)
+            //    {
+            //        var annotation = _annotationOptions.Annotations.FirstOrDefault(ann =>
+            //            !ann.IsClassAnnotation && ann.Name == entityFieldAnnotation.Name);
 
-                    if (!annotation.AllowedPropTypeKinds.Contains(entityField.Type.BaseTypeKind))
-                        throw new InvalidAnnotationForPropTypeException(annotation.Name,
-                            entityField.Type.BaseTypeKind);
+            //        if (annotation == null)
+            //            throw new UnknownPropAnnotationException(entityFieldAnnotation.Name);
 
-                    foreach (var entityFieldAnnotationParam in entityFieldAnnotation.Params)
-                    {
-                        var param = annotation.Params.FirstOrDefault(p => p.Name == entityFieldAnnotationParam.Name);
+            //        if (!annotation.AllowedPropTypeKinds.Contains(entityField.Type.BaseTypeKind))
+            //            throw new InvalidAnnotationForPropTypeException(annotation.Name,
+            //                entityField.Type.BaseTypeKind);
 
-                        if (param == null)
-                            throw new UnknownAnnotationParameterException(entityFieldAnnotationParam.Name,
-                                entityFieldAnnotation.Name);
+            //        foreach (var entityFieldAnnotationParam in entityFieldAnnotation.Params)
+            //        {
+            //            var param = annotation.Params.FirstOrDefault(p => p.Name == entityFieldAnnotationParam.Name);
 
-                        if (param.Type != entityFieldAnnotationParam.Type)
-                            throw new InvalidAnnotationParameterValueTypeException(annotation.Name, param.Name,
-                                entityFieldAnnotationParam.Type, param.Type);
-                    }
-                }
-            }
+            //            if (param == null)
+            //                throw new UnknownAnnotationParameterException(entityFieldAnnotationParam.Name,
+            //                    entityFieldAnnotation.Name);
+
+            //            if (param.Type != entityFieldAnnotationParam.Type)
+            //                throw new InvalidAnnotationParameterValueTypeException(annotation.Name, param.Name,
+            //                    entityFieldAnnotationParam.Type, param.Type);
+            //        }
+            //    }
+            //}
         }
     }
 }

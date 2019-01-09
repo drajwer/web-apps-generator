@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using WebAppsGenerator.Core.Models;
-using WebAppsGenerator.Generating.WebUi.Models.Templating;
-
-namespace WebAppsGenerator.Generating.WebUi.Extensions
+using WebAppsGenerator.Generating.Abstract.Models.Templating;
+using static WebAppsGenerator.Generating.Abstract.Const.AnnotationsConsts;
+namespace WebAppsGenerator.Generating.Abstract.Extensions
 {
     /// <summary>
     /// Provides methods for passing annotation data into drop object's properties
@@ -23,9 +22,6 @@ namespace WebAppsGenerator.Generating.WebUi.Extensions
             {
                 switch (annotation.Name)
                 {
-                    case "DisplayName":
-                        annotatedEntityDrop.DisplayName = (string)annotation.Params.First(p => p.Name == "Name").Value;
-                        break;
                 }
             }
         }
@@ -43,9 +39,16 @@ namespace WebAppsGenerator.Generating.WebUi.Extensions
             {
                 switch (annotation.Name)
                 {
-                    case "DisplayName":
-                        annotatedFieldDrop.DisplayName = (string)annotation.Params.First(p => p.Name == "Name").Value;
+                    case Length:
+                        annotatedFieldDrop.AddLengthAnnotation(annotation);
                         break;
+                    case Range:
+                        annotatedFieldDrop.AddRangeAnnotation(annotation);
+                        break;
+                    case Required:
+                        annotatedFieldDrop.Required = true;
+                        break;
+
                 }
             }
         }

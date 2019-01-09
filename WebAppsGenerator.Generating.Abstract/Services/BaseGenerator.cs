@@ -10,14 +10,14 @@ using FileInfo = WebAppsGenerator.Generating.Abstract.Models.FileInfo;
 
 namespace WebAppsGenerator.Generating.Abstract.Services
 {
-    public class BaseGenerator: IGenerator
+    public abstract class BaseGenerator: IGenerator
     {
         protected IGeneratorConfiguration GeneratorConfiguration;
         protected IFileService FileService;
         protected IDropFactory DropFactory;
         protected ITemplatingConfigProvider ConfigProvider;
 
-        public BaseGenerator(IGeneratorConfiguration generatorConfiguration, IDropFactory dropFactory, ITemplatingConfigProvider configProvider, IFileService fileService)
+        protected BaseGenerator(IGeneratorConfiguration generatorConfiguration, IDropFactory dropFactory, ITemplatingConfigProvider configProvider, IFileService fileService)
         {
             GeneratorConfiguration = generatorConfiguration;
             DropFactory = dropFactory;

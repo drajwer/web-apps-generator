@@ -1,6 +1,9 @@
 ﻿class Person
 	FirstName: string
 	LastName: string
+
+	#Range(Max = 100)
 	Age: int
+
 	Books: Book[]
 	Clubs: Club[]

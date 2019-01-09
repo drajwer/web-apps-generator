@@ -16,6 +16,15 @@ namespace {{Params.WebApiProjectName}}.ViewModels.Generated
 				{%- unless prop.Type.IsNullable or prop.Name == 'Id' -%}
 		[Required]
 				{%- endunless -%}
+				{%- unless prop.ValueRange == nil -%}
+					{%- unless prop.ValueRange.Min == nil or prop.ValueRange.Max == nil -%}
+		[Range({{prop.ValueRange.Min}}, {{prop.ValueRange.Max}})]
+					{%- elsif prop.ValueRange.Min == nil -%}
+		[Range({{prop.Type.Name | TrimQuestionMark}}.MinValue, {{prop.ValueRange.Max}})]
+					{%- else -%}
+		[Range({{prop.ValueRange.Min}}, {{prop.Type.Name | TrimQuestionMark}}.MaxValue)]
+					{%- endunless -%}
+				{%- endunless -%}
 		public {{ prop.Type.Name }}{%- unless prop.Type.IsNullable or prop.Type.Name == "string" -%}?{%-endunless%} {{ prop.Name }} { get; set; }
 
 			{%- elsif prop.Relation.HasMany -%}

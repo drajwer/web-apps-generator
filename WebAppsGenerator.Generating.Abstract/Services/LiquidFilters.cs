@@ -34,5 +34,10 @@ namespace WebAppsGenerator.Generating.Abstract.Services
         {
             return string.Concat(text.Select((x, i) => i > 0 && char.IsUpper(x) ? "_" + x.ToString() : x.ToString().ToUpper()));
         }
+
+        public static string TrimQuestionMark(string text)
+        {
+            return text.Trim('?');
+        }
     }
 }

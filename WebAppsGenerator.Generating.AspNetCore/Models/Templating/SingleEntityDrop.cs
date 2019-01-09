@@ -10,7 +10,7 @@ namespace WebAppsGenerator.Generating.AspNetCore.Models.Templating
         public SingleEntityDrop(IGeneratorConfiguration generatorConfiguration, SolutionPathService solutionPathService, Entity entity) 
             : base(solutionPathService, generatorConfiguration)
         {
-            Entity = new AnnotatedEntityDrop(entity);
+            Entity = new WebApiAnnotatedEntityDrop(entity);
         }
 
         public SingleEntityDrop(IGeneratorConfiguration generatorConfiguration, SolutionPathService pathService, EntityDrop entity)

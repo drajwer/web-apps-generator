@@ -1,18 +1,18 @@
 ﻿using WebAppsGenerator.Core.Models;
 using WebAppsGenerator.Generating.Abstract.Models.Templating;
-using WebAppsGenerator.Generating.WebUi.Extensions;
+using WebAppsGenerator.Generating.AspNetCore.Extensions;
 
-namespace WebAppsGenerator.Generating.WebUi.Models.Templating
+namespace WebAppsGenerator.Generating.AspNetCore.Models.Templating
 {
     /// <inheritdoc />
     /// <summary>
     /// Extends FieldDrop by adding properties that store information extracted from annotations
     /// </summary>
-    public class AnnotatedFieldDrop : FieldDrop
+    public class WebApiAnnotatedFieldDrop : AnnotatedFieldDrop
     {
         public string DisplayName { get; set; }
 
-        public AnnotatedFieldDrop(Field field) : base(field)
+        public WebApiAnnotatedFieldDrop(Field field) : base(field)
         {
             this.ParseFieldAnnotations(field.Annotations);
         }

@@ -10,7 +10,7 @@ namespace WebAppsGenerator.Generating.WebUi.Services
     {
         public List<EntityDrop> GetDrops(IEnumerable<Entity> entities)
         {
-            var drops = entities.Select(e => new AnnotatedEntityDrop(e)).OfType<EntityDrop>().ToList();
+            var drops = entities.Select(e => new WebUiAnnotatedEntityDrop(e)).OfType<EntityDrop>().ToList();
             SetReferencedIdTypes(entities, drops);
             SetTypescriptTypes(drops);
 

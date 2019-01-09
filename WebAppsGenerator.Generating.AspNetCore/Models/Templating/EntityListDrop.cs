@@ -19,7 +19,7 @@ namespace WebAppsGenerator.Generating.AspNetCore.Models.Templating
             IEnumerable<Entity> entities)
             : base(solutionPathService, generatorConfiguration)
         {
-            Entities = entities.Select(e => new AnnotatedEntityDrop(e)).OfType<EntityDrop>().ToList();
+            Entities = entities.Select(e => new WebApiAnnotatedEntityDrop(e)).OfType<EntityDrop>().ToList();
         }
 
         public List<EntityDrop> Entities { get; }
