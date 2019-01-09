@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using WebAppsGenerator.Core.Models;
-using WebAppsGenerator.Generating.AspNetCore.Models.Templating;
+using WebAppsGenerator.Generating.WebUi.Models.Templating;
 
-namespace WebAppsGenerator.Generating.AspNetCore.Extensions
+namespace WebAppsGenerator.Generating.WebUi.Extensions
 {
     /// <summary>
     /// Provides methods for passing annotation data into drop object's properties
@@ -38,7 +38,7 @@ namespace WebAppsGenerator.Generating.AspNetCore.Extensions
         public static void ParseFieldAnnotations(this AnnotatedFieldDrop annotatedFieldDrop, IEnumerable<Annotation> annotations)
         {
             if (annotations == null) return;
-            
+
             foreach (var annotation in annotations)
             {
                 switch (annotation.Name)
