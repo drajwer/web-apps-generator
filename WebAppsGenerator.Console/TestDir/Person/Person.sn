@@ -1,4 +1,5 @@
 ﻿class Person
+	#Length(Max = 30)
 	FirstName: string
 	LastName: string
 
