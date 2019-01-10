@@ -6,7 +6,8 @@ namespace WebAppsGenerator.Generating.AspNetCore.Models.Templating
 {
     /// <inheritdoc />
     /// <summary>
-    /// Extends FieldDrop by adding properties that store information extracted from annotations
+    /// Extends AnnotatedFieldDrop by adding properties that store information
+    /// extracted from annotations specific to AspNetCore generator
     /// </summary>
     public class WebApiAnnotatedFieldDrop : AnnotatedFieldDrop
     {

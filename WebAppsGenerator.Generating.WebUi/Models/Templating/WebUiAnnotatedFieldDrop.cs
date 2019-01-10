@@ -6,7 +6,8 @@ namespace WebAppsGenerator.Generating.WebUi.Models.Templating
 {
     /// <inheritdoc />
     /// <summary>
-    /// Extends FieldDrop by adding properties that store information extracted from annotations
+    /// Extends EntityDrop by adding properties that store information 
+    /// extracted from annotations specific to WebUI generator
     /// </summary>
     public class WebUiAnnotatedFieldDrop : AnnotatedFieldDrop
     {

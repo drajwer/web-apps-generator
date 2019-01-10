@@ -1,3 +1,4 @@
-﻿class Club
+﻿#HideInMenu
+class Club
 	Name: string
 	People: Person[]

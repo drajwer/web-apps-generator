@@ -7,7 +7,8 @@ namespace WebAppsGenerator.Generating.AspNetCore.Models.Templating
 {
     /// <inheritdoc />
     /// <summary>
-    /// Extends EntityDrop by adding properties that store information extracted from annotations
+    /// Extends AnnotatedEntityDrop by adding properties that store information 
+    /// extracted from annotations specific to AspNetCore generator
     /// </summary>
     public class WebApiAnnotatedEntityDrop : AnnotatedEntityDrop
     {

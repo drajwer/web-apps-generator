@@ -8,12 +8,15 @@ namespace WebAppsGenerator.Generating.WebUi.Models.Templating
 {
     /// <inheritdoc />
     /// <summary>
-    /// Extends EntityDrop by adding properties that store information extracted from annotations
+    /// Extends EntityDrop by adding properties that store information 
+    /// extracted from annotations specific to WebUI generator
     /// </summary>
     public class WebUiAnnotatedEntityDrop : AnnotatedEntityDrop
     {
         public string DisplayName { get; set; }
         public string PluralDisplayName { get; set; }
+
+        public bool HideInMenu { get; set; }
 
         public WebUiAnnotatedEntityDrop(Entity entity) : base(entity)
         {

@@ -29,6 +29,9 @@ namespace WebAppsGenerator.Generating.WebUi.Extensions
                         annotatedEntityDrop.PluralDisplayName =
                             PluralizationHelper.Pluralize(annotatedEntityDrop.DisplayName);
                         break;
+                    case HideInMenu:
+                        annotatedEntityDrop.HideInMenu = true;
+                        break;
                 }
             }
         }

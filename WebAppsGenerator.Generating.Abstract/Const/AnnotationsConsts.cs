@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace WebAppsGenerator.Generating.Abstract.Const
+﻿namespace WebAppsGenerator.Generating.Abstract.Const
 {
     public static class AnnotationsConsts
     {

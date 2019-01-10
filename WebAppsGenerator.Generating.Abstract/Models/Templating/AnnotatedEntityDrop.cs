@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using WebAppsGenerator.Core.Models;
+﻿using WebAppsGenerator.Core.Models;
 using WebAppsGenerator.Generating.Abstract.Extensions;
 
 namespace WebAppsGenerator.Generating.Abstract.Models.Templating
