@@ -30,7 +30,6 @@ namespace {{Params.WebApiProjectName}}.ViewModels.Generated
 		[StringLength({{prop.LengthRange.Max}}, MinimumLength = {{prop.LengthRange.Min}})]
 					{%- elsif prop.LengthRange.Min == nil -%}
 		[StringLength({{prop.LengthRange.Max}})]
-					{%- else -%}
 					{%- endunless -%}
 				{%- endunless -%}
 		public {{ prop.Type.Name }}{%- unless prop.Type.IsNullable or prop.Type.Name == "string" -%}?{%-endunless%} {{ prop.Name }} { get; set; }

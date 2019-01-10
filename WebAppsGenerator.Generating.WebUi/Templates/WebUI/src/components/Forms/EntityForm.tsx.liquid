@@ -326,17 +326,30 @@ class {{Params.Entity.Name}}Form extends React.Component<IProps, {%- if createSt
 				{%- unless field.ValueRange == nil -%}
 					{%- unless field.ValueRange.Min == nil or field.ValueRange.Max == nil -%}
 		if({{field.Name}} < {{field.ValueRange.Min}} || {{field.Name}} > {{field.ValueRange.Max}}){
-			validationErrors.{{field.Name}}Error = "{{field.Name | Capitalize}} should be between {{field.ValueRange.Min}} and {{field.ValueRange.Max}}.";
+			validationErrors.{{field.Name}}Error = "{{field.Name | Capitalize | SplitCamelCase}} should be between {{field.ValueRange.Min}} and {{field.ValueRange.Max}}.";
 			return false;
 		}
 					{%- elsif field.ValueRange.Min == nil -%}
 		if({{field.Name}} > {{field.ValueRange.Max}}){
-			validationErrors.{{field.Name}}Error = "{{field.Name | Capitalize}} should not be greater than {{field.ValueRange.Max}}.";
+			validationErrors.{{field.Name}}Error = "{{field.Name | Capitalize | SplitCamelCase}} should not be greater than {{field.ValueRange.Max}}.";
 			return false;
 		}
 					{%- else -%}
 		if({{field.Name}} < {{field.ValueRange.Min}}){
-			validationErrors.{{field.Name}}Error = "{{field.Name | Capitalize}} should not be lower than {{field.ValueRange.Min}}.";
+			validationErrors.{{field.Name}}Error = "{{field.Name | Capitalize | SplitCamelCase}} should not be lower than {{field.ValueRange.Min}}.";
+			return false;
+		}
+					{%- endunless -%}
+				{%- endunless -%}
+				{%- unless field.LengthRange == nil -%}
+					{%- unless field.LengthRange.Min == nil or field.LengthRange.Max == nil -%}
+		if({{field.Name}}.length < {{field.LengthRange.Min}} || {{field.Name}}.length > {{field.LengthRange.Max}}){
+			validationErrors.{{field.Name}}Error = "{{field.Name | Capitalize | SplitCamelCase}} should have length between {{field.LengthRange.Min}} and {{field.LengthRange.Max}}.";
+			return false;
+		}
+					{%- else -%}
+		if({{field.Name}}.length > {{field.LengthRange.Max}}){
+			validationErrors.{{field.Name}}Error = "{{field.Name | Capitalize | SplitCamelCase}} should not have length greater than {{field.LengthRange.Max}}.";
 			return false;
 		}
 					{%- endunless -%}
