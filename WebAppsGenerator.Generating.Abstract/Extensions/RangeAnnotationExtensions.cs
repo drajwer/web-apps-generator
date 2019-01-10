@@ -28,7 +28,6 @@ namespace WebAppsGenerator.Generating.Abstract.Extensions
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(fieldDrop.Type));
-                    
             }
         }
 

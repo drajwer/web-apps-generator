@@ -12,6 +12,9 @@ namespace {{Params.CoreProjectName}}.Models
 					{%- unless prop.Type.IsNullable -%}
 		[Required]
 					{%- endunless -%}
+					{%- unless prop.LengthRange.Max == nil -%}
+		[MaxLength({{prop.LengthRange.Max}})]
+					{%- endunless -%}
 				{%- endif -%}
 			{%- endif -%}
 		public {{ prop.Type.Name }} {{ prop.Name }} { get; set; }
