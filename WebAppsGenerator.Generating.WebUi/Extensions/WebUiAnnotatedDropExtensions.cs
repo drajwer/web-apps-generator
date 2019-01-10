@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using WebAppsGenerator.Core.Models;
+using WebAppsGenerator.Generating.Abstract.Services;
 using WebAppsGenerator.Generating.WebUi.Models.Templating;
 using static WebAppsGenerator.Generating.WebUi.Const.WebUiAnnotations;
 namespace WebAppsGenerator.Generating.WebUi.Extensions
@@ -25,6 +26,8 @@ namespace WebAppsGenerator.Generating.WebUi.Extensions
                 {
                     case DisplayName:
                         annotatedEntityDrop.DisplayName = (string)annotation.Params.First(p => p.Name == "Name").Value;
+                        annotatedEntityDrop.PluralDisplayName =
+                            PluralizationHelper.Pluralize(annotatedEntityDrop.DisplayName);
                         break;
                 }
             }

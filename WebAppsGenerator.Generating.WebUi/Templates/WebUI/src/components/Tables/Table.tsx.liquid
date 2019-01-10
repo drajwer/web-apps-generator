@@ -52,7 +52,7 @@ class {{ Params.Entity.Name }}Table extends React.Component<ICombinedProps> {
 			[
 				{%- for field in Params.Entity.Fields -%}
 					{%- if field.Type.IsSimpleType -%}
-				'{{ field.Name | Capitalize | SplitCamelCase }}',
+				'{{ field.DisplayName | Capitalize | SplitCamelCase }}',
 					{%- endif -%}
 				{%- endfor -%}
 			];
@@ -61,7 +61,7 @@ class {{ Params.Entity.Name }}Table extends React.Component<ICombinedProps> {
             <GenericTable
                 data={data}
                 selected={this.props.selected}
-                tableTitle="{{ Params.Entity.PluralName }}"
+                tableTitle="{{ Params.Entity.PluralDisplayName }}"
                 tableHeadLabels={tableHeadLabels}
                 showCheckboxes={showCheckboxes}
                 multipleSelects={multipleSelects}

@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using WebAppsGenerator.Core.Models;
 using WebAppsGenerator.Generating.Abstract.Models.Templating;
+using WebAppsGenerator.Generating.Abstract.Services;
 using WebAppsGenerator.Generating.WebUi.Extensions;
 
 namespace WebAppsGenerator.Generating.WebUi.Models.Templating
@@ -12,6 +13,7 @@ namespace WebAppsGenerator.Generating.WebUi.Models.Templating
     public class WebUiAnnotatedEntityDrop : AnnotatedEntityDrop
     {
         public string DisplayName { get; set; }
+        public string PluralDisplayName { get; set; }
 
         public WebUiAnnotatedEntityDrop(Entity entity) : base(entity)
         {
@@ -20,6 +22,7 @@ namespace WebAppsGenerator.Generating.WebUi.Models.Templating
 
             // assign default values to helper properties in case they are not filled later
             DisplayName = Name;
+            PluralDisplayName = PluralName;
 
             this.ParseEntityAnnotations(entity.Annotations);
         }

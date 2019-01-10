@@ -14,6 +14,9 @@ namespace WebAppsGenerator.Generating.WebUi.Models.Templating
 
         public WebUiAnnotatedFieldDrop(Field field) : base(field)
         {
+            // assign default values to helper properties in case they are not filled later
+            DisplayName = Name;
+
             this.ParseFieldAnnotations(field.Annotations);
         }
     }

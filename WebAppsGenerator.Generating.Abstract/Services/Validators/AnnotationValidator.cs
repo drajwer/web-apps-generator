@@ -36,27 +36,29 @@ namespace WebAppsGenerator.Generating.Abstract.Services.Validators
         /// </summary>
         public void ValidateClassAnnotations(Entity entity)
         {
-            foreach (var entityAnnotation in entity.Annotations)
-            {
-                var annotation = _annotationOptions.Annotations.FirstOrDefault(ann =>
-                    ann.IsClassAnnotation && ann.Name == entityAnnotation.Name);
+            // todo: change validation
 
-                if (annotation == null)
-                    throw new UnknownClassAnnotationException(entityAnnotation.Name);
+            //foreach (var entityAnnotation in entity.Annotations)
+            //{
+            //    var annotation = _annotationOptions.Annotations.FirstOrDefault(ann =>
+            //        ann.IsClassAnnotation && ann.Name == entityAnnotation.Name);
 
-                foreach (var entityAnnotationParam in entityAnnotation.Params)
-                {
-                    var param = annotation.Params.FirstOrDefault(p => p.Name == entityAnnotationParam.Name);
+            //    if (annotation == null)
+            //        throw new UnknownClassAnnotationException(entityAnnotation.Name);
 
-                    if (param == null)
-                        throw new UnknownAnnotationParameterException(entityAnnotationParam.Name,
-                            entityAnnotation.Name);
+            //    foreach (var entityAnnotationParam in entityAnnotation.Params)
+            //    {
+            //        var param = annotation.Params.FirstOrDefault(p => p.Name == entityAnnotationParam.Name);
 
-                    if (param.Type != entityAnnotationParam.Type)
-                        throw new InvalidAnnotationParameterValueTypeException(annotation.Name, param.Name,
-                            entityAnnotationParam.Type, param.Type);
-                }
-            }
+            //        if (param == null)
+            //            throw new UnknownAnnotationParameterException(entityAnnotationParam.Name,
+            //                entityAnnotation.Name);
+
+            //        if (param.Type != entityAnnotationParam.Type)
+            //            throw new InvalidAnnotationParameterValueTypeException(annotation.Name, param.Name,
+            //                entityAnnotationParam.Type, param.Type);
+            //    }
+            //}
         }
 
         /// <summary>
