@@ -7,5 +7,8 @@
 
         public const string DisplayInDropdown = "DisplayInDropdown";
         public const string Dropdown = "Dropdown";
+
+        public const string DisplayInList = "DisplayInList";
+
     }
 }

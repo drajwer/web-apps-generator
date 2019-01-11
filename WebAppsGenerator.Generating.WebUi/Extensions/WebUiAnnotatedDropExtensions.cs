@@ -58,6 +58,9 @@ namespace WebAppsGenerator.Generating.WebUi.Extensions
                     case Dropdown:
                         annotatedFieldDrop.ShowDropdown = true;
                         break;
+                    case DisplayInList:
+                        annotatedFieldDrop.DisplayInList = true;
+                        break;
                 }
             }
         }

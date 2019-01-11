@@ -42,16 +42,16 @@ class {{ Params.Entity.Name }}Table extends React.Component<ICombinedProps> {
 
         const data = !{{ Params.Entity.PluralName | DeCapitalize }}? null : {{ Params.Entity.PluralName | DeCapitalize }}.map(({{ Params.Entity.Name | DeCapitalize }}: {{ Params.Entity.Name }}) => ({
             {%- for field in Params.Entity.Fields -%}
-				{%- if field.Type.IsSimpleType -%}
+				{%- if field.Type.IsSimpleType and field.DisplayInList -%}
 			{{ field.Name }}: {{ Params.Entity.Name | DeCapitalize }}.{{ field.Name }},
 				{%- endif -%}
 			{%- endfor -%}
         }));
 
-        const tableHeadLabels = 
+        const tableHeadLabels: string[] = 
 			[
 				{%- for field in Params.Entity.Fields -%}
-					{%- if field.Type.IsSimpleType -%}
+					{%- if field.Type.IsSimpleType and field.DisplayInList -%}
 				'{{ field.DisplayName | Capitalize | SplitCamelCase }}',
 					{%- endif -%}
 				{%- endfor -%}

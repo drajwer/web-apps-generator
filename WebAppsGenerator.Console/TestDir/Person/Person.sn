@@ -4,6 +4,7 @@
 
 	#DisplayName(Name="Surname")
 	#DisplayInDropdown
+	#DisplayInList
 	LastName: string
 
 	#Range(Max = 100)
