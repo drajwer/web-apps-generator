@@ -10,6 +10,9 @@
 	#Range(Max = 100)
 	Age: int
 
+	#DisplayInList
+	ShoeSize: int
+
 	Books: Book[]
 
 	#Dropdown

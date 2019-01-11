@@ -9,6 +9,7 @@ namespace WebAppsGenerator.Generating.Abstract.Options
     {
         public string ProjectName { get; set; }
         public string OutputPath { get; set; }
+        public string MigrationName { get; set; }
         public List<NuGetPackageDetails> CoreProjectPackages { get; set; }
     }
 }

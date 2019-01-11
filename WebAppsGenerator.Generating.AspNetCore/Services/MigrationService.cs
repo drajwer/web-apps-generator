@@ -19,6 +19,7 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
 
         public void AddMigration(string migrationName)
         {
+            migrationName = migrationName ?? "Init";
             _commandLineService.RunCommand($"dotnet ef migrations add --startup-project {_pathService.WebApiDirPath} --project {_pathService.CoreDirPath} {migrationName}");
         }
 

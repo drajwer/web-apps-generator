@@ -10,6 +10,7 @@ namespace WebAppsGenerator.Generating.Abstract.Interfaces
     {
         string ProjectName { get; }
         string OutputPath { get; }
+        string MigrationName { get; }
         List<NuGetPackageDetails> CoreProjectPackages { get; set; }
     }
 }

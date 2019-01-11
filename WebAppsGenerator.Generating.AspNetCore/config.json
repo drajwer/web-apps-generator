@@ -1,7 +1,8 @@
 {
     "GeneratorOptions": {
         "OutputPath": "Output",
-        "ProjectName": "Bookstore",
+        "ProjectName": "Library",
+        "MigrationName": "AddedShoeSizeToPerson",
         "CoreProjectPackages": [
             {
                 "Name": "Microsoft.EntityFrameworkCore",

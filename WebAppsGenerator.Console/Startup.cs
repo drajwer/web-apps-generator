@@ -21,7 +21,7 @@ namespace WebAppsGenerator.Console
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("config.json");
+                .AddJsonFile("config.json", optional: false, reloadOnChange: true);
             Configuration = builder.Build();
         }
 

@@ -11,6 +11,7 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
     {
         private readonly SolutionPathService PathService;
         private readonly MigrationService _migrationService;
+        private readonly IGeneratorConfiguration _generatorConfiguration;
 
         public CoreProjectGenerator(IGeneratorConfiguration generatorConfiguration, IAspNetCoreFileService fileService,
             MigrationService migrationService, ICoreProjectTemplatingConfigProvider templatingConfigProvider,
@@ -18,6 +19,7 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
             : base(generatorConfiguration, dropFactory, templatingConfigProvider, fileService)
         {
             _migrationService = migrationService;
+            _generatorConfiguration = generatorConfiguration;
             PathService = new SolutionPathService(generatorConfiguration);
         }
 
@@ -28,7 +30,7 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
 
             base.Generate(entities);
 
-            _migrationService.AddMigration("Init");
+            _migrationService.AddMigration(_generatorConfiguration.MigrationName);
             _migrationService.UpdateDatabase();
         }
     }
