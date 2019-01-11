@@ -52,6 +52,12 @@ namespace WebAppsGenerator.Generating.WebUi.Extensions
                     case DisplayName:
                         annotatedFieldDrop.DisplayName = (string)annotation.Params.First(p => p.Name == "Name").Value;
                         break;
+                    case DisplayInDropdown:
+                        annotatedFieldDrop.DisplayInDropdown = true;
+                        break;
+                    case Dropdown:
+                        annotatedFieldDrop.ShowDropdown = true;
+                        break;
                 }
             }
         }

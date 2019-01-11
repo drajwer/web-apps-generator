@@ -18,14 +18,20 @@ namespace WebAppsGenerator.Generating.WebUi.Models.Templating
 
         public bool HideInMenu { get; set; }
 
+        public string DisplayInDropdownField { get; set; }
+
         public WebUiAnnotatedEntityDrop(Entity entity) : base(entity)
         {
-            Fields = entity.Fields.Select(f => new WebUiAnnotatedFieldDrop(f)).OfType<FieldDrop>().ToList();
+            var annotatedFields = entity.Fields.Select(f => new WebUiAnnotatedFieldDrop(f)).ToList();
+            var displayInDropdownField = annotatedFields.FirstOrDefault(f => f.DisplayInDropdown);
+
+            Fields = annotatedFields.OfType<FieldDrop>().ToList();
             IdField = Fields.FirstOrDefault(f => f.Name == "Id");
 
             // assign default values to helper properties in case they are not filled later
             DisplayName = Name;
             PluralDisplayName = PluralName;
+            DisplayInDropdownField = displayInDropdownField?.Name ?? IdField?.Name;
 
             this.ParseEntityAnnotations(entity.Annotations);
         }

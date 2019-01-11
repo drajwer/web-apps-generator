@@ -1,11 +1,9 @@
 ﻿import * as React from 'react';
 import { Grid } from '@material-ui/core';
 {%- for field in Params.Entity.Fields -%}
-	{%- unless field.Name == 'id' -%}
-		{%- unless field.Type.Name == 'boolean' -%}
+	{%- unless field.Name == 'id' or field.Type.Name == 'boolean' or field.ShowDropdown -%}
 import { TextField } from '@material-ui/core';
 			{%- break -%}
-		{%- endunless -%}
 	{%- endunless -%}
 {%- endfor -%}
 {%- for field in Params.Entity.Fields -%}
@@ -32,7 +30,16 @@ import { DateTimePicker } from 'material-ui-pickers';
 {%- endfor -%}
 {%- for field in Params.Entity.Fields -%}
 	{%- if field.Relation.HasOne or field.Relation.HasMany -%}
+		{%- unless field.ShowDropdown -%}
 import {{ field.Type.EntityName }}Modal from 'src/components/Modals/{{ field.Type.EntityName }}/{{ field.Type.EntityName }}Modal';
+		{%- endunless -%}
+	{%- endif -%}
+{%- endfor -%}
+{%- for field in Params.Entity.Fields -%}
+	{%- if field.Relation.HasOne or field.Relation.HasMany -%}
+		{%- if field.ShowDropdown -%}
+import {{ field.Type.EntityName }}Dropdown from 'src/components/Dropdowns/{{ field.Type.EntityName }}/{{ field.Type.EntityName }}Dropdown';
+		{%- endif -%}
 	{%- endif -%}
 {%- endfor -%}
 import { IProps, IState } from './{{Params.Entity.Name}}FormData';
@@ -78,6 +85,7 @@ class {{Params.Entity.Name}}Form extends React.Component<IProps, {%- if createSt
             <Grid container={true} spacing={24}>
 			{%- for field in Params.Entity.Fields -%}
 				{%- if field.Relation.HasOne or field.Relation.HasMany -%}
+				{%- unless field.ShowDropdown -%}
 				<{{ field.Type.EntityName }}Modal
 					{%- if field.Relation.HasMany -%}
 					multiple = {true}
@@ -93,6 +101,7 @@ class {{Params.Entity.Name}}Form extends React.Component<IProps, {%- if createSt
 					selected = { this.props.{{Params.Entity.Name | DeCapitalize}}.{{field.Name}}Id != null ? [this.props.{{Params.Entity.Name | DeCapitalize}}.{{field.Name}}Id] : [] }
 					{%- endif -%}
 				/>
+				{%- endunless -%}
 				{%- endif -%}
 			{%- endfor -%}
 			{%- assign addPlaceholder = true -%}
@@ -116,7 +125,7 @@ class {{Params.Entity.Name}}Form extends React.Component<IProps, {%- if createSt
 								helperText={this.props.validationErrors.enabled ? this.props.validationErrors.{{field.Name}}Error : ""}
 							>
 								<MenuItem key={"undefined"} value={""}>
-									None
+									<em>None</em>
 								</MenuItem>
 								<MenuItem key={"true"} value={"true"}>
 									True
@@ -185,6 +194,21 @@ class {{Params.Entity.Name}}Form extends React.Component<IProps, {%- if createSt
 					/>
 						{%- endif -%}
 					{%- else -%}
+						{%- if field.ShowDropdown -%}
+					<{{field.Type.EntityName}}Dropdown
+						label="{{field.Name | Capitalize | SplitCamelCase}}"
+						{%- if field.Relation.HasMany -%}
+						multipleSelects={true}
+						selected={this.props.{{Params.Entity.Name | DeCapitalize}}.{{field.Name}}Ids}
+						{%- else -%}
+						multipleSelects={false}
+					    selected={this.props.{{Params.Entity.Name | DeCapitalize}}.{{field.Name}}Id != null ? [this.props.{{Params.Entity.Name | DeCapitalize}}.{{field.Name}}Id] : []}
+						{%- endif -%}
+						onSelect={this.on{{field.Name}}Change}
+						showCheckboxes={true}
+						disabled={this.props.readonly}
+					/>
+						{%- else -%}
 					<TextField
 					  required={true}
 					  id="{{field.Name}}"
@@ -200,6 +224,7 @@ class {{Params.Entity.Name}}Form extends React.Component<IProps, {%- if createSt
 					  disabled={this.props.readonly}
 					  onClick={this.toggle{{field.Name}}Modal}
 					/>
+						{%- endif -%}
 					{%- endif -%}
 				</Grid>
 				{%- endunless -%}
@@ -250,12 +275,14 @@ class {{Params.Entity.Name}}Form extends React.Component<IProps, {%- if createSt
 
 			{%- endunless -%}
 		{%- else -%}
-
+			{%- unless field.ShowDropdown -%}
 	private toggle{{ field.Name }}Modal = () => {
 		if (!this.props.readonly) {
 			this.setState({ open{{ field.Name }}Modal: !this.state.open{{ field.Name }}Modal });
 		}
 	}
+			{%- endunless -%}
+			
 
 	private on{{ field.Name }}Change = (selected: number[]) => {
 		const {{Params.Entity.Name | DeCapitalize}} = {...this.props.{{Params.Entity.Name | DeCapitalize}}};

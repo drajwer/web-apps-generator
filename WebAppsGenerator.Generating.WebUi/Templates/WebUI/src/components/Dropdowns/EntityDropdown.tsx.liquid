@@ -1,0 +1,133 @@
+﻿import * as React from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as Actions from 'src/modules/{{ Params.Entity.Name | DeCapitalize }}/actions';
+import {{ Params.Entity.Name }} from 'src/models/{{ Params.Entity.Name }}';
+import { IRootState } from 'src/modules';
+import { FormControl, InputLabel, Select, MenuItem, Checkbox, ListItemText, CircularProgress } from '@material-ui/core';
+
+interface IStoreProps {
+    {{ Params.Entity.PluralName | DeCapitalize }}: {{ Params.Entity.Name }}[] | null,
+    actions: any,
+    selected: number[],
+    isFetching: boolean
+    disabled: boolean
+}
+
+interface IComponentProps {
+	label: string
+    showCheckboxes: boolean,
+    multipleSelects: boolean,
+    onSelect?: ((selected: number[]) => void);
+}
+
+type ICombinedProps = IStoreProps & IComponentProps;
+
+class {{ Params.Entity.Name }}Dropdown extends React.Component<ICombinedProps> {
+    constructor(props: ICombinedProps) {
+        super(props);
+        this.state = {
+            openpeopleModal: false,
+        };
+    }
+    public componentWillMount() {
+        if (this.props.{{ Params.Entity.PluralName | DeCapitalize }} == null) {
+            this.refreshData();
+        }
+    }
+
+    public render() {
+        if (this.props.isFetching || this.props.{{ Params.Entity.PluralName | DeCapitalize }} == null) {
+            return (
+                <FormControl fullWidth={true} disabled={this.props.disabled}>
+                    <InputLabel>{this.props.label}</InputLabel>
+					{%- raw -%}
+                    <div style={{ textAlign: "center" }}>
+                        <CircularProgress />
+                    </div>
+					{%- endraw -%}
+                </FormControl>
+            );
+        }
+
+        return (
+            <FormControl fullWidth={true} disabled={this.props.disabled} >
+                <InputLabel>{this.props.label}</InputLabel>
+                <Select
+                    value={this.props.multipleSelects ? this.props.selected : this.props.selected.length > 0 ? this.props.selected[0] : ""}
+                    onChange={this.props.multipleSelects ? this.handleChangeMultiple : this.handleChange}
+                    multiple={this.props.multipleSelects}
+                    renderValue={(selected: any) => this.props.multipleSelects ? this.renderValues(selected) : this.renderValue(selected)}
+                >
+                    {this.props.multipleSelects ? "" :
+                        (
+                            <MenuItem key="null" value="">
+                                <em>None</em>
+                            </MenuItem>
+                        )
+                    }
+                    {this.props.{{ Params.Entity.PluralName | DeCapitalize }}.map(e => (
+                        <MenuItem key={e.id} value={e.id}>
+                            <Checkbox checked={this.props.selected.indexOf(e.id) > -1} />
+                            <ListItemText primary={e.{{ Params.Entity.DisplayInDropdownField | DeCapitalize}} } />
+                        </MenuItem>
+                    ))
+                    }
+                </Select>
+            </FormControl>
+        );
+    }
+
+
+    private refreshData = () => {
+        this.props.actions.get{{ Params.Entity.PluralName }}();
+    }
+
+    private handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        const value: number[] = [];
+        if (event.target.value != null && event.target.value !== "") {
+            value.push(parseInt(event.target.value, 10))
+        }
+        if (this.props.onSelect != null) {
+            this.props.onSelect(value);
+        }
+    };
+
+    private handleChangeMultiple = (event: any) => {
+        if (this.props.onSelect != null) {
+            this.props.onSelect(event.target.value);
+        }
+    };
+
+    private renderValue(selected?: number) : string | null {
+        if(selected == null || this.props.{{ Params.Entity.PluralName | DeCapitalize }} == null) {
+            return "";
+        }
+        const elem = this.props.{{ Params.Entity.PluralName | DeCapitalize }}.find(c => c.id === selected);
+        if(elem == null) {
+            return "";
+        }
+        return elem.{{Params.Entity.DisplayInDropdownField | DeCapitalize}}.toString();
+    }
+
+    private renderValues(selected?: number[]) : string {
+        if(selected == null || this.props.{{ Params.Entity.PluralName | DeCapitalize }} == null) {
+            return "";
+        }
+        if(selected.length === 0) {
+            return "";
+        }
+        return `${selected.length} selected`;
+    }
+}
+
+const mapStateToProps = (state: IRootState, ownProps: IComponentProps) => ({
+    {{ Params.Entity.PluralName | DeCapitalize }}: state.{{ Params.Entity.Name | DeCapitalize }}.{{ Params.Entity.PluralName | DeCapitalize }},
+    isFetching: state.{{ Params.Entity.Name | DeCapitalize }}.isFetching,
+    ...ownProps
+});
+
+const mapDispatchToProps = (dispatch: any) => ({
+    actions: bindActionCreators(Actions, dispatch),
+});
+export default connect(mapStateToProps, mapDispatchToProps)({{ Params.Entity.Name }}Dropdown);

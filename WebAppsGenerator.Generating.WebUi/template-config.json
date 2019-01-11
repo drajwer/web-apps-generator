@@ -55,6 +55,13 @@
             "DropId": "EntityDrop",
             "Multiple": true
           }
+        },
+        "Dropdowns": {
+          "EntityDropdown.tsx": {
+            "NameTemplate": "{{Params.Entity.Name}}/{{Params.Entity.Name}}Dropdown.tsx",
+            "DropId": "EntityDrop",
+            "Multiple": true
+          }
         }
       },
       "models": {

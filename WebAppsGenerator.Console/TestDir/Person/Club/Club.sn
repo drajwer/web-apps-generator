@@ -1,4 +1,5 @@
 ﻿#HideInMenu
 class Club
+	#DisplayInDropdown
 	Name: string
 	People: Person[]

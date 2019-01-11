@@ -4,5 +4,8 @@
     {
         public const string DisplayName = "DisplayName";
         public const string HideInMenu = "HideInMenu";
+
+        public const string DisplayInDropdown = "DisplayInDropdown";
+        public const string Dropdown = "Dropdown";
     }
 }

@@ -13,6 +13,10 @@ namespace WebAppsGenerator.Generating.WebUi.Models.Templating
     {
         public string DisplayName { get; set; }
 
+
+        public bool ShowDropdown { get; set; }
+        public bool DisplayInDropdown { get; set; }
+
         public WebUiAnnotatedFieldDrop(Field field) : base(field)
         {
             // assign default values to helper properties in case they are not filled later
