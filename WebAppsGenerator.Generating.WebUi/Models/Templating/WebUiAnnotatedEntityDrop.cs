@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using WebAppsGenerator.Core.Models;
 using WebAppsGenerator.Generating.Abstract.Models.Templating;
-using WebAppsGenerator.Generating.Abstract.Services;
 using WebAppsGenerator.Generating.WebUi.Extensions;
 
 namespace WebAppsGenerator.Generating.WebUi.Models.Templating
@@ -24,9 +23,12 @@ namespace WebAppsGenerator.Generating.WebUi.Models.Templating
         {
             var annotatedFields = entity.Fields.Select(f => new WebUiAnnotatedFieldDrop(f)).ToList();
             var displayInDropdownField = annotatedFields.FirstOrDefault(f => f.DisplayInDropdown);
+            var idField = annotatedFields.FirstOrDefault(f => f.Name == "Id");
+            if (idField != null)
+                idField.DisplayInList = true;
 
             Fields = annotatedFields.OfType<FieldDrop>().ToList();
-            IdField = Fields.FirstOrDefault(f => f.Name == "Id");
+            IdField = idField;
 
             // assign default values to helper properties in case they are not filled later
             DisplayName = Name;
