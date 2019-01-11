@@ -114,7 +114,7 @@ class {{Params.Entity.Name}}Form extends React.Component<IProps, {%- if createSt
 							{%- if field.Type.IsNullable -%}
 							<TextField
 								id="{{ field.Name }}"
-								label="{{field.Name | SplitCamelCase | Capitalize}}"
+								label="{{field.DisplayName | SplitCamelCase | Capitalize}}"
 								select={true}
 								required={false}
 								value={this.props.{{Params.Entity.Name | DeCapitalize }}.{{ field.Name | DeCapitalize }} == null ? "" : this.props.{{Params.Entity.Name | DeCapitalize }}.{{ field.Name | DeCapitalize }}.toString()}
@@ -136,7 +136,7 @@ class {{Params.Entity.Name}}Form extends React.Component<IProps, {%- if createSt
 							</TextField>
 							{%- else -%}
 							<FormControlLabel
-								label="{{ field.Name | SplitCamelCase | Capitalize }}"
+								label="{{ field.DisplayName | SplitCamelCase | Capitalize }}"
 								control={
 									<Checkbox
 										id="{{ field.Name | DeCapitalize }}"
@@ -152,7 +152,7 @@ class {{Params.Entity.Name}}Form extends React.Component<IProps, {%- if createSt
 					<DateTimePicker
 						id="{{field.Name}}"
 						name="{{field.Name | SplitCamelCase | Capitalize}}"
-						label="{{field.Name | SplitCamelCase | Capitalize}}"
+						label="{{field.DisplayName | SplitCamelCase | Capitalize}}"
 						value={this.props.{{Params.Entity.Name | DeCapitalize}}.{{field.Name}} == null ? null : this.props.{{Params.Entity.Name | DeCapitalize}}.{{field.Name}}}
 						onChange={this.on{{field.Name}}Change}
 						showTodayButton={true}
@@ -177,7 +177,7 @@ class {{Params.Entity.Name}}Form extends React.Component<IProps, {%- if createSt
 					{%-endif-%}
 					  id="{{field.Name}}"
 					  name="{{field.Name | SplitCamelCase | Capitalize}}"
-					  label="{{field.Name | SplitCamelCase | Capitalize}}"
+					  label="{{field.DisplayName | SplitCamelCase | Capitalize}}"
 						{%- if field.Type.Name == 'number' -%}
 					  type="{{ field.Type.Name }}"
 						{%- endif -%}
@@ -196,7 +196,7 @@ class {{Params.Entity.Name}}Form extends React.Component<IProps, {%- if createSt
 					{%- else -%}
 						{%- if field.ShowDropdown -%}
 					<{{field.Type.EntityName}}Dropdown
-						label="{{field.Name | Capitalize | SplitCamelCase}}"
+						label="{{field.DisplayName | Capitalize | SplitCamelCase}}"
 						{%- if field.Relation.HasMany -%}
 						multipleSelects={true}
 						selected={this.props.{{Params.Entity.Name | DeCapitalize}}.{{field.Name}}Ids}
@@ -213,7 +213,7 @@ class {{Params.Entity.Name}}Form extends React.Component<IProps, {%- if createSt
 					  required={true}
 					  id="{{field.Name}}"
 					  name="{{field.Name | SplitCamelCase | Capitalize}}"
-					  label="{{field.Name | SplitCamelCase | Capitalize}}"
+					  label="{{field.DisplayName | SplitCamelCase | Capitalize}}"
 					  type="string"
 					  fullWidth={true}
 						{%- if field.Relation.HasMany -%}
