@@ -17,6 +17,7 @@ interface IStoreProps {
 
 interface I{{ Params.Entity.Name }}TableProps {
     showCheckboxes: boolean,
+	showAddButton: boolean,
     multipleSelects: boolean,
 	onSelect? : ((selected: {{ Params.Entity.IdField.Type.Name }}[]) => void);
 }
@@ -30,7 +31,7 @@ class {{ Params.Entity.Name }}Table extends React.Component<ICombinedProps> {
 		}
     }
     public render() {
-		const { {{ Params.Entity.PluralName | DeCapitalize }}, showCheckboxes, multipleSelects, isFetching } = this.props;
+		const { {{ Params.Entity.PluralName | DeCapitalize }}, showCheckboxes, showAddButton, multipleSelects, isFetching } = this.props;
 		
         if (isFetching) {
             return (
@@ -64,6 +65,7 @@ class {{ Params.Entity.Name }}Table extends React.Component<ICombinedProps> {
                 tableTitle="{{ Params.Entity.PluralDisplayName }}"
                 tableHeadLabels={tableHeadLabels}
                 showCheckboxes={showCheckboxes}
+				showAddButton={showAddButton}
                 multipleSelects={multipleSelects}
 				onSelect={this.props.onSelect}
 				onRefresh={this.refreshData}
