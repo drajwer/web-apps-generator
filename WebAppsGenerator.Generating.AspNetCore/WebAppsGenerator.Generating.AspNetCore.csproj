@@ -10,6 +10,8 @@
     <None Remove="Templates\Core\AppDbContext.liquid" />
     <None Remove="Templates\Core\BaseCrudService.liquid" />
     <None Remove="Templates\Core\CrudService.liquid" />
+    <None Remove="Templates\Core\Exceptions\BadRequestException.csh.liquid" />
+    <None Remove="Templates\Core\Exceptions\BusinessException.csh.liquid" />
     <None Remove="Templates\Core\ICrudService.liquid" />
     <None Remove="Templates\Core\IRepository.liquid" />
     <None Remove="Templates\Core\ITransactionScope.liquid" />
@@ -21,6 +23,7 @@
     <None Remove="Templates\WebApi\appsettings.json.liquid" />
     <None Remove="Templates\WebApi\BaseViewModel.liquid" />
     <None Remove="Templates\WebApi\Extensions\SwaggerStartupExtensions.csh.liquid" />
+    <None Remove="Templates\WebApi\Middlewares\BusinessExceptionMiddleware.csh.liquid" />
     <None Remove="Templates\WebApi\ProjectFile.csproj.liquid" />
     <None Remove="Templates\WebApi\Properties\launchSettings.json.liquid" />
     <None Remove="Templates\WebApi\Startup.csh.liquid" />
@@ -30,6 +33,8 @@
 
   <ItemGroup>
     <EmbeddedResource Include="template-config.json" />
+    <EmbeddedResource Include="Templates\Core\Exceptions\BusinessException.csh.liquid" />
+    <EmbeddedResource Include="Templates\Core\Exceptions\BadRequestException.csh.liquid" />
     <EmbeddedResource Include="Templates\Core\Models\Joins\JoinEntity.csh.liquid" />
     <EmbeddedResource Include="Templates\Core\Services\Generated\BaseCrudService.csh.liquid" />
     <EmbeddedResource Include="Templates\Core\Services\CrudService.csh.liquid" />
@@ -45,6 +50,7 @@
     <EmbeddedResource Include="Templates\Core\Models\Entity.csh.liquid" />
     <EmbeddedResource Include="Templates\WebApi\appsettings.json.liquid" />
     <EmbeddedResource Include="Templates\WebApi\Extensions\SwaggerStartupExtensions.csh.liquid" />
+    <EmbeddedResource Include="Templates\WebApi\Middlewares\BusinessExceptionMiddleware.csh.liquid" />
     <EmbeddedResource Include="Templates\WebApi\Properties\launchSettings.json.liquid" />
     <EmbeddedResource Include="Templates\WebApi\ViewModels\Generated\BaseViewModel.csh.liquid" />
     <EmbeddedResource Include="Templates\WebApi\Extensions\CrudStartupExtensions.csh.liquid" />

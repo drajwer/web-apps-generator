@@ -1,0 +1,11 @@
+﻿using System.Net;
+
+namespace {{Params.CoreProjectName}}.Exceptions
+{
+    public class BadRequestException : BusinessException
+    {
+        public BadRequestException(string message) : base(message, HttpStatusCode.BadRequest)
+        {
+        }
+    }
+}

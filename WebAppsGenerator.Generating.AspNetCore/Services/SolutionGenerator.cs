@@ -12,7 +12,7 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
     /// </summary>
     public class SolutionGenerator : IGenerator
     {
-        private const bool IsEnabled = false;
+        private const bool IsEnabled = true;
 
         private readonly ICommandLineService _commandLineService;
         private readonly IGenerator _webApiProjectGenerator;

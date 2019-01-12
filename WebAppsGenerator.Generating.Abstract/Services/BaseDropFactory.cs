@@ -30,7 +30,7 @@ namespace WebAppsGenerator.Generating.Abstract.Services
 
         public virtual List<BaseDrop> CreateDropList(string dropId, IEnumerable<Entity> entities)
         {
-            throw new NotImplementedException();
+            throw new ArgumentOutOfRangeException($"Cannot create drop for {dropId}");
         }
     }
 }

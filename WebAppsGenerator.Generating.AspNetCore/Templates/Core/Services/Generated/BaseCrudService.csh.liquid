@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
+using {{Params.CoreProjectName}}.Exceptions;
 using {{Params.CoreProjectName}}.Interfaces;
 using {{Params.CoreProjectName}}.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace {{Params.CoreProjectName}}.Services.Generated
 {
@@ -22,7 +23,7 @@ namespace {{Params.CoreProjectName}}.Services.Generated
 			RepoSet = repoSet;
         }
 
-        public {{Params.Entity.Name}} Create({{Params.Entity.Name}} entity)
+        public virtual {{Params.Entity.Name}} Create({{Params.Entity.Name}} entity)
         {
 			{%- for prop in Params.Entity.Fields -%}
 				{%- unless prop.Relation == nil -%}
@@ -35,20 +36,12 @@ namespace {{Params.CoreProjectName}}.Services.Generated
             return Get(entity.Id);
         }
 
-        public void Delete({{Params.Entity.IdField.Type.Name}} id)
-        {
-            var entity = Get(id);
-            if(entity == null)
-                throw new ArgumentException($"{{Params.Entity.Name}} with id {id} does not exists.");
-            Repo.Delete(entity);
-        }
-
-        public {{Params.Entity.Name}} Get({{Params.Entity.IdField.Type.Name}} id)
+        public virtual {{Params.Entity.Name}} Get({{Params.Entity.IdField.Type.Name}} id)
         {
             return Repo.Get(id);
         }
 
-        public {{Params.Entity.Name}} GetWithChildren({{Params.Entity.IdField.Type.Name}} id)
+        public virtual {{Params.Entity.Name}} GetWithChildren({{Params.Entity.IdField.Type.Name}} id)
         {
             return Repo.GetAll()
 			{%- for prop in Params.Entity.Fields -%}
@@ -61,16 +54,16 @@ namespace {{Params.CoreProjectName}}.Services.Generated
                 .FirstOrDefault(e => e.Id == id);
         }
 
-        public IQueryable<{{Params.Entity.Name}}> GetAll()
+        public virtual IQueryable<{{Params.Entity.Name}}> GetAll()
         {
             return Repo.GetAll();
         }
 
-        public {{Params.Entity.Name}} Update({{Params.Entity.IdField.Type.Name}} id, {{Params.Entity.Name}} entity)
+        public virtual {{Params.Entity.Name}} Update({{Params.Entity.IdField.Type.Name}} id, {{Params.Entity.Name}} entity)
         {
             var dbEntity = GetWithChildren(id);
             if (dbEntity == null)
-                throw new ArgumentException($"{{Params.Entity.Name}} with id {id} does not exists.");
+                throw new BadRequestException($"{{Params.Entity.Name}} with id {id} does not exists.");
 			
             UpdateSimpleProperties(entity, dbEntity);
             {%- for prop in Params.Entity.Fields -%}
@@ -84,6 +77,14 @@ namespace {{Params.CoreProjectName}}.Services.Generated
             Repo.Update(dbEntity);
 
             return Get(id);
+        }
+
+		public virtual void Delete({{Params.Entity.IdField.Type.Name}} id)
+        {
+            var entity = Get(id);
+            if(entity == null)
+                throw new BadRequestException($"{{Params.Entity.Name}} with id {id} does not exists.");
+            Repo.Delete(entity);
         }
 
 		{%- for prop in Params.Entity.Fields -%}

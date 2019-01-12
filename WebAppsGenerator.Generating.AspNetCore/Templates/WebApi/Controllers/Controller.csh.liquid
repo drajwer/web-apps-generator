@@ -79,6 +79,7 @@ namespace {{Params.WebApiProjectName}}.Controllers
         /// <param name="value">{{Params.Entity.Name}} that should replace the old version</param>
         /// <returns>Requested {{ Params.Entity.Name | SplitCamelCase }}</returns>
         /// <response code="200">Returns the updated item</response>
+		/// <response code="400">If {{ Params.Entity.Name | SplitCamelCase }} with given id does not exist</response>
 		[HttpPut("{id}")] // PUT api/{{ Params.Entity.PluralName | Downcase }}/{%- if Params.Entity.IdField.Type.Name == 'int' -%}5{%- else -%}some-string-id{%- endif %}
         [ProducesResponseType(typeof({{Params.Entity.Name}}ViewModel), 200)]
         public IActionResult Put({{Params.Entity.IdField.Type.Name}} id, [FromBody] {{Params.Entity.Name}}ViewModel value)
@@ -100,6 +101,7 @@ namespace {{Params.WebApiProjectName}}.Controllers
         /// <param name="id">Id of deleted {{ Params.Entity.Name | SplitCamelCase }}</param>
         /// <returns>Id of deleted {{ Params.Entity.Name | SplitCamelCase }}</returns>
         /// <response code="200">Returns id of deleted {{ Params.Entity.Name | SplitCamelCase }}</response>
+		/// <response code="400">If {{ Params.Entity.Name | SplitCamelCase }} with given id does not exist</response>
         [HttpDelete("{id}")] // DELETE api/{{ Params.Entity.PluralName | Downcase }}/{%- if Params.Entity.IdField.Type.Name == 'int' -%}5{%- else -%}some-string-id{%- endif %}
         [ProducesResponseType(typeof({{Params.Entity.IdField.Type.Name}}),200)]
         public IActionResult Delete({{Params.Entity.IdField.Type.Name}} id)
