@@ -1,11 +1,12 @@
 ﻿using Antlr4.Runtime;
-using WebAppsGenerator.Core.Files.FileSrevices;
+using WebAppsGenerator.Core.Files.Services;
+using WebAppsGenerator.Core.Interfaces;
 
 namespace WebAppsGenerator.Core.Grammar.ErrorListeners
 {
     public class SneakParserErrorListener: SneakBaseErrorListener<IToken>
     {
-        public SneakParserErrorListener(IFileService fileService): base(fileService)
+        public SneakParserErrorListener(IExceptionHandler exceptionHandler) : base(exceptionHandler)
         {
         }
     }

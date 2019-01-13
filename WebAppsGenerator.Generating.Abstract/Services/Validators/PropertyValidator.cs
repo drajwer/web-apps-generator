@@ -51,9 +51,13 @@ namespace WebAppsGenerator.Generating.Abstract.Services.Validators
         /// <param name="entities"></param>
         private void ValidateIdExistence(IEnumerable<Entity> entities)
         {
-            if (entities.Any(entity => entity.Fields.Exists(f => f.Name.ToLowerInvariant() == "id")))
+            foreach (var entity in entities)
             {
-                _exceptionHandler.ThrowException(new IdPropExistsException());
+                foreach (var entityField in entity.Fields)
+                {
+                    if (entityField.Name.ToLowerInvariant() == "id")
+                        _exceptionHandler.ThrowException(new IdPropExistsException(entityField));
+                }
             }
         }
     }

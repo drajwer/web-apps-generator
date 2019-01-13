@@ -45,6 +45,7 @@ namespace WebAppsGenerator.Console
             services.AddScoped<ICommandLineService, CommandLineService>();
             services.AddScoped<IExceptionHandler, QueuedExceptionHandler>(b => b.GetService<QueuedExceptionHandler>());
             services.AddScoped<QueuedExceptionHandler>();
+            services.AddScoped<ParsingExceptionWriter>();
             services.AddScoped<IFilesProvider>(builder => new DeepDirectoryFilesProvider("./../../../TestDir", "sn"));
 
             // Options

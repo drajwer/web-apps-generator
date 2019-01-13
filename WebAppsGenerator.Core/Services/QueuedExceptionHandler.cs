@@ -12,10 +12,12 @@ namespace WebAppsGenerator.Core.Services
     /// </summary>
     public class QueuedExceptionHandler : IExceptionHandler
     {
+        private readonly ParsingExceptionWriter _exceptionWriter;
         public Queue<ParsingException> ParsingExceptions { get; set; }
 
-        public QueuedExceptionHandler()
+        public QueuedExceptionHandler(ParsingExceptionWriter exceptionWriter)
         {
+            _exceptionWriter = exceptionWriter;
             ParsingExceptions = new Queue<ParsingException>();
         }
 
@@ -31,12 +33,13 @@ namespace WebAppsGenerator.Core.Services
             }
         }
 
+        /// <summary>
+        /// Writes all queued exceptions and flushes the queue.
+        /// </summary>
         public void WriteExceptions()
         {
-            foreach (var exception in ParsingExceptions)
-            {
-                Console.WriteLine($"ERROR: ({exception.LineNumber}, {exception.CharPositionInLine}): {exception.Message}");
-            }
+            _exceptionWriter.WriteExceptions(ParsingExceptions);
+            ParsingExceptions = new Queue<ParsingException>();
         }
     }
 }

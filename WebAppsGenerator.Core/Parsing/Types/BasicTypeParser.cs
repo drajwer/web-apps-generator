@@ -1,4 +1,5 @@
 ﻿using WebAppsGenerator.Core.Exceptions;
+using WebAppsGenerator.Core.Interfaces;
 using WebAppsGenerator.Core.Models;
 using Type = WebAppsGenerator.Core.Models.Type;
 
@@ -11,19 +12,24 @@ namespace WebAppsGenerator.Core.Parsing.Types
         private const string DateType = "date";
         private const string StringType = "string";
         private const string BoolType = "bool";
+        private readonly IExceptionHandler _exceptionHandler;
 
-        public bool IsSimpleType(string type) => ParseTypeKind(type) != TypeKind.Entity;
+        public BasicTypeParser(IExceptionHandler exceptionHandler)
+        {
+            _exceptionHandler = exceptionHandler;
+        }
 
         public Type ParseTypeName(string typeName, int lineNo, int charNo)
         {
-            var kind = ParseTypeKind(typeName);
-            var type = new Type(lineNo, charNo) { BaseTypeKind = kind, FullTypeName = typeName };
-            EnsureArrayAndNullable(typeName, kind);
+            var type = new Type(lineNo, charNo) {  FullTypeName = typeName };
+            var kind = ParseTypeKind(type);
+            type.BaseTypeKind = kind;
+            EnsureArrayAndNullable(type);
 
             if (kind == TypeKind.Entity)
             {
                 type.IsArray = IsArrayType(typeName);
-                type.EntityName = GetBaseType(typeName);
+                type.EntityName = GetBaseType(type);
             }
             else
             {
@@ -33,7 +39,7 @@ namespace WebAppsGenerator.Core.Parsing.Types
             return type;
         }
 
-        private TypeKind ParseTypeKind(string type)
+        private TypeKind ParseTypeKind(Type type)
         {
             string baseType = GetBaseType(type).ToLower();
             switch (baseType)
@@ -53,36 +59,40 @@ namespace WebAppsGenerator.Core.Parsing.Types
             }
         }
 
-        private static string GetBaseType(string type)
+        private string GetBaseType(Type type)
         {
-            if (type.EndsWith("[]"))
+            var typeName = type.FullTypeName;
+            if (typeName.EndsWith("[]"))
             {
-                var baseType = type.TrimEnd(']').TrimEnd('[');
+                var baseType = typeName.TrimEnd(']').TrimEnd('[');
                 EnsureBaseType(type, baseType);
                 return baseType;
             }
-            if (type.EndsWith('?'))
+            if (typeName.EndsWith('?'))
             {
-                var baseType = type.TrimEnd('?');
+                var baseType = typeName.TrimEnd('?');
                 EnsureBaseType(type, baseType);
                 return baseType;
             }
 
-            EnsureBaseType(type, type);
-            return type;
+            EnsureBaseType(type, typeName);
+            return typeName;
         }
 
-        private void EnsureArrayAndNullable(string type, TypeKind kind)
+        private void EnsureArrayAndNullable(Type type)
         {
-            if (kind == TypeKind.Entity && type.EndsWith("?"))
-                throw new InvalidTypeParsingException(type);
-            if (kind != TypeKind.Entity && type.EndsWith("[]"))
-                throw new InvalidTypeParsingException(type);
+            var kind = type.BaseTypeKind;
+            var typeName = type.FullTypeName;
+
+            if (kind == TypeKind.Entity && typeName.EndsWith("?"))
+                _exceptionHandler.ThrowException(new InvalidTypeParsingException(type));
+            if (kind != TypeKind.Entity && typeName.EndsWith("[]"))                   
+                _exceptionHandler.ThrowException(new InvalidTypeParsingException(type));
         }
-        private static void EnsureBaseType(string type, string baseType)
+        private void EnsureBaseType(Type type, string baseType)
         {
             if (baseType.EndsWith('?') || baseType.EndsWith(']') || baseType.EndsWith('['))
-                throw new InvalidTypeParsingException(type);
+                _exceptionHandler.ThrowException(new InvalidTypeParsingException(type));
         }
 
         private static bool IsArrayType(string typeName)

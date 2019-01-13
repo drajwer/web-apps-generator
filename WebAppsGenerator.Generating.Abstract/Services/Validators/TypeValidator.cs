@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using WebAppsGenerator.Core.Exceptions;
+using WebAppsGenerator.Core.Interfaces;
 using WebAppsGenerator.Core.Models;
 using WebAppsGenerator.Generating.Abstract.Interfaces;
 
@@ -13,6 +14,12 @@ namespace WebAppsGenerator.Generating.Abstract.Services.Validators
     /// </summary>
     public class TypeValidator : IValidator
     {
+        private readonly IExceptionHandler _exceptionHandler;
+
+        public TypeValidator(IExceptionHandler exceptionHandler)
+        {
+            _exceptionHandler = exceptionHandler;
+        }
         public void Validate(IEnumerable<Entity> entities)
         {
             entities = entities.ToList();
@@ -23,7 +30,7 @@ namespace WebAppsGenerator.Generating.Abstract.Services.Validators
                 foreach (var prop in entity.Fields)
                 {
                     if (prop.Type.BaseTypeKind == TypeKind.Entity && !declaredClasses.Contains(prop.Type.EntityName))
-                        throw new UnknownTypeException(prop.Type.EntityName);
+                        _exceptionHandler.ThrowException(new UnknownTypeException(prop.Type));
                 }
             }
         }

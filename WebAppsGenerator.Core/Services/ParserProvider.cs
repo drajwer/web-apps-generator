@@ -2,20 +2,21 @@
 using System.Collections.Generic;
 using System.Text;
 using Antlr4.Runtime;
-using WebAppsGenerator.Core.Files.FileSrevices;
+using WebAppsGenerator.Core.Files.Services;
 using WebAppsGenerator.Core.Grammar.ErrorListeners;
+using WebAppsGenerator.Core.Interfaces;
 
 namespace WebAppsGenerator.Core.Services
 {
     public class ParserProvider
     {
         private readonly LexerProvider _lexerProvider;
-        private readonly ConcatFileService _concatFileService;
+        private readonly IExceptionHandler _exceptionHandler;
 
-        public ParserProvider(LexerProvider lexerProvider, ConcatFileService concatFileService)
+        public ParserProvider(LexerProvider lexerProvider, IExceptionHandler exceptionHandler)
         {
             _lexerProvider = lexerProvider;
-            _concatFileService = concatFileService;
+            _exceptionHandler = exceptionHandler;
         }
 
         public SneakParser CreateParser()
@@ -25,7 +26,7 @@ namespace WebAppsGenerator.Core.Services
 
             var parser = new SneakParser(commonTokenStream);
             parser.RemoveErrorListeners();
-            parser.AddErrorListener(new SneakParserErrorListener(_concatFileService));
+            parser.AddErrorListener(new SneakParserErrorListener(_exceptionHandler));
 
             return parser;
         }

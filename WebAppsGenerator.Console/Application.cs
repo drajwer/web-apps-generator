@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using WebAppsGenerator.Core.Helpers;
 using WebAppsGenerator.Core.Interfaces;
 using WebAppsGenerator.Core.Services;
 using WebAppsGenerator.Generating.Abstract.Services;
@@ -22,16 +23,23 @@ namespace WebAppsGenerator.Console
 
         public void Run()
         {
+            ConsoleHelper.WriteInfo("Start building...");
             var entities = _modelProvider.CreateModel();
             _validator.Validate(entities);
 
             if (_exceptionHandler.ParsingExceptions.Any())
             {
+                ConsoleHelper.WriteInfo("Build failed. See errors below.");
                 _exceptionHandler.WriteExceptions();
+
                 return;
             }
 
+            ConsoleHelper.WriteInfo("Build succeeded.");
+            ConsoleHelper.WriteInfo("Start generating...");
+   
             _generator.Generate(entities);
+            ConsoleHelper.WriteInfo("Generating finished.");
         }
     }
 }

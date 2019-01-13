@@ -1,10 +1,11 @@
-﻿using System;
+﻿
+using WebAppsGenerator.Core.Models;
 
 namespace WebAppsGenerator.Core.Exceptions
 {
-    public class InvalidTypeParsingException : Exception
+    public class InvalidTypeParsingException : ParsingException
     {
-        public InvalidTypeParsingException(string typeName) : base($"Invalid type: {typeName}")
+        public InvalidTypeParsingException(Type type) : base($"Invalid type: {type.FullTypeName}", type)
         {
         }
     }

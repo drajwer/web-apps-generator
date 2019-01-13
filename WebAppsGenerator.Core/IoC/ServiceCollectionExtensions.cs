@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Extensions.DependencyInjection;
-using WebAppsGenerator.Core.Files.FileSrevices;
+using WebAppsGenerator.Core.Files.Services;
 using WebAppsGenerator.Core.Grammar;
 using WebAppsGenerator.Core.Interfaces;
 using WebAppsGenerator.Core.Parsing.Annotations;
