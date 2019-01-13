@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="config.WebUi.json" />
     <None Remove="template-config.json" />
     <None Remove="Templates\run.ps1.liquid" />
     <None Remove="Templates\WebUI\package-lock.json.liquid" />
@@ -46,6 +47,12 @@
     <None Remove="Templates\WebUI\src\screens\TestPage\TestPage.tsx.liquid" />
     <None Remove="Templates\WebUI\src\vendors\http.tsx.liquid" />
     <None Remove="Templates\WebUI\tslint.json.liquid" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="config.WebUi.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

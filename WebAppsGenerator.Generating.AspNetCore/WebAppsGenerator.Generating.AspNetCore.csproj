@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="config.json" />
+    <None Remove="config.AspNetCore.json" />
     <None Remove="template-config.json" />
     <None Remove="Templates\Core\AppDbContext.liquid" />
     <None Remove="Templates\Core\BaseCrudService.liquid" />
@@ -71,7 +71,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="config.json">
+    <Content Include="config.AspNetCore.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

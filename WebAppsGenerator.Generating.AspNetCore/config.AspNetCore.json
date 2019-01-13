@@ -1,0 +1,34 @@
+{
+    "GeneratorOptions": {
+        "OutputPath": "Output",
+        "ProjectName": "Library",
+        "CoreProjectPackages": [
+            {
+                "Name": "Microsoft.EntityFrameworkCore",
+                "Version": "2.1.4"
+            },
+            {
+                "Name": "Microsoft.EntityFrameworkCore.SqlServer",
+                "Version": "2.1.4"
+            }
+        ]
+    },
+    "AllowedAnnotationsCore": {
+        "Annotations": [
+            {
+                "IsClassAnnotation": false,
+                "Name": "InverseProperty",
+                "Params": [
+                    {
+                        "Name": "Name",
+                        "Type": "string"
+                    }
+                ],
+                "AllowedPropTypeKinds": [
+                    "Entity"
+                ],
+                "AllowNoParams": false,
+            }
+        ]
+    }
+}

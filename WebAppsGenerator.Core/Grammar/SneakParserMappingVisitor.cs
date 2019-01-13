@@ -91,9 +91,6 @@ namespace WebAppsGenerator.Core.Grammar
         {
             var annotation = VisitAnnotation(context) as Annotation;
 
-            if (annotation != null)
-                annotation.IsClassAnnotation = true;
-
             return annotation;
         }
 

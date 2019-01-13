@@ -32,11 +32,12 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
 
         public void Generate(IEnumerable<Entity> entities)
         {
-            if(!IsEnabled)
-                return;
 
             if (entities == null)
                 throw new ArgumentNullException();
+
+            if (!IsEnabled)
+                return;
 
             CreateSolutionWithProjects();
 

@@ -21,7 +21,9 @@ namespace WebAppsGenerator.Console
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("config.json", optional: false, reloadOnChange: true);
+                .AddJsonFile("config.main.json", optional: false, reloadOnChange: true)
+                .AddJsonFile("config.WebUi.json", optional: false, reloadOnChange: true)
+                .AddJsonFile("config.AspNetCore.json", optional: false, reloadOnChange: true);
             Configuration = builder.Build();
         }
 
@@ -50,7 +52,9 @@ namespace WebAppsGenerator.Console
 
             // Options
             services.AddOptions();
-            services.AddConfigurationOptions(Configuration);
+            services.Configure<AnnotationOptions>(Configuration.GetSection("AllowedAnnotationsCommon"));
+            services.AddAspNetCoreConfigurationOptions(Configuration);
+            services.AddWebUiConfigurationOptions(Configuration);
         }
 
     }

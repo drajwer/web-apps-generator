@@ -1,0 +1,56 @@
+{
+    "AllowedAnnotationsUi": {
+        "Annotations": [
+            {
+                "IsClassAnnotation": false,
+                "Name": "DisplayName",
+                "Params": [
+                    {
+                        "Name": "Name",
+                        "Type": "string"
+                    }
+                ],
+                "AllowNoParams": true
+            },
+            {
+                "IsClassAnnotation": true,
+                "Name": "DisplayName",
+                "Params": [
+                    {
+                        "Name": "Name",
+                        "Type": "string"
+                    }
+                ],
+                "AllowNoParams": true
+            },
+            {
+                "IsClassAnnotation": true,
+                "Name": "HideInMenu",
+                "Params": [],
+                "AllowNoParams": true
+            },
+            {
+                "IsClassAnnotation": false,
+                "Name": "DisplayInDropdown",
+                "Params": [],
+                "AllowNoParams": true
+            },
+            {
+                "IsClassAnnotation": false,
+                "Name": "Dropdown",
+                "Params": [],
+                "AllowedPropTypeKinds": [
+                    "Entity"
+                ],
+                "AllowNoParams": true
+            },
+            {
+                "IsClassAnnotation": false,
+                "Name": "DisplayInList",
+                "Params": [],
+                "AllowNoParams": true
+            }
+        ]
+    }
+
+}

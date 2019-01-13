@@ -1,0 +1,70 @@
+{
+    "AllowedAnnotationsCommon": {
+        "Annotations": [
+            {
+                "IsClassAnnotation": false,
+                "Name": "Length",
+                "Params": [
+                    {
+                        "Name": "Min",
+                        "Type": "int"
+                    },
+                    {
+                        "Name": "Max",
+                        "Type": "int"
+                    }
+                ],
+                "AllowNoParams": false,
+                "AllowedPropTypeKinds": [
+                    "string"
+                ]
+            },
+            {
+                "IsClassAnnotation": false,
+                "Name": "Range",
+                "Params": [
+                    {
+                        "Name": "Min",
+                        "Type": "int"
+                    },
+                    {
+                        "Name": "Max",
+                        "Type": "int"
+                    }
+                ],
+                "AllowNoParams": false,
+                "AllowedPropTypeKinds": [
+                    "int"
+                ]
+            },
+            {
+                "IsClassAnnotation": false,
+                "Name": "Range",
+                "IsRequired": true,
+                "Params": [
+                    {
+                        "Name": "Min",
+                        "Type": "float"
+                    },
+                    {
+                        "Name": "Max",
+                        "Type": "float"
+                    }
+                ],
+                "AllowNoParams": false,
+                "AllowedPropTypeKinds": [
+                    "float"
+                ]
+            },
+            {
+                "IsClassAnnotation": false,
+                "Name": "Required",
+                "Params": [],
+                "AllowedPropTypeKinds": [
+                    "Entity"
+                ],
+                "AllowNoParams": true,
+            }
+        ]
+    } 
+}
