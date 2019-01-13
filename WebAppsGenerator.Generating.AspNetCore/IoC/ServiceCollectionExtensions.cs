@@ -4,6 +4,7 @@ using WebAppsGenerator.Core.Interfaces;
 using WebAppsGenerator.Generating.Abstract.Interfaces;
 using WebAppsGenerator.Generating.Abstract.Options;
 using WebAppsGenerator.Generating.AspNetCore.Interfaces;
+using WebAppsGenerator.Generating.AspNetCore.Options;
 using WebAppsGenerator.Generating.AspNetCore.Services;
 
 namespace WebAppsGenerator.Generating.AspNetCore.IoC
@@ -16,7 +17,7 @@ namespace WebAppsGenerator.Generating.AspNetCore.IoC
 
             services.AddScoped<IGenerator>(provider =>
             {
-                var generatorConfiguration = provider.GetService<IGeneratorConfiguration>();
+                var generatorConfiguration = provider.GetService<AspNetCoreGeneratorConfiguration>();
                 var commandLineService = provider.GetService<ICommandLineService>();
                 var webApiGenerator = provider.GetService<WebApiProjectGenerator>();
                 var coreGenerator = provider.GetService<CoreProjectGenerator>();
@@ -30,7 +31,8 @@ namespace WebAppsGenerator.Generating.AspNetCore.IoC
         public static IServiceCollection AddAspNetCoreConfigurationOptions(this IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<AnnotationOptions>(configuration.GetSection("AllowedAnnotationsCore"));
-            services.Configure<GeneratorOptions>(configuration.GetSection("GeneratorOptions"));
+            services.Configure<AspNetCoreGeneratorOptions>(configuration.GetSection("GeneratorOptions"));
+            services.AddScoped<AspNetCoreGeneratorConfiguration>();
 
             return services;
         }

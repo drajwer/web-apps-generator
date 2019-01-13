@@ -29,6 +29,8 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
             File.Delete(sampleControllerPath);
 
             base.Generate(entities);
+            if (_generatorConfiguration.MigrationName == null)
+                return;
 
             _migrationService.AddMigration(_generatorConfiguration.MigrationName);
             _migrationService.UpdateDatabase();

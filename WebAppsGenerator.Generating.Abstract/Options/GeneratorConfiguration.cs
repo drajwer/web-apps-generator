@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Extensions.Options;
+using WebAppsGenerator.Core.Exceptions;
+using WebAppsGenerator.Core.Interfaces;
 using WebAppsGenerator.Generating.Abstract.Interfaces;
 
 namespace WebAppsGenerator.Generating.Abstract.Options
@@ -12,15 +14,24 @@ namespace WebAppsGenerator.Generating.Abstract.Options
         public string ProjectName { get; set; }
         public string OutputPath { get; set; }
         public string MigrationName { get; set; }
-        public List<NuGetPackageDetails> CoreProjectPackages { get; set; }
+        public bool RunAspNetCoreGen { get; set; }
+        public bool RunWebUiGen { get; set; }
+        public bool RunReactAppCreation { get; set; }
 
-        public GeneratorConfiguration(IOptions<GeneratorOptions> generatorOptions)
+        public GeneratorConfiguration(IOptions<GeneratorOptions> generatorOptions, IExceptionHandler exceptionHandler)
         {
             var options = generatorOptions.Value;
             ProjectName = options.ProjectName;
             OutputPath = options.OutputPath;
             MigrationName = options.MigrationName;
-            CoreProjectPackages = options.CoreProjectPackages;
+            RunAspNetCoreGen = options.RunAspNetCoreGen;
+            RunWebUiGen = options.RunWebUiGen;
+            RunReactAppCreation = options.RunReactAppCreation;
+
+            if (ProjectName == null)
+                exceptionHandler.ThrowException(new ParsingException("ProjectName must be specified in the config.", -1, -1));
+            if (OutputPath == null)
+                exceptionHandler.ThrowException(new ParsingException("OutputPath must be specified in the config.", -1, -1));
         }
     }
 }

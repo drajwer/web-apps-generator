@@ -5,6 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="config.main.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="config.main.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="DotLiquid" Version="2.0.298" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="2.1.1" />
     <PackageReference Include="PluralizeService.Core" Version="1.0.0.5" />

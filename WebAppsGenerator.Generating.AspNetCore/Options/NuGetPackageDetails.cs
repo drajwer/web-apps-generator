@@ -1,4 +1,4 @@
-﻿namespace WebAppsGenerator.Generating.Abstract.Options
+﻿namespace WebAppsGenerator.Generating.AspNetCore.Options
 {
     public class NuGetPackageDetails
     {

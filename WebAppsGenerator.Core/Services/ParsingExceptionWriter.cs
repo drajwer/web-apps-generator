@@ -35,8 +35,16 @@ namespace WebAppsGenerator.Core.Services
 
         private void WriteException(ParsingException exception)
         {
-            var lineInfo = _fileService.GetLineInfo(exception.LineNumber);
-            var errorMsg = $"ERROR in {lineInfo.FileName}, line: {lineInfo.LineNumber}, char: {exception.CharPositionInLine}: {exception.Message}";
+            string errorMsg;
+            if (exception.LineNumber < 0)
+            {
+                errorMsg = $"ERROR: {exception.Message}";
+            }
+            else
+            {
+                var lineInfo = _fileService.GetLineInfo(exception.LineNumber);
+                errorMsg = $"ERROR in {lineInfo.FileName}, line: {lineInfo.LineNumber}, char: {exception.CharPositionInLine}: {exception.Message}";
+            }
 
             if(_writer != null)
                 _writer.WriteLine(errorMsg);

@@ -1,7 +1,5 @@
 {
     "GeneratorOptions": {
-        "OutputPath": "Output",
-        "ProjectName": "Library",
         "CoreProjectPackages": [
             {
                 "Name": "Microsoft.EntityFrameworkCore",

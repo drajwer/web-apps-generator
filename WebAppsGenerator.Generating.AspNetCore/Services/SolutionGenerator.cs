@@ -4,6 +4,7 @@ using WebAppsGenerator.Core.Interfaces;
 using WebAppsGenerator.Core.Models;
 using WebAppsGenerator.Generating.Abstract.Interfaces;
 using WebAppsGenerator.Generating.Abstract.Options;
+using WebAppsGenerator.Generating.AspNetCore.Options;
 
 namespace WebAppsGenerator.Generating.AspNetCore.Services
 {
@@ -17,10 +18,10 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
         private readonly ICommandLineService _commandLineService;
         private readonly IGenerator _webApiProjectGenerator;
         private readonly IGenerator _coreProjectGenerator;
-        private readonly IGeneratorConfiguration _generatorConfiguration;
+        private readonly AspNetCoreGeneratorConfiguration _generatorConfiguration;
         private readonly SolutionPathService _pathService;
 
-        public SolutionGenerator(IGeneratorConfiguration generatorConfiguration, ICommandLineService commandLineService,
+        public SolutionGenerator(AspNetCoreGeneratorConfiguration generatorConfiguration, ICommandLineService commandLineService,
             IGenerator webApiProjectGenerator, IGenerator coreProjectGenerator)
         {
             _commandLineService = commandLineService;
@@ -32,12 +33,11 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
 
         public void Generate(IEnumerable<Entity> entities)
         {
+            if (!_generatorConfiguration.RunAspNetCoreGen)
+                return;
 
             if (entities == null)
                 throw new ArgumentNullException();
-
-            if (!IsEnabled)
-                return;
 
             CreateSolutionWithProjects();
 

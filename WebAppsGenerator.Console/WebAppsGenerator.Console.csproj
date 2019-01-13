@@ -6,13 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="config.main.json" />
     <None Remove="SneakLexer.g4" />
+    <None Remove="TestDir\config.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="config.main.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Content Include="TestDir\config.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
     <ItemGroup>

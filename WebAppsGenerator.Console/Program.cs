@@ -7,7 +7,11 @@ namespace WebAppsGenerator.Console
     {
         private static void Main(string[] args)
         {
-            var startup = new Startup(args);
+            var options = ArgsParser.ParseArguments(args);
+            if (options == null)
+                return;
+
+            var startup = new Startup(options);
             var serviceProvider = ConfigureServices(startup);
 
             var application = serviceProvider.GetService<Application>();

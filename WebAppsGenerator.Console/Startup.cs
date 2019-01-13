@@ -1,7 +1,9 @@
 ﻿using System.IO;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using WebAppsGenerator.Core.Files.Providers;
+using WebAppsGenerator.Core.Helpers;
 using WebAppsGenerator.Core.Interfaces;
 using WebAppsGenerator.Core.IoC;
 using WebAppsGenerator.Core.Services;
@@ -16,9 +18,12 @@ namespace WebAppsGenerator.Console
     public class Startup
     {
         public IConfiguration Configuration { get; set; }
+        private readonly GeneratorOptions _options;
 
-        public Startup(string[] args)
+        public Startup(GeneratorOptions options)
         {
+            _options = options;
+
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("config.main.json", optional: false, reloadOnChange: true)
@@ -48,11 +53,12 @@ namespace WebAppsGenerator.Console
             services.AddScoped<IExceptionHandler, QueuedExceptionHandler>(b => b.GetService<QueuedExceptionHandler>());
             services.AddScoped<QueuedExceptionHandler>();
             services.AddScoped<ParsingExceptionWriter>();
-            services.AddScoped<IFilesProvider>(builder => new DeepDirectoryFilesProvider("./../../../TestDir", "sn"));
+            services.AddScoped<IFilesProvider>(builder => new DeepDirectoryFilesProvider(_options.InputPath, "sn"));
 
             // Options
             services.AddOptions();
             services.Configure<AnnotationOptions>(Configuration.GetSection("AllowedAnnotationsCommon"));
+            services.AddScoped<IOptions<GeneratorOptions>>(b => new OptionsWrapper<GeneratorOptions>(_options));
             services.AddAspNetCoreConfigurationOptions(Configuration);
             services.AddWebUiConfigurationOptions(Configuration);
         }
