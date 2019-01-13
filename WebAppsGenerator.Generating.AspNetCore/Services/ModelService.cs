@@ -61,9 +61,13 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
                 List<FieldDrop> fieldsToAdd = new List<FieldDrop>();
                 foreach (var relationField in relationFields)
                 {
+                    if (relationField.Relation != null && relationField.Relation.HasOneWithOne && !relationField.Relation.Primary)
+                        continue;
+
                     var referencedEntity = entities.First(e => e.Name == relationField.Type.EntityName);
                     var referencedIdField = referencedEntity.Fields.First(e => e.Name == EntitiesFixer.Id);
-
+                    var currentField = entities.FirstOrDefault(e => e.Name == entityDrop.Name)?.Fields
+                        .FirstOrDefault(f => f.Name == relationField.Name);
                     
                     var idField = new Field(-1, -1)
                     {
@@ -73,6 +77,7 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
                             BaseTypeKind = referencedIdField.Type.BaseTypeKind,
                             IsNullable = !entityDrop.IsJoinModel
                         },
+                        Annotations = currentField?.Annotations
                     };
                     var drop = new WebApiAnnotatedFieldDrop(idField) {Relation = relationField.Relation};
                     fieldsToAdd.Add(drop);

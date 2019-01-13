@@ -16,8 +16,10 @@ namespace {{Params.CoreProjectName}}.Models
 		[MaxLength({{prop.LengthRange.Max}})]
 					{%- endunless -%}
 				{%- endif -%}
-			{%- endif -%}
 		public {{ prop.Type.Name }} {{ prop.Name }} { get; set; }
+			{%- else -%}
+		public virtual {{ prop.Type.Name }} {{ prop.Name }} { get; set; }
+			{%- endif -%}
 		{%- endfor -%}
 	}
 }

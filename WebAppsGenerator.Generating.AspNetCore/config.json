@@ -2,7 +2,6 @@
     "GeneratorOptions": {
         "OutputPath": "Output",
         "ProjectName": "Library",
-        "MigrationName": "AddedShoeSizeToPerson",
         "CoreProjectPackages": [
             {
                 "Name": "Microsoft.EntityFrameworkCore",

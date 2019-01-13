@@ -94,6 +94,16 @@ namespace {{Params.CoreProjectName}}.Services.Generated
         {
             {%- if prop.Relation.HasManyWithOne -%}
 			entity.{{prop.Name}} = entity.{{prop.Name}}?.Select(e => RepoSet.{{prop.Type.EntityName}}Repo.Get(e.Id)).ToList();
+			{%- elsif prop.Relation.HasOneWithOne -%}
+				{%- unless prop.Relation.Primary -%}
+			if (entity.{{prop.Name}} == null)
+                return;
+
+            var id = entity.{{prop.Name}}.Id;
+            entity.{{prop.Name}} = RepoSet.{{prop.Type.EntityName}}Repo.Get(id);
+            if (entity.{{prop.Name}} == null)
+                throw new BadRequestException($"{{prop.Type.EntityName | SplitCamelCase}} with id {id} not found");
+				{%- endunless -%}
 			{%- endif -%}
         }
 
@@ -114,6 +124,21 @@ namespace {{Params.CoreProjectName}}.Services.Generated
 				return;
             var children = entity.{{prop.Name}}?.Select(s => RepoSet.{{prop.Type.EntityName}}Repo.Get(s.Id)).ToList();
 			dbEntity.{{prop.Name}} = children;
+			{%- elsif prop.Relation.HasOneWithOne -%}
+				{%- unless prop.Relation.Primary -%}
+			if (entity.{{prop.Name}} == null)
+			{
+				dbEntity.{{prop.Name}} = null;
+				return;
+			}
+
+            var id = entity.{{prop.Name}}.Id;
+            dbEntity.{{prop.Name}} = RepoSet.{{prop.Type.EntityName}}Repo.Get(id);
+            if (dbEntity.{{prop.Name}} == null)
+                throw new BadRequestException($"{{prop.Type.EntityName | SplitCamelCase}} with id {id} not found");
+				{%- else -%}
+			dbEntity.{{prop.Name}}Id = entity.{{prop.Name}}Id;
+				{%- endunless -%}
 			{%- else -%}
 			dbEntity.{{prop.Name}}Id = entity.{{prop.Name}}Id;
 			{%- endif -%}
