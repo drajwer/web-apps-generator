@@ -42,7 +42,13 @@ import {{ field.Type.EntityName }}Dropdown from 'src/components/Dropdowns/{{ fie
 		{%- endif -%}
 	{%- endif -%}
 {%- endfor -%}
-import { IProps, IState } from './{{Params.Entity.Name}}FormData';
+{%- for field in Params.Entity.Fields -%}
+		{%- if field.Relation.HasOne or field.Relation.HasMany -%}
+import { IState} from './{{Params.Entity.Name}}FormData';
+			{%- break -%}
+		{%- endif -%}
+{%- endfor -%}
+import { IProps} from './{{Params.Entity.Name}}FormData';
 export { {{Params.Entity.Name}}ValidationErrors } from './{{Params.Entity.Name}}FormData';
 {%- assign renderValidateAll = false -%}
 {%- for field in Params.Entity.Fields -%}
