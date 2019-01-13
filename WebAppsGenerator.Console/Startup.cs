@@ -43,7 +43,8 @@ namespace WebAppsGenerator.Console
             // Specific implementations
             services.AddScoped<IGeneratorConfiguration, GeneratorConfiguration>();
             services.AddScoped<ICommandLineService, CommandLineService>();
-            services.AddScoped<IExceptionHandler, ImmediateExceptionHandler>();
+            services.AddScoped<IExceptionHandler, QueuedExceptionHandler>(b => b.GetService<QueuedExceptionHandler>());
+            services.AddScoped<QueuedExceptionHandler>();
             services.AddScoped<IFilesProvider>(builder => new DeepDirectoryFilesProvider("./../../../TestDir", "sn"));
 
             // Options

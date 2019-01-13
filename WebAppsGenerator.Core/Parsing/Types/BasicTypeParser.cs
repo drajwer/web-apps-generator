@@ -14,10 +14,10 @@ namespace WebAppsGenerator.Core.Parsing.Types
 
         public bool IsSimpleType(string type) => ParseTypeKind(type) != TypeKind.Entity;
 
-        public Type ParseTypeName(string typeName)
+        public Type ParseTypeName(string typeName, int lineNo, int charNo)
         {
             var kind = ParseTypeKind(typeName);
-            var type = new Type() { BaseTypeKind = kind, FullTypeName = typeName };
+            var type = new Type(lineNo, charNo) { BaseTypeKind = kind, FullTypeName = typeName };
             EnsureArrayAndNullable(typeName, kind);
 
             if (kind == TypeKind.Entity)

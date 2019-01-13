@@ -5,14 +5,14 @@ using System.Text;
 namespace WebAppsGenerator.Core.Interfaces
 {
     /// <summary>
-    /// Provides gathering exception for later processing.
+    /// Provides gathering exception for processing.
     /// </summary>
     public interface IExceptionHandler
     {
         /// <summary>
-        /// Add exception for later processing.
+        /// Add exception for processing.
         /// </summary>
-        /// <param name="e"></param>
+        /// <param name="e">Exception to be processed</param>
         void ThrowException(Exception e);
     }
 }

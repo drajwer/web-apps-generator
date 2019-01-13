@@ -39,7 +39,7 @@ namespace WebAppsGenerator.Generating.Abstract.Services.Validators
                 foreach (var entityField in entity.Fields)
                 {
                     if (dict.Contains(entityField.Name))
-                        _exceptionHandler.ThrowException(new MultiplePropException(entityField.Name, entity.Name));
+                        _exceptionHandler.ThrowException(new MultiplePropException(entityField, entity.Name));
                     dict.Add(entityField.Name);
                 }
             }

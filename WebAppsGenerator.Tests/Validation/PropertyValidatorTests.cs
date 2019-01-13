@@ -66,19 +66,19 @@ namespace WebAppsGenerator.Tests.Validation
         {
             return new List<Entity>()
             {
-                new Entity()
+                new Entity(-1, -1)
                 {
                     Fields = new List<Field>()
                     {
-                        new Field()
+                        new Field(-1, -1)
                         {
                             Name = "Test",
-                            Type = new Type() {BaseTypeKind = TypeKind.Int}
+                            Type = new Type(-1, -1) {BaseTypeKind = TypeKind.Int}
                         },
-                        new Field()
+                        new Field(-1, -1)
                         {
                             Name = uniqueProps ? "Other" : "Test",
-                            Type = new Type() {BaseTypeKind = TypeKind.Int}
+                            Type = new Type(-1, -1) {BaseTypeKind = TypeKind.Int}
                         },
                     }
                 }

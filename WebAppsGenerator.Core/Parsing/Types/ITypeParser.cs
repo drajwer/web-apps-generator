@@ -5,6 +5,6 @@ namespace WebAppsGenerator.Core.Parsing.Types
     public interface ITypeParser
     {
         bool IsSimpleType(string type);
-        Type ParseTypeName(string typeName);
+        Type ParseTypeName(string typeName, int lineNo, int charNo);
     }
 }

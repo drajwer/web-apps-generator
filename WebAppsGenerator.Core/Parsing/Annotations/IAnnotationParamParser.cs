@@ -4,6 +4,6 @@ namespace WebAppsGenerator.Core.Parsing.Annotations
 {
     public interface IAnnotationParamParser
     {
-        AnnotationParam ParseAnnotationParam(string name, string valueString);
+        AnnotationParam ParseAnnotationParam(string name, string valueString, int lineNo, int charNo);
     }
 }

@@ -34,11 +34,11 @@ namespace WebAppsGenerator.Core.Services
             {
                 if (entity.Fields.All(f => f.Name != Id))
                 {
-                    entity.Fields.Add(new Field()
+                    entity.Fields.Add(new Field(-1, -1)
                     {
                         Name = Id,
                         Annotations = new List<Annotation>(),
-                        Type = new Models.Type()
+                        Type = new Models.Type(-1, -1)
                         {
                             FullTypeName = "int",
                             BaseTypeKind = TypeKind.Int,

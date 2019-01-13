@@ -19,7 +19,7 @@ namespace WebAppsGenerator.Core.Grammar.ErrorListeners
         {
             var lineInfo = FileService.GetLineInfo(line);
 
-            throw new ParsingException($"File {lineInfo.FileName}, line {lineInfo.LineNumber}: {charPositionInLine} + {msg}");
+            throw new ParsingException(msg, line, charPositionInLine);
         }
     }
 }

@@ -64,7 +64,7 @@ namespace WebAppsGenerator.Tests.Generating.AspNetCore
             // Arrange
             _configuration.ProjectName = "TestProject";
             _configuration.OutputPath = "test/some/path";
-            var entity = new Entity();
+            var entity = new Entity(-1, -1);
 
             // Act
             _generator.Generate(new List<Entity>() { entity });
