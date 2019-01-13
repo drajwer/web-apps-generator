@@ -36,7 +36,7 @@ namespace WebAppsGenerator.Generating.AspNetCore.Models.Templating
                     typeName = "double";
                     break;
                 case TypeKind.DateTime:
-                    typeName = "DateTime";
+                    typeName = "DateTimeOffset";
                     break;
                 case TypeKind.String:
                     return "string";
