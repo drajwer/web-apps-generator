@@ -7,8 +7,12 @@ namespace WebAppsGenerator.Generating.Abstract.Options
     /// </summary>
     public class GeneratorOptions
     {
+        public string InputPath { get; set; }
         public string ProjectName { get; set; }
         public string OutputPath { get; set; }
-        public List<NuGetPackageDetails> CoreProjectPackages { get; set; }
+        public string MigrationName { get; set; }
+        public bool RunAspNetCoreGen { get; set; }
+        public bool RunWebUiGen { get; set; }
+        public bool RunReactAppCreation { get; set; }
     }
 }

@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using WebAppsGenerator.Core.Models;
-using WebAppsGenerator.Generating.Abstract.Models.Templating;
-using WebAppsGenerator.Generating.Abstract.Services;
+﻿using WebAppsGenerator.Core.Models;
 
 namespace WebAppsGenerator.Generating.AspNetCore.Models.Templating
 {
-    public class ModelDrop : EntityDrop
+    public class ModelDrop : WebApiAnnotatedEntityDrop
     {
         public bool IsJoinModel { get;  }
         public ModelDrop(Entity entity, bool isJoinModel = false) : base(entity)

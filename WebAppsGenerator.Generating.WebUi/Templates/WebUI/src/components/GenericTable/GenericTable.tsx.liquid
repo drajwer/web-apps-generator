@@ -26,6 +26,7 @@ interface IGenericTableProps {
     tableHeadLabels: string[],
     classes: any,
     showCheckboxes: boolean,
+	showAddButton: boolean,
     multipleSelects: boolean,
 	onSelect? : (selected: number[]) => void,
 	onRefresh: () => void,
@@ -152,7 +153,7 @@ class GenericTable extends React.Component<IGenericTableProps, IGenericTableStat
     }
 
     public render() {
-        const { data, classes, showCheckboxes, multipleSelects, tableTitle, tableHeadLabels, onRefresh } = this.props;
+        const { data, classes, showCheckboxes, showAddButton, multipleSelects, tableTitle, tableHeadLabels, onRefresh } = this.props;
         const { order, orderBy, selected, rowsPerPage, page } = this.state;
         const dataLength = data ? data.length : 0;
         const emptyRows = rowsPerPage - Math.min(rowsPerPage, dataLength - page * rowsPerPage);
@@ -164,7 +165,7 @@ class GenericTable extends React.Component<IGenericTableProps, IGenericTableStat
             }));
         return (
             <Paper className={classes.root}>
-                <TableToolbar numSelected={selected.length} tableTitle={tableTitle} onRefresh={onRefresh} />
+                <TableToolbar showAddButton={showAddButton} numSelected={selected.length} tableTitle={tableTitle} onRefresh={onRefresh} />
                 <div className={classes.tableWrapper}>
                     <Table className={classes.table} aria-labelledby="tableTitle">
                         <CustomTableHead

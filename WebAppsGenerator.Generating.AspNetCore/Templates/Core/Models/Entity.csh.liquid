@@ -1,13 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace {{Params.CoreProjectName}}.Models
 {
 	public class {{ Params.Entity.Name }}
 	{
 		{%- for prop in Params.Entity.Fields -%}
+			{%- if prop.Type.IsSimpleType -%}
+				{%- if prop.Type.Name == 'string' -%}
+					{%- unless prop.Type.IsNullable -%}
+
+		[Required]
+					{%- endunless -%}
+					{%- unless prop.LengthRange.Max == nil -%}
+
+		[MaxLength({{prop.LengthRange.Max}})]
+					{%- endunless -%}
+				{%- endif -%}
 		public {{ prop.Type.Name }} {{ prop.Name }} { get; set; }
+			{%- else -%}
+				{%- if prop.InverseProperty -%}
+
+		[InverseProperty("{{prop.InverseProperty}}")]
+				{%- endif -%}
+		public virtual {{ prop.Type.Name }} {{ prop.Name }} { get; set; }
+			{%- endif -%}
 		{%- endfor -%}
 	}
 }

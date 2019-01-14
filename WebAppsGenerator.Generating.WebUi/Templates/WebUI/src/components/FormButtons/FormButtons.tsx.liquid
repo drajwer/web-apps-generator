@@ -7,6 +7,7 @@ import * as React from 'react';
 interface ITableToolbarProps {
     onSaveClick: () => void
     onCancelClick: () => void
+    saveDisabled?: boolean
 };
 
 const FormButtons = (props: ITableToolbarProps) => {
@@ -17,7 +18,7 @@ const FormButtons = (props: ITableToolbarProps) => {
             	<ClearIcon />
             </Button>
 			{%- raw -%}
-            <Button variant="contained" color="primary" onClick={props.onSaveClick} style={{ marginLeft: "10px" }}>
+            <Button disabled={props.saveDisabled} variant="contained" color="primary" onClick={props.onSaveClick} style={{ marginLeft: "10px" }}>
                 Save
             	<SaveIcon />
             </Button>

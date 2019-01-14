@@ -8,10 +8,10 @@ namespace WebAppsGenerator.Core.Parsing.Annotations
 {
     public class BasicAnnotationParamParser : IAnnotationParamParser
     {
-        public AnnotationParam ParseAnnotationParam(string name, string valueString)
+        public AnnotationParam ParseAnnotationParam(string name, string valueString, int lineNo, int charNo)
         {
-            (TypeKind kind, object value) = ParseValueString(valueString);
-            return new AnnotationParam()
+            (TypeKind kind, object value) = ParseValueString(valueString, lineNo, charNo);
+            return new AnnotationParam(lineNo, charNo)
             {
                 Name = name,
                 Value = value,
@@ -19,7 +19,7 @@ namespace WebAppsGenerator.Core.Parsing.Annotations
             };
         }
 
-        public (TypeKind, object) ParseValueString(string valueString)
+        private (TypeKind, object) ParseValueString(string valueString, int lineNo, int charNo)
         {
             if (valueString.StartsWith('"') && valueString.EndsWith('"'))
             {
@@ -37,7 +37,7 @@ namespace WebAppsGenerator.Core.Parsing.Annotations
             if (bool.TryParse(valueString, out var boolResult))
                 return (TypeKind.Bool, boolResult);
 
-            throw new ParsingException($"Invalid value: {valueString}");
+            throw new ParsingException($"Invalid value: {valueString}", lineNo, charNo);
         }
     }
 }

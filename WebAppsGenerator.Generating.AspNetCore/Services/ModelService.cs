@@ -61,20 +61,25 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
                 List<FieldDrop> fieldsToAdd = new List<FieldDrop>();
                 foreach (var relationField in relationFields)
                 {
+                    if (relationField.Relation != null && relationField.Relation.HasOneWithOne && !relationField.Relation.Primary)
+                        continue;
+
                     var referencedEntity = entities.First(e => e.Name == relationField.Type.EntityName);
                     var referencedIdField = referencedEntity.Fields.First(e => e.Name == EntitiesFixer.Id);
-
+                    var currentField = entities.FirstOrDefault(e => e.Name == entityDrop.Name)?.Fields
+                        .FirstOrDefault(f => f.Name == relationField.Name);
                     
-                    var idField = new Field()
+                    var idField = new Field(-1, -1)
                     {
                         Name = $"{relationField.Name}Id",
-                        Type = new Core.Models.Type()
+                        Type = new Core.Models.Type(-1, -1)
                         {
                             BaseTypeKind = referencedIdField.Type.BaseTypeKind,
                             IsNullable = !entityDrop.IsJoinModel
                         },
+                        Annotations = currentField?.Annotations
                     };
-                    var drop = new FieldDrop(idField) {Relation = relationField.Relation};
+                    var drop = new WebApiAnnotatedFieldDrop(idField) {Relation = relationField.Relation};
                     fieldsToAdd.Add(drop);
                 }
                 entityDrop.Fields.AddRange(fieldsToAdd);
@@ -96,27 +101,27 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
                         ? entity.Name + secondEntityName
                         : secondEntityName + entity.Name;
                     joinTypeName = PluralizationHelper.Pluralize(joinTypeName);
-                    var joinField = new Field()
+                    var joinField = new Field(-1, -1)
                     {
                         Name = manyToManyField.Name, 
-                        Type = new Core.Models.Type()
+                        Type = new Core.Models.Type(-1, -1)
                         { BaseTypeKind = TypeKind.Entity, EntityName = joinTypeName, IsArray = true }
                     };
-                    var drop = new FieldDrop(joinField) {Relation = manyToManyField.Relation};
+                    var drop = new WebApiAnnotatedFieldDrop(joinField) {Relation = manyToManyField.Relation};
                     entityDrop.Fields.Add(drop);
 
-                    var currentEntityRefField = new Field()
+                    var currentEntityRefField = new Field(-1, -1)
                     {
                         Name = entity.Name,
                         Relation = new Relation() { Primary = false, HasOne = true, WithOne = false },
-                        Type = new Core.Models.Type() { BaseTypeKind = TypeKind.Entity, EntityName = entity.Name }
+                        Type = new Core.Models.Type(-1, -1) { BaseTypeKind = TypeKind.Entity, EntityName = entity.Name }
                     };
 
-                    var secondEntityRefField = new Field()
+                    var secondEntityRefField = new Field(-1, -1)
                     {
                         Name = secondEntityName,
                         Relation = new Relation() { Primary = false, HasOne = true, WithOne = false },
-                        Type = new Core.Models.Type() { BaseTypeKind = TypeKind.Entity, EntityName = secondEntityName }
+                        Type = new Core.Models.Type(-1, -1) { BaseTypeKind = TypeKind.Entity, EntityName = secondEntityName }
                     };
 
                     var joinTableFields = isCurrentPrimary
@@ -127,7 +132,7 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
                     if (entityDrops.Any(e => e.Name == joinTypeName))
                         continue;
 
-                    var joinEntity = new Entity()
+                    var joinEntity = new Entity(-1, -1)
                     {
                         Name = joinTypeName,
                         Fields = joinTableFields

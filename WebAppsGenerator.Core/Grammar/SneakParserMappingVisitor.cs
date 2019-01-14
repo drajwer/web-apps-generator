@@ -28,7 +28,10 @@ namespace WebAppsGenerator.Core.Grammar
         {
             var className = context.ID().GetText();
             var fields = VisitBody(context.body());
-            var entity = new Entity()
+            var lineNo = context.Start.Line;
+            var charNo = context.Start.Column + 1;
+
+            var entity = new Entity(lineNo, charNo)
             {
                 Name = className,
                 Fields = (fields as Field[])?.ToList(),
@@ -37,7 +40,7 @@ namespace WebAppsGenerator.Core.Grammar
 
             if(!Entities.TryAdd(className, entity))
             {
-                throw new ParsingException($"Duplicate declaration of {className}");
+                throw new ParsingException($"Duplicate declaration of {className}", entity);
             }
             return entity;
         }
@@ -55,7 +58,9 @@ namespace WebAppsGenerator.Core.Grammar
         }
         public override object VisitProperty([NotNull] SneakParser.PropertyContext context)
         {
-            var property = new Field()
+            var lineNo = context.Start.Line;
+            var charNo = context.Start.Column + 1;
+            var property = new Field(lineNo, charNo)
             {
                 Name = context.ID().GetText(),
                 Annotations = VisitAnnotations(context.annotations()) as List<Annotation>,
@@ -67,8 +72,11 @@ namespace WebAppsGenerator.Core.Grammar
 
         public Type VisitFieldType(ITerminalNode type)
         {
-            return _typeParser.ParseTypeName(type.GetText());
+            var lineNo = type.Symbol.Line;
+            var charNo = type.Symbol.Column + 1;
+            return _typeParser.ParseTypeName(type.GetText(), lineNo, charNo);
         }
+
         public override object VisitAnnotations([NotNull] SneakParser.AnnotationsContext context)
         {
             return context.annotation().Select(VisitAnnotation).OfType<Annotation>().ToList();
@@ -83,15 +91,14 @@ namespace WebAppsGenerator.Core.Grammar
         {
             var annotation = VisitAnnotation(context) as Annotation;
 
-            if (annotation != null)
-                annotation.IsClassAnnotation = true;
-
             return annotation;
         }
 
         public override object VisitAnnotation([NotNull] SneakParser.AnnotationContext context)
         {
-            return new Annotation()
+            var lineNo = context.Start.Line;
+            var charNo = context.Start.Column + 1;
+            return new Annotation(lineNo, charNo)
             {
                 Name = context.ID().GetText(),
                 Params = VisitParams(context.@params()) as List<AnnotationParam>
@@ -113,7 +120,9 @@ namespace WebAppsGenerator.Core.Grammar
 
         public override object VisitParam([NotNull] SneakParser.ParamContext context)
         {
-            return _annotationParamParser.ParseAnnotationParam(context.ID().GetText(), context.VALUE().GetText());
+            var lineNo = context.Start.Line;
+            var charNo = context.Start.Column + 1;
+            return _annotationParamParser.ParseAnnotationParam(context.ID().GetText(), context.VALUE().GetText(), lineNo, charNo);
         }
     }
 }

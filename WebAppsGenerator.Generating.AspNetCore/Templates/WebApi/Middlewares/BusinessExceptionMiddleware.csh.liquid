@@ -1,0 +1,43 @@
+﻿using System.Net;
+using System.Threading.Tasks;
+using {{Params.CoreProjectName}}.Exceptions;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+
+namespace {{Params.WebApiProjectName}}.Middlewares
+{
+    public class BusinessExceptionMiddleware
+    {
+        private readonly RequestDelegate _next;
+        private const string DbExMessage = "There was an issue with your request.";
+
+        public BusinessExceptionMiddleware(RequestDelegate next)
+        {
+            _next = next;
+        }
+
+        public async Task InvokeAsync(HttpContext context)
+        {
+            try
+            {
+                // Call the next delegate/middleware in the pipeline
+                await _next(context);
+            }
+            catch (BusinessException e)
+            {
+                await ReturnPlainTextResponse(context, e.Message, e.StatusCode);
+            }
+            catch (DbUpdateException)
+            {
+                await ReturnPlainTextResponse(context, DbExMessage, HttpStatusCode.BadRequest);
+            }
+        }
+
+        private async Task ReturnPlainTextResponse(HttpContext context, string message, HttpStatusCode statusCode)
+        {
+            context.Response.ContentType = "text/plain";
+            context.Response.StatusCode = (int)statusCode;
+            await context.Response.WriteAsync(message);
+        }
+    }
+}

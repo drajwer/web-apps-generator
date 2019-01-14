@@ -13,13 +13,14 @@ import history from 'src/history';
 
 interface ITableToolbarProps {
     classes: any,
+	showAddButton: boolean,
     numSelected: number,
     tableTitle: string,
 	onRefresh: () => void,
 };
 
 const TableToolbar = (props: ITableToolbarProps) => {
-    const { numSelected, classes, tableTitle, onRefresh } = props;
+    const { showAddButton, numSelected, classes, tableTitle, onRefresh } = props;
 
     const handleAddClick = () => {
         history.push(`${history.location.pathname}/new`);
@@ -55,11 +56,16 @@ const TableToolbar = (props: ITableToolbarProps) => {
                         <RefreshIcon onClick={onRefresh} />
                     </IconButton>
                 </Tooltip>
-                <Tooltip title="Add item">
-                    <IconButton aria-label="Add item">
-                        <AddIcon onClick={handleAddClick} />
-                    </IconButton>
-                </Tooltip>
+				{
+				showAddButton?
+					(<Tooltip title="Add item">
+						<IconButton aria-label="Add item">
+							<AddIcon onClick={handleAddClick} />
+						</IconButton>
+					</Tooltip>)
+					:
+					null
+				}
             </div>
         </Toolbar>
     );

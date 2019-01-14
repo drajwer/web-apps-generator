@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ComponentModel.DataAnnotations;
 using {{Params.CoreProjectName}}.Models;
 
 namespace {{Params.WebApiProjectName}}.ViewModels.Generated
@@ -12,12 +13,35 @@ namespace {{Params.WebApiProjectName}}.ViewModels.Generated
     {
         {%- for prop in Params.Entity.Fields -%}
 			{%- if prop.Type.IsSimpleType -%}
-		public {{ prop.Type.Name }} {{ prop.Name }} { get; set; }
+				{%- unless prop.Type.IsNullable or prop.Name == 'Id' -%}
+		[Required]
+				{%- endunless -%}
+				{%- unless prop.ValueRange == nil -%}
+					{%- unless prop.ValueRange.Min == nil or prop.ValueRange.Max == nil -%}
+		[Range({{prop.ValueRange.Min}}, {{prop.ValueRange.Max}})]
+					{%- elsif prop.ValueRange.Min == nil -%}
+		[Range({{prop.Type.Name | TrimQuestionMark}}.MinValue, {{prop.ValueRange.Max}})]
+					{%- else -%}
+		[Range({{prop.ValueRange.Min}}, {{prop.Type.Name | TrimQuestionMark}}.MaxValue)]
+					{%- endunless -%}
+				{%- endunless -%}
+				{%- unless prop.LengthRange == nil -%}
+					{%- unless prop.LengthRange.Min == nil or prop.LengthRange.Max == nil -%}
+		[StringLength({{prop.LengthRange.Max}}, MinimumLength = {{prop.LengthRange.Min}})]
+					{%- elsif prop.LengthRange.Min == nil -%}
+		[StringLength({{prop.LengthRange.Max}})]
+					{%- endunless -%}
+				{%- endunless -%}
+		public {{ prop.Type.Name }}{%- unless prop.Type.IsNullable or prop.Type.Name == "string" -%}?{%-endunless%} {{ prop.Name }} { get; set; }
+
 			{%- elsif prop.Relation.HasMany -%}
 		public List<{{prop.Relation.SecondIdType.Name}}> {{ prop.Name }}Ids { get; set; }
+			{%- elsif prop.Relation.HasOneWithOne -%}
+				{%- unless prop.Relation.Primary -%}
+		public {{prop.Relation.SecondIdType.Name}}? {{ prop.Name }}Id { get; set; }
+				{%- endunless -%}
 			{%- endif -%}
 		{%- endfor -%}
-
 
         public {{Params.Entity.Name}}BaseViewModel()
         {
@@ -32,6 +56,10 @@ namespace {{Params.WebApiProjectName}}.ViewModels.Generated
 			{{ prop.Name }}Ids = entity.{{prop.Name}}?.Select(elem => elem.{{prop.Relation.SecondEntityName}}Id).ToList();
 				{%- elsif prop.Relation.HasManyWithOne -%}
 			{{ prop.Name }}Ids = entity.{{prop.Name}}?.Select(elem => elem.Id).ToList();
+				{%- elsif prop.Relation.HasOneWithOne -%}
+					{%- unless prop.Relation.Primary -%}
+			{{ prop.Name }}Id = entity.{{prop.Name}}?.Id;
+					{%- endunless -%}
 				{%- endif -%}
 			{%- endfor -%}
         }
@@ -43,12 +71,16 @@ namespace {{Params.WebApiProjectName}}.ViewModels.Generated
                 {%- for prop in Params.Entity.Fields -%}
 					{%- if prop.Type.IsSimpleType -%}
 						{%- unless prop.Name == 'Id' -%}
-				{{ prop.Name }} = {{prop.Name}},
+				{{ prop.Name }} = {{prop.Name}}{%- unless prop.Type.IsNullable or prop.Type.Name == "string" -%}.GetValueOrDefault(){%-endunless-%},
 						{%- endunless -%}
 					{%- elsif prop.Relation.HasManyWithMany -%}
 				{{ prop.Name }} = {{prop.Name}}Ids?.Select(id => new {{prop.Type.EntityName}}() { {{prop.Relation.SecondEntityName}}Id = id }).ToList(),
 					{%- elsif prop.Relation.HasManyWithOne -%}
 				{{ prop.Name }} = {{prop.Name}}Ids?.Select(id => new {{prop.Type.EntityName}}() { Id = id }).ToList(),
+					{%- elsif prop.Relation.HasOneWithOne -%}
+						{%- unless prop.Relation.Primary -%}
+				{{ prop.Name }} = {{ prop.Name }}Id != null ? new {{prop.Type.EntityName}}() { Id = {{ prop.Name }}Id.Value } : null,
+						{%- endunless -%}
 					{%- endif -%}
 				{%- endfor -%}
             };

@@ -6,9 +6,12 @@ namespace WebAppsGenerator.Generating.WebUi.Models.Templating
 {
     public class TypeScriptTypeDrop : TypeDrop
     {
+        public bool? IsFloat { get; set; }
         public TypeScriptTypeDrop(TypeDrop type) : base(type)
         {
             Name = GetFullTypeName(type);
+            if (BaseTypeKind == TypeKind.Int || BaseTypeKind == TypeKind.Float)
+                IsFloat = BaseTypeKind == TypeKind.Float;
         }
 
         private string GetFullTypeName(TypeDrop type)
@@ -20,18 +23,14 @@ namespace WebAppsGenerator.Generating.WebUi.Models.Templating
 
         private string GetSimpleTypeName(TypeDrop type)
         {
-            string typeName = "";
             switch (type.BaseTypeKind)
             {
                 case TypeKind.Bool:
-                    typeName = "boolean";
-                    break;
+                    return "boolean";
                 case TypeKind.Int:
-                    typeName = "number";
-                    break;
+                    return "number";
                 case TypeKind.Float:
-                    typeName = "number";
-                    break;
+                    return "number";
                 case TypeKind.String:
                     return "string";
                 case TypeKind.DateTime:
@@ -39,11 +38,6 @@ namespace WebAppsGenerator.Generating.WebUi.Models.Templating
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-
-            if (IsNullable)
-                typeName += "?";
-
-            return typeName;
         }
 
         private string GetFullEntityTypeName(TypeDrop type)

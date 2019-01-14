@@ -17,6 +17,7 @@ interface IStoreProps {
 
 interface I{{ Params.Entity.Name }}TableProps {
     showCheckboxes: boolean,
+	showAddButton: boolean,
     multipleSelects: boolean,
 	onSelect? : ((selected: {{ Params.Entity.IdField.Type.Name }}[]) => void);
 }
@@ -30,7 +31,7 @@ class {{ Params.Entity.Name }}Table extends React.Component<ICombinedProps> {
 		}
     }
     public render() {
-		const { {{ Params.Entity.PluralName | DeCapitalize }}, showCheckboxes, multipleSelects, isFetching } = this.props;
+		const { {{ Params.Entity.PluralName | DeCapitalize }}, showCheckboxes, showAddButton, multipleSelects, isFetching } = this.props;
 		
         if (isFetching) {
             return (
@@ -42,17 +43,17 @@ class {{ Params.Entity.Name }}Table extends React.Component<ICombinedProps> {
 
         const data = !{{ Params.Entity.PluralName | DeCapitalize }}? null : {{ Params.Entity.PluralName | DeCapitalize }}.map(({{ Params.Entity.Name | DeCapitalize }}: {{ Params.Entity.Name }}) => ({
             {%- for field in Params.Entity.Fields -%}
-				{%- if field.Type.IsSimpleType -%}
+				{%- if field.Type.IsSimpleType and field.DisplayInList -%}
 			{{ field.Name }}: {{ Params.Entity.Name | DeCapitalize }}.{{ field.Name }},
 				{%- endif -%}
 			{%- endfor -%}
         }));
 
-        const tableHeadLabels = 
+        const tableHeadLabels: string[] = 
 			[
 				{%- for field in Params.Entity.Fields -%}
-					{%- if field.Type.IsSimpleType -%}
-				'{{ field.Name | Capitalize | SplitCamelCase }}',
+					{%- if field.Type.IsSimpleType and field.DisplayInList -%}
+				'{{ field.DisplayName | Capitalize | SplitCamelCase }}',
 					{%- endif -%}
 				{%- endfor -%}
 			];
@@ -61,9 +62,10 @@ class {{ Params.Entity.Name }}Table extends React.Component<ICombinedProps> {
             <GenericTable
                 data={data}
                 selected={this.props.selected}
-                tableTitle="{{ Params.Entity.PluralName }}"
+                tableTitle="{{ Params.Entity.PluralDisplayName }}"
                 tableHeadLabels={tableHeadLabels}
                 showCheckboxes={showCheckboxes}
+				showAddButton={showAddButton}
                 multipleSelects={multipleSelects}
 				onSelect={this.props.onSelect}
 				onRefresh={this.refreshData}

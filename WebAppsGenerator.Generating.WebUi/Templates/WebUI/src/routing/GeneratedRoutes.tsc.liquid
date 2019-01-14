@@ -1,7 +1,9 @@
 ﻿import * as React from 'react';
 {%- for entity in Params.Entities -%}
+	{%- if entity.HideInMenu == false -%}
 import {{entity.Name}}List from "../screens/Entities/{{entity.Name}}/List/{{entity.Name}}List";
 import {{entity.Name}}Form from "../screens/Entities/{{entity.Name}}/Form/{{entity.Name}}Form"; 
+	{%- endif -%}
 {%- endfor -%}
 
 interface ILabelInfo {
@@ -13,8 +15,10 @@ interface ILabelInfo {
 const routes : ILabelInfo[] = 
 [
     {%- for entity in Params.Entities -%}
+		{%- if entity.HideInMenu == false -%}
     {component: {{entity.Name}}List, path: "{{entity.PluralName | DeCapitalize }}", exact: true},
     {component: {{entity.Name}}Form, path: "{{entity.PluralName | DeCapitalize }}/:id", exact: false},
+		{%- endif -%}
 	{%- endfor -%}
 ]
 

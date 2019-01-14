@@ -28,6 +28,7 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
         {
             switch (dropId)
             {
+                case null:
                 case "WebApiBase":
                     return new WebApiBaseDrop(_pathService, _generatorConfiguration);
                 case "EntityList":
@@ -57,7 +58,7 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
                     return GetModelDrops(entities).Where(d => (d.Entity is ModelDrop drop) && drop.IsJoinModel)
                         .OfType<BaseDrop>().ToList();
                 default:
-                    throw new ArgumentOutOfRangeException($"Cannot create drop for {dropId}");
+                    return base.CreateDropList(dropId, entities);
             }
         }
 

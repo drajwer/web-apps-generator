@@ -44,7 +44,6 @@ namespace WebAppsGenerator.Generating.WebUi.Services
                     return new List<BaseDrop>(_entityService.GetDrops(entities).Select(e => new SingleEntityDrop(_generatorConfiguration, _pathService, e)).ToList());
                 default:
                     throw new ArgumentOutOfRangeException($"Cannot create drop for {dropId}");
-
             }
         }
     }

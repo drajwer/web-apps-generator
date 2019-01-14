@@ -38,6 +38,7 @@ class {{ Params.Entity.Name }}Modal extends React.Component<IProps, IState>{
                         <{{ Params.Entity.Name }}Table
                             selected={this.state.selected}
                             showCheckboxes={true}
+							showAddButton={false}
                             multipleSelects={this.props.multiple}
                             onSelect={this.onSelect}
                          />

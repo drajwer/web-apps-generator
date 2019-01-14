@@ -19,7 +19,7 @@ namespace WebAppsGenerator.Generating.WebUi.Models.Templating
             IEnumerable<Entity> entities)
             : base(solutionPathService, generatorConfiguration)
         {
-            Entities = entities.Select(e => new EntityDrop(e)).ToList();
+            Entities = entities.Select(e => new WebUiAnnotatedEntityDrop(e)).OfType<EntityDrop>().ToList();
         }
 
         public List<EntityDrop> Entities { get; }

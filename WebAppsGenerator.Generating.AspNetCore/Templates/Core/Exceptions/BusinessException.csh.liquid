@@ -1,0 +1,20 @@
+﻿using System;
+using System.Net;
+
+namespace {{Params.CoreProjectName}}.Exceptions
+{
+    /// <inheritdoc/>
+    /// <summary>
+    /// Exception which should be returned to the client.
+    /// The exception contains the message and <see cref="HttpStatusCode"/>.
+    /// </summary>
+    public class BusinessException : Exception
+    {
+        public HttpStatusCode StatusCode { get; }
+
+        public BusinessException(string message, HttpStatusCode statusCode) : base(message)
+        {
+            StatusCode = statusCode;
+        }
+    }
+}

@@ -1,4 +1,4 @@
-﻿namespace WebAppsGenerator.Core.Files.FileSrevices
+﻿namespace WebAppsGenerator.Core.Files.Services
 {
     public interface IFileService
     {

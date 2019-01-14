@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using WebAppsGenerator.Core.Models;
 using WebAppsGenerator.Generating.Abstract.Interfaces;
 using WebAppsGenerator.Generating.Abstract.Models.Templating;
@@ -21,7 +19,7 @@ namespace WebAppsGenerator.Generating.AspNetCore.Models.Templating
             IEnumerable<Entity> entities)
             : base(solutionPathService, generatorConfiguration)
         {
-            Entities = entities.Select(e => new EntityDrop(e)).ToList();
+            Entities = entities.Select(e => new WebApiAnnotatedEntityDrop(e)).OfType<EntityDrop>().ToList();
         }
 
         public List<EntityDrop> Entities { get; }

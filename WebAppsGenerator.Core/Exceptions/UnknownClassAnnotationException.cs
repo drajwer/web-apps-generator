@@ -1,10 +1,11 @@
-﻿using System;
+﻿using WebAppsGenerator.Core.Models;
 
 namespace WebAppsGenerator.Core.Exceptions
 {
-    public class UnknownClassAnnotationException : Exception
+    public class UnknownClassAnnotationException : ParsingException
     {
-        public UnknownClassAnnotationException(string annName) : base($"Unrecognized class annotation: {annName}")
+        public UnknownClassAnnotationException(string annName, Annotation annotation)
+            : base($"Unrecognized class annotation: {annName}", annotation)
         {
         }
     }

@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using WebAppsGenerator.Core.Models;
 
 namespace WebAppsGenerator.Core.Exceptions
 {
-    public class UnknownTypeException: Exception
+    public class UnknownTypeException: ParsingException
     {
-        public UnknownTypeException(string type): base($"Type {type} is not declared")
+        public UnknownTypeException(Type type): base($"Type {type.EntityName} is not declared", type)
         {
         }
     }

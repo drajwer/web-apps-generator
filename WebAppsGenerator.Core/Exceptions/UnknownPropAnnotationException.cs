@@ -1,10 +1,11 @@
-﻿using System;
+﻿using WebAppsGenerator.Core.Models;
 
 namespace WebAppsGenerator.Core.Exceptions
 {
-    public class UnknownPropAnnotationException : Exception
+    public class UnknownPropAnnotationException : ParsingException
     {
-        public UnknownPropAnnotationException(string annName) : base($"Unrecognized property annotation: {annName}")
+        public UnknownPropAnnotationException(string annName, Annotation annotation) 
+            : base($"Unrecognized property annotation: {annName}", annotation)
         {
         }
     }

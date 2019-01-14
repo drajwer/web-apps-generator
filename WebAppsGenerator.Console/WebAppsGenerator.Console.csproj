@@ -7,8 +7,17 @@
 
   <ItemGroup>
     <None Remove="SneakLexer.g4" />
+    <None Remove="TestDir\config.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="TestDir\config.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
     <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.2.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="2.2.0" />
         <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.1.1" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.1.1" />
         <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.1.1" />
@@ -19,12 +28,6 @@
     <ProjectReference Include="..\WebAppsGenerator.Generating.Abstract\WebAppsGenerator.Generating.Abstract.csproj" />
     <ProjectReference Include="..\WebAppsGenerator.Generating.AspNetCore\WebAppsGenerator.Generating.AspNetCore.csproj" />
     <ProjectReference Include="..\WebAppsGenerator.Generating.WebUi\WebAppsGenerator.Generating.WebUi.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="config.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>

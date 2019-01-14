@@ -35,10 +35,11 @@ namespace WebAppsGenerator.Generating.AspNetCore.Models.Templating
                 case TypeKind.Float:
                     typeName = "double";
                     break;
+                case TypeKind.DateTime:
+                    typeName = "DateTimeOffset";
+                    break;
                 case TypeKind.String:
                     return "string";
-                case TypeKind.DateTime:
-                    return "DateTime";
                 default:
                     throw new ArgumentOutOfRangeException();
             }

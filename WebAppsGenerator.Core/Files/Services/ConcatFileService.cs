@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using WebAppsGenerator.Core.Files.Providers;
 
-namespace WebAppsGenerator.Core.Files.FileSrevices
+namespace WebAppsGenerator.Core.Files.Services
 {
     public class ConcatFileService : IFileService
     {
@@ -33,7 +33,7 @@ namespace WebAppsGenerator.Core.Files.FileSrevices
             var lineCounter = 0;
             foreach (var fileInfo in _files)
             {
-                if (lineCounter + fileInfo.Lines > concatFileLineNo)
+                if (lineCounter + fileInfo.Lines >= concatFileLineNo)
                 {
                     var lineNo = concatFileLineNo - lineCounter;
                     return new LineInfo()

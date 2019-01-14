@@ -20,13 +20,12 @@ namespace WebAppsGenerator.Generating.WebUi.IoC
             return services;
         }
 
-        //public static IServiceCollection AddConfigurationOptions(this IServiceCollection services, IConfiguration configuration)
-        //{
-        //    services.Configure<AnnotationOptions>(configuration.GetSection("AllowedAnnotations"));
-        //    services.Configure<GeneratorOptions>(configuration.GetSection("GeneratorOptions"));
+        public static IServiceCollection AddWebUiConfigurationOptions(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.Configure<AnnotationOptions>(configuration.GetSection("AllowedAnnotationsUi"));
 
-        //    return services;
-        //}
+            return services;
+        }
 
         private static void RegisterGeneratorSpecificServices(IServiceCollection services)
         {

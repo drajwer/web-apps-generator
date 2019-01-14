@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using WebAppsGenerator.Generating.Abstract.Options;
-
-namespace WebAppsGenerator.Generating.Abstract.Interfaces
+﻿namespace WebAppsGenerator.Generating.Abstract.Interfaces
 {
     /// <summary>
     /// Provides basic configuration for generator
@@ -10,6 +7,9 @@ namespace WebAppsGenerator.Generating.Abstract.Interfaces
     {
         string ProjectName { get; }
         string OutputPath { get; }
-        List<NuGetPackageDetails> CoreProjectPackages { get; set; }
+        string MigrationName { get; }
+        bool RunAspNetCoreGen { get; }
+        bool RunWebUiGen { get; }
+        bool RunReactAppCreation { get; }
     }
 }

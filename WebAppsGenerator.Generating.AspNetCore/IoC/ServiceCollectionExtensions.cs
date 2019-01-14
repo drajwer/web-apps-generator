@@ -1,12 +1,10 @@
-﻿using System.Reflection;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WebAppsGenerator.Core.Interfaces;
-using WebAppsGenerator.Core.Services;
 using WebAppsGenerator.Generating.Abstract.Interfaces;
 using WebAppsGenerator.Generating.Abstract.Options;
-using WebAppsGenerator.Generating.Abstract.Services;
 using WebAppsGenerator.Generating.AspNetCore.Interfaces;
+using WebAppsGenerator.Generating.AspNetCore.Options;
 using WebAppsGenerator.Generating.AspNetCore.Services;
 
 namespace WebAppsGenerator.Generating.AspNetCore.IoC
@@ -19,9 +17,9 @@ namespace WebAppsGenerator.Generating.AspNetCore.IoC
 
             services.AddScoped<IGenerator>(provider =>
             {
-                var generatorConfiguration = provider.GetService<IGeneratorConfiguration>();
+                var generatorConfiguration = provider.GetService<AspNetCoreGeneratorConfiguration>();
                 var commandLineService = provider.GetService<ICommandLineService>();
-                var webApiGenerator = provider.GetService<WebApiProjectGenerator>(); 
+                var webApiGenerator = provider.GetService<WebApiProjectGenerator>();
                 var coreGenerator = provider.GetService<CoreProjectGenerator>();
 
                 return new SolutionGenerator(generatorConfiguration, commandLineService, webApiGenerator, coreGenerator);
@@ -30,10 +28,11 @@ namespace WebAppsGenerator.Generating.AspNetCore.IoC
             return services;
         }
 
-        public static IServiceCollection AddConfigurationOptions(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddAspNetCoreConfigurationOptions(this IServiceCollection services, IConfiguration configuration)
         {
-            services.Configure<AnnotationOptions>(configuration.GetSection("AllowedAnnotations"));
-            services.Configure<GeneratorOptions>(configuration.GetSection("GeneratorOptions"));
+            services.Configure<AnnotationOptions>(configuration.GetSection("AllowedAnnotationsCore"));
+            services.Configure<AspNetCoreGeneratorOptions>(configuration.GetSection("GeneratorOptions"));
+            services.AddScoped<AspNetCoreGeneratorConfiguration>();
 
             return services;
         }
@@ -42,7 +41,7 @@ namespace WebAppsGenerator.Generating.AspNetCore.IoC
         {
             services.AddTransient<IAspNetCoreFileService, AspNetCoreFileService>();
             services.AddScoped<WebApiProjectGenerator>();
-            services.AddScoped<CoreProjectGenerator>(); 
+            services.AddScoped<CoreProjectGenerator>();
             services.AddScoped<MigrationService>();
             services.AddScoped<SolutionPathService>();
 

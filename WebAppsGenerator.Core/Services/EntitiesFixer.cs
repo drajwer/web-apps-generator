@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using WebAppsGenerator.Core.Interfaces;
 using WebAppsGenerator.Core.Models;
 
@@ -34,11 +33,11 @@ namespace WebAppsGenerator.Core.Services
             {
                 if (entity.Fields.All(f => f.Name != Id))
                 {
-                    entity.Fields.Add(new Field()
+                    entity.Fields.Add(new Field(-1, -1)
                     {
                         Name = Id,
                         Annotations = new List<Annotation>(),
-                        Type = new Models.Type()
+                        Type = new Models.Type(-1, -1)
                         {
                             FullTypeName = "int",
                             BaseTypeKind = TypeKind.Int,
@@ -55,22 +54,47 @@ namespace WebAppsGenerator.Core.Services
             {
                 foreach (var entityField in entity.Fields)
                 {
-                    if(entityField.Type.BaseTypeKind != TypeKind.Entity)
+                    if (entityField.Type.BaseTypeKind != TypeKind.Entity)
                         continue;
                     var referencedEntity = entityList.First(e => e.Name == entityField.Type.EntityName);
                     var referencedFields = referencedEntity.Fields.Where(f => f.Type.EntityName == entity.Name).ToList();
                     var referencedField = referencedFields.FirstOrDefault();
-                    if (referencedFields.Count() > 1)
+                    if (referencedFields.Count > 1)
                     {
-                        referencedField = referencedFields.FirstOrDefault(f =>
-                            f.Name.Contains(entityField.Name) || entityField.Name.Contains(f.Name));
+                        var inversePropAnnotation =
+                            entityField.Annotations.FirstOrDefault(ann => ann.Name == "InverseProperty");
+                        if (inversePropAnnotation != null)
+                            referencedField =
+                                referencedFields.First(f =>
+                                    f.Name == (string) inversePropAnnotation.Params
+                                        .First(p => p.Name == "Name").Value);
+                        else
+                            referencedField = null;
                     }
+
+                    bool primary;
+
+                    var inversePropInEntityField =
+                        entityField.Annotations.FirstOrDefault(ann => ann.Name == "InverseProperty");
+
+                    var inversePropInReferencedField =
+                        referencedField?.Annotations.FirstOrDefault(ann => ann.Name == "InverseProperty");
+
+                    if (inversePropInEntityField != null && inversePropInReferencedField != null)
+                        primary = string.Compare(entity.Name, referencedEntity.Name, StringComparison.Ordinal) >= 0;
+
+                    else if (inversePropInEntityField != null) // the class with InverseProperty annotation declared is principial
+                        primary = true;
+                    else if (inversePropInReferencedField != null)
+                        primary = false;
+                    else
+                        primary = false;
 
                     entityField.Relation = new Relation()
                     {
                         HasOne = !entityField.Type.IsArray,
                         WithOne = !referencedField?.Type.IsArray ?? false,
-                        Primary = referencedField == null || entity.Name.CompareTo(referencedEntity.Name) >= 0,
+                        Primary = primary,
                         SecondFieldName = referencedField?.Name
                     };
                 }

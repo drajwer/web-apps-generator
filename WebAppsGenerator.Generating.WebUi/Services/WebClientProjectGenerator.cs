@@ -9,26 +9,26 @@ namespace WebAppsGenerator.Generating.WebUi.Services
 {
     public class WebClientProjectGenerator : IGenerator
     {
-        private const bool IsEnabled = true;
-        private const bool CreateReactApp = true;
-
         private readonly SolutionPathService _pathService;
         private readonly ICommandLineService _commandLineService;
         private readonly IEnumerable<IWebUiChildGenerator> _webUiGenerators;
+        private readonly IGeneratorConfiguration _configuration;
 
-        public WebClientProjectGenerator(SolutionPathService pathService, ICommandLineService commandLineService, IEnumerable<IWebUiChildGenerator> webUiGenerators)
+        public WebClientProjectGenerator(SolutionPathService pathService, ICommandLineService commandLineService,
+            IEnumerable<IWebUiChildGenerator> webUiGenerators, IGeneratorConfiguration configuration)
         {
             _pathService = pathService;
             _commandLineService = commandLineService;
             _webUiGenerators = webUiGenerators;
+            _configuration = configuration;
         }
 
         public void Generate(IEnumerable<Entity> entities)
         {
-            if(!IsEnabled)
+            if(!_configuration.RunWebUiGen)
                 return;
 
-            if (CreateReactApp)
+            if (_configuration.RunReactAppCreation)
             {
                 CreateApp();
                 RemoveUnnecessaryFiles();

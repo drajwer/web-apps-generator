@@ -42,11 +42,23 @@
             "NameTemplate": "{{Params.Entity.Name}}/{{Params.Entity.Name}}Form.tsx",
             "DropId": "EntityDrop",
             "Multiple": true
+          },
+          "EntityFormData.ts": {
+            "NameTemplate": "{{Params.Entity.Name}}/{{Params.Entity.Name}}FormData.ts",
+            "DropId": "EntityDrop",
+            "Multiple": true
           }
         },
         "Modals": {
           "EntityModal.tsx": {
             "NameTemplate": "{{Params.Entity.Name}}/{{Params.Entity.Name}}Modal.tsx",
+            "DropId": "EntityDrop",
+            "Multiple": true
+          }
+        },
+        "Dropdowns": {
+          "EntityDropdown.tsx": {
+            "NameTemplate": "{{Params.Entity.Name}}/{{Params.Entity.Name}}Dropdown.tsx",
             "DropId": "EntityDrop",
             "Multiple": true
           }

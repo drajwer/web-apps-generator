@@ -6,7 +6,9 @@
 const labels : ILabelInfo[] = 
 [
 	{%- for entity in Params.Entities -%}
-    {displayName: "{{entity.PluralName | SplitCamelCase}}", path: "{{entity.PluralName | DeCapitalize }}"},
+		{%- if entity.HideInMenu == false -%}
+    {displayName: "{{entity.PluralDisplayName | SplitCamelCase}}", path: "{{entity.PluralName | DeCapitalize }}"},
+		{%- endif -%}
 	{%- endfor -%}
 ]
 
