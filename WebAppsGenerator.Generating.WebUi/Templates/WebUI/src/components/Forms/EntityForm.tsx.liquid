@@ -28,19 +28,11 @@ import { DateTimePicker } from 'material-ui-pickers';
 		{%- break -%}
 	{%- endif -%}
 {%- endfor -%}
-{%- for field in Params.Entity.Fields -%}
-	{%- if field.Relation.HasOne or field.Relation.HasMany -%}
-		{%- unless field.ShowDropdown -%}
-import {{ field.Type.EntityName }}Modal from 'src/components/Modals/{{ field.Type.EntityName }}/{{ field.Type.EntityName }}Modal';
-		{%- endunless -%}
-	{%- endif -%}
+{%- for relation in Params.Entity.RelationsToShowInModal -%}
+import {{ relation }}Modal from 'src/components/Modals/{{ relation }}/{{ relation }}Modal';
 {%- endfor -%}
-{%- for field in Params.Entity.Fields -%}
-	{%- if field.Relation.HasOne or field.Relation.HasMany -%}
-		{%- if field.ShowDropdown -%}
-import {{ field.Type.EntityName }}Dropdown from 'src/components/Dropdowns/{{ field.Type.EntityName }}/{{ field.Type.EntityName }}Dropdown';
-		{%- endif -%}
-	{%- endif -%}
+{%- for relation in Params.Entity.RelationsToShowInDropdown -%}
+import {{ relation }}Dropdown from 'src/components/Dropdowns/{{ relation }}/{{ relation }}Dropdown';
 {%- endfor -%}
 {%- for field in Params.Entity.Fields -%}
 		{%- if field.Relation.HasOne or field.Relation.HasMany -%}

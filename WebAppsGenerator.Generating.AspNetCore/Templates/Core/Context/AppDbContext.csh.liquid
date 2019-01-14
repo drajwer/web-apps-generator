@@ -40,12 +40,13 @@ namespace {{Params.CoreProjectName}}.Context
 	            .WithMany(e => e.{{prop.Name}})
 	            .HasForeignKey(j => j.{{entity.Name}}Id);
 						{%- elsif prop.Relation.HasOneWithOne -%}
-							{%- unless prop.Relation.Primary -%}
+							{%- if prop.Relation.Primary -%}
 			modelBuilder.Entity<{{entity.Name}}>()
 	            .HasOne(e => e.{{prop.Name}})
 	            .WithOne(e => e.{{prop.Relation.SecondFieldName}})
 	            .HasForeignKey<{{prop.Type.EntityName}}>(e => e.{{prop.Relation.SecondFieldName}}Id);
-							{%- endunless -%}
+
+							{%- endif -%}
 						{%- endif -%}
 					{%- endunless -%}
 				{%- endfor -%}

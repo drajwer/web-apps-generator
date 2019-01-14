@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using WebAppsGenerator.Core.Models;
 using WebAppsGenerator.Generating.Abstract.Models.Templating;
 using WebAppsGenerator.Generating.WebUi.Extensions;
@@ -19,6 +20,9 @@ namespace WebAppsGenerator.Generating.WebUi.Models.Templating
 
         public string DisplayInDropdownField { get; set; }
 
+        public List<string> RelationsToShowInModal { get; set; }
+        public List<string> RelationsToShowInDropdown { get; set; }
+
         public WebUiAnnotatedEntityDrop(Entity entity) : base(entity)
         {
             var annotatedFields = entity.Fields.Select(f => new WebUiAnnotatedFieldDrop(f)).ToList();
@@ -36,6 +40,16 @@ namespace WebAppsGenerator.Generating.WebUi.Models.Templating
             DisplayInDropdownField = displayInDropdownField?.Name ?? IdField?.Name;
 
             this.ParseEntityAnnotations(entity.Annotations);
+
+            RelationsToShowInDropdown = 
+                annotatedFields.Where(f => ((f.Relation?.HasOne ?? false) || (f.Relation?.HasMany ?? false)) && f.ShowDropdown)
+                .Select(f => f.Type.EntityName).Distinct().ToList();
+
+            RelationsToShowInModal = annotatedFields
+                .Where(f => ((f.Relation?.HasOne ?? false) || (f.Relation?.HasMany ?? false)) && !f.ShowDropdown)
+                .Select(f => f.Type.EntityName).Distinct().ToList();
+
+
         }
 
     }

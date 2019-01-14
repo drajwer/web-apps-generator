@@ -32,6 +32,8 @@ namespace WebAppsGenerator.Generating.Abstract.Services.Validators
                 ValidateClassAnnotations(entity);
                 ValidatePropAnnotations(entity);
             }
+
+            ValidateInversePropertyAnnotations(entities);
         }
 
         /// <summary>
@@ -145,6 +147,26 @@ namespace WebAppsGenerator.Generating.Abstract.Services.Validators
                     if (annotationDefinitions.Count > 1)
                         _exceptionHandler.ThrowException(new AmbigiousAnnotationException(entityFieldAnnotation.Name, entityFieldAnnotation));
 
+                }
+            }
+        }
+
+        public void ValidateInversePropertyAnnotations(IEnumerable<Entity> entities)
+        {
+            var entityList = entities.ToList();
+            foreach (var entity in entityList)
+            {
+                foreach (var entityField in entity.Fields)
+                {
+                    var inversePropAnn = entityField.Annotations.FirstOrDefault(ann => ann.Name == "InverseProperty");
+                    if (inversePropAnn == null) continue;
+
+                    var referencedFieldName = inversePropAnn.Params.First(p => p.Name == "Name").Value as string;
+                    var referencedEntity = entityList.First(e => e.Name == entityField.Type.EntityName);
+                    var referencedField = referencedEntity.Fields.FirstOrDefault(f => f.Name == referencedFieldName);
+
+                    if (referencedField == null)
+                        _exceptionHandler.ThrowException(new InvalidInversePropertyArgumentException(inversePropAnn));
                 }
             }
         }

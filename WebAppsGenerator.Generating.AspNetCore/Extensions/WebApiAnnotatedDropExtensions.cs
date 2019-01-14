@@ -17,17 +17,6 @@ namespace WebAppsGenerator.Generating.AspNetCore.Extensions
         /// <param name="annotations">Entity's annotations</param>
         public static void ParseEntityAnnotations(this WebApiAnnotatedEntityDrop annotatedEntityDrop, IEnumerable<Annotation> annotations)
         {
-            if (annotations == null) return;
-
-            foreach (var annotation in annotations)
-            {
-                switch (annotation.Name)
-                {
-                    case "DisplayName":
-                        annotatedEntityDrop.DisplayName = (string)annotation.Params.First(p => p.Name == "Name").Value;
-                        break;
-                }
-            }
         }
 
         /// <summary>
@@ -43,8 +32,8 @@ namespace WebAppsGenerator.Generating.AspNetCore.Extensions
             {
                 switch (annotation.Name)
                 {
-                    case "DisplayName":
-                        annotatedFieldDrop.DisplayName = (string)annotation.Params.First(p => p.Name == "Name").Value;
+                    case "InverseProperty":
+                        annotatedFieldDrop.InverseProperty = (string)annotation.Params.First(p => p.Name == "Name").Value;
                         break;
                 }
             }

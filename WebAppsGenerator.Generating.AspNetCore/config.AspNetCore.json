@@ -19,7 +19,8 @@
                 "Params": [
                     {
                         "Name": "Name",
-                        "Type": "string"
+                        "Type": "string",
+                        "IsRequired": true,
                     }
                 ],
                 "AllowedPropTypeKinds": [

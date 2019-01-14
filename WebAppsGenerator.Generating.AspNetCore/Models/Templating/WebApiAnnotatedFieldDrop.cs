@@ -11,7 +11,7 @@ namespace WebAppsGenerator.Generating.AspNetCore.Models.Templating
     /// </summary>
     public class WebApiAnnotatedFieldDrop : AnnotatedFieldDrop
     {
-        public string DisplayName { get; set; }
+        public string InverseProperty { get; set; }
 
         public WebApiAnnotatedFieldDrop(Field field) : base(field)
         {
