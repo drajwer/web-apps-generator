@@ -7,10 +7,11 @@
                 "Params": [
                     {
                         "Name": "Name",
-                        "Type": "string"
+                        "Type": "string",
+                        "IsRequired": true,
                     }
                 ],
-                "AllowNoParams": true
+                "AllowNoParams": false
             },
             {
                 "IsClassAnnotation": true,
@@ -18,10 +19,11 @@
                 "Params": [
                     {
                         "Name": "Name",
-                        "Type": "string"
+                        "Type": "string",
+                        "IsRequired": true,
                     }
                 ],
-                "AllowNoParams": true
+                "AllowNoParams": false
             },
             {
                 "IsClassAnnotation": true,
@@ -48,7 +50,14 @@
                 "IsClassAnnotation": false,
                 "Name": "DisplayInList",
                 "Params": [],
-                "AllowNoParams": true
+                "AllowedPropTypeKinds": [
+                    "int",
+                    "float",
+                    "string",
+                    "dateTime",
+                    "bool"
+                ],
+                "AllowNoParams": true,
             }
         ]
     }

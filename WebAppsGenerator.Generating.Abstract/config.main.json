@@ -56,15 +56,6 @@
                     "float"
                 ]
             },
-            {
-                "IsClassAnnotation": false,
-                "Name": "Required",
-                "Params": [],
-                "AllowedPropTypeKinds": [
-                    "Entity"
-                ],
-                "AllowNoParams": true,
-            }
         ]
     } 
 }
