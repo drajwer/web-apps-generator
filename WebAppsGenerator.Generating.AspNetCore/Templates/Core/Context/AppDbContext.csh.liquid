@@ -14,7 +14,7 @@ namespace {{Params.CoreProjectName}}.Context
 		{%- endfor -%}
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
-	    {
+		{
             base.OnModelCreating(modelBuilder);
 
 			{%- for entity in Params.Entities -%}

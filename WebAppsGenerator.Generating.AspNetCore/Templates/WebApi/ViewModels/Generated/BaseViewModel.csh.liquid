@@ -37,9 +37,9 @@ namespace {{Params.WebApiProjectName}}.ViewModels.Generated
 			{%- elsif prop.Relation.HasMany -%}
 		public List<{{prop.Relation.SecondIdType.Name}}> {{ prop.Name }}Ids { get; set; }
 			{%- elsif prop.Relation.HasOneWithOne -%}
-				{%- unless prop.Relation.Primary -%}
+				{%- if prop.Relation.Primary -%}
 		public {{prop.Relation.SecondIdType.Name}}? {{ prop.Name }}Id { get; set; }
-				{%- endunless -%}
+				{%- endif -%}
 			{%- endif -%}
 		{%- endfor -%}
 
@@ -57,9 +57,9 @@ namespace {{Params.WebApiProjectName}}.ViewModels.Generated
 				{%- elsif prop.Relation.HasManyWithOne -%}
 			{{ prop.Name }}Ids = entity.{{prop.Name}}?.Select(elem => elem.Id).ToList();
 				{%- elsif prop.Relation.HasOneWithOne -%}
-					{%- unless prop.Relation.Primary -%}
+					{%- if prop.Relation.Primary -%}
 			{{ prop.Name }}Id = entity.{{prop.Name}}?.Id;
-					{%- endunless -%}
+					{%- endif -%}
 				{%- endif -%}
 			{%- endfor -%}
         }
@@ -78,9 +78,9 @@ namespace {{Params.WebApiProjectName}}.ViewModels.Generated
 					{%- elsif prop.Relation.HasManyWithOne -%}
 				{{ prop.Name }} = {{prop.Name}}Ids?.Select(id => new {{prop.Type.EntityName}}() { Id = id }).ToList(),
 					{%- elsif prop.Relation.HasOneWithOne -%}
-						{%- unless prop.Relation.Primary -%}
+						{%- if prop.Relation.Primary -%}
 				{{ prop.Name }} = {{ prop.Name }}Id != null ? new {{prop.Type.EntityName}}() { Id = {{ prop.Name }}Id.Value } : null,
-						{%- endunless -%}
+						{%- endif -%}
 					{%- endif -%}
 				{%- endfor -%}
             };
