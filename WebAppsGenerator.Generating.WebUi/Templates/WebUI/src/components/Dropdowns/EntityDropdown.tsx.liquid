@@ -58,6 +58,19 @@ class {{ Params.Entity.Name }}Dropdown extends React.Component<ICombinedProps> {
                     onChange={this.props.multipleSelects ? this.handleChangeMultiple : this.handleChange}
                     multiple={this.props.multipleSelects}
                     renderValue={(selected: any) => this.props.multipleSelects ? this.renderValues(selected) : this.renderValue(selected)}
+					{%- raw -%}
+					MenuProps={{
+                        anchorOrigin:{
+                            vertical: "bottom",
+                            horizontal: "left"
+                        },
+                        transformOrigin:{
+                            vertical: "top",
+                            horizontal: "left"
+                        },
+                        getContentAnchorEl: null                   
+                    }}
+					{%- endraw -%}
                 >
                     {this.props.multipleSelects ? "" :
                         (
@@ -117,7 +130,15 @@ class {{ Params.Entity.Name }}Dropdown extends React.Component<ICombinedProps> {
         if(selected.length === 0) {
             return "";
         }
-        return `${selected.length} selected`;
+
+        const displayNames = this.props.{{ Params.Entity.PluralName | DeCapitalize }}.filter(c => selected.indexOf(c.id) >= 0).map(c => c.{{ Params.Entity.DisplayInDropdownField | DeCapitalize}}.toString());
+        const leftElems = 3;
+        let text = displayNames.slice(0, leftElems).reduce((prev, cur) => prev + ', ' + cur);
+        if(displayNames.length > leftElems){
+            text += '...';
+        }
+        
+        return `${selected.length} selected (${text})`;
     }
 }
 
