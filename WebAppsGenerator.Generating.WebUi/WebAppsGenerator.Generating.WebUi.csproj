@@ -12,7 +12,7 @@
     <None Remove="Templates\WebUI\public\index.html.liquid" />
     <None Remove="Templates\WebUI\src\api\Api.tsx.liquid" />
     <None Remove="Templates\WebUI\src\components\CustomTableHead\CustomTableHead.tsx.liquid" />
-    <None Remove="Templates\WebUI\src\components\Dropdowns\EntityDropdown.tsx.liquid" />
+    <None Remove="Templates\WebUI\src\components\Inputs\EntityInput.tsx.liquid" />
     <None Remove="Templates\WebUI\src\components\EntityPageTitle\EntityPageTitle.tsx.liquid" />
     <None Remove="Templates\WebUI\src\components\FormButtons\FormButtons.tsx.liquid" />
     <None Remove="Templates\WebUI\src\components\Forms\EntityForm.tsx.liquid" />
@@ -58,7 +58,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Templates\run.ps1.liquid" />
     <EmbeddedResource Include="Templates\WebUI\public\index.html.liquid" />
-    <EmbeddedResource Include="Templates\WebUI\src\components\Dropdowns\EntityDropdown.tsx.liquid" />
+    <EmbeddedResource Include="Templates\WebUI\src\components\Inputs\EntityInput.tsx.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\components\EntityPageTitle\EntityPageTitle.tsx.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\components\FormButtons\FormButtons.tsx.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\components\Forms\EntityFormData.tsc.liquid" />

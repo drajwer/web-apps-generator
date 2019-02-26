@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import * as Actions from 'src/modules/{{ Params.Entity.Name | DeCapitalize }}/actions';
 import {{ Params.Entity.Name }} from 'src/models/{{ Params.Entity.Name }}';
 import { IRootState } from 'src/modules';
-import { FormControl, InputLabel, Select, MenuItem, Checkbox, ListItemText, CircularProgress } from '@material-ui/core';
+import { FormControl, InputLabel, Select, MenuItem, Checkbox, ListItemText, CircularProgress, TextField } from '@material-ui/core';
+import {{ Params.Entity.Name }}Modal from 'src/components/Modals/{{ Params.Entity.Name }}/{{ Params.Entity.Name }}Modal';
 
 interface IStoreProps {
     {{ Params.Entity.PluralName | DeCapitalize }}: {{ Params.Entity.Name }}[] | null,
@@ -18,16 +19,21 @@ interface IComponentProps {
 	label: string
     showCheckboxes: boolean,
     multipleSelects: boolean,
-    onSelect?: ((selected: number[]) => void);
+    onSelect: ((selected: number[]) => void);
+	type: "dropdown" | "modal"
+}
+
+interface IState {
+    openModal: boolean
 }
 
 type ICombinedProps = IStoreProps & IComponentProps;
 
-class {{ Params.Entity.Name }}Dropdown extends React.Component<ICombinedProps> {
+class {{ Params.Entity.Name }}Dropdown extends React.Component<ICombinedProps, IState> {
     constructor(props: ICombinedProps) {
         super(props);
         this.state = {
-            openpeopleModal: false,
+            openModal: false,
         };
     }
     public componentWillMount() {
@@ -36,7 +42,15 @@ class {{ Params.Entity.Name }}Dropdown extends React.Component<ICombinedProps> {
         }
     }
 
-    public render() {
+	public render() {
+        if (this.props.type === "dropdown") {
+            return this.renderDropdown();
+        }
+        
+        return this.renderModal();
+    }
+
+    public renderDropdown() {
         if (this.props.isFetching || this.props.{{ Params.Entity.PluralName | DeCapitalize }} == null) {
             return (
                 <FormControl fullWidth={true} disabled={this.props.disabled}>
@@ -91,6 +105,30 @@ class {{ Params.Entity.Name }}Dropdown extends React.Component<ICombinedProps> {
         );
     }
 
+	private renderModal() {
+        return (
+            <div>
+                <{{ Params.Entity.Name }}Modal
+                    multiple={this.props.multipleSelects}
+                    open={this.state.openModal}
+                    onClose={this.toggleModal}
+                    onSave={this.props.onSelect}
+                    selected={this.props.selected}
+                />
+                <TextField
+                    required={false}
+                    id={this.props.label}
+                    name={this.props.label}
+                    label={this.props.label}
+                    type="string"
+                    fullWidth={true}
+                    value={this.props.multipleSelects ? this.renderValues(this.props.selected) : this.renderValue(this.props.selected.length > 0 ? this.props.selected[0] : undefined)}
+                    disabled={this.props.disabled}
+                    onClick={this.toggleModal}
+                />
+            </div>
+        );
+    }
 
     private refreshData = () => {
         this.props.actions.get{{ Params.Entity.PluralName }}();
@@ -112,7 +150,7 @@ class {{ Params.Entity.Name }}Dropdown extends React.Component<ICombinedProps> {
         }
     };
 
-    private renderValue(selected?: number) : string | null {
+    private renderValue(selected?: number) : string {
         if(selected == null || this.props.{{ Params.Entity.PluralName | DeCapitalize }} == null) {
             return "";
         }
@@ -139,6 +177,12 @@ class {{ Params.Entity.Name }}Dropdown extends React.Component<ICombinedProps> {
         }
         
         return `${selected.length} selected (${text})`;
+    }
+	
+    private toggleModal = () => {
+        if (!this.props.disabled) {
+            this.setState({ openModal: !this.state.openModal });
+        }
     }
 }
 
