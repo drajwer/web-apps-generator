@@ -5,7 +5,7 @@
         public const string DisplayName = "DisplayName";
         public const string HideInMenu = "HideInMenu";
 
-        public const string DisplayInDropdown = "DisplayInDropdown";
+        public const string DisplayField = "DisplayField";
         public const string Dropdown = "Dropdown";
 
         public const string DisplayInList = "DisplayInList";

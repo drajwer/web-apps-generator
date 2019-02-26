@@ -82,7 +82,7 @@ class {{ Params.Entity.Name }}Dropdown extends React.Component<ICombinedProps> {
                     {this.props.{{ Params.Entity.PluralName | DeCapitalize }}.map(e => (
                         <MenuItem key={e.id} value={e.id}>
                             <Checkbox checked={this.props.selected.indexOf(e.id) > -1} />
-                            <ListItemText primary={e.{{ Params.Entity.DisplayInDropdownField | DeCapitalize}} } />
+                            <ListItemText primary={e.{{ Params.Entity.DisplayField | DeCapitalize}} } />
                         </MenuItem>
                     ))
                     }
@@ -120,7 +120,7 @@ class {{ Params.Entity.Name }}Dropdown extends React.Component<ICombinedProps> {
         if(elem == null) {
             return "";
         }
-        return elem.{{Params.Entity.DisplayInDropdownField | DeCapitalize}}.toString();
+        return elem.{{Params.Entity.DisplayField | DeCapitalize}}.toString();
     }
 
     private renderValues(selected?: number[]) : string {
@@ -131,7 +131,7 @@ class {{ Params.Entity.Name }}Dropdown extends React.Component<ICombinedProps> {
             return "";
         }
 
-        const displayNames = this.props.{{ Params.Entity.PluralName | DeCapitalize }}.filter(c => selected.indexOf(c.id) >= 0).map(c => c.{{ Params.Entity.DisplayInDropdownField | DeCapitalize}}.toString());
+        const displayNames = this.props.{{ Params.Entity.PluralName | DeCapitalize }}.filter(c => selected.indexOf(c.id) >= 0).map(c => c.{{ Params.Entity.DisplayField | DeCapitalize}}.toString());
         const leftElems = 3;
         let text = displayNames.slice(0, leftElems).reduce((prev, cur) => prev + ', ' + cur);
         if(displayNames.length > leftElems){

@@ -3,7 +3,7 @@
 	FirstName: string
 
 	#DisplayName(Name="Surname")
-	#DisplayInDropdown
+	#DisplayField
 	#DisplayInList
 	LastName: string
 

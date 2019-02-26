@@ -18,7 +18,7 @@ namespace WebAppsGenerator.Generating.WebUi.Models.Templating
 
         public bool HideInMenu { get; set; }
 
-        public string DisplayInDropdownField { get; set; }
+        public string DisplayField { get; set; }
 
         public List<string> RelationsToShowInModal { get; set; }
         public List<string> RelationsToShowInDropdown { get; set; }
@@ -26,7 +26,7 @@ namespace WebAppsGenerator.Generating.WebUi.Models.Templating
         public WebUiAnnotatedEntityDrop(Entity entity) : base(entity)
         {
             var annotatedFields = entity.Fields.Select(f => new WebUiAnnotatedFieldDrop(f)).ToList();
-            var displayInDropdownField = annotatedFields.FirstOrDefault(f => f.DisplayInDropdown);
+            var displayField = annotatedFields.FirstOrDefault(f => f.IsDisplayField);
             var idField = annotatedFields.FirstOrDefault(f => f.Name == "Id");
             if (idField != null)
                 idField.DisplayInList = true;
@@ -37,7 +37,7 @@ namespace WebAppsGenerator.Generating.WebUi.Models.Templating
             // assign default values to helper properties in case they are not filled later
             DisplayName = Name;
             PluralDisplayName = PluralName;
-            DisplayInDropdownField = displayInDropdownField?.Name ?? IdField?.Name;
+            DisplayField = displayField?.Name ?? IdField?.Name;
 
             this.ParseEntityAnnotations(entity.Annotations);
 

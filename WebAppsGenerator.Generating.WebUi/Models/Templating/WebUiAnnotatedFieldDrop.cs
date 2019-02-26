@@ -14,7 +14,7 @@ namespace WebAppsGenerator.Generating.WebUi.Models.Templating
         public string DisplayName { get; set; }
 
         public bool ShowDropdown { get; set; }
-        public bool DisplayInDropdown { get; set; }
+        public bool IsDisplayField { get; set; }
 
         public bool DisplayInList { get; set; }
 
