@@ -7,73 +7,118 @@ import Tooltip from '@material-ui/core/Tooltip';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import AddIcon from '@material-ui/icons/Add';
 import RefreshIcon from '@material-ui/icons/Refresh';
+import Input from '@material-ui/core/Input';
 import { withStyles } from '@material-ui/core/styles';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 import history from 'src/history';
+import './TableToolbar.css';
 
 interface ITableToolbarProps {
     classes: any,
-	showAddButton: boolean,
+    showAddButton: boolean,
     numSelected: number,
     tableTitle: string,
-	onRefresh: () => void,
+    onRefresh: () => void,
+    onFilterChange: (event: object) => void
+    onFilterHide: () => void,
 };
 
-const TableToolbar = (props: ITableToolbarProps) => {
-    const { showAddButton, numSelected, classes, tableTitle, onRefresh } = props;
+interface ITableToolbarState {
+    showFilterInput: boolean
+}
 
-    const handleAddClick = () => {
-        history.push(`${history.location.pathname}/new`);
+class TableToolbar extends React.Component<ITableToolbarProps, ITableToolbarState> {
+    constructor(props: ITableToolbarProps) {
+        super(props);
+        this.state = {
+            showFilterInput: false
+        };
     }
+    public render() {
+        const { showAddButton, numSelected, classes, tableTitle, onRefresh, onFilterHide } = this.props;
 
-    return (
-        <Toolbar
-            className={classNames(classes.root, {
-                [classes.highlight]: numSelected > 0,
-            })}
-        >
-            <div className={classes.title}>
-                {numSelected > 0 ? (
-                    <Typography color="inherit" variant="subtitle1">
-                        {numSelected} selected
+        const handleAddClick = () => {
+            history.push(`${history.location.pathname}/new`);
+        }
+
+        const onFilterClick = () => {
+            this.setState({ showFilterInput: !this.state.showFilterInput });
+            onFilterHide();
+        }
+
+        return (
+            <Toolbar
+                className={classNames(classes.root, {
+                    [classes.highlight]: numSelected > 0,
+                })}
+            >
+                {/* <div className="toolbar"> */}
+                <div className={classes.title}>
+                    {numSelected > 0 ? (
+                        <Typography color="inherit" variant="subtitle1">
+                            {numSelected} selected
                     </Typography>
-                ) : (
-                        <Typography variant="h6" id="tableTitle">
-                            {tableTitle}
-                        </Typography>
-                    )}
-            </div>
-            <div className={classes.spacer} />
-            <div className={classes.actions}>
-                <Tooltip title="Filter list">
-                    <IconButton aria-label="Filter list">
-                        <FilterListIcon />
-                    </IconButton>
-                </Tooltip>
+                    ) : (
+                            <Typography variant="h6" id="tableTitle">
+                                {tableTitle}
+                            </Typography>
+                        )}
+                </div>
+                {/* <div className={classes.spacer} /> */}
+                <div className="control-panel">
+                    {this.state.showFilterInput
+                        ?
+                        <div className="filter-block">
+                            <div className="filter-label">
+                                <Typography variant="subtitle1">
+                                    Filter by:
+                            </Typography>
+                            </div>
+                            <div className="filter-input">
+                                <Input onChange={this.props.onFilterChange} />
+                            </div>
+                        </div>
+                        : null
+                    }
+                    <div className={classes.actions}>
+                        <Tooltip title="Filter list">
+                            <IconButton aria-label="Filter list" onClick={onFilterClick}>
+                                <FilterListIcon />
+                            </IconButton>
+                        </Tooltip>
 
-                <Tooltip title="Refresh list">
-                    <IconButton aria-label="Refresh list">
-                        <RefreshIcon onClick={onRefresh} />
-                    </IconButton>
-                </Tooltip>
-				{
-				showAddButton?
-					(<Tooltip title="Add item">
-						<IconButton aria-label="Add item">
-							<AddIcon onClick={handleAddClick} />
-						</IconButton>
-					</Tooltip>)
-					:
-					null
-				}
-            </div>
-        </Toolbar>
-    );
+                        <Tooltip title="Refresh list">
+                            <IconButton aria-label="Refresh list">
+                                <RefreshIcon onClick={onRefresh} />
+                            </IconButton>
+                        </Tooltip>
+                        {
+                            showAddButton ?
+                                (<Tooltip title="Add item">
+                                    <IconButton aria-label="Add item">
+                                        <AddIcon onClick={handleAddClick} />
+                                    </IconButton>
+                                </Tooltip>)
+                                :
+                                null
+                        }
+                    </div></div>
+                {/* </div> */}
+            </Toolbar>
+        );
+    }
 };
 
 const toolbarStyles = (theme: any) => ({
     root: {
         paddingRight: theme.spacing.unit,
+        display: 'flex',
+        'flex-wrap': 'wrap',
+        'flex-direction': 'row',
+        'justify-content': 'space-between',
+        'padding-top': '10px',
+        'padding-bottom': '10px',
+
     },
     highlight:
         theme.palette.type === 'light'
@@ -91,9 +136,12 @@ const toolbarStyles = (theme: any) => ({
     actions: {
         color: theme.palette.text.secondary,
         display: 'flex',
+        'flex-wrap': 'wrap',
+        // 'padding-top': '10px'
     },
     title: {
         flex: '0 0 auto',
+        'margin-right': '40px',
     },
 });
 

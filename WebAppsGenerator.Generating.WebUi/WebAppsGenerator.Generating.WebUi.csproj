@@ -25,6 +25,7 @@
     <None Remove="Templates\WebUI\src\components\PageButtons\PageButtons.tsx.liquid" />
     <None Remove="Templates\WebUI\src\components\Tables\Table.css.liquid" />
     <None Remove="Templates\WebUI\src\components\Tables\Table.tsx.liquid" />
+    <None Remove="Templates\WebUI\src\components\TableToolbar\TableToolbar.css.liquid" />
     <None Remove="Templates\WebUI\src\components\TableToolbar\TableToolbar.tsx.liquid" />
     <None Remove="Templates\WebUI\src\config.tsx.liquid" />
     <None Remove="Templates\WebUI\src\history.tsc.liquid" />
@@ -67,6 +68,7 @@
     <EmbeddedResource Include="Templates\WebUI\src\components\PageButtons\PageButtons.tsx.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\components\Tables\Table.css.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\components\Tables\Table.tsx.liquid" />
+    <EmbeddedResource Include="Templates\WebUI\src\components\TableToolbar\TableToolbar.css.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\components\TableToolbar\TableToolbar.tsx.liquid" />
   </ItemGroup>
 
