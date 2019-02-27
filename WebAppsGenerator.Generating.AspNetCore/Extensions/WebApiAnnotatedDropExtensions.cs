@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using WebAppsGenerator.Core.Models;
+using WebAppsGenerator.Generating.AspNetCore.Const;
 using WebAppsGenerator.Generating.AspNetCore.Models.Templating;
 
 namespace WebAppsGenerator.Generating.AspNetCore.Extensions
@@ -32,8 +33,11 @@ namespace WebAppsGenerator.Generating.AspNetCore.Extensions
             {
                 switch (annotation.Name)
                 {
-                    case "InverseProperty":
+                    case AspNetCoreAnnotations.InverseProperty:
                         annotatedFieldDrop.InverseProperty = (string)annotation.Params.First(p => p.Name == "Name").Value;
+                        break;
+                    case AspNetCoreAnnotations.Index:
+                        annotatedFieldDrop.Index = true;
                         break;
                 }
             }

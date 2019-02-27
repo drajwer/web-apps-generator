@@ -50,6 +50,14 @@ namespace {{Params.CoreProjectName}}.Context
 						{%- endif -%}
 					{%- endunless -%}
 				{%- endfor -%}
+
+				{%- for prop in entity.Fields -%}
+					{%-if prop.Index -%}
+			modelBuilder.Entity<{{entity.Name}}>()
+				.HasIndex(e => e.{{prop.Name}});
+					{%- endif -%}
+				{%- endfor -%}
+
 			{%- endfor -%}
 
 		}

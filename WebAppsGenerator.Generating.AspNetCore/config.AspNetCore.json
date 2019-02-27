@@ -27,6 +27,19 @@
                     "Entity"
                 ],
                 "AllowNoParams": false,
+            },
+            {
+                "IsClassAnnotation": false,
+                "Name": "Index",
+                "Params": [],
+                "AllowedPropTypeKinds": [
+                    "int",
+                    "float",
+                    "string",
+                    "dateTime",
+                    "bool"
+                ],
+                "AllowNoParams": true,
             }
         ]
     }

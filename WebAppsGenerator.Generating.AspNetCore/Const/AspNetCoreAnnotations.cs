@@ -2,6 +2,7 @@
 {
     public static class AspNetCoreAnnotations
     {
-        public const string InverseProperty = "InverseProperty"; // TODO: Implement it
+        public const string InverseProperty = "InverseProperty"; 
+        public const string Index = "Index";
     }
 }
