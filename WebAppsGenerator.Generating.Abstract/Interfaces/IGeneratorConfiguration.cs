@@ -8,6 +8,7 @@
         string ProjectName { get; }
         string OutputPath { get; }
         string MigrationName { get; }
+        bool AddMigration { get; }
         bool RunAspNetCoreGen { get; }
         bool RunWebUiGen { get; }
         bool RunReactAppCreation { get; }

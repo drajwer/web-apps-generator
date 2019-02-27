@@ -11,6 +11,7 @@ namespace WebAppsGenerator.Generating.Abstract.Options
         public string ProjectName { get; set; }
         public string OutputPath { get; set; }
         public string MigrationName { get; set; }
+        public bool AddMigration { get; set; }
         public bool RunAspNetCoreGen { get; set; }
         public bool RunWebUiGen { get; set; }
         public bool RunReactAppCreation { get; set; }
