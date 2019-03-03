@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using WebAppsGenerator.Core.Interfaces;
 using WebAppsGenerator.Core.Models;
 using WebAppsGenerator.Generating.Abstract.Interfaces;
@@ -40,8 +41,8 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
                 throw new ArgumentNullException();
 
             CreateSolutionWithProjects();
-
-            AddNuGetPackages($"{_pathService.CoreDirPath}\\{_pathService.CoreProjectName}.csproj", _generatorConfiguration.CoreProjectPackages);
+            var coreProjFilePath = Path.Combine(_pathService.CoreDirPath, $"{_pathService.CoreProjectName}.csproj");
+            AddNuGetPackages(coreProjFilePath, _generatorConfiguration.CoreProjectPackages);
 
             _webApiProjectGenerator.Generate(entities);
             _coreProjectGenerator.Generate(entities);
@@ -49,12 +50,15 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
 
         private void CreateSolutionWithProjects()
         {
+            var coreProjFilePath = Path.Combine(_pathService.CoreDirPath, $"{_pathService.CoreProjectName}.csproj");
+            var webApiProjFilePath = Path.Combine(_pathService.WebApiDirPath, $"{_pathService.WebApiProjectName}.csproj");
+            
             _commandLineService.RunCommand($"dotnet new sln -n {_generatorConfiguration.ProjectName} -o {_pathService.SolutionDirPath}");
             _commandLineService.RunCommand($"dotnet new classlib -o {_pathService.CoreDirPath}");
             _commandLineService.RunCommand($"dotnet new webapi -o {_pathService.WebApiDirPath}");
             _commandLineService.RunCommand($"dotnet sln {_pathService.SolutionFilePath} add {_pathService.CoreDirPath}");
             _commandLineService.RunCommand($"dotnet sln {_pathService.SolutionFilePath} add {_pathService.WebApiDirPath}");
-            _commandLineService.RunCommand($"dotnet add {_pathService.WebApiDirPath}\\{_pathService.WebApiProjectName}.csproj reference {_pathService.CoreDirPath}\\{_pathService.CoreProjectName}.csproj");
+            _commandLineService.RunCommand($"dotnet add {webApiProjFilePath} reference {coreProjFilePath}");
         }
 
         private void AddNuGetPackages(string csprojPath, IEnumerable<NuGetPackageDetails> packages)
