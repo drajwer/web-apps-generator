@@ -118,10 +118,24 @@
           "Multiple": true
         },
         "index.tsx": {
-          "NameTemplate": "index.tsx",
-          "DropId": "EntityList",
-          "Multiple": false
-        }
+            "NameTemplate": "index.tsx",
+            "DropId": "EntityList",
+            "Multiple": false
+        },
+        "snackbar": {
+            "actions.ts": {
+                "DropId": "EntityList",
+                "Multiple": false
+            },
+            "actionTypes.ts": {
+                "DropId": "EntityList",
+                "Multiple": false
+            },
+            "reducer.ts": {
+                "DropId": "EntityList",
+                "Multiple": false
+            }
+        } 
       }
     }
   }

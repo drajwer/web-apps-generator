@@ -1,0 +1,67 @@
+﻿import { SnackbarActionTypes } from './actionTypes';
+import { SnackbarActions } from './actions';
+
+export interface ISnackbarState {
+    showToast: boolean,
+    message: string,
+};
+
+const initialState: ISnackbarState = {
+    showToast: false,
+    message: '',
+}
+const snackbarReducer = (state = initialState, action: SnackbarActions) => {
+    switch (action.type) {
+	{%- for entity in Params.Entities -%}
+        case SnackbarActionTypes.RESPONSE_UPDATE_{{ entity.Name | SnakeUppercase}}:
+            return {
+				showToast: true,
+                message: '{{ entity.Name }} updated successfully'
+			};
+        case SnackbarActionTypes.RESPONSE_DELETE_{{ entity.Name | SnakeUppercase}}:
+			return {
+				showToast: true,
+                message: '{{ entity.Name }} deleted successfully'
+			};        
+		case SnackbarActionTypes.RESPONSE_ADD_{{ entity.Name | SnakeUppercase}}:
+			return {
+				showToast: true,
+                message: '{{ entity.Name }} created successfully'
+			};        
+        case SnackbarActionTypes.SET_ADD_{{ entity.Name | SnakeUppercase}}_ERROR:
+        	return {
+				showToast: true,
+                message: '{{ entity.Name }} creation failed'
+			};        
+        case SnackbarActionTypes.SET_UPDATE_{{ entity.Name | SnakeUppercase}}_ERROR:
+			return {
+				showToast: true,
+                message: '{{ entity.Name }} update failed'
+			};        
+        case SnackbarActionTypes.SET_DELETE_{{ entity.Name | SnakeUppercase}}_ERROR:
+			return {
+				showToast: true,
+                message: '{{ entity.Name }} deletion failed'
+			};        
+        case SnackbarActionTypes.SET_FETCH_ERROR_{{ entity.Name | SnakeUppercase }}:
+            return {
+                showToast: true,
+                message: 'Could not fetch {{ entity.Name | DeCapitalize}}'
+            };
+		case SnackbarActionTypes.SET_FETCH_ERROR_{{ entity.PluralName | SnakeUppercase }}:
+            return {
+                showToast: true,
+                message: 'Could not fetch {{ entity.PluralName | DeCapitalize}}'
+            };
+		{%- endfor -%}
+        case SnackbarActionTypes.HIDE_SNACKBAR:
+            return {
+                showToast: false,
+                message: '',
+            };
+        default:
+            return state;
+    }
+}
+
+export default snackbarReducer;

@@ -35,6 +35,9 @@
     <None Remove="Templates\WebUI\src\modules\index.tsx.liquid" />
     <None Remove="Templates\WebUI\src\modules\reducer.tsx.liquid" />
     <None Remove="Templates\WebUI\src\models\Model.tsc.liquid" />
+    <None Remove="Templates\WebUI\src\modules\snackbar\actions.tsc.liquid" />
+    <None Remove="Templates\WebUI\src\modules\snackbar\actionTypes.tsc.liquid" />
+    <None Remove="Templates\WebUI\src\modules\snackbar\reducer.tsc.liquid" />
     <None Remove="Templates\WebUI\src\package.json.liquid" />
     <None Remove="Templates\WebUI\src\routing\GeneratedRoutes.tsc.liquid" />
     <None Remove="Templates\WebUI\src\routing\RouteComponentProps.tsc.liquid" />
@@ -89,6 +92,9 @@
     <EmbeddedResource Include="Templates\WebUI\src\modules\reducer.tsx.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\models\Model.tsc.liquid" />
     <EmbeddedResource Include="Templates\WebUI\package.json.liquid" />
+    <EmbeddedResource Include="Templates\WebUI\src\modules\snackbar\actions.tsc.liquid" />
+    <EmbeddedResource Include="Templates\WebUI\src\modules\snackbar\actionTypes.tsc.liquid" />
+    <EmbeddedResource Include="Templates\WebUI\src\modules\snackbar\reducer.tsc.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\routing\RouteComponentProps.tsc.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\routing\GeneratedRoutes.tsc.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\routing\Router.tsx.liquid" />
