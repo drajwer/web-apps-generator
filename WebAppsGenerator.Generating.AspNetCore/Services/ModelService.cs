@@ -100,7 +100,6 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
                     var joinTypeName = !isCurrentPrimary
                         ? entity.Name + secondEntityName
                         : secondEntityName + entity.Name;
-                    joinTypeName = PluralizationHelper.Pluralize(joinTypeName);
                     var joinField = new Field(-1, -1)
                     {
                         Name = manyToManyField.Name, 
