@@ -1,0 +1,72 @@
+﻿import { SnackbarActionTypes } from './actionTypes';
+import { SnackbarActions } from './actions';
+
+export interface ISnackbarState {
+    showToast: boolean,
+    message: string,
+};
+
+const initialState: ISnackbarState = {
+    showToast: false,
+    message: '',
+}
+const snackbarReducer = (state = initialState, action: SnackbarActions) => {
+	{%- for entity in Params.Entities -%}
+	const singular{{ entity.Name }}EntityName = '{{ entity.Name }}';
+	const plural{{ entity.Name }}EntityName = '{{ entity.PluralName | DeCapitalize}}';
+
+	{%- endfor -%}
+    switch (action.type) {
+	{%- for entity in Params.Entities -%}
+        case SnackbarActionTypes.RESPONSE_UPDATE_{{ entity.Name | SnakeUppercase}}:
+            return {
+				showToast: true,
+                message: singular{{ entity.Name }}EntityName + ' updated successfully'
+			};
+        case SnackbarActionTypes.RESPONSE_DELETE_{{ entity.Name | SnakeUppercase}}:
+			return {
+				showToast: true,
+                message: singular{{ entity.Name }}EntityName + ' deleted successfully'
+			};        
+		case SnackbarActionTypes.RESPONSE_ADD_{{ entity.Name | SnakeUppercase}}:
+			return {
+				showToast: true,
+                message: singular{{ entity.Name }}EntityName + ' created successfully'
+			};        
+        case SnackbarActionTypes.SET_ADD_{{ entity.Name | SnakeUppercase}}_ERROR:
+        	return {
+				showToast: true,
+                message: singular{{ entity.Name }}EntityName + ' creation failed'
+			};        
+        case SnackbarActionTypes.SET_UPDATE_{{ entity.Name | SnakeUppercase}}_ERROR:
+			return {
+				showToast: true,
+                message: singular{{ entity.Name }}EntityName + ' update failed'
+			};        
+        case SnackbarActionTypes.SET_DELETE_{{ entity.Name | SnakeUppercase}}_ERROR:
+			return {
+				showToast: true,
+                message: singular{{ entity.Name }}EntityName + ' deletion failed'
+			};        
+        case SnackbarActionTypes.SET_FETCH_ERROR_{{ entity.Name | SnakeUppercase }}:
+            return {
+                showToast: true,
+                message: 'Could not fetch ' + plural{{ entity.Name }}EntityName
+            };
+		case SnackbarActionTypes.SET_FETCH_ERROR_{{ entity.PluralName | SnakeUppercase }}:
+            return {
+                showToast: true,
+                message: 'Could not fetch ' + plural{{ entity.Name }}EntityName
+            };
+	{%- endfor -%}
+        case SnackbarActionTypes.HIDE_SNACKBAR:
+            return {
+                showToast: false,
+                message: '',
+            };
+        default:
+            return state;
+    }
+}
+
+export default snackbarReducer;
