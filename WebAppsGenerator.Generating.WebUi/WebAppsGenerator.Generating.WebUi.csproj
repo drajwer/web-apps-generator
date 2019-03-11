@@ -49,6 +49,7 @@
     <None Remove="Templates\WebUI\src\screens\MainPage\MainPage.tsx.liquid" />
     <None Remove="Templates\WebUI\src\screens\TestPage\TestPage.css.liquid" />
     <None Remove="Templates\WebUI\src\screens\TestPage\TestPage.tsx.liquid" />
+    <None Remove="Templates\WebUI\src\styles\theme.tsc.liquid" />
     <None Remove="Templates\WebUI\src\vendors\http.tsx.liquid" />
     <None Remove="Templates\WebUI\tslint.json.liquid" />
   </ItemGroup>
@@ -109,6 +110,7 @@
     <EmbeddedResource Include="Templates\WebUI\src\screens\TestPage\TestPage.tsx.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\screens\MainPage\MainPage.css.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\screens\MainPage\MainPage.tsx.liquid" />
+    <EmbeddedResource Include="Templates\WebUI\src\styles\theme.tsc.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\vendors\http.tsx.liquid" />
     <EmbeddedResource Include="Templates\WebUI\tslint.json.liquid" />
   </ItemGroup>

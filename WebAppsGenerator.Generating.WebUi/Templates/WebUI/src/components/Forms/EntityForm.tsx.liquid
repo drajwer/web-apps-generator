@@ -121,6 +121,7 @@ class {{Params.Entity.Name}}Form extends React.Component<IProps> {
 						required={true}
 						{%-endif-%}
 						fullWidth={true}
+						InputLabelProps={ { shrink: true } }
 						disabled={this.props.readonly}
 						error={this.props.validationErrors.enabled && this.props.validationErrors.{{field.Name}}Error != null}
 						helperText={this.props.validationErrors.enabled ? this.props.validationErrors.{{field.Name}}Error : ""}
@@ -145,6 +146,7 @@ class {{Params.Entity.Name}}Form extends React.Component<IProps> {
 					  value = { this.props.{{Params.Entity.Name | DeCapitalize}}.{{field.Name}} == null ? "" : this.props.{{Params.Entity.Name | DeCapitalize}}.{{field.Name}} }
 						{%- endif -%}
 					  disabled={this.props.readonly}
+					  InputLabelProps={ { shrink: true } }
 					  onChange={this.on{{ field.Name }}Change}
 					  error={this.props.validationErrors.enabled && this.props.validationErrors.{{field.Name}}Error != null}
 					  helperText={this.props.validationErrors.enabled ? this.props.validationErrors.{{field.Name}}Error : ""}

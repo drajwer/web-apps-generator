@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import * as Actions from 'src/modules/snackbar/actions';
 import { IRootState } from 'src/modules';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, MuiThemeProvider } from '@material-ui/core/styles';
 import Routes from '../../routing/Router';
 import Toolbar from '@material-ui/core/Toolbar';
 import Snackbar from '@material-ui/core/Snackbar';
@@ -18,6 +18,7 @@ import LuxonUtils from '@date-io/luxon';
 import './App.css';
 import Menu from 'src/components/Menu/Menu';
 import history from 'src/history';
+import theme from 'src/styles/theme';
 
 const styles = {
   root: {
@@ -51,7 +52,7 @@ class App extends React.Component<any, any> {
     const classes = this.props.classes;
     return (
       <Router history={history}>
-        <div>
+        <MuiThemeProvider theme={theme}>
           <div>
             <AppBar position="fixed" className="appBar">
               <Toolbar>
@@ -59,8 +60,8 @@ class App extends React.Component<any, any> {
                   <MenuIcon />
                 </IconButton>
                 <Typography variant="h6" color="inherit" className={classes.grow}>
-                  University
-          </Typography>
+					{{Params.ProjectName}}
+				</Typography>
               </Toolbar>
               <Menu openMenu={this.state.openDrawer} onClose={this.toggleDrawer} />
             </AppBar>
@@ -80,7 +81,7 @@ class App extends React.Component<any, any> {
               classes={ { root: 'snackbar' } }
             />
           </Snackbar>
-        </div>
+        </MuiThemeProvider>
       </Router>
     );
   }

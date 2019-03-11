@@ -66,7 +66,7 @@ class {{ Params.Entity.Name }}Dropdown extends React.Component<ICombinedProps, I
 
         return (
             <FormControl fullWidth={true} disabled={this.props.disabled} >
-                <InputLabel>{this.props.label}</InputLabel>
+                <InputLabel shrink={true}>{this.props.label}</InputLabel>
                 <Select
                     value={this.props.multipleSelects ? this.props.selected : this.props.selected.length > 0 ? this.props.selected[0] : ""}
                     onChange={this.props.multipleSelects ? this.handleChangeMultiple : this.handleChange}
@@ -123,7 +123,8 @@ class {{ Params.Entity.Name }}Dropdown extends React.Component<ICombinedProps, I
                     type="string"
                     fullWidth={true}
                     value={this.props.multipleSelects ? this.renderValues(this.props.selected) : this.renderValue(this.props.selected.length > 0 ? this.props.selected[0] : undefined)}
-                    disabled={this.props.disabled}
+                    InputLabelProps={ { shrink: true } }
+					disabled={this.props.disabled}
                     onClick={this.toggleModal}
                 />
             </div>
