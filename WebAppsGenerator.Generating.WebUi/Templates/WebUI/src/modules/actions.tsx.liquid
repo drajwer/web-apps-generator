@@ -11,9 +11,11 @@ type ThunkResult<R> = ThunkAction<R, IRootState, undefined, RootActions>;
 export type {{ Params.Entity.Name }}Actions =
 	{ type: {{ Params.Entity.Name }}ActionTypes.REQUEST_{{ Params.Entity.Name | SnakeUppercase}} } |
 	{ type: {{ Params.Entity.Name }}ActionTypes.RECEIVE_{{ Params.Entity.Name | SnakeUppercase}}, {{ Params.Entity.Name | DeCapitalize }}: {{ Params.Entity.Name }} } |
+	{ type: {{ Params.Entity.Name }}ActionTypes.SET_FETCH_ERROR_{{ Params.Entity.Name | SnakeUppercase }} } |
+
 	{ type: {{ Params.Entity.Name }}ActionTypes.REQUEST_{{ Params.Entity.PluralName | SnakeUppercase }} } |
 	{ type: {{ Params.Entity.Name }}ActionTypes.RECEIVE_{{ Params.Entity.PluralName | SnakeUppercase }}, {{ Params.Entity.PluralName | DeCapitalize }}: {{ Params.Entity.Name }}[] } |
-	{ type: {{ Params.Entity.Name }}ActionTypes.SET_FETCH_ERROR_{{ Params.Entity.Name | SnakeUppercase }} } |
+	{ type: {{ Params.Entity.Name }}ActionTypes.SET_FETCH_ERROR_{{ Params.Entity.PluralName | SnakeUppercase }} } |
 			
 	{ type: {{ Params.Entity.Name }}ActionTypes.REQUEST_ADD_{{ Params.Entity.Name | SnakeUppercase}} } |
 	{ type: {{ Params.Entity.Name }}ActionTypes.RESPONSE_ADD_{{ Params.Entity.Name | SnakeUppercase}}, {{ Params.Entity.Name | DeCapitalize }}: {{ Params.Entity.Name }} } |
@@ -33,7 +35,7 @@ export const get{{ Params.Entity.PluralName }}: ThunkResult<void> = () => {
         dispatch(request{{ Params.Entity.PluralName }}());
         GetAll()
             .then(response => dispatch(receive{{ Params.Entity.PluralName }}(response)))
-            .catch(() => dispatch(setFetchError()));
+            .catch(() => dispatch(setFetchError{{ Params.Entity.PluralName }}()));
     }
 }
 
@@ -42,7 +44,7 @@ export const get{{ Params.Entity.Name }}: (id: {{Params.Entity.IdField.Type.Name
         dispatch(request{{ Params.Entity.Name }}());
         Get(id)
             .then(response => dispatch(receive{{ Params.Entity.Name }}(response)))
-            .catch(() => dispatch(setFetchError()));
+            .catch(() => dispatch(setFetchError{{ Params.Entity.Name }}()));
     }
 }
 
@@ -98,8 +100,12 @@ const receive{{ Params.Entity.PluralName }}: ({{ Params.Entity.PluralName | DeCa
     {{ Params.Entity.PluralName | DeCapitalize}}
 });
 
-const setFetchError: () => {{ Params.Entity.Name }}Actions = () => ({
+const setFetchError{{ Params.Entity.Name }}: () => {{ Params.Entity.Name }}Actions = () => ({
     type: {{ Params.Entity.Name }}ActionTypes.SET_FETCH_ERROR_{{ Params.Entity.Name | SnakeUppercase }},
+});
+
+const setFetchError{{ Params.Entity.PluralName }}: () => {{ Params.Entity.Name }}Actions = () => ({
+    type: {{ Params.Entity.Name }}ActionTypes.SET_FETCH_ERROR_{{ Params.Entity.PluralName | SnakeUppercase }},
 });
 
 const requestAdd{{ Params.Entity.Name }}: () => {{ Params.Entity.Name }}Actions = () => ({

@@ -51,10 +51,16 @@ const {{ Params.Entity.Name | DeCapitalize}}Reducer: Reducer<I{{ Params.Entity.N
         case {{ Params.Entity.Name }}ActionTypes.SET_ADD_{{ Params.Entity.Name | SnakeUppercase}}_ERROR:
         case {{ Params.Entity.Name }}ActionTypes.SET_UPDATE_{{ Params.Entity.Name | SnakeUppercase}}_ERROR:
         case {{ Params.Entity.Name }}ActionTypes.SET_DELETE_{{ Params.Entity.Name | SnakeUppercase}}_ERROR:
-        case {{ Params.Entity.Name }}ActionTypes.SET_FETCH_ERROR_{{ Params.Entity.Name | SnakeUppercase }}:
-            return {
+		   return {
                 ...state,
                 isInvalid: true
+            };
+        case {{ Params.Entity.Name }}ActionTypes.SET_FETCH_ERROR_{{ Params.Entity.Name | SnakeUppercase }}:
+        case {{ Params.Entity.Name }}ActionTypes.SET_FETCH_ERROR_{{ Params.Entity.PluralName | SnakeUppercase }}:
+            return {
+                ...state,
+				isFetching: false,
+				isInvalid: true
             };
 
         default:

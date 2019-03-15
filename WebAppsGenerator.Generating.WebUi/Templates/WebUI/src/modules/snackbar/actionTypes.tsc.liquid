@@ -2,7 +2,7 @@
     HIDE_SNACKBAR = 'HIDE_SNACKBAR',
 	{%- for entity in Params.Entities -%}
 
-	SET_FETCH_ERROR_{{ entity.PluralName | SnakeUppercase }} = 'SET_FETCH_ERROR_{{ entity.Name | SnakeUppercase }}',
+	SET_FETCH_ERROR_{{ entity.PluralName | SnakeUppercase }} = 'SET_FETCH_ERROR_{{ entity.PluralName | SnakeUppercase }}',
 	
 	SET_FETCH_ERROR_{{ entity.Name | SnakeUppercase }} = 'SET_FETCH_ERROR_{{ entity.Name | SnakeUppercase }}',
 	

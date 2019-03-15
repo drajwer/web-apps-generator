@@ -13,6 +13,7 @@ const initialState: ISnackbarState = {
 const snackbarReducer = (state = initialState, action: SnackbarActions) => {
 	{%- for entity in Params.Entities -%}
 	const singular{{ entity.Name }}EntityName = '{{ entity.Name }}';
+	const singularLowercase{{ entity.Name }}EntityName = '{{ entity.Name | DeCapitalize}}';
 	const plural{{ entity.Name }}EntityName = '{{ entity.PluralName | DeCapitalize}}';
 
 	{%- endfor -%}
@@ -51,7 +52,7 @@ const snackbarReducer = (state = initialState, action: SnackbarActions) => {
         case SnackbarActionTypes.SET_FETCH_ERROR_{{ entity.Name | SnakeUppercase }}:
             return {
                 showToast: true,
-                message: 'Could not fetch ' + plural{{ entity.Name }}EntityName
+                message: 'Could not fetch ' + singularLowercase{{ entity.Name }}EntityName
             };
 		case SnackbarActionTypes.SET_FETCH_ERROR_{{ entity.PluralName | SnakeUppercase }}:
             return {
