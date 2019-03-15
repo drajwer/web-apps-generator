@@ -70,7 +70,7 @@ class {{Params.Entity.Name}}Form extends React.Component<IProps, IState> {
 		}
 		if (this.state.{{Params.Entity.Name | DeCapitalize}} == null) {
 			return (
-				<Typography variant="h4">
+				<Typography variant="h4" className="error-message">
 					{{Params.Entity.Name }} with id {this.props.match.params.id} does not exist.
 				</Typography>
 			);
