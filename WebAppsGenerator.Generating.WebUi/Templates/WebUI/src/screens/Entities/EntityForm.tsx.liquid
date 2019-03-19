@@ -9,6 +9,8 @@ import { IRootState } from 'src/modules';
 import RouteComponentProps  from 'src/routing/RouteComponentProps';
 import {{Params.Entity.Name}}FormComponent, { {{Params.Entity.Name}}ValidationErrors } from 'src/components/Forms/{{Params.Entity.Name}}/{{Params.Entity.Name}}Form';
 import PageButtons from 'src/components/PageButtons/PageButtons';
+import { Button } from "@material-ui/core";
+import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import history from 'src/history';
 import FormButtons from 'src/components/FormButtons/FormButtons';
 import EntityPageTitle from 'src/components/EntityPageTitle/EntityPageTitle';
@@ -72,16 +74,36 @@ class {{Params.Entity.Name}}Form extends React.Component<IProps, IState> {
 
 		if(this.props.isInvalid) {
 			return (
-				<Typography variant="h4" className="error-message">
-					{{Params.Entity.Name }} with id {this.props.match.params.id} does not exist.
-				</Typography>
+				<div>
+					<div>
+						<Typography variant="h4" className="error-message">
+							{{Params.Entity.Name }} with id {this.props.match.params.id} does not exist.
+						</Typography>
+					</div>
+					<div className="back-button">
+						<Button variant="contained" color="primary" onClick={this.onBackClick} style={ { marginTop: "10px" } }>
+							Back
+                			<KeyboardArrowLeftIcon />
+						</Button>
+					</div>
+				</div>
 			);
 		}
 		if (this.state.{{Params.Entity.Name | DeCapitalize}} == null) {
 			return (
-				<Typography variant="h4" className="error-message">
-					An error occured while fetching {{Params.Entity.Name | DeCapitalize }}.
-				</Typography>
+				<div>
+					<div>
+						<Typography variant="h4" className="error-message">
+							An error occured while fetching {{Params.Entity.Name | DeCapitalize }}.
+						</Typography>
+					</div>
+					<div className="back-button">
+					<Button variant="contained" color="primary" onClick={this.onBackClick} style={ { marginTop: "10px" } }>
+						Back
+						<KeyboardArrowLeftIcon />
+					</Button>
+				</div>
+			</div>
 			);
 		}
         return (
