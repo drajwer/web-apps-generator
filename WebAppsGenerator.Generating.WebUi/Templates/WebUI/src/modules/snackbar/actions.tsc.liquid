@@ -19,6 +19,8 @@ export type SnackbarActions =
 
 	{%- endfor -%}
 
+    { type: SnackbarActionTypes.SHOW_NEXT_MESSAGE } |
+
     { type: SnackbarActionTypes.HIDE_SNACKBAR };
 
 export const hideSnackbar = () => {
@@ -27,6 +29,15 @@ export const hideSnackbar = () => {
     }
 }
 
+export const showNextMessage = () => {
+	return (dispatch: any, getState: GetStateType) => {
+		dispatch(showNextMessageAction());
+	}
+}
 const hideSnackbarAction = () => ({
     type: SnackbarActionTypes.HIDE_SNACKBAR,
+});
+
+const showNextMessageAction = () => ({
+	type: SnackbarActionTypes.SHOW_NEXT_MESSAGE,
 });

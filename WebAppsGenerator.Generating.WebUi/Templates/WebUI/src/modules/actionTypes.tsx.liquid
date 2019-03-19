@@ -1,10 +1,13 @@
 ﻿export const enum {{ Params.Entity.Name }}ActionTypes {
 	REQUEST_{{ Params.Entity.PluralName | SnakeUppercase }} = 'REQUEST_{{ Params.Entity.PluralName | SnakeUppercase }}',
 	RECEIVE_{{ Params.Entity.PluralName | SnakeUppercase }} = 'RECEIVE_{{ Params.Entity.PluralName | SnakeUppercase }}',
+	SET_FETCH_ERROR_{{ Params.Entity.PluralName | SnakeUppercase }} = 'SET_FETCH_ERROR_{{ Params.Entity.PluralName | SnakeUppercase }}',
+	
 	REQUEST_{{ Params.Entity.Name | SnakeUppercase }} = 'REQUEST_{{ Params.Entity.Name | SnakeUppercase }}',
 	RECEIVE_{{ Params.Entity.Name | SnakeUppercase }} = 'RECEIVE_{{ Params.Entity.Name | SnakeUppercase }}',
 	SET_FETCH_ERROR_{{ Params.Entity.Name | SnakeUppercase }} = 'SET_FETCH_ERROR_{{ Params.Entity.Name | SnakeUppercase }}',
-	
+	INVALID_{{ Params.Entity.Name | SnakeUppercase }}_ID = 'INVALID_{{ Params.Entity.Name | SnakeUppercase }}_ID',
+
 	REQUEST_ADD_{{ Params.Entity.Name | SnakeUppercase}} = 'REQUEST_ADD_{{ Params.Entity.Name | SnakeUppercase}}',
 	RESPONSE_ADD_{{ Params.Entity.Name | SnakeUppercase}} = 'RESPONSE_ADD_{{ Params.Entity.Name | SnakeUppercase}}',
 	SET_ADD_{{ Params.Entity.Name | SnakeUppercase}}_ERROR = 'SET_ADD_{{ Params.Entity.Name | SnakeUppercase}}_ERROR',

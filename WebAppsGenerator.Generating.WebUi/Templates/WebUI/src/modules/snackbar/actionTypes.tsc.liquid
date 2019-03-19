@@ -1,8 +1,10 @@
 ﻿export const enum SnackbarActionTypes {
     HIDE_SNACKBAR = 'HIDE_SNACKBAR',
+
+	SHOW_NEXT_MESSAGE = 'SHOW_NEXT_MESSAGE',
 	{%- for entity in Params.Entities -%}
 
-	SET_FETCH_ERROR_{{ entity.PluralName | SnakeUppercase }} = 'SET_FETCH_ERROR_{{ entity.Name | SnakeUppercase }}',
+	SET_FETCH_ERROR_{{ entity.PluralName | SnakeUppercase }} = 'SET_FETCH_ERROR_{{ entity.PluralName | SnakeUppercase }}',
 	
 	SET_FETCH_ERROR_{{ entity.Name | SnakeUppercase }} = 'SET_FETCH_ERROR_{{ entity.Name | SnakeUppercase }}',
 	
