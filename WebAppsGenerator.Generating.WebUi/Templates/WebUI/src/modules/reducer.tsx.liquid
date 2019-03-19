@@ -7,6 +7,7 @@ import {{ Params.Entity.Name }} from '../../models/{{ Params.Entity.Name }}';
 export interface I{{ Params.Entity.Name }}State {
     readonly isFetching: boolean,
     readonly isInvalid: boolean,
+	readonly addOrUpdateOrDeleteError: boolean,
     readonly {{ Params.Entity.PluralName | DeCapitalize}}: {{ Params.Entity.Name }}[] | null,
     readonly {{ Params.Entity.Name | DeCapitalize }}: {{ Params.Entity.Name }} | undefined,
 }
@@ -14,6 +15,7 @@ export interface I{{ Params.Entity.Name }}State {
 const initialState: I{{ Params.Entity.Name }}State = {
     isFetching: false,
     isInvalid: false,
+	addOrUpdateOrDeleteError: false,
     {{ Params.Entity.PluralName | DeCapitalize}}: null,
     {{ Params.Entity.Name | DeCapitalize }}: undefined,
 };
@@ -23,6 +25,11 @@ const {{ Params.Entity.Name | DeCapitalize}}Reducer: Reducer<I{{ Params.Entity.N
         case {{ Params.Entity.Name }}ActionTypes.REQUEST_UPDATE_{{ Params.Entity.Name | SnakeUppercase}}:
         case {{ Params.Entity.Name }}ActionTypes.REQUEST_DELETE_{{ Params.Entity.Name | SnakeUppercase}}:
         case {{ Params.Entity.Name }}ActionTypes.REQUEST_ADD_{{ Params.Entity.Name | SnakeUppercase}}:
+		    return {
+                ...state,
+                isInvalid: false,
+                isFetching: true,
+            };
         case {{ Params.Entity.Name }}ActionTypes.REQUEST_{{ Params.Entity.Name | SnakeUppercase }}:
         case {{ Params.Entity.Name }}ActionTypes.REQUEST_{{ Params.Entity.PluralName | SnakeUppercase }}:
             return {
@@ -48,19 +55,25 @@ const {{ Params.Entity.Name | DeCapitalize}}Reducer: Reducer<I{{ Params.Entity.N
                 {{ Params.Entity.Name | DeCapitalize}}: action.{{ Params.Entity.Name | DeCapitalize}},
                 isFetching: false
             };
-        case {{ Params.Entity.Name }}ActionTypes.SET_ADD_{{ Params.Entity.Name | SnakeUppercase}}_ERROR:
-        case {{ Params.Entity.Name }}ActionTypes.SET_UPDATE_{{ Params.Entity.Name | SnakeUppercase}}_ERROR:
-        case {{ Params.Entity.Name }}ActionTypes.SET_DELETE_{{ Params.Entity.Name | SnakeUppercase}}_ERROR:
-		   return {
+		case {{ Params.Entity.Name }}ActionTypes.INVALID_{{ Params.Entity.Name | SnakeUppercase }}_ID: 
+			return {
                 ...state,
-                isInvalid: true
-            };
-        case {{ Params.Entity.Name }}ActionTypes.SET_FETCH_ERROR_{{ Params.Entity.Name | SnakeUppercase }}:
+                isInvalid: true,
+				isFetching: false,
+};
+        case {{ Params.Entity.Name }}ActionTypes.SET_ADD_{{ Params.Entity.Name | SnakeUppercase}}_ERROR:
+		case {{ Params.Entity.Name }}ActionTypes.SET_UPDATE_{{ Params.Entity.Name | SnakeUppercase}}_ERROR:
+		case {{ Params.Entity.Name }}ActionTypes.SET_DELETE_{{ Params.Entity.Name | SnakeUppercase}}_ERROR:
+			return {
+				...state,
+				addOrUpdateOrDeleteError: true,
+                isFetching: false,
+			}
+		case {{ Params.Entity.Name }}ActionTypes.SET_FETCH_ERROR_{{ Params.Entity.Name | SnakeUppercase }}:
         case {{ Params.Entity.Name }}ActionTypes.SET_FETCH_ERROR_{{ Params.Entity.PluralName | SnakeUppercase }}:
             return {
                 ...state,
 				isFetching: false,
-				isInvalid: true
             };
 
         default:

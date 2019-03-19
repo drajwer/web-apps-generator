@@ -3,12 +3,15 @@ import { SnackbarActions } from './actions';
 
 export interface ISnackbarState {
     showToast: boolean,
-    message: string,
+    messages: Array<{
+		text: string,
+		key: string,
+	}>,
 };
 
 const initialState: ISnackbarState = {
     showToast: false,
-    message: '',
+    messages: [],
 }
 const snackbarReducer = (state = initialState, action: SnackbarActions) => {
 	{%- for entity in Params.Entities -%}
@@ -17,53 +20,61 @@ const snackbarReducer = (state = initialState, action: SnackbarActions) => {
 	const plural{{ entity.Name }}EntityName = '{{ entity.PluralName | DeCapitalize}}';
 
 	{%- endfor -%}
+	const messageKey = new Date().getTime().toString();
+	
     switch (action.type) {
 	{%- for entity in Params.Entities -%}
         case SnackbarActionTypes.RESPONSE_UPDATE_{{ entity.Name | SnakeUppercase}}:
             return {
 				showToast: true,
-                message: singular{{ entity.Name }}EntityName + ' updated successfully'
+                messages: state.messages.concat({ text: singular{{ entity.Name }}EntityName + ' updated successfully', key: messageKey })
 			};
         case SnackbarActionTypes.RESPONSE_DELETE_{{ entity.Name | SnakeUppercase}}:
 			return {
 				showToast: true,
-                message: singular{{ entity.Name }}EntityName + ' deleted successfully'
+                messages: state.messages.concat({ text: singular{{ entity.Name }}EntityName + ' deleted successfully', key: messageKey })
 			};        
 		case SnackbarActionTypes.RESPONSE_ADD_{{ entity.Name | SnakeUppercase}}:
 			return {
 				showToast: true,
-                message: singular{{ entity.Name }}EntityName + ' created successfully'
+                messages: state.messages.concat({ text: singular{{ entity.Name }}EntityName + ' created successfully', key: messageKey })
 			};        
         case SnackbarActionTypes.SET_ADD_{{ entity.Name | SnakeUppercase}}_ERROR:
         	return {
 				showToast: true,
-                message: singular{{ entity.Name }}EntityName + ' creation failed'
+                messages: state.messages.concat({ text: singular{{ entity.Name }}EntityName + ' creation failed', key: messageKey })
 			};        
         case SnackbarActionTypes.SET_UPDATE_{{ entity.Name | SnakeUppercase}}_ERROR:
 			return {
 				showToast: true,
-                message: singular{{ entity.Name }}EntityName + ' update failed'
+                messages: state.messages.concat({ text: singular{{ entity.Name }}EntityName + ' update failed', key: messageKey })
 			};        
         case SnackbarActionTypes.SET_DELETE_{{ entity.Name | SnakeUppercase}}_ERROR:
 			return {
 				showToast: true,
-                message: singular{{ entity.Name }}EntityName + ' deletion failed'
+                messages: state.messages.concat({ text: singular{{ entity.Name }}EntityName + ' deletion failed', key: messageKey })
 			};        
         case SnackbarActionTypes.SET_FETCH_ERROR_{{ entity.Name | SnakeUppercase }}:
             return {
                 showToast: true,
-                message: 'Could not fetch ' + singularLowercase{{ entity.Name }}EntityName
+                messages: state.messages.concat({ text: 'Could not fetch ' + singularLowercase{{ entity.Name }}EntityName, key: messageKey })
             };
 		case SnackbarActionTypes.SET_FETCH_ERROR_{{ entity.PluralName | SnakeUppercase }}:
             return {
                 showToast: true,
-                message: 'Could not fetch ' + plural{{ entity.Name }}EntityName
+                messages: state.messages.concat({ text: 'Could not fetch ' + plural{{ entity.Name }}EntityName, key: messageKey })
             };
 	{%- endfor -%}
         case SnackbarActionTypes.HIDE_SNACKBAR:
             return {
+				...state,
                 showToast: false,
-                message: '',
+            };
+		case SnackbarActionTypes.SHOW_NEXT_MESSAGE:
+			const newArray = state.messages.slice(1);
+            return {
+                showToast: newArray.length > 0,
+                messages: newArray,
             };
         default:
             return state;

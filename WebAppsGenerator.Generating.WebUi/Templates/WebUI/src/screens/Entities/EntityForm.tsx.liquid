@@ -16,7 +16,8 @@ import EntityPageTitle from 'src/components/EntityPageTitle/EntityPageTitle';
 interface IProps extends RouteComponentProps {
 	{{Params.Entity.Name | DeCapitalize}}: {{Params.Entity.Name }} | undefined
 	isLoading: boolean
-	isInvalid: boolean
+	isInvalid: boolean,
+	addOrUpdateOrDeleteError: boolean,
 	actions: any
 }
 
@@ -65,13 +66,21 @@ class {{Params.Entity.Name}}Form extends React.Component<IProps, IState> {
 		const showDelete = !this.state.editMode;
 		const showEdit = !this.state.editMode;
 
-		if (this.props.isLoading && !this.props.isInvalid) {
+		if (this.props.isLoading) {
 			return (<div className="loading-circle"><CircularProgress /></div>);
+		}
+
+		if(this.props.isInvalid) {
+			return (
+				<Typography variant="h4" className="error-message">
+					{{Params.Entity.Name }} with id {this.props.match.params.id} does not exist.
+				</Typography>
+			);
 		}
 		if (this.state.{{Params.Entity.Name | DeCapitalize}} == null) {
 			return (
 				<Typography variant="h4" className="error-message">
-					{{Params.Entity.Name }} with id {this.props.match.params.id} does not exist.
+					An error occured while fetching {{Params.Entity.Name | DeCapitalize }}.
 				</Typography>
 			);
 		}
@@ -153,13 +162,20 @@ class {{Params.Entity.Name}}Form extends React.Component<IProps, IState> {
 			this.setState({validationErrors});
 			return;
 		}
-		this.toggleMode();
 
 		if (this.state.{{Params.Entity.Name | DeCapitalize}}.id === 0) {
-			this.props.actions.add{{Params.Entity.Name }}(this.state.{{Params.Entity.Name | DeCapitalize}});
+			this.props.actions.add{{Params.Entity.Name }}(this.state.{{Params.Entity.Name | DeCapitalize}})
+				.then(() => {
+					this.toggleMode();
+				})
+				.catch(() => {return;});;
 		}
 		else {
-			this.props.actions.update{{Params.Entity.Name }}(this.state.{{Params.Entity.Name | DeCapitalize}}.id, this.state.{{Params.Entity.Name | DeCapitalize}});
+			this.props.actions.update{{Params.Entity.Name }}(this.state.{{Params.Entity.Name | DeCapitalize}}.id, this.state.{{Params.Entity.Name | DeCapitalize}})
+				.then(() => {
+					this.toggleMode();
+				})
+				.catch(() => {return;});;
 		}
 	}
 
@@ -193,7 +209,8 @@ const mapStateToProps = (state: IRootState) => {
 	return {
 		{{Params.Entity.Name | DeCapitalize}}: state.{{Params.Entity.Name | DeCapitalize}}.{{Params.Entity.Name | DeCapitalize}},
 		isLoading: state.{{Params.Entity.Name | DeCapitalize}}.isFetching,
-		isInvalid: state.{{Params.Entity.Name | DeCapitalize}}.isInvalid
+		isInvalid: state.{{Params.Entity.Name | DeCapitalize}}.isInvalid,
+		addOrUpdateOrDeleteError: state.{{Params.Entity.Name | DeCapitalize}}.addOrUpdateOrDeleteError,
 	};
 };
 

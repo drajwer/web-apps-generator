@@ -72,12 +72,14 @@ class App extends React.Component<any, any> {
             </div>
           </MuiPickersUtilsProvider>
           <Snackbar
+			key={this.props.message.key}
             open={this.props.showToast}
             onClose={this.hideSnackbar}
             autoHideDuration={5000}
-          >
+			transitionDuration={ { enter: 500, exit: 500 } }
+>
             <SnackbarContent
-              message={this.props.message}
+              message={this.props.message.text}
               classes={ { root: 'snackbar' } }
             />
           </Snackbar>
@@ -92,13 +94,14 @@ class App extends React.Component<any, any> {
 
   private hideSnackbar = () => {
     this.props.actions.hideSnackbar();
+    this.props.actions.showNextMessage();
   }
 }
 
 const mapStateToProps = (state: IRootState) => {
   return {
     showToast: state.snackbar.showToast,
-    message: state.snackbar.message
+    message: state.snackbar.messages.length > 0? state.snackbar.messages[0] : {}
   };
 }
 
