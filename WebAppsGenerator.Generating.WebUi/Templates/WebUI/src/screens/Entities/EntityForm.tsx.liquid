@@ -190,14 +190,14 @@ class {{Params.Entity.Name}}Form extends React.Component<IProps, IState> {
 				.then(() => {
 					this.toggleMode();
 				})
-				.catch(() => {return;});;
+				.catch(() => ({}));
 		}
 		else {
 			this.props.actions.update{{Params.Entity.Name }}(this.state.{{Params.Entity.Name | DeCapitalize}}.id, this.state.{{Params.Entity.Name | DeCapitalize}})
 				.then(() => {
 					this.toggleMode();
 				})
-				.catch(() => {return;});;
+				.catch(() => ({}));
 		}
 	}
 
@@ -205,8 +205,12 @@ class {{Params.Entity.Name}}Form extends React.Component<IProps, IState> {
 		if (this.state.{{Params.Entity.Name | DeCapitalize}} == null) {
 			throw new Error("Delete could not be done for empty item.");
 		}
-		this.toggleMode();
-		this.props.actions.delete{{Params.Entity.Name }}(this.state.{{Params.Entity.Name | DeCapitalize}}.id);
+
+		this.props.actions.delete{{Params.Entity.Name }}(this.state.{{Params.Entity.Name | DeCapitalize}}.id)
+			.then(() => {
+				this.toggleMode();
+			})
+			.catch(() => ({}));;
 	}
 
 	private onBackClick = () => {
