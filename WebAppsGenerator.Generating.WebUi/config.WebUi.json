@@ -55,7 +55,8 @@
                     "float",
                     "string",
                     "dateTime",
-                    "bool"
+                    "bool",
+                    "Entity"
                 ],
                 "AllowNoParams": true,
             }

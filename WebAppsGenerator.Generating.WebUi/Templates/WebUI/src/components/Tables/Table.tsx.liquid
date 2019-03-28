@@ -5,6 +5,17 @@ import { CircularProgress } from '@material-ui/core';
 import * as Actions from '../../modules/{{ Params.Entity.Name | DeCapitalize }}/actions';
 import GenericTable from '../GenericTable/GenericTable';
 import {{ Params.Entity.Name }} from '../../models/{{ Params.Entity.Name }}';
+{%- for field in Params.Entity.ComplexFieldsDisplayedInList -%}
+	{%- if field.Type.IsArray -%}
+import { get{{ field.Type.EntityName }}DisplayValues } from '../Inputs/{{ field.Type.EntityName }}/{{ field.Type.EntityName }}Values';
+	{%- else -%}
+import { get{{ field.Type.EntityName }}DisplayValue } from '../Inputs/{{ field.Type.EntityName }}/{{ field.Type.EntityName }}Values';
+	{%- endif -%}
+{%- endfor -%}
+
+{%- for field in Params.Entity.NamesOfComplexFieldsDisplayedInList -%}
+import * as {{ field.Type.EntityName }}Actions from '../../modules/{{ field.Type.EntityName | DeCapitalize }}/actions';
+{%- endfor -%}
 import { IRootState } from '../../modules';
 import './Table.css';
 
@@ -43,8 +54,16 @@ class {{ Params.Entity.Name }}Table extends React.Component<ICombinedProps> {
 
         const data = !{{ Params.Entity.PluralName | DeCapitalize }}? null : {{ Params.Entity.PluralName | DeCapitalize }}.map(({{ Params.Entity.Name | DeCapitalize }}: {{ Params.Entity.Name }}) => ({
             {%- for field in Params.Entity.Fields -%}
-				{%- if field.Type.IsSimpleType and field.DisplayInList -%}
+				{%- if field.DisplayInList -%}
+					{%- if field.Type.IsSimpleType -%}
 			{{ field.Name }}: {{ Params.Entity.Name | DeCapitalize }}.{{ field.Name }},
+					{%- else -%}
+						{%- if field.Type.IsArray -%}
+			{{ field.Name }}: get{{ field.Type.EntityName }}DisplayValues({{ Params.Entity.Name | DeCapitalize }}.{{ field.Name }}Ids),
+						{%- else -%}
+			{{ field.Name }}: get{{ field.Type.EntityName }}DisplayValue({{ Params.Entity.Name | DeCapitalize }}.{{ field.Name }}Id),
+						{%- endif -%}
+					{%- endif -%}
 				{%- endif -%}
 			{%- endfor -%}
         }));
@@ -52,7 +71,7 @@ class {{ Params.Entity.Name }}Table extends React.Component<ICombinedProps> {
         const tableHeadLabels: string[] = 
 			[
 				{%- for field in Params.Entity.Fields -%}
-					{%- if field.Type.IsSimpleType and field.DisplayInList -%}
+					{%- if field.DisplayInList -%}
 				'{{ field.DisplayName | Capitalize | SplitCamelCase }}',
 					{%- endif -%}
 				{%- endfor -%}
@@ -74,7 +93,10 @@ class {{ Params.Entity.Name }}Table extends React.Component<ICombinedProps> {
     }
 	
 	private refreshData = () => {
-		this.props.actions.get{{ Params.Entity.PluralName }}();
+		this.props.actions.{{ Params.Entity.Name | DeCapitalize }}.get{{ Params.Entity.PluralName }}();
+		{%- for field in Params.Entity.NamesOfComplexFieldsDisplayedInList -%}
+		this.props.actions.{{ field.Type.EntityName | DeCapitalize }}.get{{ field.Type.PluralEntityName }}();
+		{%- endfor -%}
     }
 }
 
@@ -85,6 +107,11 @@ const mapStateToProps = (state: IRootState, ownProps: I{{ Params.Entity.Name }}T
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-    actions: bindActionCreators(Actions, dispatch),
+    actions: {
+		{{ Params.Entity.Name | DeCapitalize }}: bindActionCreators(Actions, dispatch),
+		{%- for field in Params.Entity.NamesOfComplexFieldsDisplayedInList -%}
+		{{ field.Type.EntityName | DeCapitalize }}: bindActionCreators({{ field.Type.EntityName }}Actions, dispatch),
+		{%- endfor -%}
+		},
 });
 export default connect(mapStateToProps, mapDispatchToProps)({{ Params.Entity.Name }}Table);

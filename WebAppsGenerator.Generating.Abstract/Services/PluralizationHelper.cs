@@ -27,6 +27,9 @@ namespace WebAppsGenerator.Generating.Abstract.Services
 
         public static string Pluralize(string name)
         {
+            if (string.IsNullOrEmpty(name))
+                return "";
+
             if (name.EndsWith('s'))
                 return name + "es"; //TODO: find less hacky solution
             return Api.Pluralize(name, CultureInfo) ?? name;

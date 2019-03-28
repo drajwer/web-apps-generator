@@ -56,7 +56,14 @@ namespace {{Params.CoreProjectName}}.Services.Generated
 
         public virtual IQueryable<{{Params.Entity.Name}}> GetAll()
         {
-            return Repo.GetAll();
+            return Repo.GetAll()
+			{%- for prop in Params.Entity.Fields -%}
+				{%- unless prop.Relation == nil -%}
+					{%- unless prop.Type.IsSimpleType -%}
+					.Include(e => e.{{prop.Name}})
+					{%- endunless -%}
+				{%- endunless -%}
+			{%- endfor -%};
         }
 
         public virtual {{Params.Entity.Name}} Update({{Params.Entity.IdField.Type.Name}} id, {{Params.Entity.Name}} entity)

@@ -57,11 +57,16 @@
           }
         },
         "Inputs": {
-          "EntityInput.tsx": {
-            "NameTemplate": "{{Params.Entity.Name}}/{{Params.Entity.Name}}Input.tsx",
-            "DropId": "EntityDrop",
-            "Multiple": true
-          }
+            "EntityInput.tsx": {
+                "NameTemplate": "{{Params.Entity.Name}}/{{Params.Entity.Name}}Input.tsx",
+                "DropId": "EntityDrop",
+                "Multiple": true
+            },
+            "EntityValues.ts": {
+                "NameTemplate": "{{Params.Entity.Name}}/{{Params.Entity.Name}}Values.ts",
+                "DropId": "EntityDrop",
+                "Multiple": true
+            } 
         }
       },
       "models": {

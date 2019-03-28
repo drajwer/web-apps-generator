@@ -23,6 +23,10 @@ namespace WebAppsGenerator.Generating.WebUi.Models.Templating
         public List<string> RelationsToShowInModal { get; set; }
         public List<string> RelationsToShowInDropdown { get; set; }
 
+        public List<WebUiAnnotatedFieldDrop> ComplexFieldsDisplayedInList { get; set; }
+
+        public List<WebUiAnnotatedFieldDrop> NamesOfComplexFieldsDisplayedInList { get; set; }
+
         public WebUiAnnotatedEntityDrop(Entity entity) : base(entity)
         {
             var annotatedFields = entity.Fields.Select(f => new WebUiAnnotatedFieldDrop(f)).ToList();
@@ -41,7 +45,7 @@ namespace WebAppsGenerator.Generating.WebUi.Models.Templating
 
             this.ParseEntityAnnotations(entity.Annotations);
 
-            RelationsToShowInDropdown = 
+            RelationsToShowInDropdown =
                 annotatedFields.Where(f => ((f.Relation?.HasOne ?? false) || (f.Relation?.HasMany ?? false)) && f.ShowDropdown)
                 .Select(f => f.Type.EntityName).Distinct().ToList();
 
@@ -49,7 +53,10 @@ namespace WebAppsGenerator.Generating.WebUi.Models.Templating
                 .Where(f => ((f.Relation?.HasOne ?? false) || (f.Relation?.HasMany ?? false)) && !f.ShowDropdown)
                 .Select(f => f.Type.EntityName).Distinct().ToList();
 
+            ComplexFieldsDisplayedInList =
+                annotatedFields.Where(f => f.DisplayInList && !f.Type.IsSimpleType).Distinct(new WebUiAnnotatedFieldDropFullTypeComparer()).ToList();
 
+            NamesOfComplexFieldsDisplayedInList = ComplexFieldsDisplayedInList.Distinct(new WebUiAnnotatedFieldDropNameComparer()).ToList();
         }
 
     }

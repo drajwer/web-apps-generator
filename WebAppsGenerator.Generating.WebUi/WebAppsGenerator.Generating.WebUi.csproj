@@ -18,6 +18,7 @@
     <None Remove="Templates\WebUI\src\components\Forms\EntityForm.tsx.liquid" />
     <None Remove="Templates\WebUI\src\components\Forms\EntityFormData.tsc.liquid" />
     <None Remove="Templates\WebUI\src\components\GenericTable\GenericTable.tsx.liquid" />
+    <None Remove="Templates\WebUI\src\components\Inputs\EntityValues.tsc.liquid" />
     <None Remove="Templates\WebUI\src\components\Menu\GeneratedLabels.tsc.liquid" />
     <None Remove="Templates\WebUI\src\components\Menu\Menu.css.liquid" />
     <None Remove="Templates\WebUI\src\components\Menu\Menu.tsx.liquid" />
@@ -68,6 +69,7 @@
     <EmbeddedResource Include="Templates\WebUI\src\components\FormButtons\FormButtons.tsx.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\components\Forms\EntityFormData.tsc.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\components\Forms\EntityForm.tsx.liquid" />
+    <EmbeddedResource Include="Templates\WebUI\src\components\Inputs\EntityValues.tsc.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\components\Modals\EntityModal.tsx.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\components\PageButtons\PageButtons.tsx.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\components\Tables\Table.css.liquid" />
