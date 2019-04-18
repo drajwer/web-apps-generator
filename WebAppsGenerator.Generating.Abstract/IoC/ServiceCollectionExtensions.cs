@@ -21,7 +21,9 @@ namespace WebAppsGenerator.Generating.Abstract.IoC
             services.AddScoped<LiquidTemplateService>();
             services.AddScoped<IFileService, FileService>();
             services.AddScoped<IEntitiesFixer, EntitiesFixer>();
-
+            services.AddScoped<OverwriteServiceFactory>();
+            services.AddScoped<IOverwriteService>(context => context.GetRequiredService<OverwriteServiceFactory>().Create());
+            services.AddScoped<OverwriteFileGenerator>();
             return services;
         }
 

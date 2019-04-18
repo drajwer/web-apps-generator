@@ -11,19 +11,22 @@ namespace WebAppsGenerator.Console
 {
     public static class ArgsParser
     {
+        private const string ForceParam =  "--force";
         /// <summary>
         /// Returns options or null if args cannot be parsed.
         /// </summary>
         /// <param name="args">Arguments given by user</param>
         public static GeneratorOptions ParseArguments(string[] args)
         {
-            if (args.Length != 1)
+            if (args.Length < 1 || args.Length > 2 ||
+                (args.Length == 2 && !args.Contains(ForceParam))
+                || (args.Length == 1 && args.Contains(ForceParam)))
             {
-                ConsoleHelper.WriteInfo("USAGE: WebAppsGenerator config_file.json");
+                ConsoleHelper.WriteInfo("USAGE: WebAppsGenerator config_file.json [--force]");
                 return null;
             }
 
-            var configPath = args[0];
+            var configPath = args[0] == ForceParam ? args[1] : args[0];
             if (!File.Exists(configPath))
             {
                 ConsoleHelper.WriteError($"Specified file: {configPath} does not exists.");
@@ -45,7 +48,7 @@ namespace WebAppsGenerator.Console
                 return null;
             }
 
-            if (options.OverwriteAll && !args.Contains("--force") && !ConsoleHelper.Prompt("Do you really want to overwrite all files?"))
+            if (options.OverwriteAll && !args.Contains(ForceParam) && !ConsoleHelper.Prompt("Do you really want to overwrite all files?"))
                 return null;
             return options;
         }

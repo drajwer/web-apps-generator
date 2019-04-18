@@ -51,12 +51,14 @@
     "Entity.cs": {
       "NameTemplate": "{{Params.Entity.Name}}.cs",
       "DropId": "ModelDropsNoJoins",
-      "Multiple": true
+      "Multiple": true,
+      "Overwrite": true
     },
     "JoinEntity.cs": {
       "NameTemplate": "{{Params.Entity.Name}}.cs",
       "DropId": "ModelDropsJoins",
-      "Multiple": true
+      "Multiple": true,
+      "Overwrite": true
     },
   },
   "WebApi": {

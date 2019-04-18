@@ -9,7 +9,8 @@ namespace WebAppsGenerator.Generating.Abstract.Options
     {
         // Paths
         public string InputPath { get; set; }
-        public string OverwriteFlagsFilePath { get; set; }
+        public string OverwriteFileInputPath { get; set; }
+        public string OverwriteFileOutputPath { get; set; }
         public string OutputPath { get; set; }
         
         // Names

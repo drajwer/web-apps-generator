@@ -23,7 +23,7 @@ namespace WebAppsGenerator.Core.Helpers
         public static bool Prompt(string message)
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.Write($"{message}(y/N)");
+            Console.Write($"{message}(y/N): ");
             var answer = Console.ReadLine();
             Console.ResetColor();
 

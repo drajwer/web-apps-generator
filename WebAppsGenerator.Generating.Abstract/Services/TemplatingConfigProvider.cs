@@ -53,7 +53,8 @@ namespace WebAppsGenerator.Generating.Abstract.Services
                     {
                         NameTemplate = config.NameTemplate ?? $"{parts[parts.Length - 3]}.{parts[parts.Length - 2]}",
                         TemplatePath = resource.Substring(resource.IndexOf(RootFolder, StringComparison.Ordinal) + RootFolder.Length + 1),
-                        OutputPath = TruncateToRelativePath(parts).Aggregate("", Path.Combine)
+                        OutputPath = TruncateToRelativePath(parts).Aggregate("", Path.Combine),
+                        Overwrite = config.Overwrite
                     };
                 }
 
