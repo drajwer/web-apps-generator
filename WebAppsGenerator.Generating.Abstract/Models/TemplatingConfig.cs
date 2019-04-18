@@ -11,5 +11,6 @@ namespace WebAppsGenerator.Generating.Abstract.Models
 
         public string DropId { get; set; }
         public bool Multiple { get; set; }
+        public bool Overwrite { get; set; }
     }
 }

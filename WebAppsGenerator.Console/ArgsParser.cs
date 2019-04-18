@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
 using WebAppsGenerator.Core.Helpers;
@@ -28,23 +29,25 @@ namespace WebAppsGenerator.Console
                 ConsoleHelper.WriteError($"Specified file: {configPath} does not exists.");
                 return null;
             }
-
+            GeneratorOptions options;
             try
             {
-                var options = JsonConvert.DeserializeObject<GeneratorOptions>(File.ReadAllText(configPath));
+                options = JsonConvert.DeserializeObject<GeneratorOptions>(File.ReadAllText(configPath));
                 if (options.InputPath == null || !Directory.Exists(options.InputPath))
                 {
                     ConsoleHelper.WriteError($"Specified file: {configPath} has unspecified or invalid input path. Please provide valid config file.");
                     return null;
                 }
-
-                return options;
             }
             catch (Exception)
             {
                 ConsoleHelper.WriteError($"Specified file: {configPath} is invalid. Please provide valid config file.");
                 return null;
             }
+
+            if (options.OverwriteAll && !args.Contains("--force") && !ConsoleHelper.Prompt("Do you really want to overwrite all files?"))
+                return null;
+            return options;
         }
     }
 }

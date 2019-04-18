@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using Newtonsoft.Json.Linq;
 using WebAppsGenerator.Generating.Abstract.Interfaces;
 using WebAppsGenerator.Generating.Abstract.Models;
-using WebAppsGenerator.Generating.Abstract.Options;
 using FileInfo = WebAppsGenerator.Generating.Abstract.Models.FileInfo;
 
 namespace WebAppsGenerator.Generating.Abstract.Services
@@ -46,12 +44,7 @@ namespace WebAppsGenerator.Generating.Abstract.Services
                     if (!string.IsNullOrWhiteSpace(fullName))
                         fullName += ".";
                     fullName += $"{parts[parts.Length - 3]}.{parts[parts.Length - 2]}";
-                    config = ReadConfig(fullName) ?? new TemplatingConfig
-                    {
-                        DropId = null,
-                        Multiple = false,
-                        NameTemplate = null
-                    };
+                    config = ReadConfig(fullName) ?? new TemplatingConfig();
                 }
 
                 if (config.FileInfo == null)
