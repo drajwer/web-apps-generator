@@ -6,6 +6,7 @@
   "RunAspNetCoreGen": true,
   "RunWebUiGen": false,
   "RunReactAppCreation": false,
+  //"OverwriteFileInputPath": "./../../../TestDir/old-overwrite.json",
   "OverwriteFileOutputPath": "./../../../TestDir/new-overwrite.json"
   //"OverwriteAll": true
 }

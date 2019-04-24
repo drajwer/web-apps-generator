@@ -17,7 +17,8 @@
     "Context": {
       "AppDbContext.cs": {
         "DropId": "ModelList",
-        "Multiple": false
+        "Multiple": false,
+        "Overwrite": true
       },
       "Repository.cs": {
         "DropId": "WebApiBase",
@@ -29,7 +30,8 @@
         "BaseCrudService.cs": {
           "NameTemplate": "{{Params.Entity.Name}}BaseCrudService.cs",
           "DropId": "ModelDropsNoJoins",
-          "Multiple": true
+          "Multiple": true,
+          "Overwrite":  true 
         }
       },
       "CrudService.cs": {
@@ -39,7 +41,8 @@
       },
       "RepositorySet.cs": {
         "DropId": "ModelListNoJoins",
-        "Multiple": false
+        "Multiple": false,
+        "Overwrite": true
       },
       "TransactionScope.cs": {
         "NameTemplate": "DbTransactionScope.cs",
@@ -65,7 +68,8 @@
     "BaseViewModel.cs": {
       "NameTemplate": "{{Params.Entity.Name}}BaseViewModel.cs",
       "DropId": "ModelDropsNoJoins",
-      "Multiple": true
+      "Multiple": true,
+      "Overwrite": true
     },
     "ViewModel.cs": {
       "NameTemplate": "{{Params.Entity.Name}}ViewModel.cs",

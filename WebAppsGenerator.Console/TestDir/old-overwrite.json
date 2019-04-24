@@ -16,17 +16,17 @@
           "launchSettings.json": false
         },
         "ViewModels": {
-          "BookViewModel.cs": false,
+          "BookViewModel.cs": true,
           "BookDetailsViewModel.cs": false,
           "BookRentViewModel.cs": false,
           "PersonViewModel.cs": false,
           "ClubViewModel.cs": false,
           "Generated": {
             "BookBaseViewModel.cs": true,
-            "BookDetailsBaseViewModel.cs": true,
-            "BookRentBaseViewModel.cs": true,
-            "PersonBaseViewModel.cs": true,
-            "ClubBaseViewModel.cs": true
+            "BookDetailsBaseViewModel.cs": false,
+            "BookRentBaseViewModel.cs": false,
+            "PersonBaseViewModel.cs": false,
+            "ClubBaseViewModel.cs": false
           }
         },
         "Controllers": {
@@ -46,7 +46,7 @@
           "Book.cs": true,
           "BookDetails.cs": true,
           "BookRent.cs": true,
-          "Person.cs": true,
+          "Person.cs": false,
           "Club.cs": true,
           "Joins": {
             "ClubPerson.cs": true
@@ -59,13 +59,13 @@
           "PersonCrudService.cs": false,
           "ClubCrudService.cs": false,
           "DbTransactionScope.cs": false,
-          "RepositorySet.cs": true,
+          "RepositorySet.cs": false,
           "Generated": {
-            "BookBaseCrudService.cs": true,
-            "BookDetailsBaseCrudService.cs": true,
-            "BookRentBaseCrudService.cs": true,
-            "PersonBaseCrudService.cs": true,
-            "ClubBaseCrudService.cs": true
+            "BookBaseCrudService.cs": false,
+            "BookDetailsBaseCrudService.cs": false,
+            "BookRentBaseCrudService.cs": false,
+            "PersonBaseCrudService.cs": false,
+            "ClubBaseCrudService.cs": false
           }
         },
         "Interfaces": {
@@ -75,7 +75,7 @@
         },
         "Context": {
           "Repository.cs": false,
-          "AppDbContext.cs": true
+          "AppDbContext.cs": false
         }
       }
     }
