@@ -41,32 +41,37 @@
           "EntityForm.tsx": {
             "NameTemplate": "{{Params.Entity.Name}}/{{Params.Entity.Name}}Form.tsx",
             "DropId": "EntityDrop",
-            "Multiple": true
+            "Multiple": true,
+            "Overwrite":  true 
           },
           "EntityFormData.ts": {
             "NameTemplate": "{{Params.Entity.Name}}/{{Params.Entity.Name}}FormData.ts",
             "DropId": "EntityDrop",
-            "Multiple": true
+            "Multiple": true,
+            "Overwrite": true 
           }
         },
         "Modals": {
           "EntityModal.tsx": {
             "NameTemplate": "{{Params.Entity.Name}}/{{Params.Entity.Name}}Modal.tsx",
             "DropId": "EntityDrop",
-            "Multiple": true
+            "Multiple": true,
+            "Overwrite": true 
           }
         },
         "Inputs": {
-            "EntityInput.tsx": {
-                "NameTemplate": "{{Params.Entity.Name}}/{{Params.Entity.Name}}Input.tsx",
-                "DropId": "EntityDrop",
-                "Multiple": true
-            },
-            "EntityValues.ts": {
-                "NameTemplate": "{{Params.Entity.Name}}/{{Params.Entity.Name}}Values.ts",
-                "DropId": "EntityDrop",
-                "Multiple": true
-            } 
+          "EntityInput.tsx": {
+            "NameTemplate": "{{Params.Entity.Name}}/{{Params.Entity.Name}}Input.tsx",
+            "DropId": "EntityDrop",
+            "Multiple": true,
+            "Overwrite": true
+          },
+          "EntityValues.ts": {
+            "NameTemplate": "{{Params.Entity.Name}}/{{Params.Entity.Name}}Values.ts",
+            "DropId": "EntityDrop",
+            "Multiple": true,
+            "Overwrite": true
+          } 
         }
       },
       "models": {
@@ -87,22 +92,26 @@
           "EntityForm.tsx": {
             "NameTemplate": "{{Params.Entity.Name}}/Form/{{Params.Entity.Name}}Form.tsx",
             "DropId": "EntityDrop",
-            "Multiple": true
+            "Multiple": true,
+            "Overwrite": true
           },
           "EntityForm.css": {
             "NameTemplate": "{{Params.Entity.Name}}/Form/{{Params.Entity.Name}}Form.css",
             "DropId": "EntityDrop",
-            "Multiple": true
+            "Multiple": true,
+            "Overwrite": true
           },
           "EntityList.tsx": {
             "NameTemplate": "{{Params.Entity.Name}}/List/{{Params.Entity.Name}}List.tsx",
             "DropId": "EntityDrop",
-            "Multiple": true
+            "Multiple": true,
+            "Overwrite": true
           },
           "EntityList.css": {
             "NameTemplate": "{{Params.Entity.Name}}/List/{{Params.Entity.Name}}List.css",
             "DropId": "EntityDrop",
-            "Multiple": true
+            "Multiple": true,
+            "Overwrite": true
           }
         }
       },
