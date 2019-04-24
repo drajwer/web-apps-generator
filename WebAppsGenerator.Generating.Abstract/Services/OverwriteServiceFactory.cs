@@ -33,10 +33,10 @@ namespace WebAppsGenerator.Generating.Abstract.Services
             foreach (var prop in jObject.Properties())
             {
                 var key = Path.Combine(path, prop.Name);
-                if (prop.Value<bool?>() != null)
-                    _dictionary.Add(key, prop.Value<bool>());
-                else if (prop.Value is JObject childObject)
+                if (prop.Value is JObject childObject)
                     AddSection(childObject, key);
+                else if(prop.Value.Value<bool?>() != null)
+                    _dictionary.Add(key, prop.Value.Value<bool>());
             }
         }
     }
