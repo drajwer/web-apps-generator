@@ -1,0 +1,9 @@
+{
+  "InputPath": "../data/In/Library",
+  "ProjectName": "Library",
+  "OutputPath": "../data/Out/Library",
+  "MigrationName": "Init",
+  "RunAspNetCoreGen": true,
+  "RunWebUiGen": true,
+  "RunReactAppCreation": true
+}

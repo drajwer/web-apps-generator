@@ -1,0 +1,19 @@
+﻿class Person
+	#Length(Max = 30)
+	FirstName: string
+
+	#DisplayName(Name="Surname")
+	#DisplayInDropdown
+	#DisplayInList
+	LastName: string
+
+	#Range(Max = 100)
+	Age: int
+
+	#DisplayInList
+	ShoeSize: int
+
+	Books: Book[]
+
+	#Dropdown
+	Clubs: Club[]

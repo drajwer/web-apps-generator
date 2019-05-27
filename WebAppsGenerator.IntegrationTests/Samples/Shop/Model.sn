@@ -1,0 +1,39 @@
+class Item
+	#DisplayInList
+	#DisplayInDropdown
+	Name: string
+
+	#DisplayInList	
+	Category: string
+
+	Price: float
+
+class OrderItem
+	#Dropdown
+	Item: Item
+
+	#DisplayInList
+	#Range(Min = 1)
+	Quantity: int
+
+class Order
+	#DisplayInList
+	#Length(Min = 5, Max = 6)
+	Code: string
+	OrderItems: OrderItem[]
+
+	#Dropdown
+	Client: Company
+
+class Company
+	#DisplayInList	
+	#DisplayInDropdown
+	#Length(Max = 30)
+	Name: string
+
+	#DisplayInList
+	Email: string
+
+	#Length(Max = 50)
+	Address: string?
+

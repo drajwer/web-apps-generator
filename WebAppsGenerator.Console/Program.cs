@@ -3,9 +3,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace WebAppsGenerator.Console
 {
-    internal class Program
+    public class Program
     {
-        private static void Main(string[] args)
+        public static void Main(string[] args)
         {
             var options = ArgsParser.ParseArguments(args);
             if (options == null)

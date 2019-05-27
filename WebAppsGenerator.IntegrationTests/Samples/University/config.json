@@ -1,0 +1,9 @@
+{
+  "InputPath": "../data/In/University",
+  "ProjectName": "University",
+  "OutputPath": "../data/Out/University",
+  "MigrationName": "Init",
+  "RunAspNetCoreGen": true,
+  "RunWebUiGen": true,
+  "RunReactAppCreation": true
+}
