@@ -2,6 +2,6 @@
 {
     public interface ICommandLineService
     {
-        void RunCommand(string command);
+        int RunCommand(string command);
     }
 }

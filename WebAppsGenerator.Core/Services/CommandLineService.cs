@@ -25,14 +25,26 @@ namespace WebAppsGenerator.Core.Services
             _errorAction = errorAction;
         }
 
-        public void RunCommand(string command)
+        public int RunCommand(string command)
+        {
+            Process process = CreateProcessForCommand(command);
+
+            process.WaitForExit();
+            var exitCode = process.ExitCode;
+
+            process.Close();
+
+            return exitCode;
+        }
+
+        public Process CreateProcessForCommand(string command, bool createNewWindow = false)
         {
             var shell = GetShell();
             var arguments = GetArguments(command);
 
             var processInfo = new ProcessStartInfo(shell, arguments)
             {
-                CreateNoWindow = true,
+                CreateNoWindow = !createNewWindow,
                 UseShellExecute = false,
                 RedirectStandardError = true,
                 RedirectStandardOutput = true
@@ -44,8 +56,7 @@ namespace WebAppsGenerator.Core.Services
             process.ErrorDataReceived += (sender, e) => _errorAction(e.Data);
             process.BeginOutputReadLine();
             process.BeginErrorReadLine();
-            process.WaitForExit();
-            process.Close();
+            return process;
         }
 
         private static string GetArguments(string command)

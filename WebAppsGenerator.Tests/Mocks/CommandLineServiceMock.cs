@@ -15,9 +15,10 @@ namespace WebAppsGenerator.Tests.Mocks
             Commands = new List<string>();
         }
 
-        public void RunCommand(string command)
+        public int RunCommand(string command)
         {
             Commands.Add(command);
+            return 0;
         }
     }
 }

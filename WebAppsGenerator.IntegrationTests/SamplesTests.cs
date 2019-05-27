@@ -1,8 +1,11 @@
+using System;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
+using WebAppsGenerator.Core.Services;
 using WebAppsGenerator.Generating.Abstract.Options;
 
 namespace WebAppsGenerator.IntegrationTests
@@ -13,8 +16,8 @@ namespace WebAppsGenerator.IntegrationTests
         private static string In = Path.Combine(Path.GetTempPath(), "WebAppsGen-IntTst-In");
         private static string Out = Path.Combine(Path.GetTempPath(), "WebAppsGen-IntTst-Out");
         private const string ConfigJsonFileName = "config.json";
-
-        public string Setup([CallerMemberName] string directoryName = "")
+        private static string ConfigJsonFilePath => Path.Combine(In, ConfigJsonFileName);
+        public GeneratorOptions Setup([CallerMemberName] string directoryName = "")
         {
             var assembly = Assembly.GetExecutingAssembly();
             var resourceName = $"WebAppsGenerator.IntegrationTests.Samples.{directoryName}.{ConfigJsonFileName}";
@@ -33,11 +36,9 @@ namespace WebAppsGenerator.IntegrationTests
                 Directory.CreateDirectory(In);
                 Directory.CreateDirectory(Out);
 
-                var newConfigFilePath = Path.Combine(In, ConfigJsonFileName);
-                
-                File.WriteAllText(newConfigFilePath, json);
+                File.WriteAllText(ConfigJsonFilePath, json);
 
-                return newConfigFilePath;
+                return options;
             }
         }
 
@@ -54,13 +55,21 @@ namespace WebAppsGenerator.IntegrationTests
         public void Library()
         {
             // Arrange
-            var inputPath = Setup();
+            var options = Setup();
 
             // Act
-            Console.Program.Main(new [] {inputPath});
+            Console.Program.Main(new [] {ConfigJsonFilePath});
+            Action<string> func =  s => Debug.WriteLine(s);
+
+            var commandLineService = new CommandLineService(func, func);
+            var pathToWebApiProject = Path.Combine(Out, "WebApi", $"{options.ProjectName}.WebApi");
+            var returnCode = commandLineService.RunCommand($"dotnet build {pathToWebApiProject}");
+            var webApiProcess = commandLineService.CreateProcessForCommand($"dotnet run --project {pathToWebApiProject}", true);
 
             // Assert
-            
+            Assert.AreEqual(0, returnCode);
+            webApiProcess.Kill();
+            webApiProcess.WaitForExit(5000);
         }
     }
 }
