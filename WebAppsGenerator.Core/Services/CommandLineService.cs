@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Management;
 using WebAppsGenerator.Core.Interfaces;
 
 namespace WebAppsGenerator.Core.Services
@@ -45,18 +46,43 @@ namespace WebAppsGenerator.Core.Services
             var processInfo = new ProcessStartInfo(shell, arguments)
             {
                 CreateNoWindow = !createNewWindow,
-                UseShellExecute = false,
-                RedirectStandardError = true,
-                RedirectStandardOutput = true
+                UseShellExecute = createNewWindow,
+                RedirectStandardError = !createNewWindow,
+                RedirectStandardOutput = !createNewWindow
             };
 
             var process = Process.Start(processInfo);
-
-            process.OutputDataReceived += (sender, e) => _outputAction(e.Data);
-            process.ErrorDataReceived += (sender, e) => _errorAction(e.Data);
-            process.BeginOutputReadLine();
-            process.BeginErrorReadLine();
+            if (!createNewWindow)
+            {
+                process.OutputDataReceived += (sender, e) => _outputAction(e.Data);
+                process.ErrorDataReceived += (sender, e) => _errorAction(e.Data);
+                process.BeginOutputReadLine();
+                process.BeginErrorReadLine();
+            }
+            
             return process;
+        }
+        
+        public void KillProcessAndChildren(int pid)
+        {
+            using (var searcher = new ManagementObjectSearcher
+                ("Select * From Win32_Process Where ParentProcessID=" + pid))
+            {
+                var moc = searcher.Get();
+                foreach (ManagementObject mo in moc)
+                {
+                    KillProcessAndChildren(Convert.ToInt32(mo["ProcessID"]));
+                }
+                try
+                {
+                    var proc = Process.GetProcessById(pid);
+                    proc.Kill();
+                }
+                catch (Exception e)
+                {
+                    // Process already exited.
+                }
+            }
         }
 
         private static string GetArguments(string command)

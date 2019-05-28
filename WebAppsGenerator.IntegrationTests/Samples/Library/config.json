@@ -1,6 +1,7 @@
 {
   "ProjectName": "LibraryIntegrationTest",
   "MigrationName": "Init",
+  "AddMigration": true,
   "RunAspNetCoreGen": true,
   "RunWebUiGen": false,
   "RunReactAppCreation": false
