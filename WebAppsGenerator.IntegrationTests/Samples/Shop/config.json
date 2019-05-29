@@ -1,8 +1,7 @@
 {
-  "InputPath": "../data/In/Shop",
-  "ProjectName": "Shop",
-  "OutputPath": "../data/Out/Shop",
+  "ProjectName": "ShopIntegrationTest",
   "MigrationName": "Init",
+  "AddMigration": true,
   "RunAspNetCoreGen": true,
   "RunWebUiGen": true,
   "RunReactAppCreation": true

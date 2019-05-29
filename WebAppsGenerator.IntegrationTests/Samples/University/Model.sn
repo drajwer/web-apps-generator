@@ -23,7 +23,7 @@ class Teacher
 
 class Lecture
 	#DisplayInList
-	#DisplayInDropdown
+	#DisplayField
 	#Length(Max = 30)
 	Name: string
 

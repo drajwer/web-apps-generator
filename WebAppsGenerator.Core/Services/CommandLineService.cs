@@ -48,7 +48,8 @@ namespace WebAppsGenerator.Core.Services
                 CreateNoWindow = !createNewWindow,
                 UseShellExecute = createNewWindow,
                 RedirectStandardError = !createNewWindow,
-                RedirectStandardOutput = !createNewWindow
+                RedirectStandardOutput = !createNewWindow,
+                RedirectStandardInput = !createNewWindow
             };
 
             var process = Process.Start(processInfo);

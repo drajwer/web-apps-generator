@@ -3,6 +3,6 @@
   "MigrationName": "Init",
   "AddMigration": true,
   "RunAspNetCoreGen": true,
-  "RunWebUiGen": false,
-  "RunReactAppCreation": false
+  "RunWebUiGen": true,
+  "RunReactAppCreation": true
 }

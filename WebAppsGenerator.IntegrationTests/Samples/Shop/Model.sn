@@ -1,6 +1,6 @@
 class Item
 	#DisplayInList
-	#DisplayInDropdown
+	#DisplayField
 	Name: string
 
 	#DisplayInList	
@@ -27,7 +27,7 @@ class Order
 
 class Company
 	#DisplayInList	
-	#DisplayInDropdown
+	#DisplayField
 	#Length(Max = 30)
 	Name: string
 
