@@ -27,14 +27,16 @@
         "Menu": {
           "GeneratedLabels.ts": {
             "DropId": "EntityList",
-            "Multiple": false
+            "Multiple": false,
+            "Overwrite" : true
           }
         },
         "Tables": {
           "Table.tsx": {
             "NameTemplate": "{{Params.Entity.Name}}Table.tsx",
             "DropId": "EntityDrop",
-            "Multiple": true
+            "Multiple": true,
+            "Overwrite" : true
           }
         },
         "Forms": {
@@ -42,7 +44,7 @@
             "NameTemplate": "{{Params.Entity.Name}}/{{Params.Entity.Name}}Form.tsx",
             "DropId": "EntityDrop",
             "Multiple": true,
-            "Overwrite":  true 
+            "Overwrite":  true
           },
           "EntityFormData.ts": {
             "NameTemplate": "{{Params.Entity.Name}}/{{Params.Entity.Name}}FormData.ts",
@@ -78,13 +80,15 @@
         "Model.ts": {
           "NameTemplate": "{{Params.Entity.Name}}.ts",
           "DropId": "EntityDrop",
-          "Multiple": true
+          "Multiple": true,
+          "Overwrite" : true
         }
       },
       "routing": {
         "GeneratedRoutes.ts": {
           "DropId": "EntityList",
-          "Multiple": false
+          "Multiple": false,
+          "Overwrite" : true
         }
       },
       "screens": {
@@ -134,7 +138,8 @@
         "index.tsx": {
             "NameTemplate": "index.tsx",
             "DropId": "EntityList",
-            "Multiple": false
+            "Multiple": false,
+            "Overwrite" : true
         },
         "snackbar": {
             "actions.ts": {

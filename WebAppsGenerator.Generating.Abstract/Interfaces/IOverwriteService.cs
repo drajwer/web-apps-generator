@@ -8,5 +8,7 @@ namespace WebAppsGenerator.Generating.Abstract.Interfaces
     {
         bool ShouldOverwriteFile(string filePath, bool defaultValue);
         Dictionary<string, bool> GetOverwritesDictionary();
+        void SetOverwriteAll();
+        void ResetOverwriteAll();
     }
 }

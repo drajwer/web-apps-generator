@@ -82,7 +82,8 @@
     },
     "CrudStartupExtensions.cs": {
       "DropId": "ModelListNoJoins",
-      "Multiple": false
+      "Multiple": false,
+      "Overwrite": true
     },
     "SwaggerStartupExtensions.cs": {
       "DropId": "WebApiBase",

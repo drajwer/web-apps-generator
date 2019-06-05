@@ -35,7 +35,8 @@ namespace WebAppsGenerator.Core.Services
                 CreateNoWindow = true,
                 UseShellExecute = false,
                 RedirectStandardError = true,
-                RedirectStandardOutput = true
+                RedirectStandardOutput = true,
+                RedirectStandardInput = true // TODO: temp - remove it
             };
 
             var process = Process.Start(processInfo);
@@ -44,6 +45,8 @@ namespace WebAppsGenerator.Core.Services
             process.ErrorDataReceived += (sender, e) => _errorAction(e.Data);
             process.BeginOutputReadLine();
             process.BeginErrorReadLine();
+            if(command.Contains("npx")) // TODO: temp - remove it
+                process.StandardInput.WriteLine("y"); // TODO: temp - remove it
             process.WaitForExit();
             process.Close();
         }
