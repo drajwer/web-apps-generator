@@ -1,0 +1,8 @@
+{
+  "ProjectName": "UniversityIntegrationTest",
+  "MigrationName": "Init",
+  "AddMigration": true,
+  "RunAspNetCoreGen": true,
+  "RunWebUiGen": true,
+  "RunReactAppCreation": true
+}

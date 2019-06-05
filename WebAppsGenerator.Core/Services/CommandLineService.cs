@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Management;
 using WebAppsGenerator.Core.Interfaces;
 
 namespace WebAppsGenerator.Core.Services
@@ -25,29 +26,52 @@ namespace WebAppsGenerator.Core.Services
             _errorAction = errorAction;
         }
 
-        public void RunCommand(string command)
+        public int RunCommand(string command, params string[] inputLines)
+        {
+            Process process = CreateProcessForCommand(command);
+            
+            WriteLinesToProcess(process, inputLines);
+            
+            process.WaitForExit();
+            var exitCode = process.ExitCode;
+
+            process.Close();
+
+            return exitCode;
+        }
+        
+        public Process CreateProcessForCommand(string command, bool createNewWindow = false)
         {
             var shell = GetShell();
             var arguments = GetArguments(command);
 
             var processInfo = new ProcessStartInfo(shell, arguments)
             {
-                CreateNoWindow = true,
-                UseShellExecute = false,
-                RedirectStandardError = true,
-                RedirectStandardOutput = true
+                CreateNoWindow = !createNewWindow,
+                UseShellExecute = createNewWindow,
+                RedirectStandardError = !createNewWindow,
+                RedirectStandardOutput = !createNewWindow,
+                RedirectStandardInput = !createNewWindow
             };
 
             var process = Process.Start(processInfo);
-
-            process.OutputDataReceived += (sender, e) => _outputAction(e.Data);
-            process.ErrorDataReceived += (sender, e) => _errorAction(e.Data);
-            process.BeginOutputReadLine();
-            process.BeginErrorReadLine();
-            process.WaitForExit();
-            process.Close();
+            if (!createNewWindow)
+            {
+                process.OutputDataReceived += (sender, e) => _outputAction(e.Data);
+                process.ErrorDataReceived += (sender, e) => _errorAction(e.Data);
+                process.BeginOutputReadLine();
+                process.BeginErrorReadLine();
+            }
+            
+            return process;
         }
-
+        
+        private static void WriteLinesToProcess(Process process, string[] inputLines)
+        {
+            foreach (var line in inputLines)
+                process.StandardInput.WriteLine(line);
+        }
+        
         private static string GetArguments(string command)
         {
             if (CurrentPlatformId == PlatformID.Unix || CurrentPlatformId == PlatformID.MacOSX)

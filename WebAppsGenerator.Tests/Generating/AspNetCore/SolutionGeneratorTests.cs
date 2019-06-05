@@ -67,23 +67,23 @@ namespace WebAppsGenerator.Tests.Generating.AspNetCore
 
         // commented because IsEnabled causes failure
 
-        //[TestMethod]
-        //public void SomeEntitiesTest()
-        //{
-        //    // Arrange
-        //    _configuration.ProjectName = "TestProject";
-        //    _configuration.OutputPath = "test/some/path";
-        //    var entity = new Entity(-1, -1);
+        [TestMethod]
+        public void SomeEntitiesTest()
+        {
+            // Arrange
+            _baseConfiguration.ProjectName = "TestProject";
+            _baseConfiguration.OutputPath = "test/some/path";
+            var entity = new Entity(-1, -1);
 
-        //    // Act
-        //    _generator.Generate(new List<Entity>() { entity });
+            // Act
+            _generator.Generate(new List<Entity>() { entity });
 
-        //    // Assert
-        //    Assert.IsTrue(_webApiGeneratorCalled);
-        //    Assert.IsTrue(_coreGeneratorCalled);
-        //    Assert.AreEqual(6, _commandLineService.Commands.Count);
-        //    Assert.IsTrue(_commandLineService.Commands.All(c => c.StartsWith("dotnet")));
-        //    // TODO: Assert if commands executed in correct order and with valid args.
-        //}
+            // Assert
+            Assert.IsTrue(_webApiGeneratorCalled);
+            Assert.IsTrue(_coreGeneratorCalled);
+            Assert.AreEqual(6, _commandLineService.Commands.Count);
+            Assert.IsTrue(_commandLineService.Commands.All(c => c.StartsWith("dotnet")));
+            // TODO: Assert if commands executed in correct order and with valid args.
+        }
     }
 }
