@@ -26,10 +26,12 @@ namespace WebAppsGenerator.Core.Services
             _errorAction = errorAction;
         }
 
-        public int RunCommand(string command)
+        public int RunCommand(string command, params string[] inputLines)
         {
             Process process = CreateProcessForCommand(command);
-
+            
+            WriteLinesToProcess(process, inputLines);
+            
             process.WaitForExit();
             var exitCode = process.ExitCode;
 
@@ -37,7 +39,7 @@ namespace WebAppsGenerator.Core.Services
 
             return exitCode;
         }
-
+        
         public Process CreateProcessForCommand(string command, bool createNewWindow = false)
         {
             var shell = GetShell();
@@ -64,28 +66,12 @@ namespace WebAppsGenerator.Core.Services
             return process;
         }
         
-        public void KillProcessAndChildren(int pid)
+        private static void WriteLinesToProcess(Process process, string[] inputLines)
         {
-            using (var searcher = new ManagementObjectSearcher
-                ("Select * From Win32_Process Where ParentProcessID=" + pid))
-            {
-                var moc = searcher.Get();
-                foreach (ManagementObject mo in moc)
-                {
-                    KillProcessAndChildren(Convert.ToInt32(mo["ProcessID"]));
-                }
-                try
-                {
-                    var proc = Process.GetProcessById(pid);
-                    proc.Kill();
-                }
-                catch (Exception e)
-                {
-                    // Process already exited.
-                }
-            }
+            foreach (var line in inputLines)
+                process.StandardInput.WriteLine(line);
         }
-
+        
         private static string GetArguments(string command)
         {
             if (CurrentPlatformId == PlatformID.Unix || CurrentPlatformId == PlatformID.MacOSX)

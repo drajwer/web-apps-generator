@@ -43,9 +43,7 @@ namespace WebAppsGenerator.Generating.WebUi.Services
         private void CreateApp()
         {
             _commandLineService.RunCommand("npm i create-react-app -g"); // TODO: is this necessary? 
-            var process = _commandLineService.CreateProcessForCommand($"npx create-react-app {_pathService.WebProjectDirPath} --scripts-version=react-scripts-ts");
-            process.StandardInput.WriteLine("y");
-            process.WaitForExit();
+            _commandLineService.RunCommand($"npx create-react-app {_pathService.WebProjectDirPath} --scripts-version=react-scripts-ts", "y");
         }
 
         private void RemoveUnnecessaryFiles()
