@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 
 namespace WebAppsGenerator.Generating.Abstract.Services
 {
@@ -9,8 +6,12 @@ namespace WebAppsGenerator.Generating.Abstract.Services
     {
         public static string DeCapitalize(string text)
         {
+            if (text == null)
+                return null;
+
             if (text?.Length == 0)
                 return text;
+
             if (text.Length == 1)
                 return char.ToLower(text[0]).ToString();
 
@@ -18,10 +19,13 @@ namespace WebAppsGenerator.Generating.Abstract.Services
         }
         public static string SplitCamelCase(string text)
         {
-            string result = "";
-            for (int i = 0; i < text.Length; i++)
+            if (text == null)
+                return null;
+
+            var result = "";
+            for (var i = 0; i < text.Length; i++)
             {
-                char c = text[i];
+                var c = text[i];
                 if (char.IsUpper(c) && i > 0)
                     result += ' ';
                 result += c;
@@ -32,12 +36,15 @@ namespace WebAppsGenerator.Generating.Abstract.Services
 
         public static string SnakeUppercase(string text)
         {
-            return string.Concat(text.Select((x, i) => i > 0 && char.IsUpper(x) ? "_" + x.ToString() : x.ToString().ToUpper()));
+            if (text == null)
+                return null;
+
+            return string.Concat(text.Select((x, i) => i > 0 && char.IsUpper(x) ? ("_" + x.ToString()) : (x.ToString().ToUpper())));
         }
 
         public static string TrimQuestionMark(string text)
         {
-            return text.Trim('?');
+            return text?.Trim('?');
         }
     }
 }
