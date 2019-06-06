@@ -11,11 +11,13 @@ namespace WebAppsGenerator.Generating.Abstract.Services
     public class RootGenerator : IGenerator
     {
         private readonly IEnumerable<IGenerator> _generators;
+        private readonly OverwriteFileGenerator _overwriteFileGenerator;
         private IEntitiesFixer _entitiesFixer;
-        public RootGenerator(IEnumerable<IGenerator> generators, IEntitiesFixer entitiesFixer)
+        public RootGenerator(IEnumerable<IGenerator> generators, OverwriteFileGenerator overwriteFileGenerator, IEntitiesFixer entitiesFixer)
         {
             _generators = generators;
             _entitiesFixer = entitiesFixer;
+            _overwriteFileGenerator = overwriteFileGenerator;
         }
 
         public void Generate(IEnumerable<Entity> entities)
@@ -26,6 +28,7 @@ namespace WebAppsGenerator.Generating.Abstract.Services
             {
                 generator.Generate(entities);
             }
+            _overwriteFileGenerator.Generate();
         }
     }
 }

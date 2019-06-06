@@ -1,0 +1,83 @@
+{
+  "Output2": {
+    "WebApi": {
+      "Library.WebApi": {
+        "appsettings.json": false,
+        "Startup.cs": false,
+        "Library.WebApi.csproj": false,
+        "Extensions": {
+          "SwaggerStartupExtensions.cs": false,
+          "CrudStartupExtensions.cs": false
+        },
+        "Middlewares": {
+          "BusinessExceptionMiddleware.cs": false
+        },
+        "Properties": {
+          "launchSettings.json": false
+        },
+        "ViewModels": {
+          "BookViewModel.cs": true,
+          "BookDetailsViewModel.cs": false,
+          "BookRentViewModel.cs": false,
+          "PersonViewModel.cs": false,
+          "ClubViewModel.cs": false,
+          "Generated": {
+            "BookBaseViewModel.cs": true,
+            "BookDetailsBaseViewModel.cs": false,
+            "BookRentBaseViewModel.cs": false,
+            "PersonBaseViewModel.cs": false,
+            "ClubBaseViewModel.cs": false
+          }
+        },
+        "Controllers": {
+          "BooksController.cs": false,
+          "BookDetailsesController.cs": false,
+          "BookRentsController.cs": false,
+          "PeopleController.cs": false,
+          "ClubsController.cs": false
+        }
+      },
+      "Library.Core": {
+        "Exceptions": {
+          "BusinessException.cs": false,
+          "BadRequestException.cs": false
+        },
+        "Models": {
+          "Book.cs": true,
+          "BookDetails.cs": true,
+          "BookRent.cs": true,
+          "Person.cs": false,
+          "Club.cs": true,
+          "Joins": {
+            "ClubPerson.cs": true
+          }
+        },
+        "Services": {
+          "BookCrudService.cs": false,
+          "BookDetailsCrudService.cs": false,
+          "BookRentCrudService.cs": false,
+          "PersonCrudService.cs": false,
+          "ClubCrudService.cs": false,
+          "DbTransactionScope.cs": false,
+          "RepositorySet.cs": false,
+          "Generated": {
+            "BookBaseCrudService.cs": false,
+            "BookDetailsBaseCrudService.cs": false,
+            "BookRentBaseCrudService.cs": false,
+            "PersonBaseCrudService.cs": false,
+            "ClubBaseCrudService.cs": false
+          }
+        },
+        "Interfaces": {
+          "ITransactionScope.cs": false,
+          "ICrudService.cs": false,
+          "IRepository.cs": false
+        },
+        "Context": {
+          "Repository.cs": false,
+          "AppDbContext.cs": false
+        }
+      }
+    }
+  }
+}

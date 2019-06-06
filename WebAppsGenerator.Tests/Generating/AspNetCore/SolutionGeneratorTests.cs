@@ -20,6 +20,7 @@ namespace WebAppsGenerator.Tests.Generating.AspNetCore
         private AspNetCoreGeneratorConfiguration _configuration;
         private GeneratorConfiguration _baseConfiguration;
         private CommandLineServiceMock _commandLineService;
+        private OverwriteServiceMock _overwriteService;
         private bool _webApiGeneratorCalled;
         private bool _coreGeneratorCalled;
 
@@ -35,12 +36,13 @@ namespace WebAppsGenerator.Tests.Generating.AspNetCore
                     {CoreProjectPackages = new List<NuGetPackageDetails>()}));
 
             _commandLineService = new CommandLineServiceMock();
+            _overwriteService = new OverwriteServiceMock();
             var webApiGenerator = new Mock<IGenerator>();
             webApiGenerator.Setup(g => g.Generate(It.IsAny<IEnumerable<Entity>>())).Callback(() => _webApiGeneratorCalled = true);
             var coreGenerator = new Mock<IGenerator>();
             coreGenerator.Setup(g => g.Generate(It.IsAny<IEnumerable<Entity>>())).Callback(() => _coreGeneratorCalled = true);
 
-            _generator = new SolutionGenerator(_configuration, _commandLineService, webApiGenerator.Object, coreGenerator.Object);
+            _generator = new SolutionGenerator(_configuration, _commandLineService, webApiGenerator.Object, coreGenerator.Object, _overwriteService);
         }
 
         [TestMethod]

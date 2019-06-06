@@ -2,8 +2,11 @@
   "InputPath": "./../../../TestDir",
   "ProjectName": "Library",
   "OutputPath": "Output2",
-  "MigrationName": "Init",
+  //"MigrationName": "Init",
   "RunAspNetCoreGen": true,
-  "RunWebUiGen": true,
-  "RunReactAppCreation": true
+  "RunWebUiGen": false,
+  "RunReactAppCreation": false,
+  //"OverwriteFileInputPath": "./../../../TestDir/old-overwrite.json",
+  "OverwriteFileOutputPath": "./../../../TestDir/new-overwrite.json"
+  //"OverwriteAll": true
 }

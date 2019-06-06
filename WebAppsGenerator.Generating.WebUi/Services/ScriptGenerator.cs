@@ -28,7 +28,7 @@ namespace WebAppsGenerator.Generating.WebUi.Services
         {
             var templatePath = "run.ps1.liquid";
             var outputPath = _pathService.OutputPath;
-            var fileInfo = new FileInfo("run.ps1", templatePath, outputPath);
+            var fileInfo = new FileInfo("run.ps1", templatePath, outputPath, false);
             _fileService.CreateFromTemplate(fileInfo, new WebUiBaseDrop(_pathService, _generatorConfiguration));
         }
     }

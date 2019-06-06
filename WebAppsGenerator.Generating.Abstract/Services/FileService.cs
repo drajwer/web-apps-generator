@@ -15,11 +15,12 @@ namespace WebAppsGenerator.Generating.Abstract.Services
         private const char PathSeparator = '/';
         private readonly TemplateFileProvider _fileProvider;
         private readonly LiquidTemplateService _templateService;
-
-        public FileService(TemplateFileProvider fileProvider, LiquidTemplateService templateService)
+        private readonly IOverwriteService _overwriteService;
+        public FileService(TemplateFileProvider fileProvider, LiquidTemplateService templateService, IOverwriteService overwriteService)
         {
             _fileProvider = fileProvider;
             _templateService = templateService;
+            _overwriteService = overwriteService;
         }
 
         public void CreateFromTemplate(FileInfo fileInfo, Drop templatingObject)
@@ -31,16 +32,10 @@ namespace WebAppsGenerator.Generating.Abstract.Services
             var dirPath = pathSplitted.SkipLast(1).Aggregate(fileInfo.OutputPath, Path.Combine);
             var fileName = pathSplitted.Last();
             Directory.CreateDirectory(dirPath);
-            WriteFile(dirPath, fileName, rendered);
+
+            WriteFile(dirPath, fileName, rendered, fileInfo.Overwrite);
         }
 
-        private void WriteFile(string dirPath, string fileName, string rendered)
-        {
-            using (var streamWriter = File.CreateText(CreatePath(dirPath, fileName)))
-            {
-                streamWriter.Write(rendered);
-            }
-        }
 
         public void CreateFromTemplate(FileInfo fileInfo, List<Drop> templatingObjects)
         {
@@ -51,10 +46,25 @@ namespace WebAppsGenerator.Generating.Abstract.Services
             Directory.CreateDirectory(fileInfo.OutputPath);
             for (int i = 0; i < fileNames.Length; i++)
             {
-                WriteFile(fileInfo.OutputPath, fileNames[i], renderedFiles[i]);
+                WriteFile(fileInfo.OutputPath, fileNames[i], renderedFiles[i], fileInfo.Overwrite);
             }
         }
 
+        private void WriteFile(string dirPath, string fileName, string content, bool overwriteDefault)
+        {
+            var filePath = CreatePath(dirPath, fileName);
+            var overwrite = _overwriteService.ShouldOverwriteFile(filePath, overwriteDefault);
+            if (File.Exists(filePath) && !overwrite)
+                return;
+            WriteFile(filePath, content);
+        }
+        private void WriteFile(string filePath, string rendered)
+        {
+            using (var streamWriter = File.CreateText(filePath))
+            {
+                streamWriter.Write(rendered);
+            }
+        }
 
         private string CreatePath(string outputPath, string fileName)
         {

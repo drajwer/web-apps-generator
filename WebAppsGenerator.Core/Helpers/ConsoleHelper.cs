@@ -20,5 +20,17 @@ namespace WebAppsGenerator.Core.Helpers
             Console.WriteLine(info);
             Console.ResetColor();
         }
+
+        public static bool Prompt(string message)
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write($"{message}(y/N): ");
+            var answer = Console.ReadLine();
+            Console.ResetColor();
+
+            if (answer.ToLower() == "y")
+                return true;
+            return false;
+        }
     }
 }
