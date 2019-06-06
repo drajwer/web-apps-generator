@@ -144,15 +144,18 @@
         "snackbar": {
             "actions.ts": {
                 "DropId": "EntityList",
-                "Multiple": false
+                "Multiple": false,
+                "Overwrite": true
             },
             "actionTypes.ts": {
                 "DropId": "EntityList",
-                "Multiple": false
+                "Multiple": false,
+                "Overwrite": true
             },
             "reducer.ts": {
                 "DropId": "EntityList",
-                "Multiple": false
+                "Multiple": false,
+                "Overwrite": true
             }
         } 
       }
