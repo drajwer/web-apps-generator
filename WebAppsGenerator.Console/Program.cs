@@ -21,7 +21,7 @@ namespace WebAppsGenerator.Console
         private static IServiceProvider ConfigureServices(Startup startup)
         {
             var services = new ServiceCollection();
-
+            startup.SetInvariantCulture();
             startup.ConfigureServices(services);
             return services.BuildServiceProvider();
         }
