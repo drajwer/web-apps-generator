@@ -1,0 +1,20 @@
+﻿export const enum SnackbarActionTypes {
+    HIDE_SNACKBAR = 'HIDE_SNACKBAR',
+
+	SHOW_NEXT_MESSAGE = 'SHOW_NEXT_MESSAGE',
+	{%- for entity in Params.Entities -%}
+
+	SET_FETCH_ERROR_{{ entity.PluralName | SnakeUppercase }} = 'SET_FETCH_ERROR_{{ entity.PluralName | SnakeUppercase }}',
+	
+	SET_FETCH_ERROR_{{ entity.Name | SnakeUppercase }} = 'SET_FETCH_ERROR_{{ entity.Name | SnakeUppercase }}',
+	
+	RESPONSE_ADD_{{ entity.Name | SnakeUppercase}} = 'RESPONSE_ADD_{{ entity.Name | SnakeUppercase}}',
+	SET_ADD_{{ entity.Name | SnakeUppercase}}_ERROR = 'SET_ADD_{{ entity.Name | SnakeUppercase}}_ERROR',
+	
+	RESPONSE_UPDATE_{{ entity.Name | SnakeUppercase}} = 'RESPONSE_UPDATE_{{ entity.Name | SnakeUppercase}}',
+	SET_UPDATE_{{ entity.Name | SnakeUppercase}}_ERROR = 'SET_UPDATE_{{ entity.Name | SnakeUppercase}}_ERROR',
+	
+	RESPONSE_DELETE_{{ entity.Name | SnakeUppercase}} = 'RESPONSE_DELETE_{{ entity.Name | SnakeUppercase}}',
+	SET_DELETE_{{ entity.Name | SnakeUppercase}}_ERROR = 'SET_DELETE_{{ entity.Name | SnakeUppercase}}_ERROR',
+	{%- endfor -%}
+}

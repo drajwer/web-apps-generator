@@ -20,6 +20,7 @@ namespace WebAppsGenerator.Tests.Generating.AspNetCore
         private AspNetCoreGeneratorConfiguration _configuration;
         private GeneratorConfiguration _baseConfiguration;
         private CommandLineServiceMock _commandLineService;
+        private OverwriteServiceMock _overwriteService;
         private bool _webApiGeneratorCalled;
         private bool _coreGeneratorCalled;
 
@@ -35,12 +36,13 @@ namespace WebAppsGenerator.Tests.Generating.AspNetCore
                     {CoreProjectPackages = new List<NuGetPackageDetails>()}));
 
             _commandLineService = new CommandLineServiceMock();
+            _overwriteService = new OverwriteServiceMock();
             var webApiGenerator = new Mock<IGenerator>();
             webApiGenerator.Setup(g => g.Generate(It.IsAny<IEnumerable<Entity>>())).Callback(() => _webApiGeneratorCalled = true);
             var coreGenerator = new Mock<IGenerator>();
             coreGenerator.Setup(g => g.Generate(It.IsAny<IEnumerable<Entity>>())).Callback(() => _coreGeneratorCalled = true);
 
-            _generator = new SolutionGenerator(_configuration, _commandLineService, webApiGenerator.Object, coreGenerator.Object);
+            _generator = new SolutionGenerator(_configuration, _commandLineService, webApiGenerator.Object, coreGenerator.Object, _overwriteService);
         }
 
         [TestMethod]
@@ -67,23 +69,23 @@ namespace WebAppsGenerator.Tests.Generating.AspNetCore
 
         // commented because IsEnabled causes failure
 
-        //[TestMethod]
-        //public void SomeEntitiesTest()
-        //{
-        //    // Arrange
-        //    _configuration.ProjectName = "TestProject";
-        //    _configuration.OutputPath = "test/some/path";
-        //    var entity = new Entity(-1, -1);
+        [TestMethod]
+        public void SomeEntitiesTest()
+        {
+            // Arrange
+            _baseConfiguration.ProjectName = "TestProject";
+            _baseConfiguration.OutputPath = "test/some/path";
+            var entity = new Entity(-1, -1);
 
-        //    // Act
-        //    _generator.Generate(new List<Entity>() { entity });
+            // Act
+            _generator.Generate(new List<Entity>() { entity });
 
-        //    // Assert
-        //    Assert.IsTrue(_webApiGeneratorCalled);
-        //    Assert.IsTrue(_coreGeneratorCalled);
-        //    Assert.AreEqual(6, _commandLineService.Commands.Count);
-        //    Assert.IsTrue(_commandLineService.Commands.All(c => c.StartsWith("dotnet")));
-        //    // TODO: Assert if commands executed in correct order and with valid args.
-        //}
+            // Assert
+            Assert.IsTrue(_webApiGeneratorCalled);
+            Assert.IsTrue(_coreGeneratorCalled);
+            Assert.AreEqual(6, _commandLineService.Commands.Count);
+            Assert.IsTrue(_commandLineService.Commands.All(c => c.StartsWith("dotnet")));
+            // TODO: Assert if commands executed in correct order and with valid args.
+        }
     }
 }

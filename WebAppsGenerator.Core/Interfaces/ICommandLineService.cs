@@ -1,7 +1,9 @@
-﻿namespace WebAppsGenerator.Core.Interfaces
+﻿using System.Diagnostics;
+
+namespace WebAppsGenerator.Core.Interfaces
 {
     public interface ICommandLineService
     {
-        void RunCommand(string command);
+        int RunCommand(string command, params string[] inputLines);
     }
 }

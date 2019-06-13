@@ -19,10 +19,10 @@ namespace WebAppsGenerator.Core.Files.Services
             {
                 var lines = File.ReadLines(file);
                 var content = File.ReadAllText(file);
-                // if the file ends with \r\n, there is an empty line at the end that ReadLines() skips but we need to count it
-                var linesCount = content.EndsWith("\r\n") ? lines.Count() + 1 : lines.Count();
+                // if the file ends with \n or \r\n, there is an empty line at the end that ReadLines() skips but we need to count it
+                var linesCount = content.EndsWith("\n") ? lines.Count() + 1 : lines.Count();
 
-                ConcatFile += content + "\r\n";
+                ConcatFile += content + Environment.NewLine;
                 _files.Add(new FileInfo(linesCount, file));
             }
         }

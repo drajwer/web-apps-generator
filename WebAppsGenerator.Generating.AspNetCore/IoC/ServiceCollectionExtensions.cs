@@ -21,8 +21,9 @@ namespace WebAppsGenerator.Generating.AspNetCore.IoC
                 var commandLineService = provider.GetService<ICommandLineService>();
                 var webApiGenerator = provider.GetService<WebApiProjectGenerator>();
                 var coreGenerator = provider.GetService<CoreProjectGenerator>();
+                var overwriteService = provider.GetService<IOverwriteService>();
 
-                return new SolutionGenerator(generatorConfiguration, commandLineService, webApiGenerator, coreGenerator);
+                return new SolutionGenerator(generatorConfiguration, commandLineService, webApiGenerator, coreGenerator, overwriteService);
             });
 
             return services;

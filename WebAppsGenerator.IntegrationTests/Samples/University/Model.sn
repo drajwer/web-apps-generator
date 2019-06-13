@@ -1,0 +1,51 @@
+
+class Student
+	#DisplayInList
+	FirstName: string
+
+	#DisplayInList	
+	LastName: string
+
+	DateOfBirth: date?
+	Lectures: StudentLecture[]
+	Groups: StudentGroup[] 
+
+class Teacher
+	#DisplayInList
+	#Length(Min = 2, Max = 20)
+	FirstName: string
+
+	#DisplayInList
+	#Length(Min = 2, Max = 30)
+	LastName: string
+
+	HasPhD: bool
+
+class Lecture
+	#DisplayInList
+	#DisplayField
+	#Length(Max = 30)
+	Name: string
+
+	Lecturer: Teacher
+	Students: StudentLecture[]
+
+	#DisplayInList
+	#Range(Min = 1, Max = 30)
+	ECTS: int
+
+#DisplayName(Name = "Student Grade")
+class StudentLecture
+	Student: Student
+
+	#Dropdown
+	Lecture: Lecture
+	#Range(Min = 2, Max = 5)
+	Grade: int
+	Points: float?
+
+class StudentGroup
+	#DisplayInList
+	#Length(Max = 20)
+	Name: string
+	Students: Student[]

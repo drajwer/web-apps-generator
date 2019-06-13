@@ -38,6 +38,7 @@ interface IGenericTableState {
     selected: number[],
     page: number,
     rowsPerPage: number,
+    filterText: string,
 };
 
 class GenericTable extends React.Component<IGenericTableProps, IGenericTableState> {
@@ -50,7 +51,8 @@ class GenericTable extends React.Component<IGenericTableProps, IGenericTableStat
             selected: props.selected,
             page: 0,
             rowsPerPage: 5,
-        };
+            filterText: '',
+};
     };
 
     public handleRequestSort = (event: any, property: any) => {
@@ -151,6 +153,22 @@ class GenericTable extends React.Component<IGenericTableProps, IGenericTableStat
     public getSorting = (order: "asc" | "desc" | undefined, orderBy: any) => {
         return order === 'desc' ? (a: any, b: any) => this.desc(a, b, orderBy) : (a: any, b: any) => -this.desc(a, b, orderBy);
     }
+	
+    public onFilterChange = (event: any) => {
+        this.setState({ filterText: event.target.value });
+    }
+
+    public onFilterHide = () => {
+        this.setState({ filterText: '' });
+    }
+
+    public filterPredicate = (record: object) => {
+        return Object.keys(record).some((propName: string) => {
+            const propValue = record[propName];
+            return propValue != null &&
+                propValue.toString().toLowerCase().indexOf(this.state.filterText.toLowerCase()) !== -1;
+        });
+    }
 
     public render() {
         const { data, classes, showCheckboxes, showAddButton, multipleSelects, tableTitle, tableHeadLabels, onRefresh } = this.props;
@@ -165,7 +183,13 @@ class GenericTable extends React.Component<IGenericTableProps, IGenericTableStat
             }));
         return (
             <Paper className={classes.root}>
-                <TableToolbar showAddButton={showAddButton} numSelected={selected.length} tableTitle={tableTitle} onRefresh={onRefresh} />
+                <TableToolbar showAddButton={showAddButton}
+                    numSelected={selected.length}
+                    tableTitle={tableTitle}
+                    onRefresh={onRefresh}
+                    onFilterChange={this.onFilterChange}
+                    onFilterHide={this.onFilterHide}
+				/>
                 <div className={classes.tableWrapper}>
                     <Table className={classes.table} aria-labelledby="tableTitle">
                         <CustomTableHead
@@ -180,7 +204,7 @@ class GenericTable extends React.Component<IGenericTableProps, IGenericTableStat
                             multipleSelects={multipleSelects}
                         />
                         <TableBody>
-                            {stableSort(this.props.data, this.getSorting(order, orderBy))
+                            {stableSort((this.props.data || []).filter(this.filterPredicate), this.getSorting(order, orderBy))
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 .map((n: any, elementIndex: number) => {
                                     const isSelected = this.isSelected(n.id);

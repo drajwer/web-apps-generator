@@ -14,7 +14,7 @@ namespace {{Params.CoreProjectName}}.Context
 		{%- endfor -%}
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
-	    {
+		{
             base.OnModelCreating(modelBuilder);
 
 			{%- for entity in Params.Entities -%}
@@ -50,6 +50,14 @@ namespace {{Params.CoreProjectName}}.Context
 						{%- endif -%}
 					{%- endunless -%}
 				{%- endfor -%}
+
+				{%- for prop in entity.Fields -%}
+					{%-if prop.Index -%}
+			modelBuilder.Entity<{{entity.Name}}>()
+				.HasIndex(e => e.{{prop.Name}});
+					{%- endif -%}
+				{%- endfor -%}
+
 			{%- endfor -%}
 
 		}

@@ -18,15 +18,19 @@ namespace WebAppsGenerator.Generating.WebUi.Models.Templating
 
         public bool HideInMenu { get; set; }
 
-        public string DisplayInDropdownField { get; set; }
+        public string DisplayField { get; set; }
 
         public List<string> RelationsToShowInModal { get; set; }
         public List<string> RelationsToShowInDropdown { get; set; }
 
+        public List<WebUiAnnotatedFieldDrop> ComplexFieldsDisplayedInList { get; set; }
+
+        public List<WebUiAnnotatedFieldDrop> NamesOfComplexFieldsDisplayedInList { get; set; }
+
         public WebUiAnnotatedEntityDrop(Entity entity) : base(entity)
         {
             var annotatedFields = entity.Fields.Select(f => new WebUiAnnotatedFieldDrop(f)).ToList();
-            var displayInDropdownField = annotatedFields.FirstOrDefault(f => f.DisplayInDropdown);
+            var displayField = annotatedFields.FirstOrDefault(f => f.IsDisplayField);
             var idField = annotatedFields.FirstOrDefault(f => f.Name == "Id");
             if (idField != null)
                 idField.DisplayInList = true;
@@ -37,11 +41,11 @@ namespace WebAppsGenerator.Generating.WebUi.Models.Templating
             // assign default values to helper properties in case they are not filled later
             DisplayName = Name;
             PluralDisplayName = PluralName;
-            DisplayInDropdownField = displayInDropdownField?.Name ?? IdField?.Name;
+            DisplayField = displayField?.Name ?? IdField?.Name;
 
             this.ParseEntityAnnotations(entity.Annotations);
 
-            RelationsToShowInDropdown = 
+            RelationsToShowInDropdown =
                 annotatedFields.Where(f => ((f.Relation?.HasOne ?? false) || (f.Relation?.HasMany ?? false)) && f.ShowDropdown)
                 .Select(f => f.Type.EntityName).Distinct().ToList();
 
@@ -49,7 +53,10 @@ namespace WebAppsGenerator.Generating.WebUi.Models.Templating
                 .Where(f => ((f.Relation?.HasOne ?? false) || (f.Relation?.HasMany ?? false)) && !f.ShowDropdown)
                 .Select(f => f.Type.EntityName).Distinct().ToList();
 
+            ComplexFieldsDisplayedInList =
+                annotatedFields.Where(f => f.DisplayInList && !f.Type.IsSimpleType).Distinct(new WebUiAnnotatedFieldDropFullTypeComparer()).ToList();
 
+            NamesOfComplexFieldsDisplayedInList = ComplexFieldsDisplayedInList.Distinct(new WebUiAnnotatedFieldDropNameComparer()).ToList();
         }
 
     }

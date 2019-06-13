@@ -1,0 +1,43 @@
+﻿import { SnackbarActionTypes } from './actionTypes';
+import { GetStateType } from '../index';
+
+
+export type SnackbarActions =
+	{%- for entity in Params.Entities -%}
+	{ type: SnackbarActionTypes.SET_FETCH_ERROR_{{ entity.PluralName | SnakeUppercase }} } |
+	
+	{ type: SnackbarActionTypes.SET_FETCH_ERROR_{{ entity.Name | SnakeUppercase }} } |
+	
+	{ type: SnackbarActionTypes.RESPONSE_ADD_{{ entity.Name | SnakeUppercase}} } |
+	{ type: SnackbarActionTypes.SET_ADD_{{ entity.Name | SnakeUppercase}}_ERROR } |
+	
+	{ type: SnackbarActionTypes.RESPONSE_UPDATE_{{ entity.Name | SnakeUppercase}} } |
+	{ type: SnackbarActionTypes.SET_UPDATE_{{ entity.Name | SnakeUppercase}}_ERROR } |
+	
+	{ type: SnackbarActionTypes.RESPONSE_DELETE_{{ entity.Name | SnakeUppercase}} } |
+	{ type: SnackbarActionTypes.SET_DELETE_{{ entity.Name | SnakeUppercase}}_ERROR } |
+
+	{%- endfor -%}
+
+    { type: SnackbarActionTypes.SHOW_NEXT_MESSAGE } |
+
+    { type: SnackbarActionTypes.HIDE_SNACKBAR };
+
+export const hideSnackbar = () => {
+    return (dispatch: any, getState: GetStateType) => {
+        dispatch(hideSnackbarAction());
+    }
+}
+
+export const showNextMessage = () => {
+	return (dispatch: any, getState: GetStateType) => {
+		dispatch(showNextMessageAction());
+	}
+}
+const hideSnackbarAction = () => ({
+    type: SnackbarActionTypes.HIDE_SNACKBAR,
+});
+
+const showNextMessageAction = () => ({
+	type: SnackbarActionTypes.SHOW_NEXT_MESSAGE,
+});

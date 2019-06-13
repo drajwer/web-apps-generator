@@ -12,12 +12,13 @@
     <None Remove="Templates\WebUI\public\index.html.liquid" />
     <None Remove="Templates\WebUI\src\api\Api.tsx.liquid" />
     <None Remove="Templates\WebUI\src\components\CustomTableHead\CustomTableHead.tsx.liquid" />
-    <None Remove="Templates\WebUI\src\components\Dropdowns\EntityDropdown.tsx.liquid" />
+    <None Remove="Templates\WebUI\src\components\Inputs\EntityInput.tsx.liquid" />
     <None Remove="Templates\WebUI\src\components\EntityPageTitle\EntityPageTitle.tsx.liquid" />
     <None Remove="Templates\WebUI\src\components\FormButtons\FormButtons.tsx.liquid" />
     <None Remove="Templates\WebUI\src\components\Forms\EntityForm.tsx.liquid" />
     <None Remove="Templates\WebUI\src\components\Forms\EntityFormData.tsc.liquid" />
     <None Remove="Templates\WebUI\src\components\GenericTable\GenericTable.tsx.liquid" />
+    <None Remove="Templates\WebUI\src\components\Inputs\EntityValues.tsc.liquid" />
     <None Remove="Templates\WebUI\src\components\Menu\GeneratedLabels.tsc.liquid" />
     <None Remove="Templates\WebUI\src\components\Menu\Menu.css.liquid" />
     <None Remove="Templates\WebUI\src\components\Menu\Menu.tsx.liquid" />
@@ -25,6 +26,7 @@
     <None Remove="Templates\WebUI\src\components\PageButtons\PageButtons.tsx.liquid" />
     <None Remove="Templates\WebUI\src\components\Tables\Table.css.liquid" />
     <None Remove="Templates\WebUI\src\components\Tables\Table.tsx.liquid" />
+    <None Remove="Templates\WebUI\src\components\TableToolbar\TableToolbar.css.liquid" />
     <None Remove="Templates\WebUI\src\components\TableToolbar\TableToolbar.tsx.liquid" />
     <None Remove="Templates\WebUI\src\config.tsx.liquid" />
     <None Remove="Templates\WebUI\src\history.tsc.liquid" />
@@ -34,6 +36,9 @@
     <None Remove="Templates\WebUI\src\modules\index.tsx.liquid" />
     <None Remove="Templates\WebUI\src\modules\reducer.tsx.liquid" />
     <None Remove="Templates\WebUI\src\models\Model.tsc.liquid" />
+    <None Remove="Templates\WebUI\src\modules\snackbar\actions.tsc.liquid" />
+    <None Remove="Templates\WebUI\src\modules\snackbar\actionTypes.tsc.liquid" />
+    <None Remove="Templates\WebUI\src\modules\snackbar\reducer.tsc.liquid" />
     <None Remove="Templates\WebUI\src\package.json.liquid" />
     <None Remove="Templates\WebUI\src\routing\GeneratedRoutes.tsc.liquid" />
     <None Remove="Templates\WebUI\src\routing\RouteComponentProps.tsc.liquid" />
@@ -45,6 +50,7 @@
     <None Remove="Templates\WebUI\src\screens\MainPage\MainPage.tsx.liquid" />
     <None Remove="Templates\WebUI\src\screens\TestPage\TestPage.css.liquid" />
     <None Remove="Templates\WebUI\src\screens\TestPage\TestPage.tsx.liquid" />
+    <None Remove="Templates\WebUI\src\styles\theme.tsc.liquid" />
     <None Remove="Templates\WebUI\src\vendors\http.tsx.liquid" />
     <None Remove="Templates\WebUI\tslint.json.liquid" />
   </ItemGroup>
@@ -58,15 +64,17 @@
   <ItemGroup>
     <EmbeddedResource Include="Templates\run.ps1.liquid" />
     <EmbeddedResource Include="Templates\WebUI\public\index.html.liquid" />
-    <EmbeddedResource Include="Templates\WebUI\src\components\Dropdowns\EntityDropdown.tsx.liquid" />
+    <EmbeddedResource Include="Templates\WebUI\src\components\Inputs\EntityInput.tsx.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\components\EntityPageTitle\EntityPageTitle.tsx.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\components\FormButtons\FormButtons.tsx.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\components\Forms\EntityFormData.tsc.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\components\Forms\EntityForm.tsx.liquid" />
+    <EmbeddedResource Include="Templates\WebUI\src\components\Inputs\EntityValues.tsc.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\components\Modals\EntityModal.tsx.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\components\PageButtons\PageButtons.tsx.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\components\Tables\Table.css.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\components\Tables\Table.tsx.liquid" />
+    <EmbeddedResource Include="Templates\WebUI\src\components\TableToolbar\TableToolbar.css.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\components\TableToolbar\TableToolbar.tsx.liquid" />
   </ItemGroup>
 
@@ -87,6 +95,9 @@
     <EmbeddedResource Include="Templates\WebUI\src\modules\reducer.tsx.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\models\Model.tsc.liquid" />
     <EmbeddedResource Include="Templates\WebUI\package.json.liquid" />
+    <EmbeddedResource Include="Templates\WebUI\src\modules\snackbar\actions.tsc.liquid" />
+    <EmbeddedResource Include="Templates\WebUI\src\modules\snackbar\actionTypes.tsc.liquid" />
+    <EmbeddedResource Include="Templates\WebUI\src\modules\snackbar\reducer.tsc.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\routing\RouteComponentProps.tsc.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\routing\GeneratedRoutes.tsc.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\routing\Router.tsx.liquid" />
@@ -101,6 +112,7 @@
     <EmbeddedResource Include="Templates\WebUI\src\screens\TestPage\TestPage.tsx.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\screens\MainPage\MainPage.css.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\screens\MainPage\MainPage.tsx.liquid" />
+    <EmbeddedResource Include="Templates\WebUI\src\styles\theme.tsc.liquid" />
     <EmbeddedResource Include="Templates\WebUI\src\vendors\http.tsx.liquid" />
     <EmbeddedResource Include="Templates\WebUI\tslint.json.liquid" />
   </ItemGroup>

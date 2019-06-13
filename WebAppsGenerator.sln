@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAppsGenerator.Generating
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAppsGenerator.Generating.AspNetCore", "WebAppsGenerator.Generating.AspNetCore\WebAppsGenerator.Generating.AspNetCore.csproj", "{3208C381-05C0-49A4-B9D4-4727981D10F8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppsGenerator.Generating.WebUi", "WebAppsGenerator.Generating.WebUi\WebAppsGenerator.Generating.WebUi.csproj", "{A721943D-DD9F-445C-B268-E3E2ACD28BBA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAppsGenerator.Generating.WebUi", "WebAppsGenerator.Generating.WebUi\WebAppsGenerator.Generating.WebUi.csproj", "{A721943D-DD9F-445C-B268-E3E2ACD28BBA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppsGenerator.IntegrationTests", "WebAppsGenerator.IntegrationTests\WebAppsGenerator.IntegrationTests.csproj", "{77D1F620-541D-4C8A-A9BB-C0759D2870FD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{A721943D-DD9F-445C-B268-E3E2ACD28BBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A721943D-DD9F-445C-B268-E3E2ACD28BBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A721943D-DD9F-445C-B268-E3E2ACD28BBA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77D1F620-541D-4C8A-A9BB-C0759D2870FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77D1F620-541D-4C8A-A9BB-C0759D2870FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77D1F620-541D-4C8A-A9BB-C0759D2870FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77D1F620-541D-4C8A-A9BB-C0759D2870FD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

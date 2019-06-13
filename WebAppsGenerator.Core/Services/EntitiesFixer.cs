@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using WebAppsGenerator.Core.Exceptions;
 using WebAppsGenerator.Core.Interfaces;
 using WebAppsGenerator.Core.Models;
 
@@ -9,6 +10,13 @@ namespace WebAppsGenerator.Core.Services
     public class EntitiesFixer : IEntitiesFixer
     {
         public const string Id = "Id";
+
+        private readonly IExceptionHandler _exceptionHandler;
+
+        public EntitiesFixer(IExceptionHandler exceptionHandler)
+        {
+            _exceptionHandler = exceptionHandler;
+        }
 
         public void FixEntities(IEnumerable<Entity> entities)
         {
@@ -58,39 +66,52 @@ namespace WebAppsGenerator.Core.Services
                         continue;
                     var referencedEntity = entityList.First(e => e.Name == entityField.Type.EntityName);
                     var referencedFields = referencedEntity.Fields.Where(f => f.Type.EntityName == entity.Name).ToList();
-                    var referencedField = referencedFields.FirstOrDefault();
-                    if (referencedFields.Count > 1)
-                    {
-                        var inversePropAnnotation =
-                            entityField.Annotations.FirstOrDefault(ann => ann.Name == "InverseProperty");
-                        if (inversePropAnnotation != null)
-                            referencedField =
-                                referencedFields.First(f =>
-                                    f.Name == (string) inversePropAnnotation.Params
-                                        .First(p => p.Name == "Name").Value);
-                        else
-                            referencedField = null;
-                    }
 
                     bool primary;
+                    Field referencedField;
 
-                    var inversePropInEntityField =
-                        entityField.Annotations.FirstOrDefault(ann => ann.Name == "InverseProperty");
-
-                    var inversePropInReferencedField =
-                        referencedField?.Annotations.FirstOrDefault(ann => ann.Name == "InverseProperty");
-
-                    if (inversePropInEntityField != null && inversePropInReferencedField != null)
-                        primary = string.Compare(entity.Name, referencedEntity.Name, StringComparison.Ordinal) >= 0;
-
-                    else if (inversePropInEntityField != null) // the class with InverseProperty annotation declared is principial
-                        primary = true;
-                    else if (inversePropInReferencedField != null)
-                        primary = false;
+                    if (referencedFields.Count == 1)
+                    {
+                        referencedField = referencedFields.First();
+                        if (!entityField.Type.IsArray && referencedField.Type.IsArray)      // one to many
+                            primary = false;
+                        else if (entityField.Type.IsArray && !referencedField.Type.IsArray) // many to one
+                            primary = true;
+                        else                                                                // many to many
+                            primary = (!referencedField.Relation?.Primary) ?? true;
+                    }
                     else
-                        primary = false;
+                    {
+                        var inversePropAnnotation =
+                                entityField.Annotations.FirstOrDefault(ann => ann.Name == "InverseProperty");
 
-                    entityField.Relation = new Relation()
+                        if (inversePropAnnotation != null)  // existence of this annotation indicates that this prop is principial
+                        {
+                            var referencedFieldName =
+                                inversePropAnnotation.Params.First(p => p.Name == "Name").Value as string;
+
+                            referencedField = referencedFields.First(f => f.Name == referencedFieldName);
+                            primary = true;
+                        }
+                        else
+                        {
+                            referencedField = referencedFields
+                                .FirstOrDefault(f => f.Annotations.Exists(ann =>
+                                    ann.Name == "InverseProperty" &&
+                                    (string)ann.Params.First(p => p.Name == "Name").Value == entityField.Name));
+
+                            primary = false;
+
+                            if (referencedField == null)
+                            {
+                                primary = true;
+                                // EF won't be able to create migration
+                            }
+                        }
+
+                    }
+
+                    entityField.Relation = new Relation
                     {
                         HasOne = !entityField.Type.IsArray,
                         WithOne = !referencedField?.Type.IsArray ?? false,

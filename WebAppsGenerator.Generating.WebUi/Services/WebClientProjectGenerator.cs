@@ -13,14 +13,16 @@ namespace WebAppsGenerator.Generating.WebUi.Services
         private readonly ICommandLineService _commandLineService;
         private readonly IEnumerable<IWebUiChildGenerator> _webUiGenerators;
         private readonly IGeneratorConfiguration _configuration;
+        private readonly IOverwriteService _overwriteService;
 
         public WebClientProjectGenerator(SolutionPathService pathService, ICommandLineService commandLineService,
-            IEnumerable<IWebUiChildGenerator> webUiGenerators, IGeneratorConfiguration configuration)
+            IEnumerable<IWebUiChildGenerator> webUiGenerators, IGeneratorConfiguration configuration, IOverwriteService overwriteService)
         {
             _pathService = pathService;
             _commandLineService = commandLineService;
             _webUiGenerators = webUiGenerators;
             _configuration = configuration;
+            _overwriteService = overwriteService;
         }
 
         public void Generate(IEnumerable<Entity> entities)
@@ -30,6 +32,7 @@ namespace WebAppsGenerator.Generating.WebUi.Services
 
             if (_configuration.RunReactAppCreation)
             {
+                _overwriteService.SetOverwriteAll();
                 CreateApp();
                 RemoveUnnecessaryFiles();
             }
@@ -38,12 +41,15 @@ namespace WebAppsGenerator.Generating.WebUi.Services
             {
                 webUiChildGenerator.Generate(entities);
             }
+            
+            if(_configuration.RunReactAppCreation)
+                _overwriteService.ResetOverwriteAll();
         }
 
         private void CreateApp()
         {
-            _commandLineService.RunCommand("npm i create-react-app -g");
-            _commandLineService.RunCommand($"npx create-react-app {_pathService.WebProjectDirPath} --scripts-version=react-scripts-ts");
+            _commandLineService.RunCommand("npm i create-react-app -g"); // TODO: is this necessary? 
+            _commandLineService.RunCommand($"npx create-react-app {_pathService.WebProjectDirPath} --scripts-version=react-scripts-ts", "y");
         }
 
         private void RemoveUnnecessaryFiles()

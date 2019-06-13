@@ -1,9 +1,15 @@
 ﻿import AppBar from '@material-ui/core/AppBar'
 import * as React from 'react';
 import { Router } from 'react-router-dom';
-import { withStyles } from '@material-ui/core/styles';
+import { connect } from 'react-redux';
+import { bindActionCreators, Dispatch } from 'redux';
+import * as Actions from 'src/modules/snackbar/actions';
+import { IRootState } from 'src/modules';
+import { withStyles, MuiThemeProvider } from '@material-ui/core/styles';
 import Routes from '../../routing/Router';
 import Toolbar from '@material-ui/core/Toolbar';
+import Snackbar from '@material-ui/core/Snackbar';
+import SnackbarContent from '@material-ui/core/SnackbarContent';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Typography from '@material-ui/core/Typography';
@@ -12,6 +18,7 @@ import LuxonUtils from '@date-io/luxon';
 import './App.css';
 import Menu from 'src/components/Menu/Menu';
 import history from 'src/history';
+import theme from 'src/styles/theme';
 
 const styles = {
   root: {
@@ -29,46 +36,79 @@ const styles = {
   },
   content: {
     marginTop: 500
-  }
+  },
+  // snackbar: {
+  //   'justify-content': 'center',
+  // }
 };
 
 
 class App extends React.Component<any, any> {
-  constructor(props : any) {
+  constructor(props: any) {
     super(props);
-    this.state = {openDrawer: false};
+    this.state = { openDrawer: false };
   }
   public render() {
-    const classes = this.props;
+    const classes = this.props.classes;
     return (
       <Router history={history}>
-        <div>
+        <MuiThemeProvider theme={theme}>
           <div>
-        <AppBar position="fixed" className="appBar">
-          <Toolbar>
-          <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" onClick ={this.toggleDrawer}>
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" color="inherit" className={classes.grow}>
-            {{Params.ProjectName}}
-          </Typography>
-        </Toolbar>
-        <Menu openMenu={this.state.openDrawer} onClose={this.toggleDrawer}/>
-      </AppBar>
-      </div>
-	  <MuiPickersUtilsProvider utils={LuxonUtils}>
-          <div className="content">
-			<Routes />
+            <AppBar position="fixed" className="appBar">
+              <Toolbar>
+                <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" onClick={this.toggleDrawer}>
+                  <MenuIcon />
+                </IconButton>
+                <Typography variant="h6" color="inherit" className={classes.grow}>
+					{{Params.ProjectName}}
+				</Typography>
+              </Toolbar>
+              <Menu openMenu={this.state.openDrawer} onClose={this.toggleDrawer} />
+            </AppBar>
           </div>
-	  </MuiPickersUtilsProvider>
-        </div>
+          <MuiPickersUtilsProvider utils={LuxonUtils}>
+            <div className="content">
+              <Routes />
+            </div>
+          </MuiPickersUtilsProvider>
+          <Snackbar
+			key={this.props.message.key}
+            open={this.props.showToast}
+            onClose={this.hideSnackbar}
+            autoHideDuration={5000}
+			transitionDuration={ { enter: 500, exit: 500 } }
+>
+            <SnackbarContent
+              message={this.props.message.text}
+              classes={ { root: 'snackbar' } }
+            />
+          </Snackbar>
+        </MuiThemeProvider>
       </Router>
     );
   }
 
   private toggleDrawer = () => {
-    this.setState({openDrawer: !this.state.openDrawer})
+    this.setState({ openDrawer: !this.state.openDrawer })
+  }
+
+  private hideSnackbar = () => {
+    this.props.actions.hideSnackbar();
+    this.props.actions.showNextMessage();
   }
 }
 
-export default withStyles(styles)(App);
+const mapStateToProps = (state: IRootState) => {
+  return {
+    showToast: state.snackbar.showToast,
+    message: state.snackbar.messages.length > 0? state.snackbar.messages[0] : {}
+  };
+}
+
+const mapDispatchToProps = (dispatch: Dispatch) => {
+  return {
+    actions: bindActionCreators(Actions, dispatch),
+  };
+}
+
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(App));

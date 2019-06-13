@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace WebAppsGenerator.Core.Helpers
@@ -18,6 +19,18 @@ namespace WebAppsGenerator.Core.Helpers
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine(info);
             Console.ResetColor();
+        }
+
+        public static bool Prompt(string message)
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write($"{message}(y/N): ");
+            var answer = Console.ReadLine();
+            Console.ResetColor();
+
+            if (answer.ToLower() == "y")
+                return true;
+            return false;
         }
     }
 }

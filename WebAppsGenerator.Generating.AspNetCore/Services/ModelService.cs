@@ -61,7 +61,7 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
                 List<FieldDrop> fieldsToAdd = new List<FieldDrop>();
                 foreach (var relationField in relationFields)
                 {
-                    if (relationField.Relation != null && relationField.Relation.HasOneWithOne && !relationField.Relation.Primary)
+                    if (relationField.Relation != null && relationField.Relation.HasOneWithOne && relationField.Relation.Primary)
                         continue;
 
                     var referencedEntity = entities.First(e => e.Name == relationField.Type.EntityName);
@@ -97,10 +97,9 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
                     entityDrop.Fields.Remove(manyToManyField);
                     var isCurrentPrimary = manyToManyField.Relation.Primary;
                     var secondEntityName = manyToManyField.Type.EntityName;
-                    var joinTypeName = isCurrentPrimary
+                    var joinTypeName = !isCurrentPrimary
                         ? entity.Name + secondEntityName
                         : secondEntityName + entity.Name;
-                    joinTypeName = PluralizationHelper.Pluralize(joinTypeName);
                     var joinField = new Field(-1, -1)
                     {
                         Name = manyToManyField.Name, 
@@ -113,18 +112,18 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
                     var currentEntityRefField = new Field(-1, -1)
                     {
                         Name = entity.Name,
-                        Relation = new Relation() { Primary = false, HasOne = true, WithOne = false },
+                        Relation = new Relation() { Primary = true, HasOne = true, WithOne = false },
                         Type = new Core.Models.Type(-1, -1) { BaseTypeKind = TypeKind.Entity, EntityName = entity.Name }
                     };
 
                     var secondEntityRefField = new Field(-1, -1)
                     {
                         Name = secondEntityName,
-                        Relation = new Relation() { Primary = false, HasOne = true, WithOne = false },
+                        Relation = new Relation() { Primary = true, HasOne = true, WithOne = false },
                         Type = new Core.Models.Type(-1, -1) { BaseTypeKind = TypeKind.Entity, EntityName = secondEntityName }
                     };
 
-                    var joinTableFields = isCurrentPrimary
+                    var joinTableFields = !isCurrentPrimary
                         ? new List<Field>() { currentEntityRefField, secondEntityRefField }
                         : new List<Field>() { secondEntityRefField, currentEntityRefField };
 

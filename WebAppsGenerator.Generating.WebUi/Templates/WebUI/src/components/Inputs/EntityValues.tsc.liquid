@@ -1,0 +1,34 @@
+﻿import store from '../../../modules';
+
+export const get{{ Params.Entity.Name }}DisplayValues = (selected: number[]) => {
+    const state = store.getState();
+    const {{ Params.Entity.PluralName | DeCapitalize }} = state.{{ Params.Entity.Name | DeCapitalize }}.{{ Params.Entity.PluralName | DeCapitalize }};
+
+    if(selected == null || {{ Params.Entity.PluralName | DeCapitalize }} == null) {
+        return "";
+    }
+    if(selected.length === 0) {
+        return "";
+    }
+
+    const displayNames = {{ Params.Entity.PluralName | DeCapitalize }}.filter(c => selected.indexOf(c.id) >= 0).map(c => c.{{ Params.Entity.DisplayField | DeCapitalize }}.toString());
+    const leftElems = 3;
+    const text = displayNames.slice(0, leftElems).reduce((prev, cur) => prev + ', ' + cur);
+
+    return text;
+}
+
+export const get{{ Params.Entity.Name }}DisplayValue = (selected?: number) => {
+    const state = store.getState();
+    const {{ Params.Entity.PluralName | DeCapitalize }} = state.{{ Params.Entity.Name | DeCapitalize }}.{{ Params.Entity.PluralName | DeCapitalize }};
+
+    if(selected == null || {{ Params.Entity.PluralName | DeCapitalize }} == null) {
+        return "";
+    }
+
+    const elem = {{ Params.Entity.PluralName | DeCapitalize }}.find(c => c.id === selected);
+    if(elem == null) {
+        return "";
+    }
+    return elem.{{ Params.Entity.DisplayField | DeCapitalize }}.toString();
+}

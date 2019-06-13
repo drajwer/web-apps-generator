@@ -1,5 +1,6 @@
 ﻿using DotLiquid;
 using WebAppsGenerator.Core.Models;
+using WebAppsGenerator.Generating.Abstract.Services;
 
 namespace WebAppsGenerator.Generating.Abstract.Models.Templating
 {
@@ -15,6 +16,7 @@ namespace WebAppsGenerator.Generating.Abstract.Models.Templating
             IsArray = type.IsArray;
             IsSimpleType = type.BaseTypeKind != TypeKind.Entity;
             EntityName = type.EntityName;
+            PluralEntityName = PluralizationHelper.Pluralize(EntityName);
             BaseTypeKind = type.BaseTypeKind;
 
             if (!IsSimpleType)
@@ -30,6 +32,7 @@ namespace WebAppsGenerator.Generating.Abstract.Models.Templating
             IsArray = typeDrop.IsArray;
             IsSimpleType = typeDrop.IsSimpleType;
             EntityName = typeDrop.EntityName;
+            PluralEntityName = typeDrop.PluralEntityName;
             BaseTypeKind = typeDrop.BaseTypeKind;
         }
 
@@ -38,6 +41,7 @@ namespace WebAppsGenerator.Generating.Abstract.Models.Templating
         public bool IsArray { get; set; }
         public bool IsSimpleType { get; set; }
         public string EntityName { get; set; }
+        public string PluralEntityName { get; set; }
         public TypeKind BaseTypeKind { get; set; }
 
     }

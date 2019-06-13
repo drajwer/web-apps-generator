@@ -56,7 +56,14 @@ namespace {{Params.CoreProjectName}}.Services.Generated
 
         public virtual IQueryable<{{Params.Entity.Name}}> GetAll()
         {
-            return Repo.GetAll();
+            return Repo.GetAll()
+			{%- for prop in Params.Entity.Fields -%}
+				{%- unless prop.Relation == nil -%}
+					{%- unless prop.Type.IsSimpleType -%}
+					.Include(e => e.{{prop.Name}})
+					{%- endunless -%}
+				{%- endunless -%}
+			{%- endfor -%};
         }
 
         public virtual {{Params.Entity.Name}} Update({{Params.Entity.IdField.Type.Name}} id, {{Params.Entity.Name}} entity)
@@ -95,7 +102,7 @@ namespace {{Params.CoreProjectName}}.Services.Generated
             {%- if prop.Relation.HasManyWithOne -%}
 			entity.{{prop.Name}} = entity.{{prop.Name}}?.Select(e => RepoSet.{{prop.Type.EntityName}}Repo.Get(e.Id)).ToList();
 			{%- elsif prop.Relation.HasOneWithOne -%}
-				{%- unless prop.Relation.Primary -%}
+				{%- if prop.Relation.Primary -%}
 			if (entity.{{prop.Name}} == null)
                 return;
 
@@ -103,7 +110,7 @@ namespace {{Params.CoreProjectName}}.Services.Generated
             entity.{{prop.Name}} = RepoSet.{{prop.Type.EntityName}}Repo.Get(id);
             if (entity.{{prop.Name}} == null)
                 throw new BadRequestException($"{{prop.Type.EntityName | SplitCamelCase}} with id {id} not found");
-				{%- endunless -%}
+				{%- endif -%}
 			{%- endif -%}
         }
 
@@ -125,7 +132,7 @@ namespace {{Params.CoreProjectName}}.Services.Generated
             var children = entity.{{prop.Name}}?.Select(s => RepoSet.{{prop.Type.EntityName}}Repo.Get(s.Id)).ToList();
 			dbEntity.{{prop.Name}} = children;
 			{%- elsif prop.Relation.HasOneWithOne -%}
-				{%- unless prop.Relation.Primary -%}
+				{%- if prop.Relation.Primary -%}
 			if (entity.{{prop.Name}} == null)
 			{
 				dbEntity.{{prop.Name}} = null;
@@ -138,7 +145,7 @@ namespace {{Params.CoreProjectName}}.Services.Generated
                 throw new BadRequestException($"{{prop.Type.EntityName | SplitCamelCase}} with id {id} not found");
 				{%- else -%}
 			dbEntity.{{prop.Name}}Id = entity.{{prop.Name}}Id;
-				{%- endunless -%}
+				{%- endif -%}
 			{%- else -%}
 			dbEntity.{{prop.Name}}Id = entity.{{prop.Name}}Id;
 			{%- endif -%}

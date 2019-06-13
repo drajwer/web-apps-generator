@@ -1,9 +1,11 @@
 ﻿import * as React from 'react';
 import { Grid } from '@material-ui/core';
 {%- for field in Params.Entity.Fields -%}
-	{%- unless field.Name == 'id' or field.Type.Name == 'boolean' or field.ShowDropdown -%}
+	{%- unless field.Name == 'id' or field.Type.Name == 'boolean' -%}
+		{%- if field.Type.IsSimpleType -%}
 import { TextField } from '@material-ui/core';
 			{%- break -%}
+		{%- endif -%}
 	{%- endunless -%}
 {%- endfor -%}
 {%- for field in Params.Entity.Fields -%}
@@ -29,16 +31,10 @@ import { DateTimePicker } from 'material-ui-pickers';
 	{%- endif -%}
 {%- endfor -%}
 {%- for relation in Params.Entity.RelationsToShowInModal -%}
-import {{ relation }}Modal from 'src/components/Modals/{{ relation }}/{{ relation }}Modal';
+import {{ relation }}Input from 'src/components/Inputs/{{ relation }}/{{ relation }}Input';
 {%- endfor -%}
 {%- for relation in Params.Entity.RelationsToShowInDropdown -%}
-import {{ relation }}Dropdown from 'src/components/Dropdowns/{{ relation }}/{{ relation }}Dropdown';
-{%- endfor -%}
-{%- for field in Params.Entity.Fields -%}
-		{%- if field.Relation.HasOne or field.Relation.HasMany -%}
-import { IState} from './{{Params.Entity.Name}}FormData';
-			{%- break -%}
-		{%- endif -%}
+import {{ relation }}Input from 'src/components/Inputs/{{ relation }}/{{ relation }}Input';
 {%- endfor -%}
 import { IProps} from './{{Params.Entity.Name}}FormData';
 export { {{Params.Entity.Name}}ValidationErrors } from './{{Params.Entity.Name}}FormData';
@@ -54,23 +50,7 @@ export { {{Params.Entity.Name}}ValidationErrors } from './{{Params.Entity.Name}}
 import { {{Params.Entity.Name}}ValidationErrors } from './{{Params.Entity.Name}}FormData';
 {%- endif -%}
 
-{%- assign createState = false -%}
-{%- for field in Params.Entity.Fields -%}
-		{%- if field.Relation.HasOne or field.Relation.HasMany -%}
-			{%- assign createState = true -%}
-		{%- endif -%}
-{%- endfor -%}
-class {{Params.Entity.Name}}Form extends React.Component<IProps, {%- if createState -%}IState{%-else-%}{}{%-endif -%}> {
-	constructor(props: IProps) {
-		super(props);
-		this.state = { 
-{%- for field in Params.Entity.Fields -%}
-	{%- if field.Relation.HasOne or field.Relation.HasMany -%}
-			open{{field.Name}}Modal: false,
-	{%- endif -%}
-{%- endfor -%}
-		};
-	}
+class {{Params.Entity.Name}}Form extends React.Component<IProps> {
 {%- if renderValidateAll -%}
 
 	public componentWillMount() {
@@ -81,27 +61,6 @@ class {{Params.Entity.Name}}Form extends React.Component<IProps, {%- if createSt
     public render() {
         return (
             <Grid container={true} spacing={24}>
-			{%- for field in Params.Entity.Fields -%}
-				{%- if field.Relation.HasOne or field.Relation.HasMany -%}
-				{%- unless field.ShowDropdown -%}
-				<{{ field.Type.EntityName }}Modal
-					{%- if field.Relation.HasMany -%}
-					multiple = {true}
-						{%- else -%}
-					multiple = {false}
-					{%- endif -%}
-					open={this.state.open{{ field.Name }}Modal}
-					onClose={this.toggle{{ field.Name }}Modal}
-					onSave={this.on{{ field.Name }}Change}
-					{%- if field.Relation.HasMany -%}
-					selected = {this.props.{{Params.Entity.Name | DeCapitalize}}.{{field.Name}}Ids}
-						{%- else -%}
-					selected = { this.props.{{Params.Entity.Name | DeCapitalize}}.{{field.Name}}Id != null ? [this.props.{{Params.Entity.Name | DeCapitalize}}.{{field.Name}}Id] : [] }
-					{%- endif -%}
-				/>
-				{%- endunless -%}
-				{%- endif -%}
-			{%- endfor -%}
 			{%- assign addPlaceholder = true -%}
 			{%- for field in Params.Entity.Fields -%}
 				{%- unless field.Name == 'id' -%}
@@ -162,6 +121,7 @@ class {{Params.Entity.Name}}Form extends React.Component<IProps, {%- if createSt
 						required={true}
 						{%-endif-%}
 						fullWidth={true}
+						InputLabelProps={ { shrink: true } }
 						disabled={this.props.readonly}
 						error={this.props.validationErrors.enabled && this.props.validationErrors.{{field.Name}}Error != null}
 						helperText={this.props.validationErrors.enabled ? this.props.validationErrors.{{field.Name}}Error : ""}
@@ -186,14 +146,14 @@ class {{Params.Entity.Name}}Form extends React.Component<IProps, {%- if createSt
 					  value = { this.props.{{Params.Entity.Name | DeCapitalize}}.{{field.Name}} == null ? "" : this.props.{{Params.Entity.Name | DeCapitalize}}.{{field.Name}} }
 						{%- endif -%}
 					  disabled={this.props.readonly}
+					  InputLabelProps={ { shrink: true } }
 					  onChange={this.on{{ field.Name }}Change}
 					  error={this.props.validationErrors.enabled && this.props.validationErrors.{{field.Name}}Error != null}
 					  helperText={this.props.validationErrors.enabled ? this.props.validationErrors.{{field.Name}}Error : ""}
 					/>
 						{%- endif -%}
 					{%- else -%}
-						{%- if field.ShowDropdown -%}
-					<{{field.Type.EntityName}}Dropdown
+					<{{field.Type.EntityName}}Input
 						label="{{field.DisplayName | Capitalize | SplitCamelCase}}"
 						{%- if field.Relation.HasMany -%}
 						multipleSelects={true}
@@ -205,24 +165,12 @@ class {{Params.Entity.Name}}Form extends React.Component<IProps, {%- if createSt
 						onSelect={this.on{{field.Name}}Change}
 						showCheckboxes={true}
 						disabled={this.props.readonly}
+						{%- if field.ShowDropdown -%}
+						type="dropdown"
+						{%-else-%}
+						type="modal"
+						{%-endif-%}
 					/>
-						{%- else -%}
-					<TextField
-					  required={false}
-					  id="{{field.Name}}"
-					  name="{{field.Name | SplitCamelCase | Capitalize}}"
-					  label="{{field.DisplayName | SplitCamelCase | Capitalize}}"
-					  type="string"
-					  fullWidth={true}
-						{%- if field.Relation.HasMany -%}
-					  value = {`${this.props.{{Params.Entity.Name | DeCapitalize}}.{{field.Name}}Ids.length} selected`}
-						{%- else -%}
-					  value = { this.props.{{Params.Entity.Name | DeCapitalize}}.{{field.Name}}Id == null ? 'Empty' : 'Item selected' }
-						{%- endif -%}
-					  disabled={this.props.readonly}
-					  onClick={this.toggle{{field.Name}}Modal}
-					/>
-						{%- endif -%}
 					{%- endif -%}
 				</Grid>
 				{%- endunless -%}
@@ -272,15 +220,7 @@ class {{Params.Entity.Name}}Form extends React.Component<IProps, {%- if createSt
     }
 
 			{%- endunless -%}
-		{%- else -%}
-			{%- unless field.ShowDropdown -%}
-	private toggle{{ field.Name }}Modal = () => {
-		if (!this.props.readonly) {
-			this.setState({ open{{ field.Name }}Modal: !this.state.open{{ field.Name }}Modal });
-		}
-	}
-			{%- endunless -%}
-			
+		{%- else -%}		
 
 	private on{{ field.Name }}Change = (selected: number[]) => {
 		const {{Params.Entity.Name | DeCapitalize}} = {...this.props.{{Params.Entity.Name | DeCapitalize}}};

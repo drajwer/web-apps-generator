@@ -3,9 +3,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace WebAppsGenerator.Console
 {
-    internal class Program
+    public class Program
     {
-        private static void Main(string[] args)
+        public static void Main(string[] args)
         {
             var options = ArgsParser.ParseArguments(args);
             if (options == null)
@@ -21,7 +21,7 @@ namespace WebAppsGenerator.Console
         private static IServiceProvider ConfigureServices(Startup startup)
         {
             var services = new ServiceCollection();
-
+            startup.SetInvariantCulture();
             startup.ConfigureServices(services);
             return services.BuildServiceProvider();
         }
