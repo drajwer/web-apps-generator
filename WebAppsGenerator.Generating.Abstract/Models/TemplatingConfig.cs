@@ -4,7 +4,7 @@ using System.Text;
 
 namespace WebAppsGenerator.Generating.Abstract.Models
 {
-    public class TemplatingConfig
+    public class  TemplatingConfig
     {
         public FileInfo FileInfo { get; set; }
         public string NameTemplate { get; set; }
