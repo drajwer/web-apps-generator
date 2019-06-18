@@ -8,6 +8,9 @@ using WebAppsGenerator.Generating.Abstract.Interfaces;
 using WebAppsGenerator.Generating.Abstract.Options;
 namespace WebAppsGenerator.Generating.Abstract.Services
 {
+    /// <summary>
+    /// Generates JSON file containing project file structure with overwrite flag for each file
+    /// </summary>
     public class OverwriteFileGenerator
     {
         private readonly GeneratorOptions _config;
@@ -26,7 +29,7 @@ namespace WebAppsGenerator.Generating.Abstract.Services
                 File.WriteAllText(_config.OverwriteFileOutputPath, jObject.ToString());
         }
 
-        public JObject GetObject(List<(string current, string original)> paths)
+        private JObject GetObject(List<(string current, string original)> paths)
         {
             var dictionary = _overwritesDictionary;
             var jObject = new JObject();

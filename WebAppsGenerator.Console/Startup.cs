@@ -16,6 +16,9 @@ using WebAppsGenerator.Generating.WebUi.IoC;
 
 namespace WebAppsGenerator.Console
 {
+    /// <summary>
+    /// Class used for setup dependency injection container and application culture
+    /// </summary>
     public class Startup
     {
         public IConfiguration Configuration { get; set; }

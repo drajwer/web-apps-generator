@@ -6,6 +6,9 @@ using static WebAppsGenerator.Generating.Abstract.Const.AnnotationsConsts;
 
 namespace WebAppsGenerator.Generating.Abstract.Extensions
 {
+    /// <summary>
+    /// Provides methods for passing length and range annotation data into drop object's properties
+    /// </summary>
     public static class RangeAnnotationExtensions
     {
         public static void AddLengthAnnotation(this AnnotatedFieldDrop fieldDrop, Annotation annotation)

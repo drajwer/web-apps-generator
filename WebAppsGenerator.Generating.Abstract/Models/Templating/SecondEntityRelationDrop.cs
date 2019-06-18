@@ -1,5 +1,8 @@
 ﻿namespace WebAppsGenerator.Generating.Abstract.Models.Templating
 {
+    /// <summary>
+    /// Extension of <see cref="RelationDrop"/> with information about relation's second end
+    /// </summary>
     public class SecondEntityRelationDrop : RelationDrop
     {
         public TypeDrop SecondIdType { get; set; }

@@ -8,6 +8,9 @@ using WebAppsGenerator.Generating.Abstract.Options;
 
 namespace WebAppsGenerator.Generating.Abstract.Services
 {
+    /// <summary>
+    /// Creates <see cref="OverwriteService"/> based on given JSON overwrite file
+    /// </summary>
     public class OverwriteServiceFactory
     {
         private GeneratorOptions options;

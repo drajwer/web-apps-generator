@@ -14,6 +14,9 @@ namespace WebAppsGenerator.Generating.Abstract.IoC
 {
     public static class ServiceCollectionExtensions
     {
+        /// <summary>
+        /// Add base generator with dependencies
+        /// </summary>
         public static IServiceCollection AddRootGenerator(this IServiceCollection services)
         {
             services.AddScoped<RootGenerator>();
@@ -27,6 +30,9 @@ namespace WebAppsGenerator.Generating.Abstract.IoC
             return services;
         }
 
+        /// <summary>
+        /// Add all validators from <see cref="Abstract"/> assembly
+        /// </summary>
         public static IServiceCollection AddValidators(this IServiceCollection services)
         {
             var assembly = Assembly.GetAssembly(typeof(IValidator));

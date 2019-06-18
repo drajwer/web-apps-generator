@@ -2,6 +2,9 @@
 
 namespace WebAppsGenerator.Generating.Abstract.Services
 {
+    /// <summary>
+    /// Provides static methods to use in DotLiquid templates as filters
+    /// </summary>
     public class LiquidFilters
     {
         public static string DeCapitalize(string text)

@@ -20,6 +20,9 @@ namespace WebAppsGenerator.Generating.Abstract.Services
             _overwriteFileGenerator = overwriteFileGenerator;
         }
 
+        /// <summary>
+        /// Runs all received generators after fixing entities.
+        /// </summary>
         public void Generate(IEnumerable<Entity> entities)
         {
             _entitiesFixer.FixEntities(entities);
