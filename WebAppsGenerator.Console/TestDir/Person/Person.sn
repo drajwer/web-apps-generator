@@ -7,6 +7,8 @@
 	#DisplayInList
 	LastName: string
 
+	NickName: string
+
 	#Range(Max = 100)
 	Age: int
 

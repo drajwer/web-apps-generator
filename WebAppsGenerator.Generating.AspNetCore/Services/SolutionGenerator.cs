@@ -5,6 +5,7 @@ using WebAppsGenerator.Core.Interfaces;
 using WebAppsGenerator.Core.Models;
 using WebAppsGenerator.Generating.Abstract.Interfaces;
 using WebAppsGenerator.Generating.Abstract.Options;
+using WebAppsGenerator.Generating.AspNetCore.Interfaces;
 using WebAppsGenerator.Generating.AspNetCore.Options;
 
 namespace WebAppsGenerator.Generating.AspNetCore.Services
@@ -17,21 +18,22 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
         private const bool IsEnabled = false;
 
         private readonly ICommandLineService _commandLineService;
-        private readonly IGenerator _webApiProjectGenerator;
-        private readonly IGenerator _coreProjectGenerator;
+        private readonly IEnumerable<IAspNetCoreChildGenerator> _aspNetCoreGenerators;
         private readonly AspNetCoreGeneratorConfiguration _generatorConfiguration;
         private readonly SolutionPathService _pathService;
         private readonly IOverwriteService _overwriteService;
+        private readonly IAspNetCoreFirstRunProvider _firstRunProvider;
 
         public SolutionGenerator(AspNetCoreGeneratorConfiguration generatorConfiguration, ICommandLineService commandLineService,
-            IGenerator webApiProjectGenerator, IGenerator coreProjectGenerator, IOverwriteService overwriteService)
+            IOverwriteService overwriteService, IAspNetCoreFirstRunProvider firstRunProvider, 
+            SolutionPathService pathService, IEnumerable<IAspNetCoreChildGenerator> aspNetCoreGenerators)
         {
             _commandLineService = commandLineService;
-            _webApiProjectGenerator = webApiProjectGenerator;
-            _coreProjectGenerator = coreProjectGenerator;
             _overwriteService = overwriteService;
+            _firstRunProvider = firstRunProvider;
+            _pathService = pathService;
+            _aspNetCoreGenerators = aspNetCoreGenerators;
             _generatorConfiguration = generatorConfiguration;
-            _pathService = new SolutionPathService(generatorConfiguration);
         }
 
         public void Generate(IEnumerable<Entity> entities)
@@ -41,40 +43,26 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
 
             if (entities == null)
                 throw new ArgumentNullException();
-            
-            var firstRun = IsFirstRun();
+
+            var firstRun = _firstRunProvider.IsFirstRun();
             if (firstRun)
+            {
                 _overwriteService.SetOverwriteAll();
 
-            CreateSolutionWithProjects();
-            var coreProjFilePath = Path.Combine(_pathService.CoreDirPath, $"{_pathService.CoreProjectName}.csproj");
-            AddNuGetPackages(coreProjFilePath, _generatorConfiguration.CoreProjectPackages);
+                CreateSolutionWithProjects();
+                var coreProjFilePath = Path.Combine(_pathService.CoreDirPath, $"{_pathService.CoreProjectName}.csproj");
+                AddNuGetPackages(coreProjFilePath, _generatorConfiguration.CoreProjectPackages);
+            }
 
-            _webApiProjectGenerator.Generate(entities);
-            _coreProjectGenerator.Generate(entities);
-            
+            foreach (var webUiChildGenerator in _aspNetCoreGenerators)
+            {
+                webUiChildGenerator.Generate(entities);
+            }
+
             if (firstRun)
                 _overwriteService.ResetOverwriteAll();
         }
 
-        private void RemoveFirstRunFiles()
-        {
-            var files = new string[]
-            {
-                Path.Combine(_pathService.WebApiDirPath, $"{_pathService.WebApiProjectName}.csproj"),
-                Path.Combine(_pathService.WebApiDirPath, "Startup.cs"),
-                Path.Combine(_pathService.WebApiDirPath, "Properties", "launchSettings.json"),
-                Path.Combine(_pathService.WebApiDirPath, "appsettings.json")
-            };
-            foreach (var file in files)
-                File.Delete(file);
-        }
-
-        private bool IsFirstRun()
-        {
-            var webApiCsProjPath = Path.Combine(_pathService.WebApiDirPath, $"{_pathService.WebApiProjectName}.csproj");
-            return !File.Exists(webApiCsProjPath);
-        }
 
         private void CreateSolutionWithProjects()
         {

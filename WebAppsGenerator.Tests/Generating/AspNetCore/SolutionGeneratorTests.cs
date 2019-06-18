@@ -7,6 +7,7 @@ using Moq;
 using WebAppsGenerator.Core.Models;
 using WebAppsGenerator.Generating.Abstract.Interfaces;
 using WebAppsGenerator.Generating.Abstract.Options;
+using WebAppsGenerator.Generating.AspNetCore.Interfaces;
 using WebAppsGenerator.Generating.AspNetCore.Options;
 using WebAppsGenerator.Generating.AspNetCore.Services;
 using WebAppsGenerator.Tests.Mocks;
@@ -37,12 +38,19 @@ namespace WebAppsGenerator.Tests.Generating.AspNetCore
 
             _commandLineService = new CommandLineServiceMock();
             _overwriteService = new OverwriteServiceMock();
-            var webApiGenerator = new Mock<IGenerator>();
-            webApiGenerator.Setup(g => g.Generate(It.IsAny<IEnumerable<Entity>>())).Callback(() => _webApiGeneratorCalled = true);
-            var coreGenerator = new Mock<IGenerator>();
-            coreGenerator.Setup(g => g.Generate(It.IsAny<IEnumerable<Entity>>())).Callback(() => _coreGeneratorCalled = true);
+            var solutionPathService = new SolutionPathService(_configuration);
 
-            _generator = new SolutionGenerator(_configuration, _commandLineService, webApiGenerator.Object, coreGenerator.Object, _overwriteService);
+            var webApiGenerator = new Mock<IAspNetCoreChildGenerator>();
+            webApiGenerator.Setup(g => g.Generate(It.IsAny<IEnumerable<Entity>>())).Callback(() => _webApiGeneratorCalled = true);
+            var coreGenerator = new Mock<IAspNetCoreChildGenerator>();
+            coreGenerator.Setup(g => g.Generate(It.IsAny<IEnumerable<Entity>>())).Callback(() => _coreGeneratorCalled = true);
+            var generators = new List<IAspNetCoreChildGenerator>() {webApiGenerator.Object, coreGenerator.Object};
+
+            var firstRunProvider = new Mock<IAspNetCoreFirstRunProvider>();
+            firstRunProvider.Setup(g => g.IsFirstRun()).Returns(true);
+
+            _generator = new SolutionGenerator(_configuration, _commandLineService, _overwriteService,
+                firstRunProvider.Object, solutionPathService, generators);
         }
 
         [TestMethod]

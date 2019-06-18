@@ -14,15 +14,17 @@ namespace WebAppsGenerator.Generating.WebUi.Services
         private readonly IEnumerable<IWebUiChildGenerator> _webUiGenerators;
         private readonly IGeneratorConfiguration _configuration;
         private readonly IOverwriteService _overwriteService;
+        private readonly IWebUiFirstRunProvider _firstRunProvider;
 
         public WebClientProjectGenerator(SolutionPathService pathService, ICommandLineService commandLineService,
-            IEnumerable<IWebUiChildGenerator> webUiGenerators, IGeneratorConfiguration configuration, IOverwriteService overwriteService)
+            IEnumerable<IWebUiChildGenerator> webUiGenerators, IGeneratorConfiguration configuration, IOverwriteService overwriteService, IWebUiFirstRunProvider firstRunProvider)
         {
             _pathService = pathService;
             _commandLineService = commandLineService;
             _webUiGenerators = webUiGenerators;
             _configuration = configuration;
             _overwriteService = overwriteService;
+            _firstRunProvider = firstRunProvider;
         }
 
         public void Generate(IEnumerable<Entity> entities)
@@ -30,7 +32,8 @@ namespace WebAppsGenerator.Generating.WebUi.Services
             if(!_configuration.RunWebUiGen)
                 return;
 
-            if (_configuration.RunReactAppCreation)
+            var firstRun = _firstRunProvider.IsFirstRun();
+            if (firstRun)
             {
                 _overwriteService.SetOverwriteAll();
                 CreateApp();
@@ -42,7 +45,7 @@ namespace WebAppsGenerator.Generating.WebUi.Services
                 webUiChildGenerator.Generate(entities);
             }
             
-            if(_configuration.RunReactAppCreation)
+            if(firstRun)
                 _overwriteService.ResetOverwriteAll();
         }
 
@@ -50,6 +53,11 @@ namespace WebAppsGenerator.Generating.WebUi.Services
         {
             _commandLineService.RunCommand("npm i create-react-app -g"); // TODO: is this necessary? 
             _commandLineService.RunCommand($"npx create-react-app {_pathService.WebProjectDirPath} --scripts-version=react-scripts-ts", "y");
+        }
+        private bool IsFirstRun()
+        {
+            var webApiCsProjPath = Path.Combine(_pathService.WebProjectDirPath, "project.json");
+            return !File.Exists(webApiCsProjPath);
         }
 
         private void RemoveUnnecessaryFiles()

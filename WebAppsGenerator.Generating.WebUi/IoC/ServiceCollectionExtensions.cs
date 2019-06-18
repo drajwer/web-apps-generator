@@ -29,6 +29,7 @@ namespace WebAppsGenerator.Generating.WebUi.IoC
 
         private static void RegisterGeneratorSpecificServices(IServiceCollection services)
         {
+            services.AddScoped<IWebUiFirstRunProvider, WebUiFirstRunProvider>();
             services.AddScoped<IWebUiFileService, WebUiFileService>();
             services.AddScoped<IWebUiProjectTemplatingConfigProvider, WebUiTemplateConfigProvider>();
             services.AddTransient<TemplateFileProvider>();

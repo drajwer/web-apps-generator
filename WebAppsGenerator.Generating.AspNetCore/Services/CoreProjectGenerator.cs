@@ -7,7 +7,7 @@ using WebAppsGenerator.Generating.AspNetCore.Interfaces;
 
 namespace WebAppsGenerator.Generating.AspNetCore.Services
 {
-    public class CoreProjectGenerator : BaseGenerator
+    public class CoreProjectGenerator : BaseGenerator, IAspNetCoreChildGenerator
     {
         private readonly SolutionPathService PathService;
         private readonly MigrationService _migrationService;

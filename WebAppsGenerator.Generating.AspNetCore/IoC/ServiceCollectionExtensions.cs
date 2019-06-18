@@ -15,16 +15,7 @@ namespace WebAppsGenerator.Generating.AspNetCore.IoC
         {
             RegisterGeneratorSpecificServices(services);
 
-            services.AddScoped<IGenerator>(provider =>
-            {
-                var generatorConfiguration = provider.GetService<AspNetCoreGeneratorConfiguration>();
-                var commandLineService = provider.GetService<ICommandLineService>();
-                var webApiGenerator = provider.GetService<WebApiProjectGenerator>();
-                var coreGenerator = provider.GetService<CoreProjectGenerator>();
-                var overwriteService = provider.GetService<IOverwriteService>();
-
-                return new SolutionGenerator(generatorConfiguration, commandLineService, webApiGenerator, coreGenerator, overwriteService);
-            });
+            services.AddScoped<IGenerator, SolutionGenerator>();
 
             return services;
         }
@@ -41,8 +32,9 @@ namespace WebAppsGenerator.Generating.AspNetCore.IoC
         private static void RegisterGeneratorSpecificServices(IServiceCollection services)
         {
             services.AddTransient<IAspNetCoreFileService, AspNetCoreFileService>();
-            services.AddScoped<WebApiProjectGenerator>();
-            services.AddScoped<CoreProjectGenerator>();
+            services.AddScoped<IAspNetCoreFirstRunProvider, AspNetCoreFirstRunProvider>();
+            services.AddScoped<IAspNetCoreChildGenerator, WebApiProjectGenerator>();
+            services.AddScoped<IAspNetCoreChildGenerator, CoreProjectGenerator>();
             services.AddScoped<MigrationService>();
             services.AddScoped<SolutionPathService>();
 

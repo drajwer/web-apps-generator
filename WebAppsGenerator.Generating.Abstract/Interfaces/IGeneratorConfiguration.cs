@@ -11,6 +11,5 @@
         bool AddMigration { get; }
         bool RunAspNetCoreGen { get; }
         bool RunWebUiGen { get; }
-        bool RunReactAppCreation { get; }
     }
 }
