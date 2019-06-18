@@ -3,6 +3,9 @@ using WebAppsGenerator.Generating.Abstract.Interfaces;
 
 namespace WebAppsGenerator.Generating.AspNetCore.Services
 {
+    /// <summary>
+    /// Provides paths for specific files or directories in web api project
+    /// </summary>
     public class SolutionPathService
     {
         private const string SolutionDirectoryName = "WebApi";

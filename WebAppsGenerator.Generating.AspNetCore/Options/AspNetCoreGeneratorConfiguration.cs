@@ -4,6 +4,9 @@ using WebAppsGenerator.Generating.Abstract.Interfaces;
 
 namespace WebAppsGenerator.Generating.AspNetCore.Options
 {
+    /// <summary>
+    /// Extends <see cref="IGeneratorConfiguration"/> with information about NuGet packages
+    /// </summary>
     public class AspNetCoreGeneratorConfiguration : IGeneratorConfiguration
     {
         private readonly IGeneratorConfiguration _baseConfig;

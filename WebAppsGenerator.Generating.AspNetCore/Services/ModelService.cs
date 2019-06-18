@@ -10,6 +10,9 @@ using WebAppsGenerator.Generating.AspNetCore.Models.Templating;
 
 namespace WebAppsGenerator.Generating.AspNetCore.Services
 {
+    /// <summary>
+    /// Provides transforming entities to ModelDrops with web api specific join models and fields
+    /// </summary>
     public class ModelService
     {
         private const string Id = "Id";

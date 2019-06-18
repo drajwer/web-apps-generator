@@ -7,6 +7,9 @@ using WebAppsGenerator.Generating.AspNetCore.Interfaces;
 
 namespace WebAppsGenerator.Generating.AspNetCore.Services
 {
+    /// <summary>
+    /// Generates all files for Core project with performing database migrations
+    /// </summary>
     public class CoreProjectGenerator : BaseGenerator, IAspNetCoreChildGenerator
     {
         private readonly SolutionPathService PathService;

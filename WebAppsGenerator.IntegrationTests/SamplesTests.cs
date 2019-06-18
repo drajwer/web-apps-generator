@@ -18,6 +18,9 @@ using WebAppsGenerator.IntegrationTests.Helpers;
 
 namespace WebAppsGenerator.IntegrationTests
 {
+    /// <summary>
+    /// Entry point of integration tests
+    /// </summary>
     [TestClass]
     public class SamplesTests : SamplesTestBase
     {

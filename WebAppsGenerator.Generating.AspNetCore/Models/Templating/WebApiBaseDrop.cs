@@ -8,6 +8,9 @@ using WebAppsGenerator.Generating.AspNetCore.Services;
 
 namespace WebAppsGenerator.Generating.AspNetCore.Models.Templating
 {
+    /// <summary>
+    /// Drop only basic information about generated project
+    /// </summary>
     public class WebApiBaseDrop : BaseDrop
     {
         public WebApiBaseDrop(SolutionPathService pathService, IGeneratorConfiguration generatorConfiguration): base(generatorConfiguration)

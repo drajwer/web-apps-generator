@@ -1,7 +1,7 @@
 ﻿namespace WebAppsGenerator.Generating.Abstract.Const
 {
     /// <summary>
-    /// Const names of the annotations
+    /// Const names of the common annotations
     /// </summary>
     public static class AnnotationsConsts
     {

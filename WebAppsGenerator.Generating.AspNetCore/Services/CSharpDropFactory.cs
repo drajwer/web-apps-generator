@@ -10,6 +10,9 @@ using WebAppsGenerator.Generating.AspNetCore.Models.Templating;
 
 namespace WebAppsGenerator.Generating.AspNetCore.Services
 {
+    /// <summary>
+    /// Provides web api drop objects creation
+    /// </summary>
     public class CSharpDropFactory : BaseDropFactory
     {
         private readonly SolutionPathService _pathService;

@@ -5,6 +5,9 @@ using WebAppsGenerator.Generating.AspNetCore.Interfaces;
 
 namespace WebAppsGenerator.Generating.AspNetCore.Services
 {
+    /// <summary>
+    /// <see cref="FileService"/> initialized using web api specific information
+    /// </summary>
     public class AspNetCoreFileService : FileService, IAspNetCoreFileService
     {
         public AspNetCoreFileService(LiquidTemplateService templateService, IOverwriteService overwriteService) 

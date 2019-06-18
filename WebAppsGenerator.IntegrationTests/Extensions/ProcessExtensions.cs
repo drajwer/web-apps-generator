@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace WebAppsGenerator.IntegrationTests.Extensions
 {
+    /// <summary>
+    /// Provides methods for managing process on different platforms
+    /// </summary>
     internal static class ProcessExtensions
     {
         private static readonly bool _isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);

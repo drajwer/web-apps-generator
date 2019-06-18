@@ -4,6 +4,9 @@ using System.Text;
 
 namespace WebAppsGenerator.IntegrationTests.Helpers
 {
+    /// <summary>
+    /// Text writer that writes all given text to debug console
+    /// </summary>
     class DebugWriter : TextWriter
     {        
         public override void WriteLine(string value)

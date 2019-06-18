@@ -11,6 +11,9 @@ namespace WebAppsGenerator.Generating.AspNetCore.IoC
 {
     public static class ServiceCollectionExtensions
     {
+        /// <summary>
+        /// Add web api generator with dependencies
+        /// </summary>
         public static IServiceCollection AddAspNetCoreGenerator(this IServiceCollection services)
         {
             RegisterGeneratorSpecificServices(services);
@@ -20,6 +23,9 @@ namespace WebAppsGenerator.Generating.AspNetCore.IoC
             return services;
         }
 
+        /// <summary>
+        /// Provide configuration for web api generator
+        /// </summary>
         public static IServiceCollection AddAspNetCoreConfigurationOptions(this IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<AnnotationOptions>(configuration.GetSection("AllowedAnnotationsCore"));

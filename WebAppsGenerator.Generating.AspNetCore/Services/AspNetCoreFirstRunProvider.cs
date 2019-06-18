@@ -3,6 +3,9 @@ using WebAppsGenerator.Generating.AspNetCore.Interfaces;
 
 namespace WebAppsGenerator.Generating.AspNetCore.Services
 {
+    /// <summary>
+    /// Provides information about first run based on csproj file existence
+    /// </summary>
     public class AspNetCoreFirstRunProvider : IAspNetCoreFirstRunProvider
     {
         private readonly SolutionPathService _pathService;

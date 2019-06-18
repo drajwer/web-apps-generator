@@ -6,6 +6,9 @@ using WebAppsGenerator.Generating.WebUi.Interfaces;
 
 namespace WebAppsGenerator.Generating.WebUi.Services
 {
+    /// <summary>
+    /// Provides information about first run based on package.json file existence
+    /// </summary>
     public class WebUiFirstRunProvider : IWebUiFirstRunProvider
     {
         private readonly SolutionPathService _pathService;
