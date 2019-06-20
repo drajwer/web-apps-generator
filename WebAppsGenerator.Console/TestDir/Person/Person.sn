@@ -8,7 +8,9 @@
 	LastName: string
 
 	NickName: string
-
+/*
+multiline
+*/
 	#Range(Max = 100)
 	Age: int
 

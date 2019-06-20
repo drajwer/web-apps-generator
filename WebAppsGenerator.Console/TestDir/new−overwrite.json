@@ -1,0 +1,119 @@
+{
+  "Library7": {
+    "run.ps1": true,
+    "WebApi": {
+      "Library7.WebApi": {
+        "appsettings.json": true,
+        "Startup.cs": true,
+        "Library7.WebApi.csproj": true,
+        "Extensions": {
+          "SwaggerStartupExtensions.cs": true,
+          "CrudStartupExtensions.cs": true
+        },
+        "Middlewares": {
+          "BusinessExceptionMiddleware.cs": true
+        },
+        "Properties": {
+          "launchSettings.json": true
+        }
+      },
+      "Library7.Core": {
+        "Exceptions": {
+          "BusinessException.cs": true,
+          "BadRequestException.cs": true
+        },
+        "Services": {
+          "DbTransactionScope.cs": true,
+          "RepositorySet.cs": true
+        },
+        "Interfaces": {
+          "ITransactionScope.cs": true,
+          "ICrudService.cs": true,
+          "IRepository.cs": true
+        },
+        "Context": {
+          "Repository.cs": true,
+          "AppDbContext.cs": true
+        }
+      }
+    },
+    "WebUI": {
+      "library7.web": {
+        "package-lock.json": true,
+        "package.json": true,
+        "tslint.json": true,
+        "public": {
+          "index.html": true
+        },
+        "src": {
+          "config.tsx": true,
+          "history.ts": true,
+          "index.tsx": true,
+          "components": {
+            "EntityPageTitle": {
+              "EntityPageTitle.tsx": true
+            },
+            "FormButtons": {
+              "FormButtons.tsx": true
+            },
+            "PageButtons": {
+              "PageButtons.tsx": true
+            },
+            "Tables": {
+              "Table.css": true
+            },
+            "TableToolbar": {
+              "TableToolbar.css": true,
+              "TableToolbar.tsx": true
+            },
+            "CustomTableHead": {
+              "CustomTableHead.tsx": true
+            },
+            "Menu": {
+              "GeneratedLabels.ts": true,
+              "Menu.css": true,
+              "Menu.tsx": true
+            },
+            "GenericTable": {
+              "GenericTable.tsx": true
+            }
+          },
+          "modules": {
+            "index.tsx": true,
+            "snackbar": {
+              "actions.ts": true,
+              "actionTypes.ts": true,
+              "reducer.ts": true
+            }
+          },
+          "routing": {
+            "RouteComponentProps.ts": true,
+            "GeneratedRoutes.ts": true,
+            "Router.tsx": true
+          },
+          "screens": {
+            "App": {
+              "App.css": true,
+              "App.tsx": true
+            },
+            "MainPage": {
+              "Libraries.ts": true,
+              "MainPage.css": true,
+              "MainPage.tsx": true
+            },
+            "TestPage": {
+              "TestPage.css": true,
+              "TestPage.tsx": true
+            }
+          },
+          "styles": {
+            "theme.ts": true
+          },
+          "vendors": {
+            "http.tsx": true
+          }
+        }
+      }
+    }
+  }
+}
