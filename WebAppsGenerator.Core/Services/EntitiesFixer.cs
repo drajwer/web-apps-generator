@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using WebAppsGenerator.Core.Exceptions;
 using WebAppsGenerator.Core.Interfaces;
 using WebAppsGenerator.Core.Models;
 
@@ -18,6 +16,9 @@ namespace WebAppsGenerator.Core.Services
             _exceptionHandler = exceptionHandler;
         }
 
+        /// <summary>
+        /// Prepares entities for further processing by Id property creation and defining relations between entities
+        /// </summary>
         public void FixEntities(IEnumerable<Entity> entities)
         {
             FixIds(entities);

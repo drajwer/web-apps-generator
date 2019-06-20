@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using WebAppsGenerator.Core.Files.Services;
 using WebAppsGenerator.Core.Grammar;
 using WebAppsGenerator.Core.Interfaces;
@@ -13,6 +10,11 @@ namespace WebAppsGenerator.Core.IoC
 {
     public static class ServiceCollectionExtensions
     {
+        /// <summary>
+        /// Registers services required for reading input files
+        /// </summary>
+        /// <param name="services"></param>
+        /// <returns></returns>
         public static IServiceCollection AddAntlrModelProvider(this IServiceCollection services)
         {
             services.AddScoped<IInputModelProvider, AntlrInputModelProvider>();

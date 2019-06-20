@@ -9,6 +9,9 @@ using WebAppsGenerator.Generating.WebUi.Models.Templating;
 
 namespace WebAppsGenerator.Generating.WebUi.Services
 {
+    /// <summary>
+    /// Provides drops for web UI generator
+    /// </summary>
     public class WebUiDropFactory : BaseDropFactory
     {
         private readonly IGeneratorConfiguration _generatorConfiguration;

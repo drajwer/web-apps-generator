@@ -4,6 +4,10 @@ using WebAppsGenerator.Generating.Abstract.Models.Templating;
 
 namespace WebAppsGenerator.Generating.WebUi.Models.Templating
 {
+    /// <inheritdoc />
+    /// <summary>
+    /// Drop exposing field's type for TypeScript templates
+    /// </summary>
     public class TypeScriptTypeDrop : TypeDrop
     {
         public bool? IsFloat { get; set; }

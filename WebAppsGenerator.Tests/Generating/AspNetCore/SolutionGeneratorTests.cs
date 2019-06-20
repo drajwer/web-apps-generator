@@ -5,7 +5,6 @@ using Microsoft.Extensions.Options;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using WebAppsGenerator.Core.Models;
-using WebAppsGenerator.Generating.Abstract.Interfaces;
 using WebAppsGenerator.Generating.Abstract.Options;
 using WebAppsGenerator.Generating.AspNetCore.Interfaces;
 using WebAppsGenerator.Generating.AspNetCore.Options;
@@ -74,8 +73,6 @@ namespace WebAppsGenerator.Tests.Generating.AspNetCore
             // Act & Assert
             _generator.Generate(new List<Entity>());
         }
-
-        // commented because IsEnabled causes failure
 
         [TestMethod]
         public void SomeEntitiesTest()

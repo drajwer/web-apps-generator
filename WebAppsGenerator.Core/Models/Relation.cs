@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace WebAppsGenerator.Core.Models
+﻿namespace WebAppsGenerator.Core.Models
 {
+    /// <summary>
+    /// Defines relation between entities
+    /// </summary>
     public class Relation
     {
         public bool HasOne { get; set; }

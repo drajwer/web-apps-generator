@@ -6,6 +6,9 @@ using System.Runtime.CompilerServices;
 
 namespace WebAppsGenerator.Tests.Grammar
 {
+    /// <summary>
+    /// Tests if grammar is properly defined
+    /// </summary>
     [TestClass]
     public class GrammarTests
     {

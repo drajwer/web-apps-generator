@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using WebAppsGenerator.Core.Interfaces;
 
 namespace WebAppsGenerator.Tests.Mocks
 {
+    /// <summary>
+    /// Stores exceptions in a list
+    /// </summary>
     class ExceptionHandlerMock : IExceptionHandler
     {
         public List<Exception> Exceptions { get; }

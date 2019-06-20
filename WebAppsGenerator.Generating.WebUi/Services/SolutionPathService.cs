@@ -3,6 +3,9 @@ using WebAppsGenerator.Generating.Abstract.Interfaces;
 
 namespace WebAppsGenerator.Generating.WebUi.Services
 {
+    /// <summary>
+    /// Provides paths for specific files or directories in web UI project
+    /// </summary>
     public class SolutionPathService
     {
         private const string WebProjectDirectoryName = "WebUI";

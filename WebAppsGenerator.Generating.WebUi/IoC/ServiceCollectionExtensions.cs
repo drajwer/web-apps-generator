@@ -1,7 +1,5 @@
-﻿using System.Reflection;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using WebAppsGenerator.Core.Interfaces;
 using WebAppsGenerator.Generating.Abstract.Interfaces;
 using WebAppsGenerator.Generating.Abstract.Options;
 using WebAppsGenerator.Generating.Abstract.Services;
@@ -12,6 +10,9 @@ namespace WebAppsGenerator.Generating.WebUi.IoC
 {
     public static class ServiceCollectionExtensions
     {
+        /// <summary>
+        /// Add web UI generator with dependencies
+        /// </summary>
         public static IServiceCollection AddWebUiCoreGenerator(this IServiceCollection services)
         {
             RegisterGeneratorSpecificServices(services);
@@ -20,6 +21,9 @@ namespace WebAppsGenerator.Generating.WebUi.IoC
             return services;
         }
 
+        /// <summary>
+        /// Provide configuration for web UI generator
+        /// </summary>
         public static IServiceCollection AddWebUiConfigurationOptions(this IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<AnnotationOptions>(configuration.GetSection("AllowedAnnotationsUi"));

@@ -4,7 +4,6 @@ using System.IO;
 using WebAppsGenerator.Core.Interfaces;
 using WebAppsGenerator.Core.Models;
 using WebAppsGenerator.Generating.Abstract.Interfaces;
-using WebAppsGenerator.Generating.Abstract.Options;
 using WebAppsGenerator.Generating.AspNetCore.Interfaces;
 using WebAppsGenerator.Generating.AspNetCore.Options;
 

@@ -7,6 +7,9 @@ using WebAppsGenerator.Generating.WebUi.Interfaces;
 
 namespace WebAppsGenerator.Generating.WebUi.Services
 {
+    /// <summary>
+    /// Creates web client project and runs all registered web UI generators
+    /// </summary>
     public class WebClientProjectGenerator : IGenerator
     {
         private readonly SolutionPathService _pathService;
@@ -27,6 +30,9 @@ namespace WebAppsGenerator.Generating.WebUi.Services
             _firstRunProvider = firstRunProvider;
         }
 
+        /// <summary>
+        /// Generates web client project
+        /// </summary>
         public void Generate(IEnumerable<Entity> entities)
         {
             if(!_configuration.RunWebUiGen)

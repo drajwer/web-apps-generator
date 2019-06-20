@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using WebAppsGenerator.Core.Interfaces;
-using WebAppsGenerator.Core.Services;
 
 namespace WebAppsGenerator.Tests.Mocks
 {
+    /// <summary>
+    /// Stores commands in a list
+    /// </summary>
     public class CommandLineServiceMock : ICommandLineService
     {
         public List<string> Commands;

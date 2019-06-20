@@ -4,12 +4,15 @@ using System.Linq;
 
 namespace WebAppsGenerator.Core.Files.Providers
 {
+    /// <summary>
+    /// Reads files from provided directory and ignores subdirectories
+    /// </summary>
     public class FlatDirectoryFilesProvider : BaseFilesProvider
     {
         public FlatDirectoryFilesProvider(string dirName, string extension = null) : base(dirName, extension)
         {
         }
-
+        
         public override string[] GetFiles()
         {
             if (!Directory.Exists(DirName))

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using WebAppsGenerator.Core.Interfaces;
-using WebAppsGenerator.Core.Services;
+﻿using System.Collections.Generic;
 using WebAppsGenerator.Generating.Abstract.Interfaces;
 
 namespace WebAppsGenerator.Tests.Mocks

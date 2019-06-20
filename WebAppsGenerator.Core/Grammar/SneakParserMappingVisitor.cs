@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
@@ -11,6 +10,9 @@ using Type = WebAppsGenerator.Core.Models.Type;
 
 namespace WebAppsGenerator.Core.Grammar
 {
+    /// <summary>
+    /// Custom visitor transforming abstract syntax tree to entities dictionary
+    /// </summary>
     public class SneakParserMappingVisitor : SneakParserBaseVisitor<object>
     {
         private readonly ITypeParser _typeParser;
