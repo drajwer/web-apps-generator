@@ -1,5 +1,4 @@
-﻿#HideInMenu
-class Club
+﻿class Clubs
 	#DisplayField
 	#DisplayInList
 	Name: string

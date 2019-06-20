@@ -5,9 +5,9 @@
 	#DisplayName(Name="Surname")
 	#DisplayField
 	#DisplayInList
-	LastName: string
+	LastNames: string
 
-	NickName: string
+        NickName: string
 /*
 multiline
 */
@@ -20,4 +20,4 @@ multiline
 	Books: Book[]
 
 	#Dropdown
-	Clubs: Club[]
+	Clubs: Clubs[]

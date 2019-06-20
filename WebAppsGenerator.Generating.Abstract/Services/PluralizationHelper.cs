@@ -30,9 +30,12 @@ namespace WebAppsGenerator.Generating.Abstract.Services
             if (string.IsNullOrEmpty(name))
                 return "";
 
-            if (name.EndsWith('s'))
-                return name + "es"; //TODO: find less hacky solution
-            return Api.Pluralize(name, CultureInfo) ?? name;
+            var pluralizedName = Api.Pluralize(name, CultureInfo) ?? name;
+
+            if (name == pluralizedName)
+                return name + "es"; 
+
+            return pluralizedName;
         }
 
         public static string Singularize(string name)
