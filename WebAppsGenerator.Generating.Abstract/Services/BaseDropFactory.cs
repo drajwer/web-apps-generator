@@ -7,6 +7,9 @@ using WebAppsGenerator.Generating.Abstract.Models.Templating;
 
 namespace WebAppsGenerator.Generating.Abstract.Services
 {
+    /// <summary>
+    /// Provides common Drop objects creation
+    /// </summary>
     public class BaseDropFactory : IDropFactory
     {
         private readonly IGeneratorConfiguration _generatorConfiguration;

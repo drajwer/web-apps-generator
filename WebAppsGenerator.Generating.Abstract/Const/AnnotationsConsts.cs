@@ -1,5 +1,8 @@
 ﻿namespace WebAppsGenerator.Generating.Abstract.Const
 {
+    /// <summary>
+    /// Const names of the common annotations
+    /// </summary>
     public static class AnnotationsConsts
     {
         public const string Length = "Length";

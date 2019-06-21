@@ -1,4 +1,6 @@
-﻿using {{Params.CoreProjectName}}.Models;
+﻿{%- if Params.Entities.size > 0 -%}
+using {{Params.CoreProjectName}}.Models;
+{%- endif -%}
 using Microsoft.EntityFrameworkCore;
 
 namespace {{Params.CoreProjectName}}.Context

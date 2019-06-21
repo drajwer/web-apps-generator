@@ -11,24 +11,21 @@ namespace WebAppsGenerator.Generating.AspNetCore.IoC
 {
     public static class ServiceCollectionExtensions
     {
+        /// <summary>
+        /// Add web api generator with dependencies
+        /// </summary>
         public static IServiceCollection AddAspNetCoreGenerator(this IServiceCollection services)
         {
             RegisterGeneratorSpecificServices(services);
 
-            services.AddScoped<IGenerator>(provider =>
-            {
-                var generatorConfiguration = provider.GetService<AspNetCoreGeneratorConfiguration>();
-                var commandLineService = provider.GetService<ICommandLineService>();
-                var webApiGenerator = provider.GetService<WebApiProjectGenerator>();
-                var coreGenerator = provider.GetService<CoreProjectGenerator>();
-                var overwriteService = provider.GetService<IOverwriteService>();
-
-                return new SolutionGenerator(generatorConfiguration, commandLineService, webApiGenerator, coreGenerator, overwriteService);
-            });
+            services.AddScoped<IGenerator, SolutionGenerator>();
 
             return services;
         }
 
+        /// <summary>
+        /// Provide configuration for web api generator
+        /// </summary>
         public static IServiceCollection AddAspNetCoreConfigurationOptions(this IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<AnnotationOptions>(configuration.GetSection("AllowedAnnotationsCore"));
@@ -41,8 +38,9 @@ namespace WebAppsGenerator.Generating.AspNetCore.IoC
         private static void RegisterGeneratorSpecificServices(IServiceCollection services)
         {
             services.AddTransient<IAspNetCoreFileService, AspNetCoreFileService>();
-            services.AddScoped<WebApiProjectGenerator>();
-            services.AddScoped<CoreProjectGenerator>();
+            services.AddScoped<IAspNetCoreFirstRunProvider, AspNetCoreFirstRunProvider>();
+            services.AddScoped<IAspNetCoreChildGenerator, WebApiProjectGenerator>();
+            services.AddScoped<IAspNetCoreChildGenerator, CoreProjectGenerator>();
             services.AddScoped<MigrationService>();
             services.AddScoped<SolutionPathService>();
 

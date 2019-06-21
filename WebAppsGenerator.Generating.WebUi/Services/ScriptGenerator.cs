@@ -10,6 +10,9 @@ using WebAppsGenerator.Generating.WebUi.Models.Templating;
 
 namespace WebAppsGenerator.Generating.WebUi.Services
 {
+    /// <summary>
+    /// Generator of scripts for running generated application
+    /// </summary>
     public class ScriptGenerator : IWebUiChildGenerator
     {
         private readonly SolutionPathService _pathService;
@@ -24,6 +27,9 @@ namespace WebAppsGenerator.Generating.WebUi.Services
             _generatorConfiguration = generatorConfiguration;
         }
 
+        /// <summary>
+        /// Generates powershell script running generated application
+        /// </summary>
         public void Generate(IEnumerable<Entity> entities)
         {
             var templatePath = "run.ps1.liquid";

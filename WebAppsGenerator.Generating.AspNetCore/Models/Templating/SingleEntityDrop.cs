@@ -5,6 +5,9 @@ using WebAppsGenerator.Generating.AspNetCore.Services;
 
 namespace WebAppsGenerator.Generating.AspNetCore.Models.Templating
 {
+    /// <summary>
+    /// Drop containing information about one specific entity
+    /// </summary>
     public class SingleEntityDrop : WebApiBaseDrop
     {
         public SingleEntityDrop(IGeneratorConfiguration generatorConfiguration, SolutionPathService solutionPathService, Entity entity) 

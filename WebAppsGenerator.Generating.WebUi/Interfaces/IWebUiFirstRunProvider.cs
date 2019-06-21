@@ -3,9 +3,9 @@
 namespace WebAppsGenerator.Generating.WebUi.Interfaces
 {
     /// <summary>
-    /// Provides output files creation for web UI generation
+    /// Marker for Web Api first run provider.
     /// </summary>
-    public interface IWebUiFileService : IFileService
+    public interface IWebUiFirstRunProvider : IFirstRunProvider
     {
     }
 }

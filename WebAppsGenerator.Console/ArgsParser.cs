@@ -12,6 +12,7 @@ namespace WebAppsGenerator.Console
     public static class ArgsParser
     {
         private const string ForceParam =  "--force";
+
         /// <summary>
         /// Returns options or null if args cannot be parsed.
         /// </summary>

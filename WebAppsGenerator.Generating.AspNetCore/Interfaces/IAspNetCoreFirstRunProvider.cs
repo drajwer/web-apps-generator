@@ -3,9 +3,9 @@
 namespace WebAppsGenerator.Generating.AspNetCore.Interfaces
 {
     /// <summary>
-    /// Marker for Web Api file service.
+    /// Marker for Web Api first run provider.
     /// </summary>
-    public interface IAspNetCoreFileService : IFileService
+    public interface IAspNetCoreFirstRunProvider : IFirstRunProvider
     {
     }
 }

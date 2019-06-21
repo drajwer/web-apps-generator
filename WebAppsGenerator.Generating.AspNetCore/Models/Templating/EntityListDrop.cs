@@ -7,6 +7,9 @@ using WebAppsGenerator.Generating.AspNetCore.Services;
 
 namespace WebAppsGenerator.Generating.AspNetCore.Models.Templating
 {
+    /// <summary>
+    /// Drop containing all provided entities
+    /// </summary>
     public class EntityListDrop : WebApiBaseDrop
     {
         public EntityListDrop(IGeneratorConfiguration generatorConfiguration, SolutionPathService solutionPathService,

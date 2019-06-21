@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-
-namespace WebAppsGenerator.Core.Interfaces
+﻿namespace WebAppsGenerator.Core.Interfaces
 {
     public interface ICommandLineService
     {

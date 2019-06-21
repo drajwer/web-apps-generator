@@ -3,6 +3,9 @@ using WebAppsGenerator.Core.Models;
 
 namespace WebAppsGenerator.Generating.Abstract.Models.Templating
 {
+    /// <summary>
+    /// Templating class to expose one field's relation information
+    /// </summary>
     public class RelationDrop : Drop
     {
         public bool HasOne { get; }

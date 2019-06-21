@@ -17,7 +17,6 @@ namespace WebAppsGenerator.Generating.Abstract.Options
         public bool AddMigration { get; set; }
         public bool RunAspNetCoreGen { get; set; }
         public bool RunWebUiGen { get; set; }
-        public bool RunReactAppCreation { get; set; }
 
         public GeneratorConfiguration(IOptions<GeneratorOptions> generatorOptions, IExceptionHandler exceptionHandler)
         {
@@ -28,7 +27,6 @@ namespace WebAppsGenerator.Generating.Abstract.Options
             AddMigration = options.AddMigration;
             RunAspNetCoreGen = options.RunAspNetCoreGen;
             RunWebUiGen = options.RunWebUiGen;
-            RunReactAppCreation = options.RunReactAppCreation;
 
             if (ProjectName == null)
                 exceptionHandler.ThrowException(new ParsingException("ProjectName must be specified in the config.", -1, -1));

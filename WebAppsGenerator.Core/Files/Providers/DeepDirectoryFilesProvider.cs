@@ -5,6 +5,9 @@ using System.Linq;
 
 namespace WebAppsGenerator.Core.Files.Providers
 {
+    /// <summary>
+    /// Reads files from all subdirectories of provided root directory
+    /// </summary>
     public class DeepDirectoryFilesProvider : BaseFilesProvider
     {
         public DeepDirectoryFilesProvider(string dirName, string extension = null) : base(dirName, extension)
@@ -45,3 +48,4 @@ namespace WebAppsGenerator.Core.Files.Providers
         }
     }
 }
+

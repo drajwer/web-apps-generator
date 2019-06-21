@@ -7,6 +7,10 @@ using WebAppsGenerator.Generating.WebUi.Interfaces;
 
 namespace WebAppsGenerator.Generating.WebUi.Services
 {
+    /// <inheritdoc />
+    /// <summary>
+    /// Provides templating configuration for web UI templates
+    /// </summary>
     public class WebUiTemplateConfigProvider : TemplatingConfigProvider, IWebUiProjectTemplatingConfigProvider
     {
         private readonly SolutionPathService _pathService;

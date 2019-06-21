@@ -10,6 +10,9 @@ using FileInfo = WebAppsGenerator.Generating.Abstract.Models.FileInfo;
 
 namespace WebAppsGenerator.Generating.Abstract.Services
 {
+    /// <summary>
+    /// Provides common logic for generating files with templates
+    /// </summary>
     public abstract class BaseGenerator: IGenerator
     {
         protected IGeneratorConfiguration GeneratorConfiguration;

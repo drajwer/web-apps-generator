@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Antlr4.Runtime;
-using WebAppsGenerator.Core.Files.Services;
+﻿using Antlr4.Runtime;
 using WebAppsGenerator.Core.Grammar.ErrorListeners;
 using WebAppsGenerator.Core.Interfaces;
 
 namespace WebAppsGenerator.Core.Services
 {
+    /// <summary>
+    /// Builds Sneak parser based on lexer
+    /// </summary>
     public class ParserProvider
     {
         private readonly LexerProvider _lexerProvider;

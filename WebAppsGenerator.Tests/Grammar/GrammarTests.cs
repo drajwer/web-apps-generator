@@ -6,6 +6,9 @@ using System.Runtime.CompilerServices;
 
 namespace WebAppsGenerator.Tests.Grammar
 {
+    /// <summary>
+    /// Tests if grammar is properly defined
+    /// </summary>
     [TestClass]
     public class GrammarTests
     {
@@ -14,7 +17,6 @@ namespace WebAppsGenerator.Tests.Grammar
             var assembly = Assembly.GetExecutingAssembly();
             var resourceName = $"WebAppsGenerator.Tests.Grammar.Files.{filename}.txt";
 
-            // TODO: change reader to use embedded resources
             using (var stream = assembly.GetManifestResourceStream(resourceName))
             {
                 var reader = new StreamReader(stream);

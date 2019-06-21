@@ -18,6 +18,10 @@ using WebAppsGenerator.IntegrationTests.Helpers;
 
 namespace WebAppsGenerator.IntegrationTests
 {
+    /// <summary>
+    /// Base for all samples tests.
+    /// Provides generating full application using generator with asserting results, setup and clean up
+    /// </summary>
     public class SamplesTestBase
     {
         private List<Process> _runProcesses;
@@ -38,24 +42,6 @@ namespace WebAppsGenerator.IntegrationTests
             _commandLineService = new CommandLineService(Func,Func);
             
             _runProcesses = new List<Process>();
-        }
-
-        private void Setup(string directoryName)
-        {
-            EnsureRunningOnWindows();
-            _runProcesses = new List<Process>();
-            
-            using (var stream = CreateConfigFileResourceStream(directoryName))
-            using (var reader = new StreamReader(stream))
-            {
-                var json = reader.ReadToEnd();
-                SetupGeneratorOptions(directoryName, json);
-
-                Directory.CreateDirectory(In);
-                Directory.CreateDirectory(Out);
-                
-                WriteGeneratorOptionsToInputFile();
-            }
         }
 
         [TestCleanup]
@@ -94,7 +80,24 @@ namespace WebAppsGenerator.IntegrationTests
                 Assert.AreEqual("[]", json);
             }
         }
-        
+
+        private void Setup(string directoryName)
+        {
+            EnsureRunningOnWindows();
+            _runProcesses = new List<Process>();
+
+            using (var stream = CreateConfigFileResourceStream(directoryName))
+            using (var reader = new StreamReader(stream))
+            {
+                var json = reader.ReadToEnd();
+                SetupGeneratorOptions(directoryName, json);
+
+                Directory.CreateDirectory(In);
+                Directory.CreateDirectory(Out);
+
+                WriteGeneratorOptionsToInputFile();
+            }
+        }
         private static Stream CreateConfigFileResourceStream(string directoryName)
         {
             var assembly = Assembly.GetExecutingAssembly();

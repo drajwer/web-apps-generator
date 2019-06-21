@@ -7,6 +7,9 @@ using WebAppsGenerator.Generating.WebUi.Services;
 
 namespace WebAppsGenerator.Generating.WebUi.Models.Templating
 {
+    /// <summary>
+    /// Drop containing all provided entities
+    /// </summary>
     public class EntityListDrop : WebUiBaseDrop
     {
         public EntityListDrop(IGeneratorConfiguration generatorConfiguration, SolutionPathService solutionPathService,

@@ -3,6 +3,11 @@ using WebAppsGenerator.Generating.Abstract.Interfaces;
 
 namespace WebAppsGenerator.Generating.Abstract.Options
 {
+    /// <summary>
+    /// Default implementation of <see cref="IOverwriteService"/>
+    /// It uses overwrite dictionary from json file.
+    /// It also saves new overwrite values in other dictionary
+    /// </summary>
     public class OverwriteService : IOverwriteService
     {    
         private readonly Dictionary<string, bool> _oldFilesToOverwrite;

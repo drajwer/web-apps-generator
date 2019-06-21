@@ -4,6 +4,9 @@ using WebAppsGenerator.Generating.Abstract.Interfaces;
 
 namespace WebAppsGenerator.Generating.AspNetCore.Services
 {
+    /// <summary>
+    /// Provides creating and running database migrations
+    /// </summary>
     public class MigrationService
     {
         private readonly SolutionPathService _pathService;
@@ -17,6 +20,9 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
             _commandLineService = commandLineService;
         }
 
+        /// <summary>
+        /// Create database migration with specified name
+        /// </summary>
         public void AddMigration(string migrationName)
         {
             migrationName = migrationName ?? "Init";
@@ -24,7 +30,7 @@ namespace WebAppsGenerator.Generating.AspNetCore.Services
         }
 
         /// <summary>
-        /// 
+        /// Update database using specified migration or all migrations
         /// </summary>
         /// <param name="targetMigrationName">Empty target migration name applies all existing migrations</param>
         public void UpdateDatabase(string targetMigrationName = "")

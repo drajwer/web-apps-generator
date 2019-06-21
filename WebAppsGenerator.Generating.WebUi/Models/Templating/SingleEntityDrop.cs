@@ -5,6 +5,9 @@ using WebAppsGenerator.Generating.WebUi.Services;
 
 namespace WebAppsGenerator.Generating.WebUi.Models.Templating
 {
+    /// <summary>
+    /// Drop containing information about one specific entity
+    /// </summary>
     public class SingleEntityDrop : WebUiBaseDrop
     {
         public SingleEntityDrop(IGeneratorConfiguration generatorConfiguration, SolutionPathService solutionPathService, Entity entity)

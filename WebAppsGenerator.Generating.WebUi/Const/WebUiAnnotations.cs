@@ -1,5 +1,8 @@
 ﻿namespace WebAppsGenerator.Generating.WebUi.Const
 {
+    /// <summary>
+    /// Const names of the web UI specific annotations
+    /// </summary>
     public static class WebUiAnnotations
     {
         public const string DisplayName = "DisplayName";

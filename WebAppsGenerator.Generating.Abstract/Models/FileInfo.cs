@@ -20,6 +20,10 @@ namespace WebAppsGenerator.Generating.Abstract.Models
         /// Location of output directory to put generated file on
         /// </summary>
         public string OutputPath { get; set; }
+
+        /// <summary>
+        /// Default value specifying if the file should be overwritten
+        /// </summary>
         public bool Overwrite { get; set; }
 
         public FileInfo(string nameTemplate, string templatePath, string outputPath, bool overwrite)

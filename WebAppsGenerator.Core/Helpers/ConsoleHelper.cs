@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
 
 namespace WebAppsGenerator.Core.Helpers
 {
+    /// <summary>
+    /// Helper class for displaying messages in console
+    /// </summary>
     public static class ConsoleHelper
     {
         public static void WriteError(string error)

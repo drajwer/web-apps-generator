@@ -2,6 +2,9 @@
 
 namespace WebAppsGenerator.Core.Models
 {
+    /// <summary>
+    /// Definition of annotation from configuration file
+    /// </summary>
     public class AnnotationDefinition
     {
         public string Name { get; set; }

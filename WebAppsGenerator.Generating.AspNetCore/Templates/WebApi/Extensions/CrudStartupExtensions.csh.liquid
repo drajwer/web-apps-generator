@@ -5,10 +5,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using {{Params.CoreProjectName}}.Context;
+{%- if Params.Entities.size > 0 -%}
 using {{Params.CoreProjectName}}.Models;
+{%- endif -%}
 using {{Params.CoreProjectName}}.Interfaces;
 using {{Params.CoreProjectName}}.Services;
+{%- if Params.Entities.size > 0 -%}
 using {{Params.CoreProjectName}}.Services.Generated;
+{%- endif -%}
 
 namespace {{Params.WebApiProjectName}}.Extensions
 {

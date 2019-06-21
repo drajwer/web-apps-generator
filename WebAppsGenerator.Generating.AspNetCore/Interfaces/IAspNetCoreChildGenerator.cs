@@ -3,9 +3,9 @@
 namespace WebAppsGenerator.Generating.AspNetCore.Interfaces
 {
     /// <summary>
-    /// Marker for Web Api file service.
+    /// Marker for Web Api generators which aren't root generator.
     /// </summary>
-    public interface IAspNetCoreFileService : IFileService
+    public interface IAspNetCoreChildGenerator : IGenerator
     {
     }
 }

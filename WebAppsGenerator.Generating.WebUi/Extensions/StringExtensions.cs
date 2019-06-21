@@ -5,6 +5,11 @@ namespace WebAppsGenerator.Generating.WebUi.Extensions
 {
     public static class StringExtensions
     {
+        /// <summary>
+        /// Converts string from pascal format to kebab case 
+        /// </summary>
+        /// <param name="value">string in pascal case</param>
+        /// <returns>The same string in kebab case</returns>
         public static string PascalToKebabCase(this string value)
         {
             if (string.IsNullOrEmpty(value))

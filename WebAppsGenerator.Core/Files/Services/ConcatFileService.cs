@@ -6,6 +6,9 @@ using WebAppsGenerator.Core.Files.Providers;
 
 namespace WebAppsGenerator.Core.Files.Services
 {
+    /// <summary>
+    /// Concatenates provided files
+    /// </summary>
     public class ConcatFileService : IFileService
     {
         private readonly List<FileInfo> _files;
@@ -28,6 +31,12 @@ namespace WebAppsGenerator.Core.Files.Services
         }
 
         public string ConcatFile { get; }
+
+        /// <summary>
+        /// Provides constituent file name and line number based on line number in concatenated file
+        /// </summary>
+        /// <param name="concatFileLineNo"></param>
+        /// <returns></returns>
         public LineInfo GetLineInfo(int concatFileLineNo)
         {
             var lineCounter = 0;

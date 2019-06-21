@@ -20,8 +20,10 @@ const snackbarReducer = (state = initialState, action: SnackbarActions) => {
 	const plural{{ entity.Name }}EntityName = '{{ entity.PluralName | DeCapitalize}}';
 
 	{%- endfor -%}
+	{%- if Params.Entities.size > 0 -%}
 	const messageKey = new Date().getTime().toString();
-	
+	{%- endif -%}
+
     switch (action.type) {
 	{%- for entity in Params.Entities -%}
         case SnackbarActionTypes.RESPONSE_UPDATE_{{ entity.Name | SnakeUppercase}}:

@@ -5,8 +5,12 @@
 	#DisplayName(Name="Surname")
 	#DisplayField
 	#DisplayInList
-	LastName: string
+	LastNames: string
 
+        NickName: string
+/*
+multiline
+*/
 	#Range(Max = 100)
 	Age: int
 
@@ -16,4 +20,4 @@
 	Books: Book[]
 
 	#Dropdown
-	Clubs: Club[]
+	Clubs: Clubs[]

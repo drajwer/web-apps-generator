@@ -6,8 +6,14 @@ using WebAppsGenerator.Generating.WebUi.Models.Templating;
 
 namespace WebAppsGenerator.Generating.WebUi.Services
 {
+    /// <summary>
+    /// Provides drops for TypeScript templates
+    /// </summary>
     public class TypeScriptEntityService
     {
+        /// <summary>
+        /// Converts entities to drops specific for web UI generator
+        /// </summary>
         public List<EntityDrop> GetDrops(IEnumerable<Entity> entities)
         {
             var drops = entities.Select(e => new WebUiAnnotatedEntityDrop(e)).OfType<EntityDrop>().ToList();

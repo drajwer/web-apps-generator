@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Management;
 using WebAppsGenerator.Core.Interfaces;
 
 namespace WebAppsGenerator.Core.Services
 {
+    /// <summary>
+    /// Enables running commands in terminal
+    /// </summary>
     public class CommandLineService : ICommandLineService
     {
         private const string Cmd = "cmd.exe";

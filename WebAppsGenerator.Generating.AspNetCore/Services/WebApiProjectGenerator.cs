@@ -7,7 +7,10 @@ using WebAppsGenerator.Generating.AspNetCore.Interfaces;
 
 namespace WebAppsGenerator.Generating.AspNetCore.Services
 {
-    public class WebApiProjectGenerator : BaseGenerator
+    /// <summary>
+    /// Generates all files for Web Api project
+    /// </summary>
+    public class WebApiProjectGenerator : BaseGenerator, IAspNetCoreChildGenerator
     {
         private readonly SolutionPathService _solutionPathService;
 

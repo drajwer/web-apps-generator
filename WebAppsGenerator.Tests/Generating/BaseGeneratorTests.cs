@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WebAppsGenerator.Core.Models;
 using WebAppsGenerator.Generating.Abstract.Models;
-using WebAppsGenerator.Generating.Abstract.Services;
 using WebAppsGenerator.Tests.Mocks;
 
 namespace WebAppsGenerator.Tests.Generating
 {
+    /// <summary>
+    /// Tests if generator properly handles discovered template files
+    /// </summary>
     [TestClass]
     public class BaseGeneratorTests
     {

@@ -7,6 +7,9 @@ using Type = WebAppsGenerator.Core.Models.Type;
 
 namespace WebAppsGenerator.Generating.AspNetCore.Models.Templating
 {
+    /// <summary>
+    /// Extends <see cref="TypeDrop"/> with C# specific information
+    /// </summary>
     public class CSharpTypeDrop : TypeDrop
     {
         public CSharpTypeDrop(TypeDrop type) : base(type)

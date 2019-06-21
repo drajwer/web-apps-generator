@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Antlr4.Runtime;
+﻿using Antlr4.Runtime;
 using WebAppsGenerator.Core.Files.Services;
 using WebAppsGenerator.Core.Grammar.ErrorListeners;
 using WebAppsGenerator.Core.Interfaces;
 
 namespace WebAppsGenerator.Core.Services
 {
+    /// <summary>
+    /// Builds lexer based on input files
+    /// </summary>
     public class LexerProvider
     {
         private readonly ConcatFileService _concatFileService;

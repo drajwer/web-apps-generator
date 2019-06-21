@@ -10,6 +10,9 @@ using FileInfo = WebAppsGenerator.Generating.Abstract.Models.FileInfo;
 
 namespace WebAppsGenerator.Generating.Abstract.Services
 {
+    /// <summary>
+    /// Provides templating configuration using Assembly resources and configuration JSON file
+    /// </summary>
     public class TemplatingConfigProvider : ITemplatingConfigProvider
     {
         private const string RootFolder = "Templates";
