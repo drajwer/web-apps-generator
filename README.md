@@ -12,14 +12,8 @@ It uses ASP.NET Core and utilizes Entity Framework package to communicate with t
 
 
 # Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
-
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+Please take a look at [wiki](https://github.com/drajwer/web-apps-generator/wiki).
+It describes how to run the generator and how to prepare model of web application to be generated.
 
 # Contribute
 Please feel free to add pull requests.
