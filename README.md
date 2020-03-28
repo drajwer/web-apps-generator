@@ -1,5 +1,15 @@
 # Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+The program created within the confines of this project generates a fully functional multilayer web application which enables users, via a browser, to perform operations on a database.
+The data model is defined in a data description language specially designed for that purpose.
+The goal of this project is to save time of software developers by automating the most tedious part of creating a web application.
+
+The generator is a .NET Core console application written in C#.
+It creates a client and server applications along with a database.
+Client application is a graphical user interface facilitating communication with the server.
+It was built using React and Redux libraries.
+Server application processes user's requests and performs operations on the data stored in the database in CRUD manner.
+It uses ASP.NET Core and utilizes Entity Framework package to communicate with the database.
+
 
 # Getting Started
 TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
@@ -12,9 +22,5 @@ TODO: Guide users through getting your code up and running on their own system. 
 TODO: Describe and show how to build your code and run the tests. 
 
 # Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
-
-If you want to learn more about creating good readme files then refer the following [guidelines](https://www.visualstudio.com/en-us/docs/git/create-a-readme). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+Please feel free to add pull requests.
+The most needed feature is to enable users to provide model to the generator via other languages (e.g. C# POCO classes).
